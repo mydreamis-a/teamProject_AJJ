@@ -296,7 +296,7 @@ let jbhcartUserImg;
 <script src="lankSlide.js"></script>
 <script src="check.js"></script>
 <script src="event.js"></script>
-<script src="/JS/cartShopCap2.js"></script>
+<script src="/JS/cartShopCap2 copy.js"></script>
 <script>
   let comeCheck = false
   const _mainNav = new mainNav();
@@ -309,19 +309,19 @@ let jbhcartUserImg;
 <script>
   shopCap().then((cartUserShopInfor)=>{ 
   ajycartUserShopInfor =  cartUserShopInfor.filter((a)=>{
-    return a.designName == "ajy"
+    return a.designName == "ajy";
   })
 
   ajycartUserImg = ajycartUserShopInfor.map(a => a.img);
 
   jbhcartUserShopInfor =  cartUserShopInfor.filter((a)=>{
-    return a.designName == "jbh"
+    return a.designName == "jbh";
   })
 
   jbhcartUserImg = jbhcartUserShopInfor.map(a => a.img);
 
   jjwcartUserShopInfor =  cartUserShopInfor.filter((a)=>{
-    return a.designName == "jjw"
+    return a.designName == "jjw";
   })
   jjwcartUserImg = jjwcartUserShopInfor.map(a => a.img);
 

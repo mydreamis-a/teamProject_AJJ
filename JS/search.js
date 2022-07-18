@@ -7,7 +7,6 @@
     topCartFirstPriceSearch.setAttribute("type", "number");
     topCartFirstPriceSearch.id = "cartFirstPriceSearch";
     topCartFirstPriceSearch.classList.add("cart-search-item");
-    topCartFirstPriceSearch.innerHTML = " ~ ";
 
     let topCartSecondPriceSearch = document.createElement("input");
     topCartSecondPriceSearch.id = "cartSecondPriceSearch"
