@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>상품 이미지 슬라이드</title>
+    <style>
+        * {
+            /* box-sizing: border-box; */
+            padding: 0;
+            margin: 0;
+        }
+
+        html,
+        body {
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        [class^="section"] {
+            border: 0.3vw solid black;
+            height: 100%;
+            width: 100%;
+        }
+
+        .Ahn-slide-container,
+        .Joo-slide-container,
+        .Jang-slide-container {
+            border: 1px solid royalblue;
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+            display: flex;
+            top: 18vh;
+        }
+
+        [class $="-slide-wrap"] {
+            display: flex;
+            left: 0;
+        }
+
+        ul {
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        [class *="-img"] {
+
+            position: absolute;
+            background-color: skyblue;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        .page-number {
+            text-align: center;
+            font-weight: 900;
+            font-size: 1.5vw;
+            color: white;
+        }
+
+        .timer-wrap {
+            width: 60vw;
+            margin: 0 auto;
+        }
+
+        .Ahn-timer,
+        .Joo-timer,
+        .Jang-timer {
+            background-color: royalblue;
+            position: relative;
+            height: 0.5vh;
+            width: 0;
+            top: 18vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="section1">
+        
+    </div>
+</body>
+<script>
+    class JangListSlide {
+        constructor(classNameValue) {
+            this.index = 0;
+            this.prevIndex;
+            this.imgRow = 10;
+            this.margin = 0.5;
+            this.imgTags = [];
+            this.slideWidth = 80;
+            this.isMoving = false;
+            this.slideSecond = 5;
+            this.leftValueArr = [];
+            this._setTimeOut = null;
+            this.imgTagsLength = 40;
+            this.pageNumberTags = [];
+            this.autoPlayFn = "first";
+            this.resizeControl = null;
+            this.slideWrapTag = document.createElement('ul');
+            this.section1Tag = document.querySelector('.section1');
+            this.slideContainerTag = document.createElement('div');
+            this.imgWidth = this.slideWidth / this.imgRow - (this.margin * 2);
+            this.slideHeight = this.imgWidth + (this.margin * 2);
+            this.newTags = [];
+            // this.timerWrapTag = document.querySelector('')
+            this.init(classNameValue);
+        }
+        init(classNameValue) {
+            let _this = this;
+
+            // ㅜ 드래그, 우클릭, 블럭 방지하기
+            window.document.ondragstart = new Function("return false");
+            window.document.oncontextmenu = new Function("return false");
+            window.document.onselectstart = new Function("return false");
+
+            // ㅜ 슬라이드의 부모 태그 width와 height 설정하기
+            _this.slideContainerTag.style.height = `${_this.slideHeight}vw`;
+            _this.slideContainerTag.style.width = `${_this.slideWidth}vw`;
+            _this.section1Tag.appendChild(_this.slideContainerTag);
+            // _this.slideContainerTag.appendChild(_this.slideWrapTag);
+            _this.slideWrapTag.classList.add(`${classNameValue}-slide-wrap`);
+            _this.slideContainerTag.classList.add(`${classNameValue}-slide-container`);
+
+            // ㅜ 슬라이드의 li 태그와 span 태그 생성하기
+            for (let i = 0; i < _this.imgTagsLength; i++) {
+                _this.imgTags.push(document.createElement('li'));
+                _this.pageNumberTags.push(document.createElement('span'));
+            }
+
+            // ㅜ 태그의 width, height, margin 설정하기
+            _this.imgTags.forEach((el, idx) => {
+                el.style.margin = `${_this.margin}vw`;
+                el.style.width = `${_this.imgWidth}vw`;
+                el.style.height = `${_this.imgWidth}vw`;
+                el.style.transition = `${_this.slideSecond}s`;
+
+                // ㅜ 슬라이드의 li 태그와 span 태그 설정하기
+                _this.slideContainerTag.appendChild(el);
+                el.appendChild(_this.pageNumberTags[idx]);
+                _this.pageNumberTags[idx].innerHTML = idx + 1;
+                el.classList.add(`${classNameValue}-img${idx + 1}`);
+                _this.pageNumberTags[idx].classList.add('page-number');
+
+            })
+
+            _this.imgTags.forEach((el, idx) => {
+                el.style.left = `${idx * (_this.imgWidth + _this.margin * 2)}vw`;
+            })
+
+            // ㅜ 첫 태그와 마지막 태그를 양 끝에 복사해놓기
+            // window["copyTagFirst"] = _this.imgTags[0].cloneNode(true);
+            // window["copyTagFinal"] = _this.imgTags[_this.imgTagsLength - 1].cloneNode(true);
+            // _this.slideWrapTag.appendChild(window["copyTagFirst"]);
+            // _this.slideWrapTag.insertBefore(window["copyTagFinal"], _this.imgTags[0]);
+            // _this.imgTags = document.querySelectorAll(`[class ^= "${classNameValue}-img"]`);
+
+
+
+
+            // ㅜ 자동 슬라이드 시작하기
+            _this.autoPlay("next", classNameValue);
+
+            //     // ㅜ 마우스를 올렸을 때
+            //     _this.slideContainerTag.onmouseenter = () => {
+
+            //         clearInterval(_this._setTimeOut);
+            //         clearInterval(_this.autoPlayFn);
+
+            //         _this.imgTags[0].style.display = "none";
+            //         _this.slideWrapTag.style.transition = "";
+            //         _this.imgTags[_this.index].style.color = "";
+            //         _this.slideContainerTag.style.overflow = "visible";
+            //         _this.slideWrapTag.style.transform = `translateY(0vh)`;
+
+            //         // ㅜ 첫 번째 태그의 색상 변화시키기
+            //         _this._setTimeOut = setTimeout(() => {
+            //             _this.index = 1;
+            //             _this.imgTags[_this.index].style.color = "white";
+
+            //             // ㅜ 자동 슬라이드 시작하기
+            //             _this.autoPlayFn = null;
+            //             _this.autoPlay("not");
+            //         }, _this.slideSecond * 500);
+            //     }
+
+            //     // ㅜ 마우스가 벗어났을 때
+            //     _this.slideContainerTag.onmouseleave = () => {
+
+            //         clearInterval(_this._setTimeOut);
+            //         clearInterval(_this.autoPlayFn);
+
+            //         _this.slideWrapTag.style.transform = `translateY(-${_this.imgHeight}vh)`;
+            //         _this.imgTags[0].style.display = "block";
+            //         _this.imgTags[_this.index].style.color = "";
+            //         _this.slideContainerTag.style.overflow = "hidden";
+
+            //         _this.index = 1;
+            //         _this.autoPlayFn = "first";
+            //         _this.autoPlay("next");
+            //     }
+
+            //     // ㅜ 창의 크기가 변경될 때
+            //     window.addEventListener("resize", () => {
+
+            //         // ㅜ 트랜지션을 비롯해서 모두 초기화시키기
+            //         clearInterval(_this.resizeControl);
+            //         clearInterval(_this._setTimeOut);
+            //         clearInterval(_this.autoPlayFn);
+            //         _this.slideWrapTag.style.transition = "";
+            //         _this.imgTags.forEach((el, idx) => {
+            //             el.style.transition = "";
+            //         })
+
+            //         // ㅜ 자동 슬라이드 시작하기
+            //         _this.resizeControl = setTimeout(() => {
+            //             _this.autoPlayFn = null;
+            //             _this.autoPlay("next");
+            //         }, 10);
+            //     })
+        }
+
+        autoPlay(str, classNameValue) {
+            let _this = this;
+            if (_this.autoPlayFn === "first") {
+
+                // ㅜ 첫 화면에 첫 번째의 태그가 보이게끔 위치 조정하기
+                // _this.slideWrapTag.style.left = `${-_this.index * (_this.imgWidth + _this.margin * 2)}vw`;
+
+                // ㅜ 자동 슬라이드 시작하기
+                _this.autoPlayFn = null;
+                _this.autoPlay(str, classNameValue);
+            }
+            else if (_this.autoPlayFn === null) {
+                _this.autoPlayFn = setInterval(() => {
+
+                    // ㅜ 트랜지션이 끝나면 자동 슬라이드 시작하기
+                    if (_this.isMoving === false) {
+                        _this.move(str, classNameValue);
+                    }
+                }, 0);
+            }
+        }
+        move(str, classNameValue) {
+            let _this = this;
+            _this.isMoving = true;
+            if (str === "next") {
+                // _this.imgTags.forEach((el, idx, arr) => {
+                //     el.style.transition = `${_this.slideSecond}s linear`;
+
+                //     // ㅜ 다음 태그로 이동하기
+                //     let currentLeft = el.style.left.slice(0, -2);
+                //     el.style.left = `${currentLeft - (_this.imgWidth + _this.margin * 2)}vw`;
+
+                //     // ㅜ 트랜지션이 끝난 이전 태그는 복사 후 맨 뒤로 보내주고 나서 삭제하기
+                //     if (idx === _this.index) {
+                //         _this._setTimeOut = setTimeout(() => {
+                //             const newCopyTag = el.cloneNode(true);
+                //             newCopyTag.style.transition = "";
+                //             _this.slideContainerTag.appendChild(newCopyTag);
+                            
+                //                 el.remove();
+                //             console.log(((arr.length-1) * (_this.imgWidth + _this.margin * 2)));
+                //                 newCopyTag.style.left = `${((arr.length-1) * (_this.imgWidth + _this.margin * 2))}vw`;
+                                
+                //                 _this.newTags.push(newCopyTag);
+                //                 _this.newTags.forEach((_el) => {
+                //                     currentLeft = _el.style.left.slice(0, -2);
+                //                     _el.style.left = `${currentLeft - (_this.imgWidth + _this.margin * 2)}vw`;
+                //                 })
+                //                 console.log("idx: "+idx+el.style.left);
+                //             // newCopyTag.style.left = `${((arr.length - 1) * (_this.imgWidth + _this.margin * 2)) *(_this.index + 1)}vw`;
+                //             // newCopyTag.style.left = `${newCopyTag.style.left.slice(0, -2) - (_this.imgWidth + _this.margin * 2)}vw`;
+                //             if (_this.newTags.length === 5) {
+
+                //                 _this.index = 0;
+                //                 _this.imgTags = _this.newTags;
+                //                 _this.newTags = [];
+                //             }
+                //             else _this.index++;
+                //             _this.isMoving = false;
+                //         }, _this.slideSecond * 1000);
+                //     }
+                // })
+         
+                _this.imgTags.forEach((el, idx) => {
+                    el.style.transition = `${_this.slideSecond}s linear`;
+
+                    // ㅜ 다음 태그로 이동하기
+                    const currentLeft = el.style.left.slice(0, -2);
+                    el.style.left = `${currentLeft - (_this.imgWidth + _this.margin * 2)}vw`;
+
+                    // ㅜ 트랜지션이 끝나면 이전 태그를 맨 뒤로 보내주기
+                    if (idx === _this.index) {
+                        _this._setTimeOut = setTimeout(() => {
+                            el.style.transition = "";
+
+                            _this._setTimeOut = setTimeout(() => {
+                                if (_this.index >= _this.imgTagsLength - 1) _this.index = 0;
+                                else _this.index++;
+
+                                el.style.left = `${(_this.imgTagsLength - 1) * (_this.imgWidth + _this.margin * 2)}vw`;
+                                _this.isMoving = false;
+                            }, 100);
+                        }, _this.slideSecond * 1000);
+                    }
+                })
+            }
+        }
+        pxToVw(value) {
+            const bodyWidth = document.body.offsetWidth;
+            return (value / bodyWidth * 100);
+        }
+    }
+
+    let _JangSlide = new JangListSlide("Jang");
+
+
+</script>
+
+</html>
