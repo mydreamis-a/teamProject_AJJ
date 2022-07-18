@@ -10,43 +10,42 @@ function productData() {
 
 (async () => {
   await productData().then((result) => {
-    const productData = { ...result };
+    const productData = [...result];
 
     for (const key in productData) {
       if (Object.hasOwnProperty.call(productData, key)) {
 
-          let AhnProduct = productData[key].filter((el) => el.designName == "ajy");
-          console.log(AhnProduct);
-          productName.push(temp.productName);
-          price.push(temp.price);
-          imgUrl.push(temp.imgUrl);
+        const AhnProduct = productData.filter((el) => el.designName === "ajy");
+        const JuProduct = productData.filter((el) => el.designName === "jbh");
+        const JangProduct = productData.filter((el) => el.designName === "jjw");
       }
-  }
+    }
+  })
 })();
 
 
-//     jbhcartUserShopInfor = cartUserShopInfor.filter((a) => {
+//     jbhwhosProduct = whosProduct.filter((a) => {
 //       return a.designName == "jbh"
 //     })
 
 //     // cartFirstPriceSearch = document.getElementById("cartFirstPriceSearch").value;
 //     // cartSecondPriceSearch = document.getElementById("cartSecondPriceSearch").value;
 
-//     cartUserSearchPriceInfor = jbhcartUserShopInfor.filter(function (data) {
+//     cartUserSearchPriceInfor = jbhwhosProduct.filter(function (data) {
 //       return cartFirstPriceSearch.value <= data.price && cartSecondPriceSearch.value >= data.price
 //     })
 //     cartUserSearchPriceInfor.sort((a, b) => {
 //       return a.price - b.price;
 //     })
-//     cartInput(cartUserSearchPriceInfor);
+//     _productListTags(cartUserSearchPriceInfor);
 //     cartListAppendJbh(cartUserSearchPriceInfor);
 //   })
 
 //   cartUserSearchPriceInfor = 0;
 
-//   shopCap().then((cartUserShopInfor) => {
+//   productData().then((whosProduct) => {
 
-//     jjwcartUserShopInfor = cartUserShopInfor.filter((a) => {
+//     jjwwhosProduct = whosProduct.filter((a) => {
 //       return a.designName == "jjw"
 //     })
 //     while (document.querySelector("#jjw-search-list-container").hasChildNodes()) {
@@ -56,21 +55,21 @@ function productData() {
 //     // cartFirstPriceSearch = document.getElementById("cartFirstPriceSearch").value;
 //     // cartSecondPriceSearch = document.getElementById("cartSecondPriceSearch").value;
 
-//     cartUserSearchPriceInfor = jjwcartUserShopInfor.filter(function (data) {
+//     cartUserSearchPriceInfor = jjwwhosProduct.filter(function (data) {
 //       return cartFirstPriceSearch.value <= data.price && cartSecondPriceSearch.value >= data.price
 //     })
 //     cartUserSearchPriceInfor.sort((a, b) => {
 //       return a.price - b.price;
 //     })
-//     cartInput(cartUserSearchPriceInfor);
+//     _productListTags(cartUserSearchPriceInfor);
 //     cartListAppendJjw(cartUserSearchPriceInfor);
 //   })
 //   cartUserSearchPriceInfor = 0;
 
 
-//   shopCap().then((cartUserShopInfor) => {
+//   productData().then((whosProduct) => {
 
-//     ajycartUserShopInfor = cartUserShopInfor.filter((a) => {
+//     ajywhosProduct = whosProduct.filter((a) => {
 //       return a.designName == "ajy"
 //     })
 //     while (document.querySelector("#ajy-search-list-container").hasChildNodes()) {
@@ -80,24 +79,24 @@ function productData() {
 //     // cartFirstPriceSearch = document.getElementById("cartFirstPriceSearch").value;
 //     // cartSecondPriceSearch = document.getElementById("cartSecondPriceSearch").value;
 
-//     cartUserSearchPriceInfor = ajycartUserShopInfor.filter(function (data) {
+//     cartUserSearchPriceInfor = ajywhosProduct.filter(function (data) {
 //       return cartFirstPriceSearch.value <= data.price && cartSecondPriceSearch.value >= data.price
 //     })
 //     cartUserSearchPriceInfor.sort((a, b) => {
 //       return a.price - b.price;
 //     })
-//     cartInput(cartUserSearchPriceInfor);
+//     _productListTags(cartUserSearchPriceInfor);
 //     cartListAppendAjy(cartUserSearchPriceInfor);
 //   })
 // })
 
 
 //주병현 숖 홈페이지
-let jbhcartUserShopInfor;
+let jbhwhosProduct;
 //장지원 숖 홈페이지
-let jjwcartUserShopInfor;
+let jjwwhosProduct;
 //안주영 숖 홈페이지
-let ajycartUserShopInfor;
+let ajywhosProduct;
 
 
 const showCount = 20;
@@ -116,8 +115,8 @@ let cartShowListCountajy = showCount;
 let cartNewProductInfor;
 
 // ㅜ 상품 목록의 전체 태그 배열
-const productList = ["cartListCol", "cartContainer", "cartPicture", "cartFirstText", "cartPicHover", "cartBody", "cartName", "cartSecondText", "cartBtnContainer", "cartBtnGroup", "cartBtnGetList", "cartBtnShowList"];
-productList.forEach((el) => {
+const productListTags = ["cartListCol", "cartContainer", "cartPicture", "cartFirstText", "cartPicHover", "cartBody", "cartName", "cartSecondText", "cartBtnContainer", "cartBtnGroup", "cartBtnGetList", "cartBtnShowList"];
+productListTags.forEach((el) => {
   window[el] = new Array();
 })
 
@@ -127,15 +126,15 @@ let cartCurrentBuyListCount = 0;
 //유저가 선택한 장바구니 배열선언(왜? 총합을 구할거기 때문에. 게다가 빼야할때도 있기 때문)
 
 // ㅜ 장바구니 목록의 태그 배열
-let cartUserListPriceReal = 0;
-const shoppingBasket = ["cartUserListPriceReal", "cartUserListPrice", "cartBuyListCol", "cartBuyContainer", "cartBuyPicture", "cartBuyFirstText", "cartBuyPicHover", "cartBuyBody", "cartBuyName", "cartBuySecondText", "cartBuyBtnContainer", "cartBuyBtnGroup", "cartBuyDeleteBtn", "cartBuyBtnShowList", "cartListPText"];
-shoppingBasket.forEach((el) => {
+let shoppingBasketPriceResult = 0;
+const shoppingBasketTags = ["shoppingBasketPrice", "cartBuyListCol", "cartBuyContainer", "cartBuyPicture", "cartBuyFirstText", "cartBuyPicHover", "cartBuyBody", "cartBuyName", "cartBuySecondText", "cartBuyBtnContainer", "cartBuyBtnGroup", "cartBuyDeleteBtn", "cartBuyBtnShowList", "cartListPText"];
+shoppingBasketTags.forEach((el) => {
   window[el] = new Array();
 })
 
 // 상품 목록의 배열 초기화에 대한 함수 정의
 function resetProductList() {
-  productList.forEach((el) => {
+  productListTags.forEach((el) => {
     window[el] = new Array();
   })
 }
@@ -146,7 +145,7 @@ function resetProductList() {
 //가격검색 제이슨 임시 변수
 let cartUserSearchPriceInfor;
 //상품검색 제이슨 임시 변수
-let cartUserShopInforSearch;
+let whosProductSearch;
 
 //최근검색어의 부모태그를 만들어줌
 let cartSearchLink = new Array();
@@ -156,7 +155,7 @@ let cartSearchTextLast = new Array();
 let cartSearchFirst = 0;
 
 //장바구니 카운트
-let cartListResult = 0;
+let shoppingBasketIdx = 0;
 
 //모달 변수
 let cartModal = document.querySelector('.cart-modal');
@@ -174,9 +173,9 @@ let btnCartList = document.querySelector('.cart-btn-cart-list');
 // ㅜ 더보기 버튼 모음
 const btns = ["cartMoreShowBtnajy", "cartMoreShowBtnjbh", "cartMoreShowBtnjjw"];
 btns.forEach((el) => {
-  el = document.createElement("input");
-  el.setAttribute("type", "button");
-  el.setAttribute("value", "더보기");
+  window[el] = document.createElement("input");
+  window[el].setAttribute("type", "button");
+  window[el].setAttribute("value", "더보기");
 })
 
 //유저의 총 합계금액 구하기 위해 필요한 태그 생성
@@ -184,131 +183,135 @@ let cartListSum = document.createElement("div");
 cartListSum.classList.add("cart-list-sum");
 let cartSumPrice = document.createElement("p");
 cartSumPrice.classList.add("cart-sum-price");
-cartSumPrice.innerHTML = "총 합계금액" + cartUserListPriceReal;
+cartSumPrice.innerHTML = "총 합계금액" + shoppingBasketPriceResult;
 
 let cartNumberCount = 0;
 document.querySelector(".wrapper").style.visibility = "hidden"
 document.querySelector(".cart-search-text-body").style.visibility = "hidden";
 
-function cartInput(cartUserShopInfor) {
+// ㅜ 상품 목록의 데이터를 불러와서 html상의 태그로 보여주는 함수
+function _productListTags(whosProduct) {
 
   resetProductList();
 
-  for (const key in cartUserShopInfor) {
-    cartListCol[key] = document.createElement("div");
-    cartListCol[key].classList.add("cart-listCol");
+  for (const key in whosProduct) {
+    if (Object.hasOwnProperty.call(whosProduct, key)) {
 
-    cartContainer[key] = document.createElement("div");
-    cartContainer[key].classList.add("cart-container");
+      cartListCol[key] = document.createElement("div");
+      cartListCol[key].classList.add("cart-listCol");
 
-    cartPicture[key] = document.createElement("div");
-    cartPicture[key].classList.add("cart-pic");
-    cartPicture[key].style.backgroundImage = cartUserShopInfor[key].img;
+      cartContainer[key] = document.createElement("div");
+      cartContainer[key].classList.add("cart-container");
 
-    cartFirstText[key] = document.createElement("div");
-    cartFirstText[key].classList.add("cart-div-text");
+      cartPicture[key] = document.createElement("div");
+      cartPicture[key].classList.add("cart-pic");
+      cartPicture[key].style.backgroundImage = whosProduct[key].img;
 
-    cartPicHover[key] = document.createElement("p");
-    cartPicHover[key].classList.add("cart-pic-bicHover");
-    cartPicHover[key].innerHTML = "사진 크게보기";
+      cartFirstText[key] = document.createElement("div");
+      cartFirstText[key].classList.add("cart-div-text");
 
-    cartBody[key] = document.createElement("div");
-    cartBody[key].classList.add("cart-body");
+      cartPicHover[key] = document.createElement("p");
+      cartPicHover[key].classList.add("cart-pic-bicHover");
+      cartPicHover[key].innerHTML = "사진 크게보기";
 
-    cartName[key] = document.createElement("p");
-    cartName[key].classList.add("cart-name");
-    cartName[key].innerHTML = cartUserShopInfor[key].name;
-    cartSecondText[key] = document.createElement("p");
-    cartSecondText[key].classList.add("cart-text");
-    cartSecondText[key].innerHTML = cartUserShopInfor[key].price + "원";
+      cartBody[key] = document.createElement("div");
+      cartBody[key].classList.add("cart-body");
 
-    cartBtnContainer[key] = document.createElement("div");
-    cartBtnContainer[key].classList.add("cart-btn-container");
+      cartName[key] = document.createElement("p");
+      cartName[key].classList.add("cart-name");
+      cartName[key].innerHTML = whosProduct[key].name;
+      cartSecondText[key] = document.createElement("p");
+      cartSecondText[key].classList.add("cart-text");
+      cartSecondText[key].innerHTML = whosProduct[key].price + "원";
 
-    cartBtnGroup[key] = document.createElement("div");
-    cartBtnGroup[key].classList.add("cart-btn-group");
+      cartBtnContainer[key] = document.createElement("div");
+      cartBtnContainer[key].classList.add("cart-btn-container");
 
-    cartBtnGetList[key] = document.createElement("input");
-    cartBtnGetList[key].setAttribute("type", "button");
-    cartBtnGetList[key].setAttribute("value", "장바구니에 담기");
-    cartBtnGetList[key].classList.add("cart-btn");
-    cartBtnGetList[key].id = "cartBtnGetList" + [key];
-    cartBtnShowList[key] = document.createElement("input");
-    cartBtnShowList[key].setAttribute("type", "button");
-    cartBtnShowList[key].setAttribute("value", "상품 보기");
-    cartBtnShowList[key].classList.add("cart-btn");
-    cartBtnShowList[key].id = "cartBtnShowList" + [key];
+      cartBtnGroup[key] = document.createElement("div");
+      cartBtnGroup[key].classList.add("cart-btn-group");
 
-    //각각의 장바구니 버튼을 눌렀을때
-    cartBtnGetList[key].addEventListener("click", function () {
+      cartBtnGetList[key] = document.createElement("input");
+      cartBtnGetList[key].setAttribute("type", "button");
+      cartBtnGetList[key].setAttribute("value", "장바구니에 담기");
+      cartBtnGetList[key].classList.add("cart-btn");
+      cartBtnGetList[key].id = "cartBtnGetList" + [key];
+      cartBtnShowList[key] = document.createElement("input");
+      cartBtnShowList[key].setAttribute("type", "button");
+      cartBtnShowList[key].setAttribute("value", "상품 보기");
+      cartBtnShowList[key].classList.add("cart-btn");
+      cartBtnShowList[key].id = "cartBtnShowList" + [key];
 
-      if (cartNumberCount == 0) {
-        document.querySelector(".wrapper").style.visibility = "";
-      }
+      // ㅜ 장바구니에 담기 버튼을 클릭했을 때
+      cartBtnGetList[key].addEventListener("click", () => {
+        const idx = shoppingBasketIdx;
+        if (cartNumberCount === 0) {
+          document.querySelector(".wrapper").style.visibility = "";
+        }
 
-      cartBuyListCol[cartListResult] = document.createElement("div");
-      cartBuyListCol[cartListResult].classList.add("cart-listCol");
+        cartBuyListCol[idx] = document.createElement("div");
+        cartBuyListCol[idx].classList.add("cart-listCol");
 
-      cartBuyContainer[cartListResult] = document.createElement("div");
-      cartBuyContainer[cartListResult].classList.add("cart-container");
+        cartBuyContainer[idx] = document.createElement("div");
+        cartBuyContainer[idx].classList.add("cart-container");
 
-      cartBuyPicture[cartListResult] = document.createElement("div");
-      cartBuyPicture[cartListResult].classList.add("cart-pic");
-      cartBuyPicture[cartListResult].style.backgroundImage = cartUserShopInfor[key].img;
+        cartBuyPicture[idx] = document.createElement("div");
+        cartBuyPicture[idx].classList.add("cart-pic");
+        cartBuyPicture[idx].style.backgroundImage = whosProduct[key].img;
 
-      cartBuyFirstText[cartListResult] = document.createElement("div");
-      cartBuyFirstText[cartListResult].classList.add("cart-div-text");
+        cartBuyFirstText[idx] = document.createElement("div");
+        cartBuyFirstText[idx].classList.add("cart-div-text");
 
-      cartBuyPicHover[cartListResult] = document.createElement("p");
-      cartBuyPicHover[cartListResult].classList.add("cart-pic-bicHover");
-      cartBuyPicHover[cartListResult].innerHTML = "사진 크게보기";
+        cartBuyPicHover[idx] = document.createElement("p");
+        cartBuyPicHover[idx].classList.add("cart-pic-bicHover");
+        cartBuyPicHover[idx].innerHTML = "사진 크게보기";
 
-      cartBuyBody[cartListResult] = document.createElement("div");
-      cartBuyBody[cartListResult].classList.add("cart-body");
+        cartBuyBody[idx] = document.createElement("div");
+        cartBuyBody[idx].classList.add("cart-body");
 
-      cartBuyName[cartListResult] = document.createElement("p");
-      cartBuyName[cartListResult].classList.add("cart-name");
-      cartBuyName[cartListResult].innerHTML = cartUserShopInfor[key].name;
+        cartBuyName[idx] = document.createElement("p");
+        cartBuyName[idx].classList.add("cart-name");
+        cartBuyName[idx].innerHTML = whosProduct[key].name;
 
-      cartBuySecondText[cartListResult] = document.createElement("p");
-      cartBuySecondText[cartListResult].classList.add("cart-text");
-      cartBuySecondText[cartListResult].innerHTML = cartUserShopInfor[key].price + "원";
+        cartBuySecondText[idx] = document.createElement("p");
+        cartBuySecondText[idx].classList.add("cart-text");
+        cartBuySecondText[idx].innerHTML = whosProduct[key].price + "원";
 
-      cartBuyBtnContainer[cartListResult] = document.createElement("div");
-      cartBuyBtnContainer[cartListResult].classList.add("cart-btn-container");
+        cartBuyBtnContainer[idx] = document.createElement("div");
+        cartBuyBtnContainer[idx].classList.add("cart-btn-container");
 
-      cartBuyBtnGroup[cartListResult] = document.createElement("div");
-      cartBuyBtnGroup[cartListResult].classList.add("cart-btn-group");
+        cartBuyBtnGroup[idx] = document.createElement("div");
+        cartBuyBtnGroup[idx].classList.add("cart-btn-group");
 
-      cartBuyDeleteBtn[cartListResult] = document.createElement("input");
-      cartBuyDeleteBtn[cartListResult].setAttribute("type", "button");
-      cartBuyDeleteBtn[cartListResult].setAttribute("value", "삭제하기");
-      cartBuyDeleteBtn[cartListResult].classList.add("cart-btn");
-      cartBuyDeleteBtn[cartListResult].id = "cartBuyDeleteBtn" + [cartListResult];
+        cartBuyDeleteBtn[idx] = document.createElement("input");
+        cartBuyDeleteBtn[idx].setAttribute("type", "button");
+        cartBuyDeleteBtn[idx].setAttribute("value", "삭제하기");
+        cartBuyDeleteBtn[idx].classList.add("cart-btn");
+        cartBuyDeleteBtn[idx].id = "cartBuyDeleteBtn" + [idx];
 
-      cartBuyBtnShowList[cartListResult] = document.createElement("input");
-      cartBuyBtnShowList[cartListResult].setAttribute("type", "button");
-      cartBuyBtnShowList[cartListResult].setAttribute("value", "자세한 상품 보기");
-      cartBuyBtnShowList[cartListResult].classList.add("cart-btn");
+        cartBuyBtnShowList[idx] = document.createElement("input");
+        cartBuyBtnShowList[idx].setAttribute("type", "button");
+        cartBuyBtnShowList[idx].setAttribute("value", "자세한 상품 보기");
+        cartBuyBtnShowList[idx].classList.add("cart-btn");
 
-      cartListPText[cartListResult] = document.createElement("p");
-      cartListPText[cartListResult].classList.add("cart-list-p-text");
-      cartListPText[cartListResult].innerHTML = cartUserShopInfor[key].name + ",";
-      cartListPText[cartListResult].id = "cartListPText" + [cartListResult];
+        cartListPText[idx] = document.createElement("p");
+        cartListPText[idx].classList.add("cart-list-p-text");
+        cartListPText[idx].innerHTML = whosProduct[key].name + ",";
+        cartListPText[idx].id = "cartListPText" + [idx];
 
-      cartUserListPrice[cartListResult] = cartUserShopInfor[key].price;
-      document.querySelector(".cart-list-text").appendChild(cartListPText[cartListResult]);
-      cartListPText[cartListResult].style.visibility = "hidden";
-      cartNumberCount++;
-      cartListResult++;
-      document.querySelector(".circleNumber").innerHTML = cartNumberCount;
-    })
+        shoppingBasketPrice[idx] = whosProduct[key].price;
+        document.querySelector(".cart-list-text").appendChild(cartListPText[idx]);
+        cartListPText[idx].style.visibility = "hidden";
+        cartNumberCount++;
+        shoppingBasketIdx++;
+        document.querySelector(".circleNumber").innerHTML = cartNumberCount;
+      })
+    }
   }
 }
 
 //속성과 값을 가진 태그들을 쏴주는거
-function cartListAppendJbh(jbhcartUserShopInfor) {
-  while (cartCurrentListCountjbh < jbhcartUserShopInfor.length) {
+function cartListAppendJbh(jbhwhosProduct) {
+  while (cartCurrentListCountjbh < jbhwhosProduct.length) {
     let cartListIndex = cartCurrentListCountjbh;
     cartSearchListContainer.appendChild(cartListCol[cartListIndex]);
     cartListCol[cartListIndex].appendChild(cartContainer[cartListIndex]);
@@ -325,7 +328,7 @@ function cartListAppendJbh(jbhcartUserShopInfor) {
     cartCurrentListCountjbh++
     if (cartCurrentListCountjbh == cartShowListCountjbh) {
       cartSearchListContainer.after(cartMoreShowBtnjbh);
-      if (cartCurrentListCountjbh == jbhcartUserShopInfor.length) {
+      if (cartCurrentListCountjbh == jbhwhosProduct.length) {
         cartMoreShowBtnjbh.remove();
       }
       break;
@@ -334,15 +337,15 @@ function cartListAppendJbh(jbhcartUserShopInfor) {
 }
 
 //초기 상품목록 더보기 버튼을 눌렀을때
-cartMoreShowBtnjbh.addEventListener("click", function () {
+cartMoreShowBtnjbh.addEventListener("click", () => {
   cartShowListCountjbh += showCount;
-  cartInput(jbhcartUserShopInfor)
-  cartListAppendJbh(jbhcartUserShopInfor);
+  _productListTags(jbhwhosProduct)
+  cartListAppendJbh(jbhwhosProduct);
 })
 
 //속성과 값을 가진 태그들을 쏴주는거
-function cartListAppendAjy(ajycartUserShopInfor) {
-  while (cartCurrentListCountajy < ajycartUserShopInfor.length) {
+function cartListAppendAjy(ajywhosProduct) {
+  while (cartCurrentListCountajy < ajywhosProduct.length) {
     let cartListIndex = cartCurrentListCountajy;
     document.querySelector("#ajy-search-list-container").appendChild(cartListCol[cartListIndex]);
     cartListCol[cartListIndex].appendChild(cartContainer[cartListIndex]);
@@ -361,24 +364,24 @@ function cartListAppendAjy(ajycartUserShopInfor) {
       document.querySelector("#ajy-search-list-container").after(cartMoreShowBtnajy);
       break;
     }
-    if (cartCurrentListCountajy == ajycartUserShopInfor.length) {
+    if (cartCurrentListCountajy == ajywhosProduct.length) {
       cartMoreShowBtnajy.remove();
     }
   }
 }
 
 //초기 상품목록 더보기 버튼을 눌렀을때
-cartMoreShowBtnajy.addEventListener("click", function () {
+cartMoreShowBtnajy.addEventListener("click", () => {
   cartShowListCountajy += showCount;
-  cartInput(ajycartUserShopInfor)
-  cartListAppendAjy(ajycartUserShopInfor);
+  _productListTags(ajywhosProduct)
+  cartListAppendAjy(ajywhosProduct);
   //80개가 다 됐을때 더보기 버튼 삭제
 })
 
 
 //속성과 값을 가진 태그들을 쏴주는거
-function cartListAppendJjw(jjwcartUserShopInfor) {
-  while (cartCurrentListCountjjw < jjwcartUserShopInfor.length) {
+function cartListAppendJjw(jjwwhosProduct) {
+  while (cartCurrentListCountjjw < jjwwhosProduct.length) {
     let cartListIndex = cartCurrentListCountjjw;
     document.querySelector("#jjw-search-list-container").appendChild(cartListCol[cartListIndex]);
     cartListCol[cartListIndex].appendChild(cartContainer[cartListIndex]);
@@ -405,28 +408,27 @@ function cartListAppendJjw(jjwcartUserShopInfor) {
       document.querySelector("#jjw-search-list-container").after(cartMoreShowBtnjjw);
       break;
     }
-    if (cartCurrentListCountjjw == jjwcartUserShopInfor.length) {
+    if (cartCurrentListCountjjw == jjwwhosProduct.length) {
       cartMoreShowBtnjjw.remove();
     }
   }
 }
 //초기 상품목록 더보기 버튼을 눌렀을때
-cartMoreShowBtnjjw.addEventListener("click", function () {
+cartMoreShowBtnjjw.addEventListener("click", () => {
   cartShowListCountjjw += showCount;
-  cartInput(jjwcartUserShopInfor);
-  cartListAppendJjw(jjwcartUserShopInfor);
+  _productListTags(jjwwhosProduct);
+  cartListAppendJjw(jjwwhosProduct);
 })
 
 
-//장바구니 버튼을 눌렀을때
-
-document.querySelector(".shopping-icon").addEventListener("click", function () {
-
+// ㅜ 장바구니 모달 창
+document.querySelector(".shopping-icon").addEventListener("click", () => {
   cartModal.style.display = 'block';
 
-  cartUserListPriceReal = cartUserListPrice.filter(a => a > 0).reduce((a, b) => a + b, 0)
+  shoppingBasketPriceResult = shoppingBasketPrice.filter(a => a > 0).reduce((a, b) => a + b);
+  console.log(typeof shoppingBasketPriceResult);
   //장바구니 총 합계금액
-  cartSumPrice.innerHTML = "총 합계금액" + cartUserListPriceReal;
+  cartSumPrice.innerHTML = "총 합계금액" + shoppingBasketPriceResult;
   //배열에 담긴 태그와 태그 속성값들을 쏴준다
   while (cartCurrentBuyListCount < cartBuyListCol.length) {
     let btnCartListIndex = cartCurrentBuyListCount;
@@ -445,18 +447,22 @@ document.querySelector(".shopping-icon").addEventListener("click", function () {
     cartCurrentBuyListCount++;
 
     //삭제하기 버튼을 눌렀을때
-    cartBuyDeleteBtn[btnCartListIndex].addEventListener("click", function () {
+    cartBuyDeleteBtn[btnCartListIndex].addEventListener("click", () => {
 
-      cartUserListPriceReal = cartUserListPriceReal - cartUserListPrice[btnCartListIndex];
-      cartUserListPrice.splice(btnCartListIndex, 1);
-
+      shoppingBasketPrice.forEach((el) => { console.log("el: "+el); })
+      console.log("result: "+shoppingBasketPriceResult);
+      shoppingBasketPriceResult = shoppingBasketPriceResult - shoppingBasketPrice[btnCartListIndex];
+      shoppingBasketPrice.splice(btnCartListIndex, 1);
+      shoppingBasketPrice.forEach((el) => { console.log("el: "+el); })
+      console.log("result: "+shoppingBasketPriceResult);
+      
       //장바구니 총 합계금액
-      cartSumPrice.innerHTML = "총 합계금액" + cartUserListPriceReal;
+      cartSumPrice.innerHTML = "총 합계금액" + shoppingBasketPriceResult;
       cartBuyListRow.after(cartListSum);
       cartListSum.appendChild(cartSumPrice);
       document.querySelector("#cart-Buy-list-row").removeChild(cartBuyListCol[btnCartListIndex]);
       cartListPText.splice(cartListPText[btnCartListIndex], 1);
-      document.querySelector(".cart-list-text").removeChild(document.getElementById("cartListPText" + [btnCartListIndex]));
+      document.querySelector(".cart-list-text").removeChild(document.querySelector(".cartListPText" + [btnCartListIndex]));
       cartNumberCount = cartNumberCount - 1;
       document.querySelector(".circleNumber").innerHTML = cartNumberCount;
     })
@@ -465,13 +471,13 @@ document.querySelector(".shopping-icon").addEventListener("click", function () {
   cartListSum.appendChild(cartSumPrice);
 })
 //모달 안에 장바구니 주문을 취소했을때
-cartListOut.addEventListener("click", function () {
+cartListOut.addEventListener("click", () => {
   cartModal.style.display = 'none';
 })
 
 
 //가격검색버튼을 눌렀을때
-cartSearchBtn.addEventListener("click", function () {
+cartSearchBtn.addEventListener("click", () => {
   cartCurrentListCountjbh = 0;
   cartShowListCountjbh = showCount;
   cartCurrentListCountjjw = 0;
@@ -483,30 +489,30 @@ cartSearchBtn.addEventListener("click", function () {
     cartSearchListContainer.removeChild(cartSearchListContainer.firstChild);
   }
 
-  shopCap().then((cartUserShopInfor) => {
+  productData().then((whosProduct) => {
 
-    jbhcartUserShopInfor = cartUserShopInfor.filter((a) => {
+    jbhwhosProduct = whosProduct.filter((a) => {
       return a.designName == "jbh"
     })
 
     // cartFirstPriceSearch = document.getElementById("cartFirstPriceSearch").value;
     // cartSecondPriceSearch = document.getElementById("cartSecondPriceSearch").value;
 
-    cartUserSearchPriceInfor = jbhcartUserShopInfor.filter(function (data) {
+    cartUserSearchPriceInfor = jbhwhosProduct.filter(function (data) {
       return cartFirstPriceSearch.value <= data.price && cartSecondPriceSearch.value >= data.price
     })
     cartUserSearchPriceInfor.sort((a, b) => {
       return a.price - b.price;
     })
-    cartInput(cartUserSearchPriceInfor);
+    _productListTags(cartUserSearchPriceInfor);
     cartListAppendJbh(cartUserSearchPriceInfor);
   })
 
   cartUserSearchPriceInfor = 0;
 
-  shopCap().then((cartUserShopInfor) => {
+  productData().then((whosProduct) => {
 
-    jjwcartUserShopInfor = cartUserShopInfor.filter((a) => {
+    jjwwhosProduct = whosProduct.filter((a) => {
       return a.designName == "jjw"
     })
     while (document.querySelector("#jjw-search-list-container").hasChildNodes()) {
@@ -516,21 +522,21 @@ cartSearchBtn.addEventListener("click", function () {
     // cartFirstPriceSearch = document.getElementById("cartFirstPriceSearch").value;
     // cartSecondPriceSearch = document.getElementById("cartSecondPriceSearch").value;
 
-    cartUserSearchPriceInfor = jjwcartUserShopInfor.filter(function (data) {
+    cartUserSearchPriceInfor = jjwwhosProduct.filter(function (data) {
       return cartFirstPriceSearch.value <= data.price && cartSecondPriceSearch.value >= data.price
     })
     cartUserSearchPriceInfor.sort((a, b) => {
       return a.price - b.price;
     })
-    cartInput(cartUserSearchPriceInfor);
+    _productListTags(cartUserSearchPriceInfor);
     cartListAppendJjw(cartUserSearchPriceInfor);
   })
   cartUserSearchPriceInfor = 0;
 
 
-  shopCap().then((cartUserShopInfor) => {
+  productData().then((whosProduct) => {
 
-    ajycartUserShopInfor = cartUserShopInfor.filter((a) => {
+    ajywhosProduct = whosProduct.filter((a) => {
       return a.designName == "ajy"
     })
     while (document.querySelector("#ajy-search-list-container").hasChildNodes()) {
@@ -540,19 +546,19 @@ cartSearchBtn.addEventListener("click", function () {
     // cartFirstPriceSearch = document.getElementById("cartFirstPriceSearch").value;
     // cartSecondPriceSearch = document.getElementById("cartSecondPriceSearch").value;
 
-    cartUserSearchPriceInfor = ajycartUserShopInfor.filter(function (data) {
+    cartUserSearchPriceInfor = ajywhosProduct.filter(function (data) {
       return cartFirstPriceSearch.value <= data.price && cartSecondPriceSearch.value >= data.price
     })
     cartUserSearchPriceInfor.sort((a, b) => {
       return a.price - b.price;
     })
-    cartInput(cartUserSearchPriceInfor);
+    _productListTags(cartUserSearchPriceInfor);
     cartListAppendAjy(cartUserSearchPriceInfor);
   })
 })
 
 //낮은 가격순 눌렀을때
-cartRowSearchPrice.addEventListener("click", function () {
+cartRowSearchPrice.addEventListener("click", () => {
   cartCurrentListCountjbh = 0;
   cartShowListCountjbh = showCount;
   cartCurrentListCountjjw = 0;
@@ -563,55 +569,55 @@ cartRowSearchPrice.addEventListener("click", function () {
     cartSearchListContainer.removeChild(cartSearchListContainer.firstChild);
   }
 
-  shopCap().then((cartUserShopInfor) => {
+  productData().then((whosProduct) => {
 
-    jbhcartUserShopInfor = cartUserShopInfor.filter((a) => {
+    jbhwhosProduct = whosProduct.filter((a) => {
       return a.designName == "jbh"
     })
 
-    jbhcartUserShopInfor.sort(function (a, b) {
+    jbhwhosProduct.sort(function (a, b) {
       return a.price - b.price;
     });
-    cartInput(jbhcartUserShopInfor)
-    cartListAppendJbh(jbhcartUserShopInfor)
+    _productListTags(jbhwhosProduct)
+    cartListAppendJbh(jbhwhosProduct)
   })
 
 
   while (cartSearchListContainer.hasChildNodes()) {
     cartSearchListContainer.removeChild(cartSearchListContainer.firstChild);
   }
-  shopCap().then((cartUserShopInfor) => {
+  productData().then((whosProduct) => {
 
-    jjwcartUserShopInfor = cartUserShopInfor.filter((a) => {
+    jjwwhosProduct = whosProduct.filter((a) => {
       return a.designName == "jjw"
     })
 
-    jjwcartUserShopInfor.sort(function (a, b) {
+    jjwwhosProduct.sort(function (a, b) {
       return a.price - b.price;
     });
-    cartInput(jjwcartUserShopInfor)
-    cartListAppendJjw(jjwcartUserShopInfor)
+    _productListTags(jjwwhosProduct)
+    cartListAppendJjw(jjwwhosProduct)
   })
 
   while (cartSearchListContainer.hasChildNodes()) {
     cartSearchListContainer.removeChild(cartSearchListContainer.firstChild);
   }
-  shopCap().then((cartUserShopInfor) => {
+  productData().then((whosProduct) => {
 
-    ajycartUserShopInfor = cartUserShopInfor.filter((a) => {
+    ajywhosProduct = whosProduct.filter((a) => {
       return a.designName == "ajy"
     })
 
-    ajycartUserShopInfor.sort(function (a, b) {
+    ajywhosProduct.sort(function (a, b) {
       return a.price - b.price;
     });
-    cartInput(ajycartUserShopInfor)
-    cartListAppendAjy(ajycartUserShopInfor)
+    _productListTags(ajywhosProduct)
+    cartListAppendAjy(ajywhosProduct)
   })
 })
 
 //높은 가격순 눌렀을때
-cartHighSearchPrice.addEventListener("click", function () {
+cartHighSearchPrice.addEventListener("click", () => {
 
   cartCurrentListCountjbh = 0;
   cartShowListCountjbh = showCount;
@@ -622,52 +628,52 @@ cartHighSearchPrice.addEventListener("click", function () {
   while (document.querySelector("#jjw-search-list-container").hasChildNodes()) {
     document.querySelector("#jjw-search-list-container").removeChild(document.querySelector("#jjw-search-list-container").firstChild);
   }
-  shopCap().then((cartUserShopInfor) => {
+  productData().then((whosProduct) => {
 
-    jbhcartUserShopInfor = cartUserShopInfor.filter((a) => {
+    jbhwhosProduct = whosProduct.filter((a) => {
       return a.designName == "jbh"
     })
 
-    jbhcartUserShopInfor.sort(function (a, b) {
+    jbhwhosProduct.sort(function (a, b) {
       return b.price - a.price;
     });
-    cartInput(jbhcartUserShopInfor)
-    cartListAppendJbh(jbhcartUserShopInfor)
+    _productListTags(jbhwhosProduct)
+    cartListAppendJbh(jbhwhosProduct)
   })
 
   while (cartSearchListContainer.hasChildNodes()) {
     cartSearchListContainer.removeChild(cartSearchListContainer.firstChild);
   }
-  shopCap().then((cartUserShopInfor) => {
+  productData().then((whosProduct) => {
 
-    jjwcartUserShopInfor = cartUserShopInfor.filter((a) => {
+    jjwwhosProduct = whosProduct.filter((a) => {
       return a.designName == "jjw"
     })
-    jjwcartUserShopInfor.sort(function (a, b) {
+    jjwwhosProduct.sort(function (a, b) {
       return b.price - a.price;
     });
-    cartInput(jjwcartUserShopInfor)
-    cartListAppendJjw(jjwcartUserShopInfor)
+    _productListTags(jjwwhosProduct)
+    cartListAppendJjw(jjwwhosProduct)
   })
   while (document.querySelector("#ajy-search-list-container").hasChildNodes()) {
     document.querySelector("#ajy-search-list-container").removeChild(document.querySelector("#ajy-search-list-container").firstChild);
   }
-  shopCap().then((cartUserShopInfor) => {
+  productData().then((whosProduct) => {
 
-    ajycartUserShopInfor = cartUserShopInfor.filter((a) => {
+    ajywhosProduct = whosProduct.filter((a) => {
       return a.designName == "ajy"
     })
 
-    ajycartUserShopInfor.sort(function (a, b) {
+    ajywhosProduct.sort(function (a, b) {
       return b.price - a.price;
     });
-    cartInput(ajycartUserShopInfor)
-    cartListAppendAjy(ajycartUserShopInfor)
+    _productListTags(ajywhosProduct)
+    cartListAppendAjy(ajywhosProduct)
   })
 })
 
 //상품검색을 위한 태그 쏴주기
-cartSearchTextBtn.addEventListener("click", function () {
+cartSearchTextBtn.addEventListener("click", () => {
   cartCurrentListCountjbh = 0;
   cartShowListCountjbh = showCount;
   cartCurrentListCountjjw = 0;
@@ -681,14 +687,14 @@ cartSearchTextBtn.addEventListener("click", function () {
   while (cartSearchListContainer.hasChildNodes()) {
     cartSearchListContainer.removeChild(cartSearchListContainer.firstChild);
   }
-  shopCap().then((cartUserShopInfor) => {
+  productData().then((whosProduct) => {
 
-    jbhcartUserShopInfor = cartUserShopInfor.filter((a) => {
+    jbhwhosProduct = whosProduct.filter((a) => {
       return a.designName == "jbh"
     })
     if (cartSearchText.value == "") {
-      cartInput(jbhcartUserShopInfor);
-      cartListAppendJbh(jbhcartUserShopInfor);
+      _productListTags(jbhwhosProduct);
+      cartListAppendJbh(jbhwhosProduct);
       cartSearchText.value = alert("검색어를 입력해주세요!");
     }
     else if (cartSearchText.value == "바지" || cartSearchText.value == "팬츠" || cartSearchText.value == "바지" || cartSearchText.value == "pants") {
@@ -706,27 +712,27 @@ cartSearchTextBtn.addEventListener("click", function () {
     else if (cartSearchText.value == "가방" || cartSearchText.value == "샤넬" || cartSearchText.value == "샤넬백" || cartSearchText.value == "백" || cartSearchText.value == "bag") {
       cartSearchText.value = "bag";
     }
-    cartUserShopInforSearch = jbhcartUserShopInfor.filter(function (data) {
+    whosProductSearch = jbhwhosProduct.filter(function (data) {
       return data.classification === cartSearchText.value;
     });
-    cartInput(cartUserShopInforSearch);
-    cartListAppendJbh(cartUserShopInforSearch);
+    _productListTags(whosProductSearch);
+    cartListAppendJbh(whosProductSearch);
   })
 
-  cartUserShopInforSearch = 0;
+  whosProductSearch = 0;
 
   while (document.querySelector("#jjw-search-list-container").hasChildNodes()) {
     document.querySelector("#jjw-search-list-container").removeChild(document.querySelector("#jjw-search-list-container").firstChild);
   }
 
-  shopCap().then((cartUserShopInfor) => {
+  productData().then((whosProduct) => {
 
-    jjwcartUserShopInfor = cartUserShopInfor.filter((a) => {
+    jjwwhosProduct = whosProduct.filter((a) => {
       return a.designName == "jjw"
     })
     if (cartSearchText.vaule == "") {
-      cartInput(jjwcartUserShopInfor);
-      cartListAppendJjw(jjwcartUserShopInfor);
+      _productListTags(jjwwhosProduct);
+      cartListAppendJjw(jjwwhosProduct);
       cartSearchText.vaule = alert("검색어를 입력해주세요!");
     }
     else if (cartSearchText.vaule == "뮤지컬" || cartSearchText.vaule == "musical" || cartSearchText.vaule == "연극" || cartSearchText.vaule == "연극뮤지컬") {
@@ -738,26 +744,26 @@ cartSearchTextBtn.addEventListener("click", function () {
     else if (cartSearchText.vaule == "클래식뮤직" || cartSearchText.vaule == "classical music" || cartSearchText.vaule == "클래식 뮤직") {
       cartSearchText.vaule = "classical music";
     }
-    cartUserShopInforSearch = jjwcartUserShopInfor.filter(function (data) {
+    whosProductSearch = jjwwhosProduct.filter(function (data) {
       return data.classification === cartSearchText.vaule;
     });
-    cartInput(cartUserShopInforSearch);
-    cartListAppendJjw(cartUserShopInforSearch);
+    _productListTags(whosProductSearch);
+    cartListAppendJjw(whosProductSearch);
   })
-  cartUserShopInforSearch = 0;
+  whosProductSearch = 0;
 
   while (document.querySelector("#ajy-search-list-container").hasChildNodes()) {
     document.querySelector("#ajy-search-list-container").removeChild(document.querySelector("#ajy-search-list-container").firstChild);
   }
 
-  shopCap().then((cartUserShopInfor) => {
+  productData().then((whosProduct) => {
 
-    ajycartUserShopInfor = cartUserShopInfor.filter((a) => {
+    ajywhosProduct = whosProduct.filter((a) => {
       return a.designName == "ajy"
     })
     if (cartSearchText.value == "") {
-      cartInput(ajycartUserShopInfor);
-      cartListAppendAjy(ajycartUserShopInfor);
+      _productListTags(ajywhosProduct);
+      cartListAppendAjy(ajywhosProduct);
       cartSearchText.value = alert("검색어를 입력해주세요!");
     }
     else if (cartSearchText.value == "poketmonbread" || cartSearchText.value == "poketmon bread" || cartSearchText.value == "빵" || cartSearchText.value == "포켓몬빵" || cartSearchText.value == "푸키먼빵" || cartSearchText.value == "bread") {
@@ -766,20 +772,20 @@ cartSearchTextBtn.addEventListener("click", function () {
     else if (cartSearchText.value == "피규어" || cartSearchText.value == "포켓몬피규어" || cartSearchText.value == "포켓몬 피규어" || cartSearchText.value == "포켓몬" || cartSearchText.value == "헬창" || cartSearchText.value == "포켓몬헬창" || cartSearchText.value == "포켓몬헬창피규어" || cartSearchText.value == "figure") {
       cartSearchText.value = "figure";
     }
-    cartUserShopInforSearch = ajycartUserShopInfor.filter(function (data) {
+    whosProductSearch = ajywhosProduct.filter(function (data) {
       return data.classification === cartSearchText.value;
     });
-    cartInput(cartUserShopInforSearch);
-    cartListAppendAjy(cartUserShopInforSearch);
+    _productListTags(whosProductSearch);
+    cartListAppendAjy(whosProductSearch);
   })
-  cartUserShopInforSearch = 0;
+  whosProductSearch = 0;
   while (document.querySelector(".cart-search-text-body").hasChildNodes()) {
     document.querySelector(".cart-search-text-body").removeChild(document.querySelector(".cart-search-text-body").firstChild);
   }
 })
 
 //상품검색 입력란을 클릭했을때
-cartSearchText.addEventListener("click", function () {
+cartSearchText.addEventListener("click", () => {
   cartCurrentListCountjbh = 0;
   cartShowListCountjbh = showCount;
   cartCurrentListCountjjw = 0;
@@ -804,18 +810,18 @@ cartSearchText.addEventListener("click", function () {
   }
 })
 
-cartSearchText.addEventListener("focusout", function () {
+cartSearchText.addEventListener("focusout", () => {
   while (document.querySelector(".cart-search-text-body").hasChildNodes()) {
     document.querySelector(".cart-search-text-body").removeChild(document.querySelector(".cart-search-text-body").firstChild);
   }
 })
-cartSearchText.addEventListener("click", function () {
+cartSearchText.addEventListener("click", () => {
   document.querySelector(".cart-search-text-body").style.visibility = "visible";
 
 })
 
 //신상품순?
-cartNewProduct.addEventListener("click", function () {
+cartNewProduct.addEventListener("click", () => {
   cartCurrentListCountjbh = 0;
   cartShowListCountjbh = showCount;
   cartCurrentListCountjjw = 0;
@@ -825,78 +831,78 @@ cartNewProduct.addEventListener("click", function () {
   while (cartSearchListContainer.hasChildNodes()) {
     cartSearchListContainer.removeChild(cartSearchListContainer.firstChild);
   }
-  shopCap().then((cartUserShopInfor) => {
-    jbhcartUserShopInfor = cartUserShopInfor.filter((a) => {
+  productData().then((whosProduct) => {
+    jbhwhosProduct = whosProduct.filter((a) => {
       return a.designName == "jbh";
     })
-    cartNewProductInfor = jbhcartUserShopInfor.sort((a, b) => {
+    cartNewProductInfor = jbhwhosProduct.sort((a, b) => {
       return b.index - a.index;
     })
-    cartInput(cartNewProductInfor);
+    _productListTags(cartNewProductInfor);
     cartListAppendJbh(cartNewProductInfor);
   })
   cartNewProductInfor = 0;
   while (document.getElementById("ajy-search-list-container").hasChildNodes()) {
     document.getElementById("ajy-search-list-container").removeChild(document.getElementById("ajy-search-list-container").firstChild);
   }
-  shopCap().then((cartUserShopInfor) => {
-    ajycartUserShopInfor = cartUserShopInfor.filter((a) => {
+  productData().then((whosProduct) => {
+    ajywhosProduct = whosProduct.filter((a) => {
       return a.designName == "ajy";
     })
-    cartNewProductInfor = ajycartUserShopInfor.sort((a, b) => {
+    cartNewProductInfor = ajywhosProduct.sort((a, b) => {
       return b.index - a.index;
     })
-    cartInput(cartNewProductInfor);
+    _productListTags(cartNewProductInfor);
     cartListAppendAjy(cartNewProductInfor);
   })
   cartNewProductInfor = 0;
   while (document.getElementById("jjw-search-list-container").hasChildNodes()) {
     document.getElementById("jjw-search-list-container").removeChild(document.getElementById("jjw-search-list-container").firstChild);
   }
-  shopCap().then((cartUserShopInfor) => {
-    jjwcartUserShopInfor = cartUserShopInfor.filter((a) => {
+  productData().then((whosProduct) => {
+    jjwwhosProduct = whosProduct.filter((a) => {
       return a.designName == "jjw";
     })
-    cartNewProductInfor = jjwcartUserShopInfor.sort((a, b) => {
+    cartNewProductInfor = jjwwhosProduct.sort((a, b) => {
       return b.index - a.index;
     })
-    cartInput(cartNewProductInfor);
+    _productListTags(cartNewProductInfor);
     cartListAppendJjw(cartNewProductInfor);
   })
 })
 
-shopCap().then((cartUserShopInfor) => {
+productData().then((whosProduct) => {
 
-  ajycartUserShopInfor = cartUserShopInfor.filter((a) => {
+  ajywhosProduct = whosProduct.filter((a) => {
     return a.designName == "ajy"
   })
-  cartInput(ajycartUserShopInfor);
-  cartListAppendAjy(ajycartUserShopInfor);
+  _productListTags(ajywhosProduct);
+  cartListAppendAjy(ajywhosProduct);
 
-  cartUserShopInfor = 0;
+  whosProduct = 0;
 
 })
 
-shopCap().then((cartUserShopInfor) => {
+productData().then((whosProduct) => {
 
-  jbhcartUserShopInfor = cartUserShopInfor.filter((a) => {
+  jbhwhosProduct = whosProduct.filter((a) => {
     return a.designName == "jbh"
   })
-  cartInput(jbhcartUserShopInfor);
-  cartListAppendJbh(jbhcartUserShopInfor);
+  _productListTags(jbhwhosProduct);
+  cartListAppendJbh(jbhwhosProduct);
 
-  cartUserShopInfor = 0;
+  whosProduct = 0;
 })
 
-shopCap().then((cartUserShopInfor) => {
+productData().then((whosProduct) => {
 
-  jjwcartUserShopInfor = cartUserShopInfor.filter((a) => {
+  jjwwhosProduct = whosProduct.filter((a) => {
     return a.designName == "jjw"
   })
-  cartInput(jjwcartUserShopInfor);
-  cartListAppendJjw(jjwcartUserShopInfor); ``
+  _productListTags(jjwwhosProduct);
+  cartListAppendJjw(jjwwhosProduct); ``
 
-  cartUserShopInfor = 0;
+  whosProduct = 0;
 })
 
 /* 220711 추가된 부분  */
@@ -909,7 +915,7 @@ if (document.documentElement.scrollTop == 0) {
   document.querySelector(".Jang-shop").style.backgroundColor = "";
   document.querySelector(".search-rank").style.backgroundColor = "";
 }
-document.querySelector(".Ann-shop").addEventListener("click", function () {
+document.querySelector(".Ann-shop").addEventListener("click", () => {
   document.querySelector(".search").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
   document.querySelector(".search").style.visibility = "";
   document.querySelector(".logo").style.backgroundColor = "white";
@@ -918,7 +924,7 @@ document.querySelector(".Ann-shop").addEventListener("click", function () {
   document.querySelector(".Jang-shop").style.backgroundColor = "white";
   document.querySelector(".search-rank").style.backgroundColor = "white";
 })
-document.querySelector(".Joo-shop").addEventListener("click", function () {
+document.querySelector(".Joo-shop").addEventListener("click", () => {
   document.querySelector(".search").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
   document.querySelector(".search").style.visibility = "";
   document.querySelector(".logo").style.backgroundColor = "white";
@@ -927,7 +933,7 @@ document.querySelector(".Joo-shop").addEventListener("click", function () {
   document.querySelector(".Jang-shop").style.backgroundColor = "white";
   document.querySelector(".search-rank").style.backgroundColor = "white";
 })
-document.querySelector(".Jang-shop").addEventListener("click", function () {
+document.querySelector(".Jang-shop").addEventListener("click", () => {
   document.querySelector(".search").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
   document.querySelector(".search").style.visibility = "";
   document.querySelector(".logo").style.backgroundColor = "white";
@@ -936,7 +942,7 @@ document.querySelector(".Jang-shop").addEventListener("click", function () {
   document.querySelector(".Jang-shop").style.backgroundColor = "white";
   document.querySelector(".search-rank").style.backgroundColor = "white";
 })
-document.querySelector(".top-icon").addEventListener("click", function () {
+document.querySelector(".top-icon").addEventListener("click", () => {
   document.querySelector(".search").style.backgroundColor = "";
   document.querySelector(".search").style.visibility = "hidden";
   document.querySelector(".logo").style.backgroundColor = "";
@@ -946,7 +952,7 @@ document.querySelector(".top-icon").addEventListener("click", function () {
   document.querySelector(".search-rank").style.backgroundColor = "";
   document.querySelector(".cart-search-text-body").style.visibility = "hidden";
 })
-document.querySelector(".logo").addEventListener("click", function () {
+document.querySelector(".logo").addEventListener("click", () => {
   document.querySelector(".search").style.backgroundColor = "";
   document.querySelector(".search").style.visibility = "hidden";
   document.querySelector(".logo").style.backgroundColor = "";
