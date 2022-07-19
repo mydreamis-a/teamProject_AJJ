@@ -214,7 +214,7 @@ textarea {
     display: inline;
 }
 
-.cart-search-item {
+.product-search {
     width: 4.5vw;
     margin-left: 0.5vw;
     margin-right: 0.5vw;
@@ -223,7 +223,7 @@ textarea {
     text-align: center;
 }
 
-.cart-search-Alignment {
+.product-search-price-start {
     display: flex;
     justify-content: center;
     align-items: center;

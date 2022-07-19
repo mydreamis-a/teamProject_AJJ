@@ -218,16 +218,16 @@ class JangListSlide {
             }, 500);
         })
 
-        // window.addEventListener("resize", (e) => {
-        //     _this.gage(0, 0);
-        //     clearInterval(_this.autoPlayFn);
-        //     _this.slideWrapTag.style.transition = "";
-        //     _this.autoPlayFn = null;
-        //    if (_this.resize === false) _this.resize = true;
-        //    this.resizeIndex = window.innerHeight;
-        //    console.log("_this.resizeIndex: "+_this.resizeIndex);
-        //    console.log("this.resizeIndex: "+this.resizeIndex);
-        // })
+        window.addEventListener("resize", (e) => {
+            _this.gage(0, 0);
+            clearInterval(_this.autoPlayFn);
+            _this.slideWrapTag.style.transition = "";
+            _this.autoPlayFn = null;
+           if (_this.resize === false) _this.resize = true;
+           this.resizeIndex = window.innerHeight;
+           console.log("_this.resizeIndex: "+_this.resizeIndex);
+           console.log("this.resizeIndex: "+this.resizeIndex);
+        })
 
         // setInterval(() => {
         //     let time = this.resizeIndex;
