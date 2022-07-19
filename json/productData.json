@@ -7,7 +7,7 @@
             "popular" : "normal",
             "index" : 0,
             "classification" : "set",
-            "designName" : "jbh"     
+            "designerName" : "JBH"     
         },
         {
             "name" : "무신사 20주년 기념 베이직 바지",
@@ -16,7 +16,7 @@
             "popular" : "Donation",
             "index" : 1,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "아디다스 X 코오롱스포츠 콜라보 바지",
@@ -25,7 +25,7 @@
             "popular" : "normal",
             "index" : 2,
             "classification" : "set",
-            "designName" : "jbh"       
+            "designerName" : "JBH"       
         },
         {
             "name" : "롱슬립 니퍼 구두",
@@ -34,7 +34,7 @@
             "popular" : "normal",
             "index" : 3,
             "classification" : "set",
-            "designName" : "jbh"       
+            "designerName" : "JBH"       
         },
         {
             "name" : "유니클로 런웨이 초록색 바지",
@@ -43,7 +43,7 @@
             "popular" : "hit",
             "index" : 4,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "회색 밴딩 무신사 바지",
@@ -52,7 +52,7 @@
             "popular" : "hit",
             "index" : 5,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "무신사 브라운색 바지",
@@ -61,7 +61,7 @@
             "popular" : "normal",
             "index" : 6,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "주머니를 뒤져보니 지갑이 없다....",
@@ -70,7 +70,7 @@
             "popular" : "normal",
             "index" : 7,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "오리 캐릭터 잠옷 바지",
@@ -79,7 +79,7 @@
             "popular" : "normal",
             "index" : 8,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "폴햄 청바지",
@@ -88,7 +88,7 @@
             "popular" : "normal",
             "index" : 9,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "이클립스 가성비 패션 바지",
@@ -97,7 +97,7 @@
             "popular" : "normal",
             "index" : 10,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "늘어나는 기모 바지",
@@ -106,7 +106,7 @@
             "popular" : "normal",
             "index" : 11,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "브라운색 바지",
@@ -115,7 +115,7 @@
             "popular" : "normal",
             "index" : 12,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "무신사 X 시그니처 클래스 바지",
@@ -124,7 +124,7 @@
             "popular" : "normal",
             "index" : 13,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "울 와이드 레그 펜츠",
@@ -133,7 +133,7 @@
             "popular" : "hit",
             "index" : 14,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "기모 바지 2개 세트",
@@ -142,7 +142,7 @@
             "popular" : "normal",
             "index" : 15,
             "classification" : "set",
-            "designName" : "jbh"       
+            "designerName" : "JBH"       
         },
         {
             "name" : "브라운색 버버리 와이드 업",
@@ -151,7 +151,7 @@
             "popular" : "normal",
             "index" : 16,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "버버리 바지와 벨트 세트",
@@ -160,7 +160,7 @@
             "popular" : "normal",
             "index" : 17,
             "classification" : "set",
-            "designName" : "jbh"       
+            "designerName" : "JBH"       
         },
         {
             "name" : "유니클로 기모바지 세트",
@@ -169,7 +169,7 @@
             "popular" : "normal",
             "index" : 18,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "레깅스",
@@ -178,7 +178,7 @@
             "popular" : "hit",
             "index" : 19,
             "classification" : "leggin,",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "수박바지 잠옷",
@@ -187,7 +187,7 @@
             "popular" : "normal",
             "index" : 20,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "흰색 통이 큰 반바지",
@@ -196,7 +196,7 @@
             "popular" : "hit",
             "index" : 21,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "(폴햄)와이드 통 청바지",
@@ -205,7 +205,7 @@
             "popular" : "hit",
             "index" : 22,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "패션 잇 아이템 바지",
@@ -214,7 +214,7 @@
             "popular" : "normal",
             "index" : 23,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "신발 바지 가방 세트",
@@ -223,7 +223,7 @@
             "popular" : "normal",
             "index" : 24,
             "classification" : "shoes",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "신발 바지 가방 세트2",
@@ -232,7 +232,7 @@
             "popular" : "normal",
             "index" : 25,
             "classification" : "shoes",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "흰색 티와 초록색 바지",
@@ -241,7 +241,7 @@
             "popular" : "normal",
             "index" : 26,
             "classification" : "set",
-            "designName" : "jbh"       
+            "designerName" : "JBH"       
         },
         {
             "name" : "기모 브라운 무신사 바지",
@@ -250,7 +250,7 @@
             "popular" : "hit",
             "index" : 27,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "다시 뒤져보아도 지갑이 없다....",
@@ -259,7 +259,7 @@
             "popular" : "normal",
             "index" : 28,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "스트릿 바지 정장 선택(red & black)",
@@ -268,7 +268,7 @@
             "popular" : "normal",
             "index" : 29,
             "classification" : "set",
-            "designName" : "jbh"       
+            "designerName" : "JBH"       
         },
         {
             "name" : "초록색 구겨긴 바지",
@@ -277,7 +277,7 @@
             "popular" : "normal",
             "index" : 30,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "흰색 정장 세트",
@@ -286,7 +286,7 @@
             "popular" : "normal",
             "index" : 31,
             "classification" : "set",
-            "designName" : "jbh"       
+            "designerName" : "JBH"       
         },
         {
             "name" : "한손 뒷주머니에 가있는 바지",
@@ -295,7 +295,7 @@
             "popular" : "normal",
             "index" : 32,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "주머니에 손 넣은 바지",
@@ -304,7 +304,7 @@
             "popular" : "normal",
             "index" : 33,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "잠옷 바지2",
@@ -313,7 +313,7 @@
             "popular" : "normal",
             "index" : 34,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "키즈 유아이 X 무신사 콜라보 후드 바지 세트",
@@ -322,7 +322,7 @@
             "popular" : "normal",
             "index" : 35,
             "classification" : "shoes",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "키즈 유아이 X 유니클로 롱 슬립 세트",
@@ -331,7 +331,7 @@
             "popular" : "normal",
             "index" : 36,
             "classification" : "set",
-            "designName" : "jbh"       
+            "designerName" : "JBH"       
         },
         {
             "name" : "키즈 유아이 X 버버리 상하의 세트",
@@ -340,7 +340,7 @@
             "popular" : "normal",
             "index" : 37,
             "classification" : "set",
-            "designName" : "jbh"       
+            "designerName" : "JBH"       
         },
         {
             "name" : "잭시미키 슬립 롱 니퍼 신발",
@@ -349,7 +349,7 @@
             "popular" : "hit",
             "index" : 38,
             "classification" : "shoes",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name" : "와이드 롤업 팬츠(카고형)",
@@ -358,7 +358,7 @@
             "popular" : "hit",
             "index" : 39,
             "classification" : "pants",
-            "designName" : "jbh"
+            "designerName" : "JBH"
         },
         {
             "name": "술잔 옆에 안주로 따뜻한 음악 하나, 꼭 챙겨드세요.",
@@ -367,7 +367,7 @@
             "popular": "normal",
             "index": 0,
             "classification": "firstContent",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "사는게 뭔지",
@@ -376,7 +376,7 @@
             "popular": "normal",
             "index": 1,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "나 어떡해",
@@ -385,7 +385,7 @@
             "popular": "normal",
             "index": 2,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "산다는 거",
@@ -394,7 +394,7 @@
             "popular": "normal",
             "index": 3,
             "classification": "musical",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Breathe",
@@ -403,7 +403,7 @@
             "popular": "normal",
             "index": 4,
             "classification": "musical",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "세월이 흘러",
@@ -412,7 +412,7 @@
             "popular": "normal",
             "index": 5,
             "classification": "musical",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "꽃이여",
@@ -421,7 +421,7 @@
             "popular": "normal",
             "index": 4,
             "classification": "musical",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "난 예술가의 아내라",
@@ -430,7 +430,7 @@
             "popular": "normal",
             "index": 5,
             "classification": "musical",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Part of Your World (Remastered 2014)",
@@ -439,7 +439,7 @@
             "popular": "normal",
             "index": 6,
             "classification": "musical",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "바람과 함께",
@@ -448,7 +448,7 @@
             "popular": "normal",
             "index": 7,
             "classification": "musical",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "당신에게로",
@@ -457,7 +457,7 @@
             "popular": "normal",
             "index": 8,
             "classification": "musical",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "살다보면",
@@ -466,7 +466,7 @@
             "popular": "normal",
             "index": 9,
             "classification": "musical",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "공무도하가(公無渡河歌)",
@@ -475,7 +475,7 @@
             "popular": "normal",
             "index": 10,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "River Waltz",
@@ -484,7 +484,7 @@
             "popular": "normal",
             "index": 11,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Granados:Spanish Dance No.2 ('Oriental')",
@@ -493,7 +493,7 @@
             "popular": "normal",
             "index": 12,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Aria (After Serenata Veneziana from Andromeda liberata, RV Anh. 117)",
@@ -502,7 +502,7 @@
             "popular": "normal",
             "index": 13,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Because This Must Be",
@@ -511,7 +511,7 @@
             "popular": "normal",
             "index": 14,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Big My Secret",
@@ -520,7 +520,7 @@
             "popular": "normal",
             "index": 15,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Chopin: Nocturne No.1 In B Flat Minor, Op.9 No.1",
@@ -529,7 +529,7 @@
             "popular": "normal",
             "index": 16,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Coleridge-Taylor: Sometimes I Feel Like a Motherless Child",
@@ -538,7 +538,7 @@
             "popular": "normal",
             "index": 17,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Contredanse in B flat major/B-dur/en si bemol majeur",
@@ -547,7 +547,7 @@
             "popular": "normal",
             "index": 18,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Epilogue",
@@ -556,7 +556,7 @@
             "popular": "normal",
             "index": 19,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Kleier Lambaol",
@@ -565,7 +565,7 @@
             "popular": "normal",
             "index": 20,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Liszt: Liebestraum No. 3 in A flat, S.541 No. 3",
@@ -574,7 +574,7 @@
             "popular": "normal",
             "index": 21,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Metamorphosis 5",
@@ -583,7 +583,7 @@
             "popular": "normal",
             "index": 22,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Piano Sonata No. 30 in B Minor, Hob.XVI:32: II: Menuet",
@@ -592,7 +592,7 @@
             "popular": "normal",
             "index": 23,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Prelude in B minor, BWV 855a (Arr. by Alexander Siloti)",
@@ -601,7 +601,7 @@
             "popular": "normal",
             "index": 24,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Schubert: Fantasy in F minor, D. 940 (Op.103) for piano duet - Allegro molto moderato - Largo - Allegro vivace - Tempo I",
@@ -610,7 +610,7 @@
             "popular": "normal",
             "index": 25,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Schumann: 슈만: 어린이의 정경, 작품번호 15 - 1. 미지의 나라들",
@@ -619,7 +619,7 @@
             "popular": "normal",
             "index": 26,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Suite No. 1 for 2 Pianos in C Major, Op. 5 'Fantaisie-tableaux': I. Barcarole",
@@ -628,7 +628,7 @@
             "popular": "normal",
             "index": 27,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "Tiersen: Six Pieces for Piano, Volume 2 - 4. La Valse d'Amélie (영화 아멜리에 삽입곡)",
@@ -637,7 +637,7 @@
             "popular": "normal",
             "index": 28,
             "classification": "classical music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "You Raise Me Up",
@@ -646,7 +646,7 @@
             "popular": "normal",
             "index": 29,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "가장 보통의 존재",
@@ -655,7 +655,7 @@
             "popular": "normal",
             "index": 30,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "너는 악마가 되어가고 있는가?",
@@ -664,7 +664,7 @@
             "popular": "normal",
             "index": 31,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "아름다운 것",
@@ -673,7 +673,7 @@
             "popular": "normal",
             "index": 32,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "작은 마음",
@@ -682,7 +682,7 @@
             "popular": "normal",
             "index": 33,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "의외의 사실",
@@ -691,7 +691,7 @@
             "popular": "normal",
             "index": 34,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "알리바이",
@@ -700,7 +700,7 @@
             "popular": "normal",
             "index": 35,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "100년 동안의 진심",
@@ -709,7 +709,7 @@
             "popular": "normal",
             "index": 36,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "인생은 금물",
@@ -718,7 +718,7 @@
             "popular": "normal",
             "index": 37,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "나는",
@@ -727,7 +727,7 @@
             "popular": "normal",
             "index": 38,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "산들산들",
@@ -736,7 +736,7 @@
             "popular": "normal",
             "index": 39,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "너의 몸을 흔들어 너의 마음을 움직여",
@@ -745,7 +745,7 @@
             "popular": "normal",
             "index": 40,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "창밖엔 태양이 빛나고",
@@ -754,7 +754,7 @@
             "popular": "normal",
             "index": 41,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "누구나 아는 비밀 (With 아이유)",
@@ -763,7 +763,7 @@
             "popular": "normal",
             "index": 42,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "마음이란",
@@ -772,7 +772,7 @@
             "popular": "normal",
             "index": 43,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "애도",
@@ -781,7 +781,7 @@
             "popular": "normal",
             "index": 44,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "나쁜 꿈",
@@ -790,7 +790,7 @@
             "popular": "normal",
             "index": 45,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "영원히 그립지 않을 시간",
@@ -799,7 +799,7 @@
             "popular": "normal",
             "index": 46,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "홀로 있는 사람들",
@@ -808,7 +808,7 @@
             "popular": "normal",
             "index": 47,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "혼자 추는 춤",
@@ -817,7 +817,7 @@
             "popular": "normal",
             "index": 48,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "시인의 마을",
@@ -826,7 +826,7 @@
             "popular": "normal",
             "index": 49,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "회상",
@@ -835,7 +835,7 @@
             "popular": "normal",
             "index": 50,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "떠나가는 배",
@@ -844,7 +844,7 @@
             "popular": "normal",
             "index": 51,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "윙윙윙",
@@ -853,7 +853,7 @@
             "popular": "normal",
             "index": 52,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "촛불",
@@ -862,7 +862,7 @@
             "popular": "normal",
             "index": 53,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "사망부가",
@@ -871,7 +871,7 @@
             "popular": "normal",
             "index": 54,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "서울의 달",
@@ -880,7 +880,7 @@
             "popular": "normal",
             "index": 55,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "애고, 도솔천아",
@@ -889,7 +889,7 @@
             "popular": "normal",
             "index": 56,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "봉숭아",
@@ -898,7 +898,7 @@
             "popular": "normal",
             "index": 57,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "북한강에서",
@@ -907,7 +907,7 @@
             "popular": "normal",
             "index": 58,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "바람",
@@ -916,7 +916,7 @@
             "popular": "normal",
             "index": 59,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "탁발승의 새벽노래",
@@ -925,7 +925,7 @@
             "popular": "normal",
             "index": 60,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "우리는",
@@ -934,7 +934,7 @@
             "popular": "normal",
             "index": 61,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "장서방네 노을",
@@ -943,7 +943,7 @@
             "popular": "normal",
             "index": 62,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "하늘 위에 눈으로",
@@ -952,7 +952,7 @@
             "popular": "normal",
             "index": 63,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "들 가운데서",
@@ -961,7 +961,7 @@
             "popular": "normal",
             "index": 64,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "서해에서",
@@ -970,7 +970,7 @@
             "popular": "normal",
             "index": 65,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "사랑하는 이에게 3",
@@ -979,7 +979,7 @@
             "popular": "normal",
             "index": 66,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "실향가",
@@ -988,7 +988,7 @@
             "popular": "normal",
             "index": 67,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "양단 몇 마름",
@@ -997,7 +997,7 @@
             "popular": "normal",
             "index": 68,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "고향집 가세",
@@ -1006,7 +1006,7 @@
             "popular": "normal",
             "index": 69,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "사랑하는 이에게2",
@@ -1015,7 +1015,7 @@
             "popular": "normal",
             "index": 70,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "인사동",
@@ -1024,7 +1024,7 @@
             "popular": "normal",
             "index": 71,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "한 여름 밤",
@@ -1033,7 +1033,7 @@
             "popular": "normal",
             "index": 72,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "나 살던 고향",
@@ -1042,7 +1042,7 @@
             "popular": "normal",
             "index": 73,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "저 들에 불을 놓아",
@@ -1051,7 +1051,7 @@
             "popular": "normal",
             "index": 74,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "L.A.스케치",
@@ -1060,7 +1060,7 @@
             "popular": "normal",
             "index": 75,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "이 어두운 터널을 박차고",
@@ -1069,7 +1069,7 @@
             "popular": "normal",
             "index": 76,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "92년 장마, 종로에서",
@@ -1078,7 +1078,7 @@
             "popular": "normal",
             "index": 77,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "정동진1",
@@ -1087,7 +1087,7 @@
             "popular": "normal",
             "index": 78,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "건너간다",
@@ -1096,7 +1096,7 @@
             "popular": "normal",
             "index": 79,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "5.18",
@@ -1105,7 +1105,7 @@
             "popular": "normal",
             "index": 80,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name": "수진리의 강",
@@ -1114,7 +1114,7 @@
             "popular": "normal",
             "index": 81,
             "classification": "music",
-            "designName": "jjw"
+            "designerName": "JJW"
         },
         {
             "name" : "고오스빵",
@@ -1123,7 +1123,7 @@
             "popular" : "hit",
             "index" : 0,
             "classification" : "bread",
-            "designName" : "ajy"       
+            "designerName" : "AJY"       
         },
         {
             "name" : "꼬부기",
@@ -1132,7 +1132,7 @@
             "popular" : "hit",
             "index" : 1,
             "classification" : "bread",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "디그다",
@@ -1141,7 +1141,7 @@
             "popular" : "hit",
             "index" : 2,
             "classification" : "bread",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "로켓단",
@@ -1150,7 +1150,7 @@
             "popular" : "hit",
             "index" : 3,
             "classification" : "bread",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "발챙이",
@@ -1159,7 +1159,7 @@
             "popular" : "hit",
             "index" : 4,
             "classification" : "bread",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "피카츄",
@@ -1168,7 +1168,7 @@
             "popular" : "hit",
             "index" : 5,
             "classification" : "bread",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "푸린",
@@ -1177,7 +1177,7 @@
             "popular" : "hit",
             "index" : 6,
             "classification" : "bread",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "파이리",
@@ -1186,7 +1186,7 @@
             "popular" : "hit",
             "index" : 7,
             "classification" : "bread",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "메타몽",
@@ -1195,7 +1195,7 @@
             "popular" : "hit",
             "index" : 8,
             "classification" : "bread",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "이상해씨",
@@ -1204,7 +1204,7 @@
             "popular" : "hit",
             "index" : 9,
             "classification" : "bread",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "이슬이",
@@ -1213,7 +1213,7 @@
             "popular" : "hit",
             "index" : 10,
             "classification" : "bread",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "푸린피치피치슈",
@@ -1222,7 +1222,7 @@
             "popular" : "hit",
             "index" : 11,
             "classification" : "bread",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "피카망고컵케이크",
@@ -1231,7 +1231,7 @@
             "popular" : "hit",
             "index" : 12,
             "classification" : "bread",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "피카앙버터",
@@ -1240,7 +1240,7 @@
             "popular" : "hit",
             "index" : 13,
             "classification" : "bread",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "고라파덕미니",
@@ -1249,7 +1249,7 @@
             "popular" : "normal",
             "index" : 14,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "이상해씨미니",
@@ -1258,7 +1258,7 @@
             "popular" : "normal",
             "index" : 15,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "파이리미니",
@@ -1267,7 +1267,7 @@
             "popular" : "normal",
             "index" : 16,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "팬텀미니",
@@ -1276,7 +1276,7 @@
             "popular" : "normal",
             "index" : 17,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "피카츄미니",
@@ -1285,7 +1285,7 @@
             "popular" : "normal",
             "index" : 18,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "고라파덕헬창",
@@ -1294,7 +1294,7 @@
             "popular" : "normal",
             "index" : 19,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "꼬북이헬창",
@@ -1303,7 +1303,7 @@
             "popular" : "normal",
             "index" : 20,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "이상해씨헬창",
@@ -1312,7 +1312,7 @@
             "popular" : "normal",
             "index" : 21,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "파이리헬창",
@@ -1321,7 +1321,7 @@
             "popular" : "normal",
             "index" : 22,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "잠만보헬창",
@@ -1330,7 +1330,7 @@
             "popular" : "normal",
             "index" : 23,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "잉어킹헬창",
@@ -1339,7 +1339,7 @@
             "popular" : "normal",
             "index" : 24,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "팬텀헬창",
@@ -1348,7 +1348,7 @@
             "popular" : "normal",
             "index" : 25,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "피카츄헬창",
@@ -1357,7 +1357,7 @@
             "popular" : "normal",
             "index" : 26,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "꼬북이머슬",
@@ -1366,7 +1366,7 @@
             "popular" : "normal",
             "index" : 27,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "이상해씨머슬",
@@ -1375,7 +1375,7 @@
             "popular" : "normal",
             "index" : 28,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "파이리머슬",
@@ -1384,7 +1384,7 @@
             "popular" : "normal",
             "index" : 29,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "피카츄머슬",
@@ -1393,7 +1393,7 @@
             "popular" : "normal",
             "index" : 30,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "헬창세트",
@@ -1402,7 +1402,7 @@
             "popular" : "normal",
             "index" : 31,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         },
         {
             "name" : "황금피카츄",
@@ -1411,7 +1411,7 @@
             "popular" : "normal",
             "index" : 32,
             "classification" : "figure",
-            "designName" : "ajy"
+            "designerName" : "AJY"
         }    
     ]
 }

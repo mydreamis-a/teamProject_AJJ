@@ -57,7 +57,7 @@
     width: 19.7vw;
     height: 10vh;
   }
-  [class $= "shop"] {
+  [class $= "shop-btn"] {
     padding-top: calc((10vh - 1.2vw) / 2);
     border-bottom: 0.3vw solid black;
     text-align: center;
@@ -69,7 +69,7 @@
     width: 20vw;
   }
   
-  [class $= "shop"]:hover {
+  [class $= "shop-btn"]:hover {
     border-bottom: 0.3vw solid royalblue;
     color: royalblue;
   }

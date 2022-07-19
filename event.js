@@ -14,14 +14,12 @@ function time(){
     if(mainEvent.style.display == "none"){
         stop = setTimeout(() => {
         mainEvent.style.display = "block";
-        console.log("나는뭘까");
         time();
         },1);
     }
     else{
         stop = setTimeout(() => {
         mainEvent.style.display = "none";
-        console.log("나는꺼짐이");
         time();
         }, 3000);
     }

@@ -9,7 +9,7 @@ class mainNav {
     constructor() {
         this.allSectionsTag = document.querySelector(".all-sections");
         this.sectionTags = document.querySelectorAll('[class ^="section"]');
-        this.navChildTags = document.querySelectorAll('[class $="shop"]');
+        this.shopBtnTags = document.querySelectorAll('[class $="shop-btn"]');
         this.mainHeaderTag = document.querySelector('.main-header');
         this.searchTag = document.createElement('div');
         this.doNotClick = false;
@@ -137,8 +137,8 @@ class mainNav {
             _this.remoconOff();
         })
 
-        // ㅜ 메뉴 버튼을 클릭했을 때 ㅡㅡㅡ navChildTags[0, 1, 2]
-        _this.navChildTags.forEach((el, idx) => {
+        // ㅜ 메뉴 버튼을 클릭했을 때 ㅡㅡㅡ shopBtnTags[0, 1, 2]
+        _this.shopBtnTags.forEach((el, idx) => {
             el.onclick = () => {
                 if (_this.doNotClick) return;
                 _this.doNotClick = true;
