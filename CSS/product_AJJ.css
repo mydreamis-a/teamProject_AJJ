@@ -50,6 +50,14 @@ textarea {
     height: 2.604vw;
 }
 
+.product-list-container {
+    min-width: 51.667vw;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+
 @media (min-width:51.667vw) {
     .product-list-container {
         max-width: 50vw;
@@ -68,13 +76,7 @@ textarea {
     }
 }
 
-.product-list-container {
-    min-width: 51.667vw;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.product-list-row {
+[class $= "-list-row"] {
     display: flex;
     flex-wrap: wrap;
     padding-top: 15vh;
@@ -150,11 +152,6 @@ textarea {
     opacity: 0.6;
     text-align: center;
     color: #ffffff;
-}
-
-.product-img-text {
-    font-size: 2vw;
-    display: inline;
 }
 
 .product-btn-container {

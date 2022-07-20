@@ -276,6 +276,16 @@
   let ajycartUserImg;
   let jjwcartUserImg;
   let jbhcartUserImg;
+
+  let jbhproductData;
+  let jjwproductData;
+  let ahnproductData;
+
+  let asdproductData;
+  let AhnProducts = new Array();
+  let JuProducts = new Array();
+  let JangProducts = new Array();
+  
 </script>
 <script src="/JS/search_AJJ.js"></script>
 <script src="nav_AJJ.js"></script>
@@ -300,29 +310,21 @@
 </script>
 
 <script>
-  // productData().then((cartUserShopInfor) => {
-  //   ajycartUserShopInfor = cartUserShopInfor.filter((a) => {
-  //     return a.designName == "ajy";
-  //   })
+   getProductData().then((result) => {
+    asdproductData = result;
+      ahnproductData = asdproductData.filter((el) => el.designerName === "AJY");
+      ajycartUserImg = ahnproductData.map(a => a.img);
 
-  //   ajycartUserImg = ajycartUserShopInfor.map(a => a.img);
+      jbhproductData = asdproductData.filter((el) => el.designerName === "JBH");
+      jbhcartUserImg = jbhproductData.map(a => a.img);
 
-  //   jbhcartUserShopInfor = cartUserShopInfor.filter((a) => {
-  //     return a.designName == "jbh";
-  //   })
+      jjwproductData = asdproductData.filter((el) => el.designerName === "JJW");
+      jjwcartUserImg = jjwproductData.map(a => a.img);
 
-  //   jbhcartUserImg = jbhcartUserShopInfor.map(a => a.img);
-
-  //   jjwcartUserShopInfor = cartUserShopInfor.filter((a) => {
-  //     return a.designName == "jjw";
-  //   })
-  //   jjwcartUserImg = jjwcartUserShopInfor.map(a => a.img);
-
-
-  // })
-  // const _AhnlistSlide = new JangListSlide("Ahn", 2, "ajy-cart-all-list", ajycartUserImg);
-  // const _JoolistSlide = new JangListSlide("Joo", 3, "cartAllList", jbhcartUserImg);
-  // const _JanglistSlide = new JangListSlide("Jang", 4, "jjw-cart-all-list", jjwcartUserImg);
+  const _AhnlistSlide = new JangListSlide("Ahn", 2, "Ahn-product-list", ajycartUserImg);
+  const _JoolistSlide = new JangListSlide("Joo", 3, "Ju-product-list", jbhcartUserImg);
+  const _JanglistSlide = new JangListSlide("Jang", 4, "Jang-product-list", jjwcartUserImg);
+});
 </script>
 
 </html>
