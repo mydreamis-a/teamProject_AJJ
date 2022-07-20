@@ -81,19 +81,11 @@ class JangListSlide {
     // ㅜ 첫 번째와 마지막 슬라이드 페이지에 한 번에 보여줄 이미지 개수만큼 복사해놓기
     for (let i = 1; i <= this.rowImgCount; i++) {
       window[`copyTag${i}`] = this.imgTags[i - 1].cloneNode(true);
-      window[`copyTag${i + this.rowImgCount}`] =
-        this.imgTags[this.imgTags.length - this.rowImgCount - 1 + i].cloneNode(
-          true
-        );
-      this.slideWrapTag.insertBefore(
-        window[`copyTag${i + this.rowImgCount}`],
-        this.imgTags[0]
-      );
+      window[`copyTag${i + this.rowImgCount}`] = this.imgTags[this.imgTags.length - this.rowImgCount - 1 + i].cloneNode(true);
+      this.slideWrapTag.insertBefore(window[`copyTag${i + this.rowImgCount}`], this.imgTags[0]);
       this.slideWrapTag.appendChild(window[`copyTag${i}`]);
     }
-    this.imgTags = document.querySelectorAll(
-      `[class ^= "${classNameValue}-img"]`
-    );
+    this.imgTags = document.querySelectorAll(`[class ^= "${classNameValue}-img"]`);
 
     // ㅜ 슬라이드의 width, height, margin 설정하기
     this.slideContainerTag.style.height = `${this.slideHeight}vw`;
@@ -267,9 +259,7 @@ class JangListSlide {
       // ㅜ 다음 슬라이드로 이동하기
       if (str === "next") {
         this.index++;
-        this.slideWrapTag.style.transform = `translateX(${
-          (this.index - 1) * this.imgWidth
-        }vw)`;
+        this.slideWrapTag.style.transform = `translateX(${(this.index - 1) * this.imgWidth}vw)`;
         this.gage("0%", `${this.slideSecond}s`);
 
         // ㅜ 이동 후 슬라이드를 잠시 정지 상태로 두기
@@ -285,9 +275,7 @@ class JangListSlide {
               if (this.imgTags.length / this.rowImgCount - 1 <= this.index) {
                 this.index = 1;
                 this.slideWrapTag.style.transition = "";
-                this.slideWrapTag.style.transform = `translateX(${
-                  (this.index - 1) * this.imgWidth
-                }vw)`;
+                this.slideWrapTag.style.transform = `translateX(${(this.index - 1) * this.imgWidth}vw)`;
               }
             }, 10);
           }, this.slideSecond * 1000);
@@ -297,9 +285,7 @@ class JangListSlide {
       // ㅜ 이전 슬라이드로 이동하기
       else if (str === "prev") {
         this.index--;
-        this.slideWrapTag.style.transform = `translateX(${
-          (this.index - 1) * this.imgWidth
-        }vw)`;
+        this.slideWrapTag.style.transform = `translateX(${(this.index - 1) * this.imgWidth}vw)`;
         this.gage("0%", `${this.slideSecond}s`);
 
         // ㅜ 이동 후 슬라이드를 잠시 정지 상태로 두기
@@ -314,9 +300,7 @@ class JangListSlide {
             if (0 >= this.index) {
               this.index = this.imgTags.length / this.rowImgCount - 2;
               this.slideWrapTag.style.transition = "0s";
-              this.slideWrapTag.style.transform = `translateX(${
-                (this.index - 1) * this.imgWidth
-              }vw)`;
+              this.slideWrapTag.style.transform = `translateX(${(this.index - 1) * this.imgWidth}vw)`;
             }
           }, this.slideSecond * 1000);
         }

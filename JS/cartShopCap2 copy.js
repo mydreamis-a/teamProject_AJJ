@@ -110,20 +110,7 @@ let cartShowListCountajy = showCount;
 let cartNewProductInfor;
 
 // ㅜ 상품 목록의 전체 태그 배열
-const productListTags = [
-  "cartListCol",
-  "cartContainer",
-  "cartPicture",
-  "cartFirstText",
-  "cartPicHover",
-  "cartBody",
-  "cartName",
-  "cartSecondText",
-  "cartBtnContainer",
-  "cartBtnGroup",
-  "cartBtnGetList",
-  "cartBtnShowList",
-];
+const productListTags = ["cartListCol", "cartContainer", "cartPicture", "cartFirstText", "cartPicHover", "cartBody", "cartName", "cartSecondText", "cartBtnContainer", "cartBtnGroup", "cartBtnGetList", "cartBtnShowList"];
 productListTags.forEach((el) => {
   window[el] = new Array();
 });
@@ -135,22 +122,7 @@ let cartCurrentBuyListCount = 0;
 
 // ㅜ 장바구니 목록의 태그 배열
 let shoppingBasketPriceResult = 0;
-const shoppingBasketTags = [
-  "shoppingBasketPrice",
-  "cartBuyListCol",
-  "cartBuyContainer",
-  "cartBuyPicture",
-  "cartBuyFirstText",
-  "cartBuyPicHover",
-  "cartBuyBody",
-  "cartBuyName",
-  "cartBuySecondText",
-  "cartBuyBtnContainer",
-  "cartBuyBtnGroup",
-  "basketDeleteBtn",
-  "cartBuyBtnShowList",
-  "cartListPText",
-];
+const shoppingBasketTags = ["shoppingBasketPrice", "cartBuyListCol", "cartBuyContainer", "cartBuyPicture", "cartBuyFirstText", "cartBuyPicHover", "cartBuyBody", "cartBuyName", "cartBuySecondText", "cartBuyBtnContainer", "cartBuyBtnGroup", "basketDeleteBtn", "cartBuyBtnShowList", "cartListPText"];
 shoppingBasketTags.forEach((el) => {
   window[el] = new Array();
 });
@@ -311,12 +283,8 @@ function _productListTags(whosProduct) {
         // cartBuyBtnContainer[key].appendChild(cartBuyBtnGroup[key]);
 
         // ㅜ 태그 복사 및 장바구니에 담기 버튼을 삭제하기 버튼으로 바꾸기
-        const copyTag = cartBtnGetList[key]
-          .closest(".cart-listCol")
-          .cloneNode(true);
-        const basketDeleteBtnTag = copyTag.querySelector(
-          `#cartBtnGetList${key}`
-        );
+        const copyTag = cartBtnGetList[key].closest(".cart-listCol").cloneNode(true);
+        const basketDeleteBtnTag = copyTag.querySelector(`#cartBtnGetList${key}`);
         basketDeleteBtnTag.id = `basket-delete-btn${key}`;
         basketDeleteBtnTag.setAttribute("value", "삭제하기");
         basketDeleteBtnTag.classList.add("cart-btn");
@@ -344,26 +312,18 @@ function _productListTags(whosProduct) {
         //삭제하기 버튼을 눌렀을때
         basketDeleteBtnTag.addEventListener("click", () => {
           basketDeleteBtnTag.closest(".cart-listCol").remove();
-          shoppingBasketPriceResult =
-            shoppingBasketPriceResult - shoppingBasketPrice[btnCartListIndex];
+          shoppingBasketPriceResult = shoppingBasketPriceResult - shoppingBasketPrice[btnCartListIndex];
           shoppingBasketPrice.splice(btnCartListIndex, 1);
 
           //장바구니 총 합계금액
           cartSumPrice.innerHTML = "총 합계금액" + shoppingBasketPriceResult;
           cartBuyListRow.after(cartListSum);
           cartListSum.appendChild(cartSumPrice);
-          document
-            .querySelector("#cart-Buy-list-row")
-            .removeChild(cartBuyListCol[btnCartListIndex]);
+          document.querySelector("#cart-Buy-list-row").removeChild(cartBuyListCol[btnCartListIndex]);
           cartListPText.splice(cartListPText[btnCartListIndex], 1);
-          document
-            .querySelector(".cart-list-text")
-            .removeChild(
-              document.querySelector(".cartListPText" + [btnCartListIndex])
-            );
+          document.querySelector(".cart-list-text").removeChild(document.querySelector(".cartListPText" + [btnCartListIndex]));
           shoppingBasketCount = shoppingBasketCount - 1;
-          document.querySelector(".circleNumber").innerHTML =
-            shoppingBasketCount;
+          document.querySelector(".circleNumber").innerHTML = shoppingBasketCount;
         });
         //모달 안에 장바구니 주문을 취소했을때
         cartListOut.addEventListener("click", () => {
@@ -412,9 +372,7 @@ cartMoreShowBtnjbh.addEventListener("click", () => {
 function cartListAppendAjy(ajywhosProduct) {
   while (cartCurrentListCountajy < ajywhosProduct.length) {
     let cartListIndex = cartCurrentListCountajy;
-    document
-      .querySelector("#ajy-search-list-container")
-      .appendChild(cartListCol[cartListIndex]);
+    document.querySelector("#ajy-search-list-container").appendChild(cartListCol[cartListIndex]);
     cartListCol[cartListIndex].appendChild(cartContainer[cartListIndex]);
     cartContainer[cartListIndex].appendChild(cartPicture[cartListIndex]);
     cartPicture[cartListIndex].appendChild(cartFirstText[cartListIndex]);
@@ -428,9 +386,7 @@ function cartListAppendAjy(ajywhosProduct) {
     cartBtnGetList[cartListIndex].after(cartBtnShowList[cartListIndex]);
     cartCurrentListCountajy++;
     if (cartCurrentListCountajy == cartShowListCountajy) {
-      document
-        .querySelector("#ajy-search-list-container")
-        .after(cartMoreShowBtnajy);
+      document.querySelector("#ajy-search-list-container").after(cartMoreShowBtnajy);
       break;
     }
     if (cartCurrentListCountajy == ajywhosProduct.length) {
@@ -451,9 +407,7 @@ cartMoreShowBtnajy.addEventListener("click", () => {
 function cartListAppendJjw(jjwwhosProduct) {
   while (cartCurrentListCountjjw < jjwwhosProduct.length) {
     let cartListIndex = cartCurrentListCountjjw;
-    document
-      .querySelector("#jjw-search-list-container")
-      .appendChild(cartListCol[cartListIndex]);
+    document.querySelector("#jjw-search-list-container").appendChild(cartListCol[cartListIndex]);
     cartListCol[cartListIndex].appendChild(cartContainer[cartListIndex]);
     cartContainer[cartListIndex].appendChild(cartPicture[cartListIndex]);
     cartPicture[cartListIndex].appendChild(cartFirstText[cartListIndex]);
@@ -469,16 +423,13 @@ function cartListAppendJjw(jjwwhosProduct) {
     cartCurrentListCountjjw++;
     if (cartCurrentListCountjjw == cartShowListCountjjw) {
       let jjwFirstInforText = document.createElement("span");
-      jjwFirstInforText.innerHTML =
-        "1차 커뮤니티 상품은<br>'유일하게 개발된 타임머신'<br><br>기부 상품은 댓글과 좋아요로 자유롭게 소통할 수 있는 커뮤니티 공간이며 해당 상품의 판매 수익은 전액 기부됩니다.";
+      jjwFirstInforText.innerHTML = "1차 커뮤니티 상품은<br>'유일하게 개발된 타임머신'<br><br>기부 상품은 댓글과 좋아요로 자유롭게 소통할 수 있는 커뮤니티 공간이며 해당 상품의 판매 수익은 전액 기부됩니다.";
       jjwFirstInforText.classList.add("jjw-first-infor-text");
       cartPicture[0].style.position = "relative";
       cartPicture[0].style.backgroundColor = "skyblue";
       cartPicture[0].style.backgroundImage = "";
       cartFirstText[0].after(jjwFirstInforText);
-      document
-        .querySelector("#jjw-search-list-container")
-        .after(cartMoreShowBtnjjw);
+      document.querySelector("#jjw-search-list-container").after(cartMoreShowBtnjjw);
       break;
     }
     if (cartCurrentListCountjjw == jjwwhosProduct.length) {
@@ -520,10 +471,7 @@ cartSearchBtn.addEventListener("click", () => {
     // cartSecondPriceSearch = document.getElementById("cartSecondPriceSearch").value;
 
     cartUserSearchPriceInfor = jbhwhosProduct.filter(function (data) {
-      return (
-        cartFirstPriceSearch.value <= data.price &&
-        cartSecondPriceSearch.value >= data.price
-      );
+      return cartFirstPriceSearch.value <= data.price && cartSecondPriceSearch.value >= data.price;
     });
     cartUserSearchPriceInfor.sort((a, b) => {
       return a.price - b.price;
@@ -538,24 +486,15 @@ cartSearchBtn.addEventListener("click", () => {
     jjwwhosProduct = whosProduct.filter((a) => {
       return a.designName == "jjw";
     });
-    while (
-      document.querySelector("#jjw-search-list-container").hasChildNodes()
-    ) {
-      document
-        .querySelector("#jjw-search-list-container")
-        .removeChild(
-          document.querySelector("#jjw-search-list-container").firstChild
-        );
+    while (document.querySelector("#jjw-search-list-container").hasChildNodes()) {
+      document.querySelector("#jjw-search-list-container").removeChild(document.querySelector("#jjw-search-list-container").firstChild);
     }
 
     // cartFirstPriceSearch = document.getElementById("cartFirstPriceSearch").value;
     // cartSecondPriceSearch = document.getElementById("cartSecondPriceSearch").value;
 
     cartUserSearchPriceInfor = jjwwhosProduct.filter(function (data) {
-      return (
-        cartFirstPriceSearch.value <= data.price &&
-        cartSecondPriceSearch.value >= data.price
-      );
+      return cartFirstPriceSearch.value <= data.price && cartSecondPriceSearch.value >= data.price;
     });
     cartUserSearchPriceInfor.sort((a, b) => {
       return a.price - b.price;
@@ -569,24 +508,15 @@ cartSearchBtn.addEventListener("click", () => {
     ajywhosProduct = whosProduct.filter((a) => {
       return a.designName == "ajy";
     });
-    while (
-      document.querySelector("#ajy-search-list-container").hasChildNodes()
-    ) {
-      document
-        .querySelector("#ajy-search-list-container")
-        .removeChild(
-          document.querySelector("#ajy-search-list-container").firstChild
-        );
+    while (document.querySelector("#ajy-search-list-container").hasChildNodes()) {
+      document.querySelector("#ajy-search-list-container").removeChild(document.querySelector("#ajy-search-list-container").firstChild);
     }
 
     // cartFirstPriceSearch = document.getElementById("cartFirstPriceSearch").value;
     // cartSecondPriceSearch = document.getElementById("cartSecondPriceSearch").value;
 
     cartUserSearchPriceInfor = ajywhosProduct.filter(function (data) {
-      return (
-        cartFirstPriceSearch.value <= data.price &&
-        cartSecondPriceSearch.value >= data.price
-      );
+      return cartFirstPriceSearch.value <= data.price && cartSecondPriceSearch.value >= data.price;
     });
     cartUserSearchPriceInfor.sort((a, b) => {
       return a.price - b.price;
@@ -660,11 +590,7 @@ cartHighSearchPrice.addEventListener("click", () => {
   cartCurrentListCountajy = 0;
   cartShowListCountajy = showCount;
   while (document.querySelector("#jjw-search-list-container").hasChildNodes()) {
-    document
-      .querySelector("#jjw-search-list-container")
-      .removeChild(
-        document.querySelector("#jjw-search-list-container").firstChild
-      );
+    document.querySelector("#jjw-search-list-container").removeChild(document.querySelector("#jjw-search-list-container").firstChild);
   }
   productData().then((whosProduct) => {
     jbhwhosProduct = whosProduct.filter((a) => {
@@ -692,11 +618,7 @@ cartHighSearchPrice.addEventListener("click", () => {
     cartListAppendJjw(jjwwhosProduct);
   });
   while (document.querySelector("#ajy-search-list-container").hasChildNodes()) {
-    document
-      .querySelector("#ajy-search-list-container")
-      .removeChild(
-        document.querySelector("#ajy-search-list-container").firstChild
-      );
+    document.querySelector("#ajy-search-list-container").removeChild(document.querySelector("#ajy-search-list-container").firstChild);
   }
   productData().then((whosProduct) => {
     ajywhosProduct = whosProduct.filter((a) => {
@@ -732,23 +654,9 @@ cartSearchTextBtn.addEventListener("click", () => {
   const shoesKeywords = ["shoes", "신발", "슈즈"];
   const setKeywords = ["set", "세트"];
   const bagKeywords = ["bag", "가방", "백", "샤넬", "샤넬백"];
-  const musicalKeywords = [
-    "musical",
-    "뮤지컬",
-    "연극",
-    "music",
-    "뮤직",
-    "음악",
-  ];
+  const musicalKeywords = ["musical", "뮤지컬", "연극", "music", "뮤직", "음악"];
   const musicKeywords = ["music", "뮤직", "음악", "뮤지컬"];
-  const classicalMusicKeywords = [
-    "classical music",
-    "classical",
-    "클래식",
-    "music",
-    "뮤직",
-    "음악",
-  ];
+  const classicalMusicKeywords = ["classical music", "classical", "클래식", "music", "뮤직", "음악"];
   const breadKeywords = ["bread", "빵", "포켓몬", "poketmon", "포켓몬빵"];
   const figureKeywords = ["figure", "피규어", "포켓몬", "poketmon", "헬창"];
 
@@ -786,11 +694,7 @@ cartSearchTextBtn.addEventListener("click", () => {
   whosProductSearch = 0;
 
   while (document.querySelector("#jjw-search-list-container").hasChildNodes()) {
-    document
-      .querySelector("#jjw-search-list-container")
-      .removeChild(
-        document.querySelector("#jjw-search-list-container").firstChild
-      );
+    document.querySelector("#jjw-search-list-container").removeChild(document.querySelector("#jjw-search-list-container").firstChild);
   }
 
   productData().then((whosProduct) => {
@@ -817,11 +721,7 @@ cartSearchTextBtn.addEventListener("click", () => {
   whosProductSearch = 0;
 
   while (document.querySelector("#ajy-search-list-container").hasChildNodes()) {
-    document
-      .querySelector("#ajy-search-list-container")
-      .removeChild(
-        document.querySelector("#ajy-search-list-container").firstChild
-      );
+    document.querySelector("#ajy-search-list-container").removeChild(document.querySelector("#ajy-search-list-container").firstChild);
   }
 
   productData().then((whosProduct) => {
@@ -845,9 +745,7 @@ cartSearchTextBtn.addEventListener("click", () => {
   });
   whosProductSearch = 0;
   while (document.querySelector(".cart-search-text-body").hasChildNodes()) {
-    document
-      .querySelector(".cart-search-text-body")
-      .removeChild(document.querySelector(".cart-search-text-body").firstChild);
+    document.querySelector(".cart-search-text-body").removeChild(document.querySelector(".cart-search-text-body").firstChild);
   }
 });
 
@@ -869,24 +767,17 @@ searchInputTag.addEventListener("click", () => {
     cartSearchChild[cartSearchFirst] = document.createElement("div");
     cartSearchChild[cartSearchFirst].classList.add("cart-search-child");
     cartSearchChild[cartSearchFirst].id = "cartSearchChild" + [cartSearchFirst];
-    cartSearchChild[cartSearchFirst].innerHTML =
-      cartSearchTextLast[cartSearchFirst];
+    cartSearchChild[cartSearchFirst].innerHTML = cartSearchTextLast[cartSearchFirst];
 
-    document
-      .querySelector(".cart-search-text-body")
-      .appendChild(cartSearchLink[cartSearchFirst]);
-    cartSearchLink[cartSearchFirst].appendChild(
-      cartSearchChild[cartSearchFirst]
-    );
+    document.querySelector(".cart-search-text-body").appendChild(cartSearchLink[cartSearchFirst]);
+    cartSearchLink[cartSearchFirst].appendChild(cartSearchChild[cartSearchFirst]);
     cartSearchFirst++;
   }
 });
 
 searchInputTag.addEventListener("focusout", () => {
   while (document.querySelector(".cart-search-text-body").hasChildNodes()) {
-    document
-      .querySelector(".cart-search-text-body")
-      .removeChild(document.querySelector(".cart-search-text-body").firstChild);
+    document.querySelector(".cart-search-text-body").removeChild(document.querySelector(".cart-search-text-body").firstChild);
   }
 });
 searchInputTag.addEventListener("click", () => {
@@ -916,11 +807,7 @@ cartNewProduct.addEventListener("click", () => {
   });
   cartNewProductInfor = 0;
   while (document.getElementById("ajy-search-list-container").hasChildNodes()) {
-    document
-      .getElementById("ajy-search-list-container")
-      .removeChild(
-        document.getElementById("ajy-search-list-container").firstChild
-      );
+    document.getElementById("ajy-search-list-container").removeChild(document.getElementById("ajy-search-list-container").firstChild);
   }
   productData().then((whosProduct) => {
     ajywhosProduct = whosProduct.filter((a) => {
@@ -934,11 +821,7 @@ cartNewProduct.addEventListener("click", () => {
   });
   cartNewProductInfor = 0;
   while (document.getElementById("jjw-search-list-container").hasChildNodes()) {
-    document
-      .getElementById("jjw-search-list-container")
-      .removeChild(
-        document.getElementById("jjw-search-list-container").firstChild
-      );
+    document.getElementById("jjw-search-list-container").removeChild(document.getElementById("jjw-search-list-container").firstChild);
   }
   productData().then((whosProduct) => {
     jjwwhosProduct = whosProduct.filter((a) => {
@@ -993,8 +876,7 @@ if (document.documentElement.scrollTop == 0) {
   document.querySelector(".search-rank").style.backgroundColor = "";
 }
 document.querySelector(".Ann-shop").addEventListener("click", () => {
-  document.querySelector(".search").style.backgroundColor =
-    "rgba(255, 255, 255, 0.5)";
+  document.querySelector(".search").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
   document.querySelector(".search").style.visibility = "";
   document.querySelector(".logo").style.backgroundColor = "white";
   document.querySelector(".Ann-shop").style.backgroundColor = "white";
@@ -1003,8 +885,7 @@ document.querySelector(".Ann-shop").addEventListener("click", () => {
   document.querySelector(".search-rank").style.backgroundColor = "white";
 });
 document.querySelector(".Joo-shop").addEventListener("click", () => {
-  document.querySelector(".search").style.backgroundColor =
-    "rgba(255, 255, 255, 0.5)";
+  document.querySelector(".search").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
   document.querySelector(".search").style.visibility = "";
   document.querySelector(".logo").style.backgroundColor = "white";
   document.querySelector(".Ann-shop").style.backgroundColor = "white";
@@ -1013,8 +894,7 @@ document.querySelector(".Joo-shop").addEventListener("click", () => {
   document.querySelector(".search-rank").style.backgroundColor = "white";
 });
 document.querySelector(".Jang-shop").addEventListener("click", () => {
-  document.querySelector(".search").style.backgroundColor =
-    "rgba(255, 255, 255, 0.5)";
+  document.querySelector(".search").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
   document.querySelector(".search").style.visibility = "";
   document.querySelector(".logo").style.backgroundColor = "white";
   document.querySelector(".Ann-shop").style.backgroundColor = "white";

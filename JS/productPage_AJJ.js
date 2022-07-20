@@ -18,13 +18,9 @@ function getProductData() {
     productData = [...result];
   });
 
-  for (const key in productData) {
-    if (Object.hasOwnProperty.call(productData, key)) {
-      AhnProducts = productData.filter((el) => el.designerName === "AJY");
-      JuProducts = productData.filter((el) => el.designerName === "JBH");
-      JangProducts = productData.filter((el) => el.designerName === "JJW");
-    }
-  }
+  AhnProducts = productData.filter((el) => el.designerName === "AJY");
+  JuProducts = productData.filter((el) => el.designerName === "JBH");
+  JangProducts = productData.filter((el) => el.designerName === "JJW");
 
   let productListColTags = new Array();
   let productContainerTags = new Array();
@@ -39,10 +35,8 @@ function getProductData() {
   let inCartBtnTags = new Array();
   let showProductBtnTags = new Array();
 
-  let cartTotalAmount = 0;
-  let cartUserListPrice = new Array();
-
   let cartTotalCount = 0;
+  let cartTotalAmount = 0;
   const showProductCount = 20;
   const cartTotalAmountTag = document.createElement("p");
   const cartIconTag = document.querySelector(".cart-icon");
@@ -55,9 +49,18 @@ function getProductData() {
   const AhnProductListTag = document.querySelector(".Ahn-product-list");
   const JangProductListTag = document.querySelector(".Jang-product-list");
   const cartModalContainerTag = document.querySelector(".cart-modal-container");
-  const cartTotalCountNumberTag = document.querySelector(
-    ".cart-total-count-number"
-  );
+  const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
+
+  const pantsKeywords = ["pants", "바지", "팬츠"];
+  const leggingsKeywords = ["leggings", "레깅스"];
+  const shoesKeywords = ["shoes", "신발", "슈즈"];
+  const setKeywords = ["set", "세트"];
+  const bagKeywords = ["bag", "가방", "백", "샤넬", "샤넬백"];
+  const musicalKeywords = ["musical", "뮤지컬", "연극", "music", "뮤직", "음악"];
+  const musicKeywords = ["music", "뮤직", "음악", "뮤지컬"];
+  const classicalMusicKeywords = ["classical music", "classical", "클래식", "music", "뮤직", "음악"];
+  const breadKeywords = ["bread", "빵", "포켓몬", "poketmon", "포켓몬빵"];
+  const figureKeywords = ["figure", "피규어", "포켓몬", "poketmon", "헬창"];
 
   // ㅜ 장바구니의 합계 금액 태그에 대해 설정하기
   cartTotalAmountTag.classList.add("cart-total-amount");
@@ -161,63 +164,65 @@ function getProductData() {
           inCartBtnTags[key].after(showProductBtnTags[key]);
 
           // ㅜ 장바구니에 담기 버튼을 클릭했을 때
-          // ㅜ 상품의 태그를 복사하고 삭제하기 버튼으로 바꾸기
+          cartTotalCountNumberTag.innerHTML = cartTotalCount;
           inCartBtnTags[key].addEventListener("click", () => {
-            console.log("@@");
+            // ㅜ 장바구니에 담은 상품 수
             cartTotalCount++;
             cartTotalCountNumberTag.innerHTML = cartTotalCount;
-            cartTotalAmount += Number(productData[key].price);
 
-            const copyTag = inCartBtnTags[key]
-              .closest(".product-list-col")
-              .cloneNode(true);
-            const cartDeleteBtnTag = copyTag.querySelector(
-              `.in-cart-btn${key}`
-            );
+            // ㅜ 장바구니에 담은 상품의 합계 금액
+            cartTotalAmount += Number(productData[key].price);
+            cartTotalAmountTag.innerHTML = "총 합계 금액: " + cartTotalAmount;
+
+            // ㅜ 클릭한 상품의 태그를 복사한 다음에 삭제하기 버튼으로 바꾸기
+            const copyTag = inCartBtnTags[key].closest(".product-list-col").cloneNode(true);
+            const cartDeleteBtnTag = copyTag.querySelector(`.in-cart-btn${key}`);
             cartDeleteBtnTag.className = `cart-delete-btn${key}`;
             cartDeleteBtnTag.setAttribute("value", "삭제하기");
             cartListRowTag.appendChild(copyTag);
 
             // ㅜ 삭제하기 버튼을 클릭했을 때
             cartDeleteBtnTag.addEventListener("click", () => {
+              // ㅜ 장바구니에 담은 상품 수
               cartTotalCount--;
               cartTotalCountNumberTag.innerHTML = cartTotalCount;
+
+              // ㅜ 장바구니에 담은 상품의 합계 금액
               cartTotalAmount -= Number(productData[key].price);
+              cartTotalAmountTag.innerHTML = "총 합계 금액: " + cartTotalAmount;
+
               cartDeleteBtnTag.closest(".product-list-col").remove();
             });
           });
         }
       }
+
+      // ㅜ 보여줄 상품이 더 남아 있을 경우에 더보기 버튼 생성하기
+      if (document.querySelector(".product-show-more-btn") !== null) {
+        document.querySelector(".product-show-more-btn").remove();
+      }
+      if (productData.length > startIdx + showProductCount) {
+        const productShowMoreBtnTag = document.createElement("input");
+        productShowMoreBtnTag.classList.add("product-show-more-btn");
+        productShowMoreBtnTag.setAttribute("type", "button");
+        productShowMoreBtnTag.setAttribute("value", "더보기");
+        productListRowTag.appendChild(productShowMoreBtnTag);
+        productShowMoreBtnTag.style.display = "block";
+
+        // ㅜ 더보기 버튼을 클릭하면 상품을 더 보여주기
+        productShowMoreBtnTag.addEventListener("click", () => {
+          createProductList(productListTag, productData, startIdx + showProductCount);
+        });
+      }
     }
 
-    // ㅜ 상품이 더 남아있을 경우에만 더보기 버튼을 생성하고
-    // ㅜ 더보기 버튼을 클릭하면 상품 목록을 더 보여주기
-    if (document.querySelector(".product-show-more-btn") !== null) {
-      document.querySelector(".product-show-more-btn").remove();
-    }
-    if (productData.length > startIdx + showProductCount) {
-      const productShowMoreBtnTag = document.createElement("input");
-      productShowMoreBtnTag.classList.add("product-show-more-btn");
-      productShowMoreBtnTag.setAttribute("type", "button");
-      productShowMoreBtnTag.setAttribute("value", "더보기");
-      productListRowTag.appendChild(productShowMoreBtnTag);
-
-      productShowMoreBtnTag.addEventListener("click", () => {
-        createProductList(
-          productListTag,
-          productData,
-          startIdx + showProductCount
-        );
-      });
-    }
+    // ㅜ 장바구니 아이콘을 클릭했을 때
+    cartModalContainerTag.style.display = "";
+    cartIconTag.addEventListener("click", () => {
+      cartModalContainerTag.style.display = "block";
+    });
+    cartExitBtnTag.addEventListener("click", () => {
+      cartModalContainerTag.style.display = "";
+    });
   }
-
-  // ㅜ 장바구니 아이콘을 클릭했을 때
-  cartModalContainerTag.style.display = "hidden";
-  cartIconTag.addEventListener("click", () => {
-    cartModalContainerTag.style.display = "block";
-  });
-  cartExitBtnTag.addEventListener("click", () => {
-    cartModalContainerTag.style.display = "hidden";
-  });
 })();

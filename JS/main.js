@@ -100,16 +100,16 @@ class AhnSlide {
       }
     });
   }
-    // 이미지 복사해서 요소 붙여넣기
-    makeClone() {
+  // 이미지 복사해서 요소 붙여넣기
+  makeClone() {
     let _this = this;
     let cloneSlidefirst = _this.slideWarp.firstElementChild.cloneNode(true);
     let cloneSlidelast = _this.slideWarp.lastElementChild.cloneNode(true);
     _this.slideWarp.appendChild(cloneSlidefirst);
     _this.slideWarp.insertBefore(cloneSlidelast, _this.slideWarp.firstElementChild);
   }
-    //게이지바 기능
-    progressMove() {
+  //게이지바 기능
+  progressMove() {
     let _this = this;
     let width = 0;
     _this._setInterval = setInterval(gauge, 20);
@@ -128,8 +128,8 @@ class AhnSlide {
       }
     }
   }
-    //슬라이드 기능
-    autoSlide() {
+  //슬라이드 기능
+  autoSlide() {
     let _this = this;
     _this.slideCount++;
     if (_this.slideCount == 4) {
@@ -164,8 +164,8 @@ class AhnSlide {
       _this.text.innerHTML = "나는 주영";
     }
   }
-    //게이지바,슬라이드 멈추기
-    progressstop() {
+  //게이지바,슬라이드 멈추기
+  progressstop() {
     let _this = this;
     _this.progress.style.width = "0%";
     clearInterval(_this._setInterval);
@@ -174,7 +174,6 @@ class AhnSlide {
 }
 
 let _AhnSlide = new AhnSlide();
-
 
 // //페이지 리사이징
 // window.onresize = function () {
