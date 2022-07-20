@@ -124,11 +124,11 @@ let cartAllList = document.getElementById("cartAllList");
   // cartMoreShowBtnajy.setAttribute("value","더보기");
 
   //유저의 총 합계금액 구하기 위해 필요한 태그 생성
-  let cartListSum = document.createElement("div");
-  cartListSum.classList.add("cart-list-sum");
-  let cartSumPrice = document.createElement("p");
-  cartSumPrice.classList.add("cart-sum-price");
-  cartSumPrice.innerHTML = "총 합계금액"+cartUserListPriceReal;
+  // let cartListSum = document.createElement("div");
+  // cartListSum.classList.add("cart-list-sum");
+  // let cartSumPrice = document.createElement("p");
+  // cartSumPrice.classList.add("cart-sum-price");
+  // cartSumPrice.innerHTML = "총 합계금액"+cartUserListPriceReal;
 
   //220711 추가된 부분
 
@@ -245,8 +245,8 @@ let cartAllList = document.getElementById("cartAllList");
         cartListPText[cartListResult].innerHTML = cartUserShopInfor[key].name+",";
         cartListPText[cartListResult].id = "cartListPText"+[cartListResult];
 
-        cartUserListPrice[cartListResult] = cartUserShopInfor[key].price;
-        document.querySelector(".cart-list-text").appendChild(cartListPText[cartListResult]); 
+        // cartUserListPrice[cartListResult] = cartUserShopInfor[key].price;
+        // document.querySelector(".cart-list-text").appendChild(cartListPText[cartListResult]); 
         cartListPText[cartListResult].style.visibility = "hidden";
         cartNumberCount++;
         cartListResult++;
@@ -400,14 +400,14 @@ cartMoreShowBtnjjw.addEventListener("click",function(){
     cartUserListPrice.splice(btnCartListIndex,1);
 
     //장바구니 총 합계금액
-    cartSumPrice.innerHTML = "총 합계금액"+cartUserListPriceReal;
-    cartBuyListRow.after(cartListSum);
-    cartListSum.appendChild(cartSumPrice);
-    document.getElementById("cart-Buy-list-row").removeChild(cartBuyListCol[btnCartListIndex]);
-    cartListPText.splice(cartListPText[btnCartListIndex],1);
-    document.querySelector(".cart-list-text").removeChild(document.getElementById("cartListPText"+[btnCartListIndex]));
-    cartNumberCount=cartNumberCount-1;
-    document.querySelector(".circleNumber").innerHTML = cartNumberCount;
+    // cartSumPrice.innerHTML = "총 합계금액"+cartUserListPriceReal;
+    // cartBuyListRow.after(cartListSum);
+    // cartListSum.appendChild(cartSumPrice);
+    // document.getElementById("cart-Buy-list-row").removeChild(cartBuyListCol[btnCartListIndex]);
+    // cartListPText.splice(cartListPText[btnCartListIndex],1);
+    // document.querySelector(".cart-list-text").removeChild(document.getElementById("cartListPText"+[btnCartListIndex]));
+    // cartNumberCount=cartNumberCount-1;
+    // document.querySelector(".circleNumber").innerHTML = cartNumberCount;
    })
 }
 cartBuyListRow.after(cartListSum)

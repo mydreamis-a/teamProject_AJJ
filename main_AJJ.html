@@ -61,9 +61,8 @@
         </ul>
       </div>
     </div>
-    <div class="search"></div>
-    <div class="cart-list-text"></div>
-    <input type="button" class="cart-btn-cart-list" value="장바구니">
+    <div class="search">
+    </div>
   </header>
   <div class="main-event">
     <svg xmlns="http://www.w3.org/2000/svg" width="80px" height="80px" fill="currentColor"
@@ -96,15 +95,12 @@
               d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
           </svg> 문의하기
           <div class="chat-box">
-            <div class="chat-text"></div>
+            <div class="chat-text">
+            </div>
             <div class="chat-robot">정보를 남겨주시면 잠시 후에 상담원이 연락 드릴 예정입니다.<br>※ 정확히 입력해주세요.
-              <div>
-                이름
-                <div>
+              <div>이름<div>
                   <input type="text" placeholder="입력하세요">
-                </div>
-                휴대폰 번호
-                <div>
+                </div>휴대폰 번호<div>
                   <input type="text" placeholder="하이픈빼고입력하세요">
                 </div>
                 <div class="submission">제출하기</div>
@@ -125,12 +121,12 @@
             </svg></div>
         </div>
       </div>
-      <div class="signup-modal">
-        <div class="signup-sub-modal">
+      <div class="sign-up-modal">
+        <div class="sign-up-sub-modal">
           <form class="form" autocomplete="off">
             <fieldset class="fieldset">
               <legend class="legend">회 원 가 입</legend>
-              <div class="signup-delete"><svg xmlns="http://www.w3.org/2000/svg" width="49.997px" height="49.997px"
+              <div class="sign-up-delete"><svg xmlns="http://www.w3.org/2000/svg" width="49.997px" height="49.997px"
                   fill="currentColor" class="bi bi-x svg" viewBox="0 0 16 16">
                   <path
                     d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
@@ -152,7 +148,7 @@
           </form>
         </div>
       </div>
-      <div class="signup-icon">
+      <div class="sign-up-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="2.344vw" height="2.344vw" fill="currentColor"
           class="bi bi-tag-fill" viewBox="0 0 16 16">
           <path
@@ -160,16 +156,16 @@
         </svg>
       </div>
       <div class="modal">
-        <div class="modal_body">
-          <p class="modal_title">로그인하기</p>
-          <p class="emailPTag">이메일</p>
-          <input type="email" id="inputEmail">
-          <p class="pwPTag">패스워드</p>
-          <input type="password" id="inputPw">
-          <div class="btn_group">
-            <input type="button" value="로그인" id="modalIn">
-            <input type="button" value="나가기" id="modalOut">
-          </div>
+        <div class="modal-body">
+          <p class="modal-title">로그인하기</p>
+          <label for="sign-in-email">이메일</label>
+            <input type="email" id="sign-in-email">
+            <label for="sign-in-password">패스워드</label>
+              <input type="password" id="sign-in-password">
+              <div class="sign-in-btn-group">
+                <input type="button" value="로그인" class="sign-in-btn">
+                <input type="button" value="나가기" class="sign-in-exit-btn">
+              </div>
         </div>
       </div>
       <div class="person-icon">
@@ -191,17 +187,13 @@
           </div>
         </div>
       </div>
-
-      <div class="shopping-icon">
-
-        <!-- 추가부분 -->
-        <div class="wrapper">
-          <div class="circle">
-            <p class="circleNumber">
+      <div class="cart-icon">
+        <div class="cart-total-count-wrapper">
+          <div class="cart-total-count-circle">
+            <p class="cart-total-count-number">
             </p>
           </div>
         </div>
-
         <svg xmlns="http://www.w3.org/2000/svg" width="2.344vw" height="2.344vw" fill="currentColor"
           class="bi bi-cart-check-fill" viewBox="0 0 16 16">
           <path
@@ -215,18 +207,18 @@
             d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-5.146-5.146-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708z" />
         </svg>
       </div>
-      <div class="cart-modal modal">
+      <div class="cart-modal-container modal">
         <div class="cart-modal-body">
           <p class="cart-title">장바구니 리스트</p>
-
-          <div class="cart-modal-container">
-            <div class="cart-list" id="cart-Buy-list">
-              <div class="cart-listRow" id="cart-Buy-list-row"></div>
+          <div class="cart-modal-wrapper">
+            <div class="cart-list">
+              <div class="cart-list-row">
+              </div>
             </div>
           </div>
           <div class="cart-btn-group">
-            <input type="button" value="주문하기" id="cartListAllBuy">
-            <input type="button" value="나가기" id="cartListOut">
+            <input type="button" value="주문하기" class="cart-order-btn">
+            <input type="button" value="나가기" class="cart-exit-btn">
           </div>
         </div>
       </div>
@@ -292,7 +284,7 @@
 <script>  const _numberAnimation = new numberAnimation();</script>
 <script src="slide_mainContent_AJJ copy 2.js"></script>
 <script src="slide_mainContent_AJJ copy.js"></script>
-<script src="signin_AJJ.js"></script>
+<script src="signIn_AJJ.js"></script>
 <script src="signUp_AJJ.js"></script>
 <script src="lankSlide.js"></script>
 <script src="check.js"></script>

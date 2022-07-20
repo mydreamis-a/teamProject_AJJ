@@ -146,7 +146,7 @@ textarea {
     padding-top: 92.5%;
 }
 
-.product-img:hover .cart-img-dark {
+.product-img:hover .product-img-dark {
     opacity: 0.6;
     text-align: center;
     color: #ffffff;
@@ -158,7 +158,7 @@ textarea {
 }
 
 .product-btn-container {
-    padding-top: 1.042vw
+    padding-top: 1.042vw;
 }
 
 .product-btn-group > input {
@@ -216,13 +216,13 @@ textarea {
 }
 
 /* 07 12 18 최종 수정 */
-.wrapper {
+.cart-total-count-wrapper {
     position: absolute;
     margin: -1.8vw 0.781vw -0.521vw 0;
     padding: 1.563vw;
 }
 
-.circle {
+.cart-total-count-circle {
     border: 0.781vw solid #ffc107;
     background-color: #ffc107;
     justify-content: center;

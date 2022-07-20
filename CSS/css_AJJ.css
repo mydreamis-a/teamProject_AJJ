@@ -120,7 +120,7 @@
     
     cursor: pointer;
   }
-  .shopping-icon{
+  .cart-icon{
     position: absolute;
     left: 1.458vw;
     bottom: 6.25vw;
@@ -133,7 +133,7 @@
     cursor: pointer;
   }
   
-  .signup-icon{
+  .sign-up-icon{
     position: absolute;
     left: 1.458vw;
     bottom: 12.5vw;
@@ -301,7 +301,7 @@
   
   /* signUp_AJJ.js */
   
-  .signup-modal{
+  .sign-up-modal{
     position: fixed;
     top: 0;
     left: 0;
@@ -314,7 +314,7 @@
     outline: 0;
     background-color: rgba(0, 0, 0, 0.4);
   }
-  .signup-sub-modal{
+  .sign-up-sub-modal{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -326,7 +326,7 @@
     box-shadow: 0 0.104vw 0.156vw 0 rgba(34, 36, 38, 0.15);
     transform: translateX(-50%) translateY(-50%);
   }
-  .signup-delete{
+  .sign-up-delete{
     position: absolute;
     cursor: pointer;
     right: 1.146vw;
@@ -556,7 +556,7 @@
     background-color: rgba(0, 0, 0, 0.4);
     /* border: 1px solid red; */
   }
-  .modal_body {
+  .modal-body {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -574,7 +574,7 @@
     transform: translateX(-50%) translateY(-50%);
     border: 4px solid palevioletred;
   }
-  .modal_title{
+  .modal-title{
     vertical-align : bottom;
     text-align:center;
     background-color: pink;
@@ -584,11 +584,11 @@
     width: 30vw;
     margin-bottom: 10vh;;
   }
-  .btn_group {
+  .sign-in-btn-group {
     margin-top: 1.042vw;
   }
   
-  .btn_group > input[type = "button"] {
+  .sign-in-btn-group > input[type = "button"] {
     background-color: pink;
     border: 1px solid palevioletred;
     margin: 0.1vw;

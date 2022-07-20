@@ -37,19 +37,32 @@ function getProductData() {
   let productPriceTags = new Array();
   let productBtnContainerTags = new Array();
   let productBtnGroupTags = new Array();
-  let putInBasketBtnTags = new Array();
+  let inCartBtnTags = new Array();
   let showProductBtnTags = new Array();
 
+  let cartTotalAmount = 0;
+  let cartUserListPrice = new Array();
 
-
-  let showProductIdx = 0;
+  
+  let cartTotalCount = 0;
   const showProductCount = 20;
-  const AhnShopBtnTag = document.querySelector('.Ahn-shop-btn');
+  const cartTotalAmountTag = document.createElement("p");
+  const cartIconTag = document.querySelector('.cart-icon');
   const JuShopBtnTag = document.querySelector('.Ju-shop-btn');
+  const AhnShopBtnTag = document.querySelector('.Ahn-shop-btn');
+  const cartListRowTag = document.querySelector('.cart-list-row');
+  const cartExitBtnTag = document.querySelector('.cart-exit-btn');
   const JangShopBtnTag = document.querySelector('.Jang-shop-btn');
-  const AhnProductListTag = document.querySelector('.Ahn-product-list');
   const JuProductListTag = document.querySelector('.Ju-product-list');
+  const AhnProductListTag = document.querySelector('.Ahn-product-list');
   const JangProductListTag = document.querySelector('.Jang-product-list');
+  const cartModalContainerTag = document.querySelector('.cart-modal-container');
+  const cartTotalCountNumberTag = document.querySelector('.cart-total-count-number');
+  
+  // ㅜ 장바구니의 합계 금액 태그에 대해 설정하기
+  cartTotalAmountTag.classList.add("cart-total-amount");
+  cartTotalAmountTag.innerHTML = "총 합계 금액: " + cartTotalAmount;
+  cartListRowTag.after(cartTotalAmountTag);
 
   // ㅜ 각 상점의 메뉴 버튼을 클릭했을 때
   // ㅜ 해당 상점의 상품 목록 태그는 생성하고 다른 상점의 상품 목록 태그는 삭제하기
@@ -90,10 +103,9 @@ function getProductData() {
 
     for (const key in productData) {
       if (Object.hasOwnProperty.call(productData, key)) {
-        console.log(key);
-        if (key < startIdx) {}
+        if (key < startIdx) { }
+
         else if (key < startIdx + showProductCount) {
-          console.log(key);
           productListColTags[key] = document.createElement('div');
           productListColTags[key].classList.add('product-list-col');
           productListRowTag.appendChild(productListColTags[key]);
@@ -138,17 +150,41 @@ function getProductData() {
           productBtnGroupTags[key].classList.add('product-btn-group');
           productBtnContainerTags[key].appendChild(productBtnGroupTags[key]);
 
-          putInBasketBtnTags[key] = document.createElement('input');
-          putInBasketBtnTags[key].classList.add(`put-in-basket-btn${key}`);
-          putInBasketBtnTags[key].setAttribute("type", "button");
-          putInBasketBtnTags[key].setAttribute("value", "장바구니에 담기");
-          productBtnGroupTags[key].appendChild(putInBasketBtnTags[key]);
+          inCartBtnTags[key] = document.createElement('input');
+          inCartBtnTags[key].classList.add(`in-cart-btn${key}`);
+          inCartBtnTags[key].setAttribute("type", "button");
+          inCartBtnTags[key].setAttribute("value", "장바구니에 담기");
+          productBtnGroupTags[key].appendChild(inCartBtnTags[key]);
 
           showProductBtnTags[key] = document.createElement('input');
           showProductBtnTags[key].classList.add(`show-product-btn${key}`);
           showProductBtnTags[key].setAttribute("type", "button");
           showProductBtnTags[key].setAttribute("value", "상품 보기");
-          putInBasketBtnTags[key].after(showProductBtnTags[key]);
+          inCartBtnTags[key].after(showProductBtnTags[key]);
+
+
+          // ㅜ 장바구니에 담기 버튼을 클릭했을 때
+          // ㅜ 상품의 태그를 복사하고 삭제하기 버튼으로 바꾸기
+          inCartBtnTags[key].addEventListener("click", () => {
+            console.log("@@");
+            cartTotalCount++;
+            cartTotalCountNumberTag.innerHTML = cartTotalCount;
+            cartTotalAmount += Number(productData[key].price);
+
+            const copyTag = inCartBtnTags[key].closest('.product-list-col').cloneNode(true);
+            const cartDeleteBtnTag = copyTag.querySelector(`.in-cart-btn${key}`);
+            cartDeleteBtnTag.className = `cart-delete-btn${key}`;
+            cartDeleteBtnTag.setAttribute("value", "삭제하기");
+            cartListRowTag.appendChild(copyTag);
+
+            // ㅜ 삭제하기 버튼을 클릭했을 때
+            cartDeleteBtnTag.addEventListener("click", () => {
+              cartTotalCount--;
+              cartTotalCountNumberTag.innerHTML = cartTotalCount;
+              cartTotalAmount -= Number(productData[key].price);
+              cartDeleteBtnTag.closest('.product-list-col').remove();
+            })
+          })
         }
       }
     }
@@ -169,7 +205,15 @@ function getProductData() {
         createProductList(productListTag, productData, startIdx + showProductCount);
       })
     }
-    
   }
+
+  // ㅜ 장바구니 아이콘을 클릭했을 때
+  cartModalContainerTag.style.display = "hidden";
+  cartIconTag.addEventListener("click", () => {
+    cartModalContainerTag.style.display = "block";
+  })
+  cartExitBtnTag.addEventListener("click", () => {
+    cartModalContainerTag.style.display = "hidden";
+  })
 
 })();

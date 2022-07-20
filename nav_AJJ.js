@@ -38,7 +38,7 @@ class mainNav {
         //아직 미구현 채팅창 카운터
         this.keypressNumber = 0;
         //회원가입 삭제버튼 눌렀을때 삭제되게하려고 가져온거
-        this.signupModal = document.querySelector('.signup-modal');
+        this.signupModal = document.querySelector('.sign-up-modal');
         //출석체크 삭제버튼 눌렀을 때 삭제되게하려고 가져온거
         this.mainContainer = document.querySelector(".main-container");
         this.logoTag = document.querySelector(".logo");
@@ -109,7 +109,7 @@ class mainNav {
                         _this.subMission.style.background = "rgb(204, 204, 255)";
                     };
                     break;
-                case 'signup-delete':
+                case 'sign-up-delete':
                     if (_this.signupModal.style.display === "block") {
                         _this.signupModal.style.display = "none";
                     };

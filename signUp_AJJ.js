@@ -8,8 +8,8 @@ class signUp {
         this.formTag = document.querySelector("form");
         this.regs = [this.regName, this.regTel, this.regEmail, this.regPassword, ,];
         this.disallowMessages = [];
-        this.signupIcon = document.querySelector(".signup-icon");
-        this.signupModal = document.querySelector('.signup-modal');
+        this.signupIcon = document.querySelector(".sign-up-icon");
+        this.signupModal = document.querySelector('.sign-up-modal');
         // this.signUpDelete = document.querySelector('.sign-up-delete');
         this.init();
     }
