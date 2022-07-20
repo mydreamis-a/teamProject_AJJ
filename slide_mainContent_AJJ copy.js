@@ -27,7 +27,6 @@ class JangMainSlide {
         this.init(classNameValue);
     }
     init(classNameValue) {
-        let _this = this;
 
         // // ㅜ 우클릭, 블럭, 드래그 방지하기
         // window.document.oncontextmenu = new Function("return false");
@@ -96,17 +95,15 @@ class JangMainSlide {
         // ㅜ 다음 버튼을 클릭했을 때
         // ㅜ 맨 뒤에 복사해 둔 첫 번째 사진의 경우 원래 자리로 이동해야 하기 때문에 막아놓기
         _this.nextBtn.onclick = () => {
-            let _this = this;
             if ((_this.index === _this.imgTags.length / _this.rowImgCount - 1)) return;
             _this.btnControl("next");
         }
 
         // ㅜ 이전 버튼을 클릭했을 때
         // ㅜ 맨 뒤에 복사해 둔 첫 번째 사진의 경우 원래 자리로 이동해야 하기 때문에 막아놓기
-        _this.prevBtn.onclick = () => {
-            let _this = this;
-            if (_this.index === 0) return;
-            _this.btnControl("prev");
+        this.prevBtn.onclick = function() {
+            if (this.index === 0) return;
+            this.btnControl("prev");
         }
 
         // ㅜ 마우스 왼쪽 버튼을 클릭했을 때
