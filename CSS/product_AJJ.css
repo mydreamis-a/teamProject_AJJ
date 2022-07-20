@@ -51,24 +51,24 @@ textarea {
 }
 
 @media (min-width:51.667vw) {
-    [class $= "-product-list"] {
+    .product-list-container {
         max-width: 50vw;
     }
 }
 
 @media (min-width:62.5vw) {
-    [class $= "-product-list"] {
+    .product-list-container {
         max-width: 59.375vw;
     }
 }
 
 @media (min-width:72.917vw) {
-    [class $= "-product-list"] {
+    .product-list-container {
         max-width: 68.75vw;
     }
 }
 
-[class $= "-product-list"] {
+.product-list-container {
     min-width: 51.667vw;
     margin-right: auto;
     margin-left: auto;

@@ -3,8 +3,9 @@
 /* 07 12 18 최종 수정 부분 */
 @font-face {
     font-family: "Lee";
-    src: url("font/LeeSeoyun.ttf");
+    src: url("/font/LeeSeoyun.ttf");
   }
+  
   * {
     box-sizing: border-box;
     padding: 0;
