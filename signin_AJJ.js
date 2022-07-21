@@ -9,24 +9,24 @@ let userInfor = {
   userInputEmail: document.querySelector("#sign-in-email").value,
   userInputPw: document.querySelector("#sign-in-password").value,
 };
-const signInExitTag = document.querySelector(".sign-in-exit-btn").addEventListener("click", function () {
+const signInExitTag = document.querySelector(".sign-in-exit-btn").addEventListener("click", () => {
   modal.style.display = "none";
 });
-personIcon.addEventListener("click", function () {
+personIcon.addEventListener("click", () => {
   if (userSignInInfor.email != "" && userSignInInfor.pw != "") {
     alert(userSignInInfor.name + " 님은 이미 로그인 하셨습니다!");
     modal.style.display = "none";
   } else {
     modal.style.display = "block";
     function loadJson() {
-      return fetch("/json/loginMain.json")
+      return fetch("/JSON/loginData_AJJ.json")
         .then((res) => res.json())
         .then((json) => json.user)
         .catch((rej) => {
           console.log("연결이 안됐음");
         });
     }
-    document.querySelector(".sign-in-btn").addEventListener("click", function () {
+    document.querySelector(".sign-in-btn").addEventListener("click", () => {
       userInfor = {
         userInputEmail: document.querySelector("#sign-in-email").value,
         userInputPw: document.querySelector("#sign-in-password").value,
