@@ -310,7 +310,7 @@
 </script>
 
 <script>
-   getProductData().then((result) => {
+   getProductsData().then((result) => {
     asdproductData = result;
       ahnproductData = asdproductData.filter((el) => el.designerName === "AJY");
       ajycartUserImg = ahnproductData.map(a => a.img);

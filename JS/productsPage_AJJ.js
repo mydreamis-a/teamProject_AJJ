@@ -2,7 +2,7 @@
 function getProductsData() {
   return fetch("/JSON/productsData_AJJ.json")
     .then((resolve) => resolve.json())
-    .then((json) => json.productInfor)
+    .then((json) => json.productsInfor)
     .catch((reject) => {
       console.log("가져오기 실패");
     });
@@ -34,9 +34,11 @@ function getProductsData() {
   let productBtnGroupTags = new Array();
   let inCartBtnTags = new Array();
   let showProductBtnTags = new Array();
+  let resultProducts = new Array();
 
   let cartTotalCount = 0;
   let cartTotalAmount = 0;
+  let productListTag = null;
   const showProductCount = 20;
   const cartTotalAmountTag = document.createElement("p");
   const cartIconTag = document.querySelector(".cart-icon");
@@ -71,7 +73,7 @@ function getProductsData() {
   const musicKeywords = ["music", "뮤직", "음악", "뮤지컬"];
   const musicalKeywords = ["musical", "뮤지컬", "연극", "music", "뮤직", "음악"];
   const classicalMusicKeywords = ["classical music", "classical", "클래식", "music", "뮤직", "음악"];
-  const keywords = [breadKeywords, figureKeywords, pantsKeywords, leggingsKeywords, setKeywords, shoesKeywords, bagKeywords, musicKeywords, musicalKeywords, classicalMusicKeywords];
+  const searchKeywords = [breadKeywords, figureKeywords, pantsKeywords, leggingsKeywords, setKeywords, shoesKeywords, bagKeywords, musicKeywords, musicalKeywords, classicalMusicKeywords];
 
   // ㅜ 장바구니의 합계 금액 태그에 대해 설정하기
   cartTotalAmountTag.classList.add("cart-total-amount");
@@ -79,33 +81,23 @@ function getProductsData() {
   cartListRowTag.after(cartTotalAmountTag);
 
   // ㅜ 각 상점의 메뉴 버튼을 클릭했을 때
-  // ㅜ 해당 상점의 상품 목록 태그는 생성하고 다른 상점의 상품 목록 태그는 삭제하기
+  // ㅜ 기존에 보고 있던 상품 목록 태그는 삭제하고 해당 상점의 상품 목록 태그만 생성하기
   AhnShopBtnTag.addEventListener("click", () => {
-    if (JuProductListTag.querySelector(".product-list-col") !== null) {
-      JuProductListTag.querySelector(".product-list-col").remove();
-    }
-    if (JangProductListTag.querySelector(".product-list-col") !== null) {
-      JangProductListTag.querySelector(".product-list-col").remove();
-    }
     createProductList(AhnProductListTag, AhnProducts, 0);
   });
 
   JuShopBtnTag.addEventListener("click", () => {
-    if (AhnProductListTag.querySelector(".product-list-col") !== null) {
-      AhnProductListTag.querySelector(".product-list-col").remove();
-    }
-    if (JangProductListTag.querySelector(".product-list-col") !== null) {
-      JangProductListTag.querySelector(".product-list-col").remove();
+    if (document.querySelector(".product-list-col") !== null) {
+      const _delete = document.querySelectorAll(".product-list-col");
+      _delete.forEach((el) => el.remove());
     }
     createProductList(JuProductListTag, JuProducts, 0);
   });
 
   JangShopBtnTag.addEventListener("click", () => {
-    if (AhnProductListTag.querySelector(".product-list-col") !== null) {
-      AhnProductListTag.querySelector(".product-list-col").remove();
-    }
-    if (JuProductListTag.querySelector(".product-list-col") !== null) {
-      JuProductListTag.querySelector(".product-list-col").remove();
+    if (document.querySelector(".product-list-col") !== null) {
+      const _delete = document.querySelectorAll(".product-list-col");
+      _delete.forEach((el) => el.remove());
     }
     createProductList(JangProductListTag, JangProducts, 0);
   });
@@ -280,6 +272,7 @@ function getProductsData() {
   productSearchNameTag.id = "product-search-name";
   productSearchNameTag.classList.add("cart-input-search-item");
   productSearchNameTag.setAttribute("type", "search");
+  productSearchNameBtnTag.setAttribute("name", "q");
   productSortHighPriceBtnTag.after(productSearchNameTag);
 
   productSearchNameBtnTag.id = "product-search-name-btn";
@@ -292,19 +285,94 @@ function getProductsData() {
   productSearchLastTag.innerHTML = "최근검색어";
   productSearchNameBtnTag.after(productSearchLastTag);
 
-  // ㅜ 가격 검색 기능
+  // ㅜ 가격 범위를 입력하고 검색 버튼을 클릭 했을 때
   productSearchPriceBtnTag.addEventListener("click", () => {
+    // ㅜ 입력한 가격의 범위 안에 해당하는 상품 목록 추출하기
     let resultProducts = new Array();
+    const productListTag = deleteProductTags();
     const min = productSearchPriceStartTag.value;
     const max = productSearchPriceEndTag.value;
-    if (min === null && max === null) resultProducts = productsData;
-    else if (min === null) resultProducts.push(productsData.filter((el) => el.price >= min));
-    else if (max === null) resultProducts.push(productsData.filter((el) => el.price <= max));
+    if (min === "" && max === "") resultProducts = productsData;
+    else if (min === "") resultProducts = productsData.filter((el) => el.price <= max);
+    else if (max === "") resultProducts = productsData.filter((el) => el.price >= min);
     else {
-      resultProducts.push(productsData.filter((el) => el.price >= min && el.price <= max));
+      resultProducts = productsData.filter((el) => el.price >= min && el.price <= max);
     }
-    resultProducts = resultProducts.sort((a, b) => a - b);
-    createProductList(productListTag, resultProducts, startIdx)
+    resultProducts = resultProducts.sort((a, b) => a.price - b.price);
+    createProductList(productListTag, resultProducts, 0);
+  });
 
-  })
+  // ㅜ 신상품순의 버튼을 클릭했을 때
+  productSortNewBtnTag.addEventListener("click", () => {
+    productListTag = deleteProducts();
+    updateResultProducts(productListTag);
+    resultProducts.sort((a, b) => b.index - a.index);
+    createProductList(productListTag, resultProducts, 0);
+  });
+
+  // ㅜ 낮은 가격순의 버튼을 클릭했을 때
+  productSortLowPriceBtnTag.addEventListener("click", () => {
+    productListTag = deleteProducts();
+    updateResultProducts(productListTag);
+    resultProducts.sort((a, b) => a.price - b.price);
+    createProductList(productListTag, resultProducts, 0);
+  });
+
+  // ㅜ 높은 가격순의 버튼을 클릭했을 때
+  productSortHighPriceBtnTag.addEventListener("click", () => {
+    productListTag = deleteProducts();
+    updateResultProducts(productListTag);
+    resultProducts.sort((a, b) => b.price - a.price);
+    createProductList(productListTag, resultProducts, 0);
+  });
+
+  // ㅜ 검색어를 입력하고 검색 버튼을 클릭했을 때
+  productSearchNameBtnTag.addEventListener("click", () => {
+    // ㅜ 기존에 보고 있던 상품 목록 태그는 삭제하기
+    const _delete = document.querySelectorAll(".product-list-col");
+    productListTag = _delete[0].closest('[class $= "-product-list"]');
+    _delete.forEach((el) => el.remove());
+
+    // ㅜ 입력된 검색어가 유사 검색어와 일치하는지 확인하고 해당하는 분류명 추출하기
+    let classification = new Array();
+    const inputKeyword = productSearchNameTag.value;
+    searchKeywords.forEach((el) => {
+      if (el.some((_el) => _el === inputKeyword)) classification.push(el[0]);
+    });
+
+    // ㅜ 분류명에 해당하는 상품 목록 데이터 추출하기
+    classification.forEach((el) => {
+      resultProducts.concat(productsData.filter((_el) => _el.classification === el));
+    });
+    resultProducts.sort((a, b) => a.price - b.price);
+    createProductList(productListTag, resultProducts, 0);
+  });
+
+  // ㅜ 기존에 보고 있던 상품 목록의 태그를 삭제하는 함수
+  function deleteProducts() {
+    if (document.querySelector(".product-list-col") !== null) {
+      const _delete = document.querySelectorAll(".product-list-col");
+      productListTag = _delete[0].closest('[class $= "-product-list"]');
+      _delete.forEach((el) => el.remove());
+    }
+    return productListTag;
+  }
+
+  // ㅜ 해당 상점의 상품 목록 데이터를 추출하는 함수
+  function updateResultProducts(productListTag) {
+    const who = productListTag.className.replace("-product-list", "");
+    console.log(who);
+    switch (who) {
+      case "Ahn":
+        resultProducts = AhnProducts;
+        break;
+      case "Ju":
+        resultProducts = JuProducts;
+        break;
+      default:
+        resultProducts = JangProducts;
+        break;
+    }
+    return who;
+  }
 })();
