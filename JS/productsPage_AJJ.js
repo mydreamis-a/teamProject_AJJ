@@ -304,7 +304,7 @@ function getProductsData() {
 
   // ㅜ 신상품순의 버튼을 클릭했을 때
   productSortNewBtnTag.addEventListener("click", () => {
-    productListTag = deleteProducts();
+    productListTag = whosPage();
     updateResultProducts(productListTag);
     resultProducts.sort((a, b) => b.index - a.index);
     createProductList(productListTag, resultProducts, 0);
@@ -312,7 +312,7 @@ function getProductsData() {
 
   // ㅜ 낮은 가격순의 버튼을 클릭했을 때
   productSortLowPriceBtnTag.addEventListener("click", () => {
-    productListTag = deleteProducts();
+    productListTag = whosPage();
     updateResultProducts(productListTag);
     resultProducts.sort((a, b) => a.price - b.price);
     createProductList(productListTag, resultProducts, 0);
@@ -320,7 +320,7 @@ function getProductsData() {
 
   // ㅜ 높은 가격순의 버튼을 클릭했을 때
   productSortHighPriceBtnTag.addEventListener("click", () => {
-    productListTag = deleteProducts();
+    productListTag = whosPage();
     updateResultProducts(productListTag);
     resultProducts.sort((a, b) => b.price - a.price);
     createProductList(productListTag, resultProducts, 0);
@@ -328,6 +328,7 @@ function getProductsData() {
 
   // ㅜ 검색어를 입력하고 검색 버튼을 클릭했을 때
   productSearchNameBtnTag.addEventListener("click", () => {
+
     // ㅜ 기존에 보고 있던 상품 목록 태그는 삭제하기
     const _delete = document.querySelectorAll(".product-list-col");
     productListTag = _delete[0].closest('[class $= "-product-list"]');
@@ -347,32 +348,26 @@ function getProductsData() {
     resultProducts.sort((a, b) => a.price - b.price);
     createProductList(productListTag, resultProducts, 0);
   });
-
-  // ㅜ 기존에 보고 있던 상품 목록의 태그를 삭제하는 함수
-  function deleteProducts() {
-    if (document.querySelector(".product-list-col") !== null) {
-      const _delete = document.querySelectorAll(".product-list-col");
-      productListTag = _delete[0].closest('[class $= "-product-list"]');
-      _delete.forEach((el) => el.remove());
-    }
-    return productListTag;
+    deleteProductTags();
   }
 
-  // ㅜ 해당 상점의 상품 목록 데이터를 추출하는 함수
-  function updateResultProducts(productListTag) {
-    const who = productListTag.className.replace("-product-list", "");
-    console.log(who);
-    switch (who) {
-      case "Ahn":
-        resultProducts = AhnProducts;
+  // ㅜ 
+  function whosPage() {
+    const allSectionsTag = document.querySelector('.all-sections');
+    const top = Number(allSectionsTag.style.top.replace("vh", ""));
+    switch (top) {
+      case -100:
+        productListTag = AhnProductListTag;
         break;
-      case "Ju":
-        resultProducts = JuProducts;
+      case -200:
+        productListTag = JuProductListTag;
+        break;
+      case -300:
+        productListTag = JangProductListTag;
         break;
       default:
-        resultProducts = JangProducts;
         break;
     }
-    return who;
+    return productListTag;
   }
 })();
