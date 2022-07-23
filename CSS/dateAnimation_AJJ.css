@@ -1,0 +1,14 @@
+/* 07 24 07 수정 */
+
+.number-animation-increase {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: 900;
+    font-size: 7vw;
+    display: flex;
+}
+
+.number-animation-increase:hover {
+    color: royalblue;
+}

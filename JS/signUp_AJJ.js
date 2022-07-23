@@ -100,5 +100,3 @@ class signUp {
     return rsltArr;
   }
 }
-
-// 07 11 12 최종 수정

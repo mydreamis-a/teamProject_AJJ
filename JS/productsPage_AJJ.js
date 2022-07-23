@@ -14,14 +14,6 @@ function getProductsData() {
   let JuProducts = new Array();
   let JangProducts = new Array();
 
-  await getProductsData().then((result) => {
-    productsData = [...result];
-  });
-
-  AhnProducts = productsData.filter((el) => el.designerName === "AJY");
-  JuProducts = productsData.filter((el) => el.designerName === "JBH");
-  JangProducts = productsData.filter((el) => el.designerName === "JJW");
-
   let productListColTags = new Array();
   let productContainerTags = new Array();
   let productImgTags = new Array();
@@ -34,26 +26,26 @@ function getProductsData() {
   let productBtnGroupTags = new Array();
   let inCartBtnTags = new Array();
   let showProductBtnTags = new Array();
-  let resultProducts = new Array();
 
   let cartTotalCount = 0;
   let cartTotalAmount = 0;
-  let productListTag = null;
   const showProductCount = 20;
+  const searchTag = document.querySelector(".search");
+  const topIconTag = document.querySelector('.top-icon');
   const cartTotalAmountTag = document.createElement("p");
   const cartIconTag = document.querySelector(".cart-icon");
-  const productSearchLastTag = document.createElement("div");
+  const productLastKeywordsTag = document.createElement("div");
   const JuShopBtnTag = document.querySelector(".Ju-shop-btn");
-  const productSearchNameTag = document.createElement("input");
   const productSortNewBtnTag = document.createElement("input");
   const AhnShopBtnTag = document.querySelector(".Ahn-shop-btn");
   const cartListRowTag = document.querySelector(".cart-list-row");
   const cartExitBtnTag = document.querySelector(".cart-exit-btn");
   const JangShopBtnTag = document.querySelector(".Jang-shop-btn");
-  const productSearchNameBtnTag = document.createElement("input");
+  const productSearchKeywordTag = document.createElement("input");
   const productSearchPriceBtnTag = document.createElement("input");
   const productSearchPriceEndTag = document.createElement("input");
   const productSortLowPriceBtnTag = document.createElement("input");
+  const productSearchKeywordBtnTag = document.createElement("input");
   const productSortHighPriceBtnTag = document.createElement("input");
   const productSearchPriceStartTag = document.createElement("input");
   const productSearchPriceLabelTag = document.createElement("label");
@@ -63,44 +55,221 @@ function getProductsData() {
   const cartModalContainerTag = document.querySelector(".cart-modal-container");
   const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
 
+  let lastKeywords = new Array();
   const breadKeywords = ["bread", "빵", "포켓몬", "poketmon", "포켓몬빵"];
   const figureKeywords = ["figure", "피규어", "포켓몬", "poketmon", "헬창"];
-  const pantsKeywords = ["pants", "바지", "팬츠"];
-  const leggingsKeywords = ["leggings", "레깅스"];
-  const setKeywords = ["set", "세트"];
-  const shoesKeywords = ["shoes", "신발", "슈즈"];
-  const bagKeywords = ["bag", "가방", "백", "샤넬", "샤넬백"];
-  const musicKeywords = ["music", "뮤직", "음악", "뮤지컬"];
-  const musicalKeywords = ["musical", "뮤지컬", "연극", "music", "뮤직", "음악"];
-  const classicalMusicKeywords = ["classical music", "classical", "클래식", "music", "뮤직", "음악"];
-  const searchKeywords = [breadKeywords, figureKeywords, pantsKeywords, leggingsKeywords, setKeywords, shoesKeywords, bagKeywords, musicKeywords, musicalKeywords, classicalMusicKeywords];
+  const setKeywords = ["set", "세트", "패션", "옷"];
+  const pantsKeywords = ["pants", "바지", "팬츠", "패션", "옷"];
+  const leggingsKeywords = ["leggings", "레깅스", "패션", "옷"];
+  const shoesKeywords = ["shoes", "신발", "슈즈", "패션", "잡화"];
+  const bagKeywords = ["bag", "가방", "백", "샤넬", "샤넬백", "패션", "잡화"];
+  const musicKeywords = ["music", "뮤직", "음악", "노래", "예술"];
+  const musicalKeywords = ["musical", "뮤지컬", "연기", "music", "뮤직", "음악", "노래", "예술"];
+  const classicalMusicKeywords = ["classical music", "classical", "클래식", "music", "뮤직", "음악", "노래", "예술"];
+  const similarKeywords = [breadKeywords, figureKeywords, setKeywords, pantsKeywords, leggingsKeywords, shoesKeywords, bagKeywords, musicKeywords, musicalKeywords, classicalMusicKeywords];
+
+  await getProductsData().then((result) => {
+    productsData = [...result];
+  });
+
+  // ㅜ 각 상점별로 상품 목록 분류하기
+  AhnProducts = sortByDesignerName(productsData, "AJY");
+  JuProducts = sortByDesignerName(productsData, "JBH");
+  JangProducts = sortByDesignerName(productsData, "JJW");
+
+  // ㅜ 해당 상점명을 클릭하면 그 상점의 상품 목록을 보여주기
+  showProductList(AhnShopBtnTag, AhnProductListTag, AhnProducts, 0);
+  showProductList(JuShopBtnTag, JuProductListTag, JuProducts, 0);
+  showProductList(JangShopBtnTag, JangProductListTag, JangProducts, 0);
 
   // ㅜ 장바구니의 합계 금액 태그에 대해 설정하기
   cartTotalAmountTag.classList.add("cart-total-amount");
   cartTotalAmountTag.innerHTML = "총 합계 금액: " + cartTotalAmount;
   cartListRowTag.after(cartTotalAmountTag);
 
-  // ㅜ 각 상점의 메뉴 버튼을 클릭했을 때
-  // ㅜ 기존에 보고 있던 상품 목록 태그는 삭제하고 해당 상점의 상품 목록 태그만 생성하기
-  AhnShopBtnTag.addEventListener("click", () => {
-    createProductList(AhnProductListTag, AhnProducts, 0);
+  // ㅜ 검색 관련 HTML 태그 생성하기
+  productSearchPriceLabelTag.classList.add("product-search-price-start");
+  productSearchPriceLabelTag.setAttribute("for", "product-search-price-start");
+  productSearchPriceLabelTag.innerHTML = "가격 검색";
+  searchTag.appendChild(productSearchPriceLabelTag);
+
+  productSearchPriceStartTag.id = "product-search-price-start";
+  productSearchPriceStartTag.classList.add("product-search");
+  productSearchPriceStartTag.setAttribute("type", "number");
+  searchTag.appendChild(productSearchPriceStartTag);
+
+  productSearchPriceEndTag.id = "product-search-price-end";
+  productSearchPriceEndTag.classList.add("product-search");
+  productSearchPriceEndTag.setAttribute("type", "number");
+  searchTag.appendChild(productSearchPriceEndTag);
+
+  productSearchPriceBtnTag.id = "product-search-price-btn";
+  productSearchPriceBtnTag.classList.add("product-search");
+  productSearchPriceBtnTag.setAttribute("type", "button");
+  productSearchPriceBtnTag.setAttribute("value", "검색");
+  searchTag.appendChild(productSearchPriceBtnTag);
+
+  productSortNewBtnTag.id = "product-sort-new";
+  productSortNewBtnTag.classList.add("product-search");
+  productSortNewBtnTag.setAttribute("type", "button");
+  productSortNewBtnTag.setAttribute("value", "신상품순");
+  searchTag.appendChild(productSortNewBtnTag);
+
+  productSortLowPriceBtnTag.id = "product-sort-low-price";
+  productSortLowPriceBtnTag.classList.add("product-search");
+  productSortLowPriceBtnTag.setAttribute("type", "button");
+  productSortLowPriceBtnTag.setAttribute("value", "낮은가격순");
+  searchTag.appendChild(productSortLowPriceBtnTag);
+
+  productSortHighPriceBtnTag.id = "product-sort-high-price";
+  productSortHighPriceBtnTag.classList.add("product-search");
+  productSortHighPriceBtnTag.setAttribute("type", "button");
+  productSortHighPriceBtnTag.setAttribute("value", "높은가격순");
+  searchTag.appendChild(productSortHighPriceBtnTag);
+
+  productSearchKeywordTag.id = "product-search-keyword";
+  productSearchKeywordTag.classList.add("cart-input-search-item");
+  productSearchKeywordTag.setAttribute("type", "search");
+  productSearchKeywordBtnTag.setAttribute("name", "q");
+  searchTag.appendChild(productSearchKeywordTag);
+
+  productSearchKeywordBtnTag.id = "product-search-keyword-btn";
+  productSearchKeywordBtnTag.classList.add("product-search");
+  productSearchKeywordBtnTag.setAttribute("type", "button");
+  productSearchKeywordBtnTag.setAttribute("value", "검색");
+  searchTag.appendChild(productSearchKeywordBtnTag);
+
+  productLastKeywordsTag.classList.add("product-search-last");
+  productLastKeywordsTag.innerHTML = "최근검색어";
+  searchTag.appendChild(productLastKeywordsTag);
+
+  // ㅜ 가격 범위를 입력하고 검색 버튼을 클릭 했을 때
+  productSearchPriceBtnTag.addEventListener("click", () => {
+
+    // ㅜ 입력한 가격의 범위 안에 해당하는 상품 목록 추출하기
+    let resultProducts = new Array();
+    const min = productSearchPriceStartTag.value;
+    const max = productSearchPriceEndTag.value;
+    if (min === "" && max === "") resultProducts = productsData;
+    else if (min === "") resultProducts = productsData.filter((el) => el.price <= max);
+    else if (max === "") resultProducts = productsData.filter((el) => el.price >= min);
+    else {
+      resultProducts = productsData.filter((el) => el.price >= min && el.price <= max);
+    }
+    resultProducts = resultProducts.sort((a, b) => a.price - b.price);
+
+    deleteProductListColTags();
+    showResultProducts(resultProducts);
   });
 
-  JuShopBtnTag.addEventListener("click", () => {
-    if (document.querySelector(".product-list-col") !== null) {
-      const _delete = document.querySelectorAll(".product-list-col");
-      _delete.forEach((el) => el.remove());
-    }
-    createProductList(JuProductListTag, JuProducts, 0);
+  // ㅜ 신상품순의 버튼을 클릭했을 때
+  productSortNewBtnTag.addEventListener("click", () => {
+    const resultProducts = productsData.sort((a, b) => b.index - a.index);
+
+    deleteProductListColTags();
+    showResultProducts(resultProducts);
   });
 
-  JangShopBtnTag.addEventListener("click", () => {
-    if (document.querySelector(".product-list-col") !== null) {
-      const _delete = document.querySelectorAll(".product-list-col");
-      _delete.forEach((el) => el.remove());
-    }
-    createProductList(JangProductListTag, JangProducts, 0);
+  // ㅜ 낮은 가격순의 버튼을 클릭했을 때
+  productSortLowPriceBtnTag.addEventListener("click", () => {
+    const resultProducts = productsData.sort((a, b) => a.price - b.price);
+
+    deleteProductListColTags();
+    showResultProducts(resultProducts);
   });
+
+  // ㅜ 높은 가격순의 버튼을 클릭했을 때
+  productSortHighPriceBtnTag.addEventListener("click", () => {
+    const resultProducts = productsData.sort((a, b) => b.price - a.price);
+
+    deleteProductListColTags();
+    showResultProducts(resultProducts);
+  });
+
+  // ㅜ 검색 창에 검색어를 입력하고 검색 버튼을 클릭했을 때
+  productSearchKeywordBtnTag.addEventListener("click", () => {
+    _lastKeywords();
+    searchKeyword();
+  });
+
+  // ㅜ 검색 창에 검색어를 입력하고 엔터를 입력했을 때
+  productSearchKeywordTag.addEventListener("keypress", (e) => {
+    if (e.code === "Enter") {
+      _lastKeywords();
+      searchKeyword();
+    }
+  })
+
+  // ㅜ 검색 창의 focus 여부에 따라 최근 검색어 보여주고 숨겨주기
+  productSearchKeywordTag.addEventListener("focus", () => {
+    productLastKeywordsTag.style.visibility = "visible";
+  })
+  productSearchKeywordTag.addEventListener("focusout", () => {
+    productLastKeywordsTag.style.visibility = "hidden";
+  })
+
+  // ㅜ TOP 버튼을 클릭했을 때 검색 관련 태그 숨기기
+  topIconTag.addEventListener("click", () => {
+    searchTag.style.visibility = "hidden";
+  })
+
+  // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 여기서부터 함수 시작 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+  // ㅜ 각 상점별로 상품 목록 분류하는 함수
+  function sortByDesignerName(productsData, name) {
+    return productsData.filter((el) => el.designerName === name);
+  }
+
+  // ㅜ 해당 상점명을 클릭하면 그 상점의 상품 목록을 보여주는 함수
+  function showProductList(btnTag, productListTag, products, startIdx) {
+    btnTag.addEventListener("click", () => {
+      searchTag.style.visibility = "visible";
+      deleteProductListColTags();
+      createProductList(productListTag, products, startIdx);
+    });
+  }
+
+  // ㅜ 기존에 생성된 상품 목록에 대한 태그가 있다면 삭제시키는 함수
+  function deleteProductListColTags() {
+    const allProductListTags = document.querySelectorAll('[class $= "-product-list"]');
+    allProductListTags.forEach((el) => {
+      if (el.querySelector(".product-list-col") !== null) {
+        const _deleteTags = el.querySelectorAll(".product-list-col");
+        _deleteTags.forEach((_el) => _el.remove());
+      }
+    })
+  }
+
+  // ㅜ 추출한 상품 목록을 각 상점별로 분류하고 보여주는 함수
+  function showResultProducts(resultProducts) {
+
+    // ㅜ 각 상점별로 상품 목록 분류하기
+    const AhnResultProducts = sortByDesignerName(resultProducts, "AJY");
+    const JuResultProducts = sortByDesignerName(resultProducts, "JBH");
+    const JangResultProducts = sortByDesignerName(resultProducts, "JJW");
+
+    // ㅜ 해당 상점명을 클릭하면 그 상점의 상품 목록을 보여주기
+    showProductList(AhnShopBtnTag, AhnProductListTag, AhnResultProducts, 0);
+    showProductList(JuShopBtnTag, JuProductListTag, JuResultProducts, 0);
+    showProductList(JangShopBtnTag, JangProductListTag, JangResultProducts, 0);
+
+    // ㅜ 현재 보고 있는 상점의 상품 목록을 보여주기
+    const allSectionsTag = document.querySelector(".all-sections");
+    let top = allSectionsTag.style.top;
+    top = top.replace("vh", "");
+    top = Number(top);
+
+    switch (top) {
+      case -100:
+        createProductList(AhnProductListTag, AhnResultProducts, 0)
+      case -200:
+        createProductList(JuProductListTag, JuResultProducts, 0)
+      case -300:
+        createProductList(JangProductListTag, JangResultProducts, 0)
+      default:
+        break;
+    }
+  }
 
   // ㅜ 상품 목록 관련 HTML 태그를 생성하는 함수
   function createProductList(productListTag, productsData, startIdx) {
@@ -169,6 +338,7 @@ function getProductsData() {
           // ㅜ 장바구니에 담기 버튼을 클릭했을 때
           cartTotalCountNumberTag.innerHTML = cartTotalCount;
           inCartBtnTags[key].addEventListener("click", () => {
+
             // ㅜ 장바구니에 담은 상품 수
             cartTotalCount++;
             cartTotalCountNumberTag.innerHTML = cartTotalCount;
@@ -186,6 +356,7 @@ function getProductsData() {
 
             // ㅜ 삭제하기 버튼을 클릭했을 때
             cartDeleteBtnTag.addEventListener("click", () => {
+
               // ㅜ 장바구니에 담은 상품 수
               cartTotalCount--;
               cartTotalCountNumberTag.innerHTML = cartTotalCount;
@@ -229,145 +400,52 @@ function getProductsData() {
     });
   }
 
-  // ㅜ 검색 관련 HTML 태그 생성하기
-  productSearchPriceLabelTag.classList.add("product-search-price-start");
-  productSearchPriceLabelTag.setAttribute("for", "product-search-price-start");
-  productSearchPriceLabelTag.innerHTML = "가격 검색";
-  document.querySelector(".search").appendChild(productSearchPriceLabelTag);
+  // ㅜ 검색 창의 검색 기능에 대한 함수
+  function searchKeyword() {
+    deleteProductListColTags();
 
-  productSearchPriceStartTag.id = "product-search-price-start";
-  productSearchPriceStartTag.classList.add("product-search");
-  productSearchPriceStartTag.setAttribute("type", "number");
-  productSearchPriceLabelTag.appendChild(productSearchPriceStartTag);
-
-  productSearchPriceEndTag.id = "product-search-price-end";
-  productSearchPriceEndTag.classList.add("product-search");
-  productSearchPriceEndTag.setAttribute("type", "number");
-  productSearchPriceStartTag.after(productSearchPriceEndTag);
-
-  productSearchPriceBtnTag.id = "product-search-price-btn";
-  productSearchPriceBtnTag.classList.add("product-search");
-  productSearchPriceBtnTag.setAttribute("type", "button");
-  productSearchPriceBtnTag.setAttribute("value", "검색");
-  productSearchPriceEndTag.after(productSearchPriceBtnTag);
-
-  productSortNewBtnTag.id = "product-sort-new";
-  productSortNewBtnTag.classList.add("product-search");
-  productSortNewBtnTag.setAttribute("type", "button");
-  productSortNewBtnTag.setAttribute("value", "신상품순");
-  productSearchPriceBtnTag.after(productSortNewBtnTag);
-
-  productSortLowPriceBtnTag.id = "product-sort-low-price";
-  productSortLowPriceBtnTag.classList.add("product-search");
-  productSortLowPriceBtnTag.setAttribute("type", "button");
-  productSortLowPriceBtnTag.setAttribute("value", "낮은가격순");
-  productSortNewBtnTag.after(productSortLowPriceBtnTag);
-
-  productSortHighPriceBtnTag.id = "product-sort-high-price";
-  productSortHighPriceBtnTag.classList.add("product-search");
-  productSortHighPriceBtnTag.setAttribute("type", "button");
-  productSortHighPriceBtnTag.setAttribute("value", "높은가격순");
-  productSortLowPriceBtnTag.after(productSortHighPriceBtnTag);
-
-  productSearchNameTag.id = "product-search-name";
-  productSearchNameTag.classList.add("cart-input-search-item");
-  productSearchNameTag.setAttribute("type", "search");
-  productSearchNameBtnTag.setAttribute("name", "q");
-  productSortHighPriceBtnTag.after(productSearchNameTag);
-
-  productSearchNameBtnTag.id = "product-search-name-btn";
-  productSearchNameBtnTag.classList.add("product-search");
-  productSearchNameBtnTag.setAttribute("type", "button");
-  productSearchNameBtnTag.setAttribute("value", "검색");
-  productSearchNameTag.after(productSearchNameBtnTag);
-
-  productSearchLastTag.classList.add("product-search-last");
-  productSearchLastTag.innerHTML = "최근검색어";
-  productSearchNameBtnTag.after(productSearchLastTag);
-
-  // ㅜ 가격 범위를 입력하고 검색 버튼을 클릭 했을 때
-  productSearchPriceBtnTag.addEventListener("click", () => {
-    // ㅜ 입력한 가격의 범위 안에 해당하는 상품 목록 추출하기
+    // ㅜ 입력된 검색어가 유사 검색어와 일치한다면 해당하는 모든 분류명 추출하기
     let resultProducts = new Array();
-    const productListTag = deleteProductTags();
-    const min = productSearchPriceStartTag.value;
-    const max = productSearchPriceEndTag.value;
-    if (min === "" && max === "") resultProducts = productsData;
-    else if (min === "") resultProducts = productsData.filter((el) => el.price <= max);
-    else if (max === "") resultProducts = productsData.filter((el) => el.price >= min);
-    else {
-      resultProducts = productsData.filter((el) => el.price >= min && el.price <= max);
-    }
-    resultProducts = resultProducts.sort((a, b) => a.price - b.price);
-    createProductList(productListTag, resultProducts, 0);
-  });
-
-  // ㅜ 신상품순의 버튼을 클릭했을 때
-  productSortNewBtnTag.addEventListener("click", () => {
-    productListTag = whosPage();
-    updateResultProducts(productListTag);
-    resultProducts.sort((a, b) => b.index - a.index);
-    createProductList(productListTag, resultProducts, 0);
-  });
-
-  // ㅜ 낮은 가격순의 버튼을 클릭했을 때
-  productSortLowPriceBtnTag.addEventListener("click", () => {
-    productListTag = whosPage();
-    updateResultProducts(productListTag);
-    resultProducts.sort((a, b) => a.price - b.price);
-    createProductList(productListTag, resultProducts, 0);
-  });
-
-  // ㅜ 높은 가격순의 버튼을 클릭했을 때
-  productSortHighPriceBtnTag.addEventListener("click", () => {
-    productListTag = whosPage();
-    updateResultProducts(productListTag);
-    resultProducts.sort((a, b) => b.price - a.price);
-    createProductList(productListTag, resultProducts, 0);
-  });
-
-  // ㅜ 검색어를 입력하고 검색 버튼을 클릭했을 때
-  productSearchNameBtnTag.addEventListener("click", () => {
-
-    // ㅜ 기존에 보고 있던 상품 목록 태그는 삭제하기
-    const _delete = document.querySelectorAll(".product-list-col");
-    productListTag = _delete[0].closest('[class $= "-product-list"]');
-    _delete.forEach((el) => el.remove());
-
-    // ㅜ 입력된 검색어가 유사 검색어와 일치하는지 확인하고 해당하는 분류명 추출하기
     let classification = new Array();
-    const inputKeyword = productSearchNameTag.value;
-    searchKeywords.forEach((el) => {
-      if (el.some((_el) => _el === inputKeyword)) classification.push(el[0]);
+    const inputKeyword = productSearchKeywordTag.value;
+    similarKeywords.forEach((el) => {
+      if (el.some((_el) => _el === inputKeyword)) {
+        classification.push(el[0]);
+      }
     });
 
     // ㅜ 분류명에 해당하는 상품 목록 데이터 추출하기
     classification.forEach((el) => {
-      resultProducts.concat(productsData.filter((_el) => _el.classification === el));
+      resultProducts = resultProducts.concat(productsData.filter((_el) => _el.classification === el));
     });
     resultProducts.sort((a, b) => a.price - b.price);
-    createProductList(productListTag, resultProducts, 0);
-  });
-    deleteProductTags();
+
+    deleteProductListColTags();
+    showResultProducts(resultProducts);
   }
 
-  // ㅜ 
-  function whosPage() {
-    const allSectionsTag = document.querySelector('.all-sections');
-    const top = Number(allSectionsTag.style.top.replace("vh", ""));
-    switch (top) {
-      case -100:
-        productListTag = AhnProductListTag;
-        break;
-      case -200:
-        productListTag = JuProductListTag;
-        break;
-      case -300:
-        productListTag = JangProductListTag;
-        break;
-      default:
-        break;
+  // ㅜ 최근 검색어를 저장하는 함수
+  function _lastKeywords() {
+    lastKeywords = [...lastKeywords, productSearchKeywordTag.value];
+
+    // ㅜ 중복된 검색어일 경우 기존 검색어를 삭제하고 새로 추가하기
+    lastKeywords = lastKeywords.reduce((prev, curr) => {
+      if (prev.includes(curr)) {
+        prev.splice(prev.indexOf(curr), 1);
+      }
+      return [...prev, curr];
+    }, []);
+
+    // ㅜ 최근 검색어가 5개를 넘어가면 첫 번째 검색어부터 삭제하기
+    if (lastKeywords.length > 5) {
+      while (lastKeywords.length > 5) lastKeywords.shift();
     }
-    return productListTag;
+
+    productLastKeywordsTag.innerHTML = "최근 검색어";
+    lastKeywords.forEach((el) => {
+      productLastKeywordsTag.innerHTML += `<br>${el}`;
+    })
   }
 })();
+
+// 07 24 07 수정

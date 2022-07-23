@@ -1,10 +1,3 @@
-// ## 네브 바 만들기
-// 1. 전체 크기는 100%
-// 2. 메뉴 3개 (안주영 shop, 주병현 shop, 장지원 shop)
-// 3. 클릭 시 스크롤 이동
-// 4. 항상 고정
-// 5. resize 되면 top 위치 맞춰주기
-// 6. 구조 및 구현에 집중, 디자인은 추후 적용
 class mainNav {
   constructor() {
     this.allSectionsTag = document.querySelector(".all-sections");
@@ -121,13 +114,6 @@ class mainNav {
       }
     });
 
-    this.logoTag.addEventListener("click", () => {
-      this.searchTag.remove();
-      this.allSectionsTag.style.top = `${0}vh`;
-      this.remoconMove(0);
-      this.remoconOff();
-    });
-
     //TOP 버튼 클릭시 메인 페이지로 이동
     this.topIcon.addEventListener("click", () => {
       this.searchTag.remove();
@@ -197,5 +183,3 @@ class mainNav {
     this.remocon.style.top = `${this.index * 100 + 50}vh`;
   }
 }
-
-// 07 21 22 최종 수정

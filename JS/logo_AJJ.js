@@ -55,5 +55,3 @@ class logo {
     this.typingTextTag.innerHTML = "";
   }
 }
-
-// 07 19 20 최종 수정

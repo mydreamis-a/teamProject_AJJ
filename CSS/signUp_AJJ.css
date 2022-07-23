@@ -1,0 +1,123 @@
+/* 07 24 07 수정 */
+
+.sign-up-modal {
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: fixed;
+    z-index: 1000;
+    display: none;
+    height: 100%;
+    width: 100%;
+    outline: 0;
+    left: 0;
+    top: 0;
+}
+
+.sign-up-sub-modal {
+    box-shadow: 0 0.104vw 0.156vw 0 rgba(34, 36, 38, 0.15);
+    transform: translateX(-50%) translateY(-50%);
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.521vw;
+    position: absolute;
+    padding: 2.083vw;
+    height: 700px;
+    width: 60vw;
+    left: 50%;
+    top: 50%;
+}
+
+.sign-up-delete {
+    position: absolute;
+    cursor: pointer;
+    right: 1.146vw;
+    top: 1.146vw;
+}
+
+.form {
+    margin: 0.521vw auto;
+    position: relative;
+    z-index: 999;
+    top: 1.563vw;
+    width: 35vw;
+    right: 0;
+}
+
+.fieldset {
+    box-shadow: 0.521vw 0.521vw 0.521vw 0.521vw pink;
+    border: 0.156vw solid palevioletred;
+    border-radius: 30px;
+    padding: 1.042vw;
+    margin: 1.042vw;
+}
+
+.legend {
+    text-align: center;
+    font-size: 1.563vw;
+    font-weight: 900;
+    float: initial;
+    width: initial;
+}
+
+.label {
+    background: url("/img_AJJ/tag-fill.svg") no-repeat left bottom;
+    padding-left: 2.083vw;
+    font-size: 1.042vw;
+    font-weight: 900;
+    margin: 0.521vw;
+    display: block;
+
+}
+
+[id ^="input"] {
+    border: 0.052vw solid palevioletred;
+    background-color: white;
+    font-size: 1.042vw;
+    padding: 0.26vw;
+    height: 1.5vw;
+    width: 100%;
+}
+
+#inputEmail,
+#inputPw {
+    margin-bottom: 1vw;
+    width: 30vw;
+}
+
+[id ^="input"]::placeholder {
+    font-size: 0.8vw;
+}
+
+[id ^="input"].is-invalid {
+    outline: 0.052vw solid red;
+    border: 0.052vw solid red;
+}
+
+[id ^="input"].is-valid {
+    outline: 0.052vw solid palevioletred;
+    border: 0.052vw solid palevioletred;
+}
+
+.disallow-massage {
+    color: palevioletred;
+    font-weight: 900;
+    display: block;
+}
+
+.welcome-msg {
+    margin: 1.042vw 0px 0px 0px;
+    text-align: center;
+    font-weight: 900;
+    color: red;
+}
+
+.submit-btn {
+    border: 0.156vw solid palevioletred;
+    background-color: palevioletred;
+    margin: 1.042vw auto 0.521vw auto;
+    padding: 0.26vw 0.521vw;
+    border-radius: 30px;
+    font-weight: 900;
+    color: white;
+    display: block;
+}

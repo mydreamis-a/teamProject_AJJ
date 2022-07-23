@@ -182,5 +182,3 @@ class JangRankSlide {
     return (value / bodyWidth) * 100;
   }
 }
-
-// 07 13 20 최종 수정
