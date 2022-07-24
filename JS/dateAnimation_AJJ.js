@@ -9,7 +9,7 @@ class dateAnimation {
     this.value = 0;
     this.increasePoint = 0;
     this.increaseCopyTag = null;
-    this.increaseTag = document.createElement("div");
+    this.increaseTag = document.createElement('div');
     this.init();
 
     // this.speedUp = null;
@@ -18,7 +18,7 @@ class dateAnimation {
   }
 
   init() {
-    this.increaseTag.classList.add("date-animation-increase");
+    this.increaseTag.classList.add('date-animation-increase');
     this.increaseTag.innerHTML = `TODAY is<br>0`;
     this.increaseCopyTag = this.increaseTag.cloneNode(true);
 
@@ -121,4 +121,4 @@ class dateAnimation {
   }
 }
 
-// 07 24 16 수정
+// 07 24 19 수정

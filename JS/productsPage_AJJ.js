@@ -34,30 +34,30 @@ class productsPage {
       let cartTotalCount = 0;
       let cartTotalAmount = 0;
       const showProductCount = 20;
-      const searchTag = document.querySelector(".search");
+      const searchTag = document.querySelector('.search');
       const topIconTag = document.querySelector('.top-icon');
-      const cartTotalAmountTag = document.createElement("p");
-      const cartIconTag = document.querySelector(".cart-icon");
-      const productLastKeywordsTag = document.createElement("div");
-      const JuShopBtnTag = document.querySelector(".Ju-shop-btn");
-      const productSortNewBtnTag = document.createElement("input");
-      const AhnShopBtnTag = document.querySelector(".Ahn-shop-btn");
-      const cartListRowTag = document.querySelector(".cart-list-row");
-      const cartExitBtnTag = document.querySelector(".cart-exit-btn");
-      const JangShopBtnTag = document.querySelector(".Jang-shop-btn");
-      const productSearchKeywordTag = document.createElement("input");
-      const productSearchPriceBtnTag = document.createElement("input");
-      const productSearchPriceEndTag = document.createElement("input");
-      const productSortLowPriceBtnTag = document.createElement("input");
-      const productSearchKeywordBtnTag = document.createElement("input");
-      const productSortHighPriceBtnTag = document.createElement("input");
-      const productSearchPriceStartTag = document.createElement("input");
-      const productSearchPriceLabelTag = document.createElement("label");
-      const JuProductListTag = document.querySelector(".Ju-product-list");
-      const AhnProductListTag = document.querySelector(".Ahn-product-list");
-      const JangProductListTag = document.querySelector(".Jang-product-list");
-      const cartModalContainerTag = document.querySelector(".cart-modal-container");
-      const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
+      const cartTotalAmountTag = document.createElement('p');
+      const cartIconTag = document.querySelector('.cart-icon');
+      const productLastKeywordsTag = document.createElement('div');
+      const JuShopBtnTag = document.querySelector('.Ju-shop-btn');
+      const productSortNewBtnTag = document.createElement('input');
+      const AhnShopBtnTag = document.querySelector('.Ahn-shop-btn');
+      const cartListRowTag = document.querySelector('.cart-list-row');
+      const cartExitBtnTag = document.querySelector('.cart-exit-btn');
+      const JangShopBtnTag = document.querySelector('.Jang-shop-btn');
+      const productSearchKeywordTag = document.createElement('input');
+      const productSearchPriceBtnTag = document.createElement('input');
+      const productSearchPriceEndTag = document.createElement('input');
+      const productSortLowPriceBtnTag = document.createElement('input');
+      const productSearchKeywordBtnTag = document.createElement('input');
+      const productSortHighPriceBtnTag = document.createElement('input');
+      const productSearchPriceStartTag = document.createElement('input');
+      const productSearchPriceLabelTag = document.createElement('label');
+      const JuProductListTag = document.querySelector('.Ju-product-list');
+      const AhnProductListTag = document.querySelector('.Ahn-product-list');
+      const JangProductListTag = document.querySelector('.Jang-product-list');
+      const cartModalContainerTag = document.querySelector('.cart-modal-container');
+      const cartTotalCountNumberTag = document.querySelector('.cart-total-count-number');
 
       let lastKeywords = new Array();
       const breadKeywords = ["bread", "빵", "포켓몬", "poketmon", "포켓몬빵"];
@@ -87,63 +87,63 @@ class productsPage {
       showProductList(JangShopBtnTag, JangProductListTag, JangProducts, 0);
 
       // ㅜ 장바구니의 합계 금액 태그에 대해 설정하기
-      cartTotalAmountTag.classList.add("cart-total-amount");
+      cartTotalAmountTag.classList.add('cart-total-amount');
       cartTotalAmountTag.innerHTML = "총 합계 금액: " + cartTotalAmount;
       cartListRowTag.after(cartTotalAmountTag);
 
       // ㅜ 검색 관련 HTML 태그 생성하기
-      productSearchPriceLabelTag.classList.add("product-search-price-start");
+      productSearchPriceLabelTag.classList.add('product-search-price-start');
       productSearchPriceLabelTag.setAttribute("for", "product-search-price-start");
       productSearchPriceLabelTag.innerHTML = "가격 검색";
       searchTag.appendChild(productSearchPriceLabelTag);
 
       productSearchPriceStartTag.id = "product-search-price-start";
-      productSearchPriceStartTag.classList.add("product-search");
+      productSearchPriceStartTag.classList.add('product-search');
       productSearchPriceStartTag.setAttribute("type", "number");
       searchTag.appendChild(productSearchPriceStartTag);
 
       productSearchPriceEndTag.id = "product-search-price-end";
-      productSearchPriceEndTag.classList.add("product-search");
+      productSearchPriceEndTag.classList.add('product-search');
       productSearchPriceEndTag.setAttribute("type", "number");
       searchTag.appendChild(productSearchPriceEndTag);
 
       productSearchPriceBtnTag.id = "product-search-price-btn";
-      productSearchPriceBtnTag.classList.add("product-search");
+      productSearchPriceBtnTag.classList.add('product-search');
       productSearchPriceBtnTag.setAttribute("type", "button");
       productSearchPriceBtnTag.setAttribute("value", "검색");
       searchTag.appendChild(productSearchPriceBtnTag);
 
       productSortNewBtnTag.id = "product-sort-new";
-      productSortNewBtnTag.classList.add("product-search");
+      productSortNewBtnTag.classList.add('product-search');
       productSortNewBtnTag.setAttribute("type", "button");
       productSortNewBtnTag.setAttribute("value", "신상품순");
       searchTag.appendChild(productSortNewBtnTag);
 
       productSortLowPriceBtnTag.id = "product-sort-low-price";
-      productSortLowPriceBtnTag.classList.add("product-search");
+      productSortLowPriceBtnTag.classList.add('product-search');
       productSortLowPriceBtnTag.setAttribute("type", "button");
       productSortLowPriceBtnTag.setAttribute("value", "낮은가격순");
       searchTag.appendChild(productSortLowPriceBtnTag);
 
       productSortHighPriceBtnTag.id = "product-sort-high-price";
-      productSortHighPriceBtnTag.classList.add("product-search");
+      productSortHighPriceBtnTag.classList.add('product-search');
       productSortHighPriceBtnTag.setAttribute("type", "button");
       productSortHighPriceBtnTag.setAttribute("value", "높은가격순");
       searchTag.appendChild(productSortHighPriceBtnTag);
 
       productSearchKeywordTag.id = "product-search-keyword";
-      productSearchKeywordTag.classList.add("cart-input-search-item");
+      productSearchKeywordTag.classList.add('cart-input-search-item');
       productSearchKeywordTag.setAttribute("type", "search");
       productSearchKeywordBtnTag.setAttribute("name", "q");
       searchTag.appendChild(productSearchKeywordTag);
 
       productSearchKeywordBtnTag.id = "product-search-keyword-btn";
-      productSearchKeywordBtnTag.classList.add("product-search");
+      productSearchKeywordBtnTag.classList.add('product-search');
       productSearchKeywordBtnTag.setAttribute("type", "button");
       productSearchKeywordBtnTag.setAttribute("value", "검색");
       searchTag.appendChild(productSearchKeywordBtnTag);
 
-      productLastKeywordsTag.classList.add("product-search-last");
+      productLastKeywordsTag.classList.add('product-search-last');
       productLastKeywordsTag.innerHTML = "최근검색어";
       searchTag.appendChild(productLastKeywordsTag);
 
@@ -237,8 +237,8 @@ class productsPage {
       function deleteProductListColTags() {
         const allProductListTags = document.querySelectorAll('[class $= "-product-list"]');
         allProductListTags.forEach((el) => {
-          if (el.querySelector(".product-list-col") !== null) {
-            const _deleteTags = el.querySelectorAll(".product-list-col");
+          if (el.querySelector('.product-list-col') !== null) {
+            const _deleteTags = el.querySelectorAll('.product-list-col');
             _deleteTags.forEach((_el) => _el.remove());
           }
         })
@@ -258,7 +258,7 @@ class productsPage {
         showProductList(JangShopBtnTag, JangProductListTag, JangResultProducts, 0);
 
         // ㅜ 현재 보고 있는 상점의 상품 목록을 보여주기
-        const allSectionsTag = document.querySelector(".all-sections");
+        const allSectionsTag = document.querySelector('.all-sections');
         let top = allSectionsTag.style.top;
         top = top.replace("vh", "");
         top = Number(top);
@@ -277,63 +277,63 @@ class productsPage {
 
       // ㅜ 상품 목록 관련 HTML 태그를 생성하는 함수
       function createProductList(productListTag, productsData, startIdx) {
-        const productListRowTag = productListTag.querySelector(".product-list-row");
+        const productListRowTag = productListTag.querySelector('.product-list-row');
 
         for (const key in productsData) {
           if (Object.hasOwnProperty.call(productsData, key)) {
             if (key < startIdx) {
             } else if (key < startIdx + showProductCount) {
-              productListColTags[key] = document.createElement("div");
-              productListColTags[key].classList.add("product-list-col");
+              productListColTags[key] = document.createElement('div');
+              productListColTags[key].classList.add('product-list-col');
               productListRowTag.appendChild(productListColTags[key]);
 
-              productContainerTags[key] = document.createElement("div");
-              productContainerTags[key].classList.add("product-container");
+              productContainerTags[key] = document.createElement('div');
+              productContainerTags[key].classList.add('product-container');
               productListColTags[key].appendChild(productContainerTags[key]);
 
-              productImgTags[key] = document.createElement("div");
-              productImgTags[key].classList.add("product-img");
+              productImgTags[key] = document.createElement('div');
+              productImgTags[key].classList.add('product-img');
               productImgTags[key].style.backgroundImage = productsData[key].img;
               productContainerTags[key].appendChild(productImgTags[key]);
 
-              productImgDarkTags[key] = document.createElement("div");
-              productImgDarkTags[key].classList.add("product-img-dark");
+              productImgDarkTags[key] = document.createElement('div');
+              productImgDarkTags[key].classList.add('product-img-dark');
               productImgTags[key].appendChild(productImgDarkTags[key]);
 
-              productImgTextTags[key] = document.createElement("p");
-              productImgTextTags[key].classList.add("product-img-text");
+              productImgTextTags[key] = document.createElement('p');
+              productImgTextTags[key].classList.add('product-img-text');
               productImgTextTags[key].innerHTML = "사진 크게 보기";
               productImgDarkTags[key].appendChild(productImgTextTags[key]);
 
-              productBoxTags[key] = document.createElement("div");
-              productBoxTags[key].classList.add("product-box");
+              productBoxTags[key] = document.createElement('div');
+              productBoxTags[key].classList.add('product-box');
               productImgTags[key].after(productBoxTags[key]);
 
-              productNameTags[key] = document.createElement("p");
-              productNameTags[key].classList.add("product-name");
+              productNameTags[key] = document.createElement('p');
+              productNameTags[key].classList.add('product-name');
               productNameTags[key].innerHTML = productsData[key].name;
               productBoxTags[key].appendChild(productNameTags[key]);
 
-              productPriceTags[key] = document.createElement("p");
-              productPriceTags[key].classList.add("product-price");
+              productPriceTags[key] = document.createElement('p');
+              productPriceTags[key].classList.add('product-price');
               productPriceTags[key].innerHTML = `${productsData[key].price}원`;
               productNameTags[key].after(productPriceTags[key]);
 
-              productBtnContainerTags[key] = document.createElement("div");
-              productBtnContainerTags[key].classList.add("product-btn-container");
+              productBtnContainerTags[key] = document.createElement('div');
+              productBtnContainerTags[key].classList.add('product-btn-container');
               productPriceTags[key].after(productBtnContainerTags[key]);
 
-              productBtnGroupTags[key] = document.createElement("div");
-              productBtnGroupTags[key].classList.add("product-btn-group");
+              productBtnGroupTags[key] = document.createElement('div');
+              productBtnGroupTags[key].classList.add('product-btn-group');
               productBtnContainerTags[key].appendChild(productBtnGroupTags[key]);
 
-              inCartBtnTags[key] = document.createElement("input");
+              inCartBtnTags[key] = document.createElement('input');
               inCartBtnTags[key].classList.add(`in-cart-btn${key}`);
               inCartBtnTags[key].setAttribute("type", "button");
               inCartBtnTags[key].setAttribute("value", "장바구니에 담기");
               productBtnGroupTags[key].appendChild(inCartBtnTags[key]);
 
-              showProductBtnTags[key] = document.createElement("input");
+              showProductBtnTags[key] = document.createElement('input');
               showProductBtnTags[key].classList.add(`show-product-btn${key}`);
               showProductBtnTags[key].setAttribute("type", "button");
               showProductBtnTags[key].setAttribute("value", "상품 보기");
@@ -352,7 +352,7 @@ class productsPage {
                 cartTotalAmountTag.innerHTML = "총 합계 금액: " + cartTotalAmount;
 
                 // ㅜ 클릭한 상품의 태그를 복사한 다음에 삭제하기 버튼으로 바꾸기
-                const copyTag = inCartBtnTags[key].closest(".product-list-col").cloneNode(true);
+                const copyTag = inCartBtnTags[key].closest('.product-list-col').cloneNode(true);
                 const cartDeleteBtnTag = copyTag.querySelector(`.in-cart-btn${key}`);
                 cartDeleteBtnTag.className = `cart-delete-btn${key}`;
                 cartDeleteBtnTag.setAttribute("value", "삭제하기");
@@ -376,12 +376,12 @@ class productsPage {
           }
 
           // ㅜ 보여줄 상품이 더 남아 있을 경우에 더보기 버튼 생성하기
-          if (document.querySelector(".product-show-more-btn") !== null) {
-            document.querySelector(".product-show-more-btn").remove();
+          if (document.querySelector('.product-show-more-btn') !== null) {
+            document.querySelector('.product-show-more-btn').remove();
           }
           if (productsData.length > startIdx + showProductCount) {
-            const productShowMoreBtnTag = document.createElement("input");
-            productShowMoreBtnTag.classList.add("product-show-more-btn");
+            const productShowMoreBtnTag = document.createElement('input');
+            productShowMoreBtnTag.classList.add('product-show-more-btn');
             productShowMoreBtnTag.setAttribute("type", "button");
             productShowMoreBtnTag.setAttribute("value", "더보기");
             productListRowTag.appendChild(productShowMoreBtnTag);
@@ -454,4 +454,4 @@ class productsPage {
   }
 }
 
-// 07 24 13 수정
+// 07 24 19 수정

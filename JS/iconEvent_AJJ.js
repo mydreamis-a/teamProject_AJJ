@@ -1,4 +1,4 @@
-const mainEvent = document.querySelector(".main-event");
+const mainEvent = document.querySelector('.main-event');
 
 mainEvent.style.display = "none";
 
@@ -26,7 +26,7 @@ function time() {
 
 let point = ["꽝", "꽝", "꽝", "10", "10", "100", "100", "1000", "10000", "100000"];
 
-mainEvent.addEventListener("click", function () {
+mainEvent.addEventListener("click", () => {
   let eventPoint = Math.floor(Math.random() * 10);
   clearTimeout(stop);
   alert(`${point[eventPoint]} 당첨`);

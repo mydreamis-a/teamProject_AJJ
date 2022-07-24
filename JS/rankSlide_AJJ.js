@@ -85,6 +85,7 @@ class JangRankSlide {
 
     // ㅜ 창의 크기가 변경될 때
     window.addEventListener("resize", () => {
+      
       // ㅜ 트랜지션을 비롯해서 모두 초기화시키기
       clearInterval(this.resizeControl);
       clearInterval(this._setTimeout);
@@ -138,6 +139,7 @@ class JangRankSlide {
   move(str) {
     this.slideWrapTag.style.transition = `${this.slideSecond}s`;
     if (str === "next") {
+
       // ㅜ 다음 태그로 Y 위치 조정하기
       this.prevIndex = this.index;
       this.index++;
@@ -163,6 +165,7 @@ class JangRankSlide {
     // ㅜ 위치는 이동하기 않고 글자 색상만 변화시키기
     else if (str === "not") {
       this._setTimeout = setTimeout(() => {
+
         // ㅜ 이전 태그의 색상 돌려놓기
         this.prevIndex = this.index;
         this.imgTags[this.prevIndex].style.color = "";

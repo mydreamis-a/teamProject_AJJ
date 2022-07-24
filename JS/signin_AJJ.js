@@ -3,13 +3,13 @@ let justEmail = false;
 let justPw = false;
 let checkArraySignBoolean = new Array(emailPw, justEmail, justPw);
 
-const modal = document.querySelector(".modal");
-const personIcon = document.querySelector(".person-icon");
+const modal = document.querySelector('.modal');
+const personIcon = document.querySelector('.person-icon');
 let userInfor = {
-  userInputEmail: document.querySelector("#sign-in-email").value,
-  userInputPw: document.querySelector("#sign-in-password").value,
+  userInputEmail: document.querySelector('#sign-in-email').value,
+  userInputPw: document.querySelector('#sign-in-password').value,
 };
-const signInExitTag = document.querySelector(".sign-in-exit-btn").addEventListener("click", () => {
+const signInExitTag = document.querySelector('.sign-in-exit-btn').addEventListener("click", () => {
   modal.style.display = "none";
 });
 personIcon.addEventListener("click", () => {
@@ -26,10 +26,10 @@ personIcon.addEventListener("click", () => {
           console.log("연결이 안됐음");
         });
     }
-    document.querySelector(".sign-in-btn").addEventListener("click", () => {
+    document.querySelector('.sign-in-btn').addEventListener("click", () => {
       userInfor = {
-        userInputEmail: document.querySelector("#sign-in-email").value,
-        userInputPw: document.querySelector("#sign-in-password").value,
+        userInputEmail: document.querySelector('#sign-in-email').value,
+        userInputPw: document.querySelector('#sign-in-password').value,
       };
       {
         loadJson().then((user) => {
@@ -62,13 +62,13 @@ personIcon.addEventListener("click", () => {
                 checkArraySignBoolean.justPw = false;
                 alert(user[key].name + " 환영합니다!");
                 modal.style.display = "none";
-                signInText = document.createElement("p");
-                signInText.classList.add("sign-in-text");
+                signInText = document.createElement('p');
+                signInText.classList.add('sign-in-text');
                 userSignInInfor.email = user[key].email;
                 userSignInInfor.pw = user[key].pw;
                 userSignInInfor.name = user[key].name;
                 signInText.innerHTML = userSignInInfor.name + " 님 환영합니다!";
-                document.querySelector(".search").appendChild(signInText);
+                document.querySelector('.search').appendChild(signInText);
                 break;
               }
             }

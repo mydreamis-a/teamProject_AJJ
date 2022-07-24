@@ -19,12 +19,12 @@ class JangMainSlide {
     this.slideWidth = 100 - 0.6;
     this.imgWidth = -this.slideWidth;
     this.slideTextTags = new Array();
-    this.prevBtn = document.createElement("div");
-    this.nextBtn = document.createElement("div");
-    this.timerTag = document.createElement("div");
-    this.slideWrapTag = document.createElement("ul");
-    this.timerWrapTag = document.createElement("div");
-    this.slideContainerTag = document.createElement("div");
+    this.prevBtn = document.createElement('div');
+    this.nextBtn = document.createElement('div');
+    this.timerTag = document.createElement('div');
+    this.slideWrapTag = document.createElement('ul');
+    this.timerWrapTag = document.createElement('div');
+    this.slideContainerTag = document.createElement('div');
     this.section1Tag = document.querySelector(`.${parentElement}`);
     this.init(who);
   }
@@ -53,11 +53,11 @@ class JangMainSlide {
     this.nextBtn.innerHTML = "다음";
 
     for (let i = 0; i < this.totalImgCount; i++) {
-      this.imgTags = [...this.imgTags, document.createElement("li")];
+      this.imgTags = [...this.imgTags, document.createElement('li')];
       this.imgTags[i].classList.add(`${who}-img${i}`);
       this.slideWrapTag.appendChild(this.imgTags[i]);
 
-      this.slideTextTags = [...this.slideTextTags, document.createElement("span")];
+      this.slideTextTags = [...this.slideTextTags, document.createElement('span')];
       this.slideTextTags[i].classList.add(`${who}-slide-text`);
       this.imgTags[i].appendChild(this.slideTextTags[i]);
     }
@@ -229,7 +229,6 @@ class JangMainSlide {
 
         // ㅜ 트랜지션이 종료될 때까지 기다리기 (autoPlay()가 짝수 번째마다 실행됨)
           this._setTimeout = setTimeout(() => {
-
             this.isMoving = false;
             this._setTimeout = null;
             this.gage("100%", `${this.slideSecond}s`);
@@ -343,4 +342,4 @@ class JangMainSlide {
   }
 }
 
-// 07 15 04 최종 수정 제가 더 열심히 할게요 흑흑흑흑흑
+// 07 24 19 최종 수정 제가 더 열심히 할게요 흑흑흑흑흑
