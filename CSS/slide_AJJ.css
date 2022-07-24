@@ -1,4 +1,4 @@
-/* 07 24 07 수정 */
+/* 07 24 19 수정 */
 
 .main-slide-container {
     position: relative;
@@ -73,21 +73,21 @@ li {
     display: flex;
 }
 
-.main-page-number {
+.main-slide-text {
     text-align: center;
     font-weight: 900;
     font-size: 3vw;
     color: white;
 }
 
-.page-number {
+.slide-text {
     text-align: center;
     font-weight: 900;
     font-size: 1.5vw;
     color: white;
 }
 
-.rank-page-number {
+.rank-slide-text {
     text-align: center;
     font-weight: 900;
     font-size: 1.5vw;

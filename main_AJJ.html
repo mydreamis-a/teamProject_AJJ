@@ -36,34 +36,34 @@
       <div class="rank-slide-container">
         <ul class="rank-slide-wrap">
           <li class="rank-img1">
-            <span class="rank-page-number">산다는 건</span>
+            <span class="rank-slide-text">산다는 건</span>
           </li>
           <li class="rank-img2">
-            <span class="rank-page-number">보헤미안</span>
+            <span class="rank-slide-text">보헤미안</span>
           </li>
           <li class="rank-img3">
-            <span class="rank-page-number">꽃이여</span>
+            <span class="rank-slide-text">꽃이여</span>
           </li>
           <li class="rank-img4">
-            <span class="rank-page-number">예술가의 아내라</span>
+            <span class="rank-slide-text">예술가의 아내라</span>
           </li>
           <li class="rank-img5">
-            <span class="rank-page-number">breathe</span>
+            <span class="rank-slide-text">breathe</span>
           </li>
           <li class="rank-img6">
-            <span class="rank-page-number">part of world</span>
+            <span class="rank-slide-text">part of world</span>
           </li>
           <li class="rank-img7">
-            <span class="rank-page-number">세월이 흘러</span>
+            <span class="rank-slide-text">세월이 흘러</span>
           </li>
           <li class="rank-img8">
-            <span class="rank-page-number">살다보면</span>
+            <span class="rank-slide-text">살다보면</span>
           </li>
           <li class="rank-img9">
-            <span class="rank-page-number">세정 배우님</span>
+            <span class="rank-slide-text">세정 배우님</span>
           </li>
           <li class="rank-img10">
-            <span class="rank-page-number">멋있어</span>
+            <span class="rank-slide-text">멋있어</span>
           </li>
         </ul>
       </div>
@@ -104,7 +104,7 @@
           <div class="chat-box">
             <div class="chat-text">
             </div>
-            <div class="chat-robot">연락처를 남겨주시면 잠시 후에 상담원이 연락 드릴 예정입니다.
+            <div class="chat-robot">연락처를 남겨주시면 상담원이 연락 드립니다.
               <div>이름<div>
                   <input type="text" placeholder="정확하게 입력해주세요.">
                 </div>휴대폰 번호<div>
@@ -166,13 +166,13 @@
         <div class="modal-body">
           <p class="modal-title">로그인하기</p>
           <label for="sign-in-email">이메일</label>
-            <input type="email" id="sign-in-email">
-            <label for="sign-in-password">패스워드</label>
-              <input type="password" id="sign-in-password">
-              <div class="sign-in-btn-group">
-                <input type="button" value="로그인" class="sign-in-btn">
-                <input type="button" value="나가기" class="sign-in-exit-btn">
-              </div>
+          <input type="email" id="sign-in-email">
+          <label for="sign-in-password">패스워드</label>
+          <input type="password" id="sign-in-password">
+          <div class="sign-in-btn-group">
+            <input type="button" value="로그인" class="sign-in-btn">
+            <input type="button" value="나가기" class="sign-in-exit-btn">
+          </div>
         </div>
       </div>
       <div class="person-icon">
@@ -292,13 +292,11 @@
   let AhnProducts = new Array();
   let JuProducts = new Array();
   let JangProducts = new Array();
-  
+
 </script>
 <script src="/JS/search_AJJ.js"></script>
 <script src="/JS/nav_AJJ.js"></script>
 <script src="/JS/logo_AJJ.js"></script>
-<script src="/JS/dateAnimation_AJJ.js"></script>
-<script>  const _numberAnimation = new numberAnimation();</script>
 <script src="/JS/slide_mainContent_AJJ copy 2.js"></script>
 <script src="/JS/slide_mainContent_AJJ copy.js"></script>
 <script src="/JS/signIn_AJJ.js"></script>
@@ -307,31 +305,41 @@
 <script src="/JS/attendanceCheck_AJJ.js"></script>
 <script src="/JS/iconEvent_AJJ.js"></script>
 <script src="/JS/productsPage_AJJ.js"></script>
+<script src="/JS/dateAnimation_AJJ.js"></script>
+<script>const _dateAnimation = new dateAnimation();</script>
 <script>
-  let comeCheck = false
   const _mainNav = new mainNav();
   const _logo = new logo();
   const _JangMainSlide = new JangMainSlide("main", "section1");
   const _signUp = new signUp();
   let _searchRankSlide = new JangRankSlide("rank");
+
+  // ㅜ 슬라이드에 메세지 넣기
+  _JangMainSlide.slideTextTags[1].appendChild(_dateAnimation.increaseTag);
+  _JangMainSlide.slideTextTags[2].innerHTML = "'안'녕하세요!<br>저희는 '주'말에도 비가 오나 눈이 오나 지치지 않고<br>열심히 '장'인 정신으로 공부하는 안주장 팀입니다.";
+  _JangMainSlide.slideTextTags[3].innerHTML = "저희 홈페이지에서는<br>여러분들에게 맛나고 즐거운 안주처럼, 따뜻한 에너지를 선사해줄 수 있는 요소들을 찾아<br>소개해드리고 있습니다. 부디 여러분 모두가 이 인생에서 편안히 안주할 수 있기를<br>바라는 마음으로 정성 들여서 만들었습니다.<br>항상 행복하세요!<br>";
+  _JangMainSlide.slideTextTags[0].innerHTML = _JangMainSlide.slideTextTags[3].innerHTML;
+  _JangMainSlide.slideTextTags[_JangMainSlide.slideTextTags.length-1].appendChild(_dateAnimation.increaseCopyTag);
+
 </script>
 
 <script>
-   getProductsData().then((result) => {
+  const _productsPage = new productsPage();
+  _productsPage.getProductsData().then((result) => {
     asdproductData = result;
-      ahnproductData = asdproductData.filter((el) => el.designerName === "AJY");
-      ajycartUserImg = ahnproductData.map(a => a.img);
+    ahnproductData = asdproductData.filter((el) => el.designerName === "AJY");
+    ajycartUserImg = ahnproductData.map(a => a.img);
 
-      jbhproductData = asdproductData.filter((el) => el.designerName === "JBH");
-      jbhcartUserImg = jbhproductData.map(a => a.img);
+    jbhproductData = asdproductData.filter((el) => el.designerName === "JBH");
+    jbhcartUserImg = jbhproductData.map(a => a.img);
 
-      jjwproductData = asdproductData.filter((el) => el.designerName === "JJW");
-      jjwcartUserImg = jjwproductData.map(a => a.img);
+    jjwproductData = asdproductData.filter((el) => el.designerName === "JJW");
+    jjwcartUserImg = jjwproductData.map(a => a.img);
 
-  const _AhnlistSlide = new JangListSlide("Ahn", 2, "Ahn-product-list", ajycartUserImg);
-  const _JoolistSlide = new JangListSlide("Joo", 3, "Ju-product-list", jbhcartUserImg);
-  const _JanglistSlide = new JangListSlide("Jang", 4, "Jang-product-list", jjwcartUserImg);
-});
+    const _AhnlistSlide = new JangListSlide("Ahn", 2, "Ahn-product-list", ajycartUserImg);
+    const _JoolistSlide = new JangListSlide("Joo", 3, "Ju-product-list", jbhcartUserImg);
+    const _JanglistSlide = new JangListSlide("Jang", 4, "Jang-product-list", jjwcartUserImg);
+  });
 </script>
 
 </html>

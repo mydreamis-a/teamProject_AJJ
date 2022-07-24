@@ -1,86 +1,124 @@
-class numberAnimation {
+class dateAnimation {
   constructor() {
-    this.point = 0;
-    this.value = 0;
-    this.speedPoint = [];
     this.today = new Date();
     this.year = String(this.today.getFullYear()).slice(-2);
     this.month = ("0" + (this.today.getMonth() + 1)).slice(-2);
     this.day = ("0" + this.today.getDate()).slice(-2);
     this.goal = this.year + this.month + this.day;
-    this.speedUp = null;
-    this.second = [1, 2, 3, 4, 5, 100];
+
+    this.value = 0;
+    this.increasePoint = 0;
+    this.increaseCopyTag = null;
     this.increaseTag = document.createElement("div");
     this.init();
+
+    // this.speedUp = null;
+    // this.speedincreasePoint = [];
+    // this.second = [1, 2, 3, 4, 5, 100];
   }
+
   init() {
-    const _this = this;
-    // _this.speedTag.innerHTML = 0;
+    this.increaseTag.classList.add("date-animation-increase");
+    this.increaseTag.innerHTML = `TODAY is<br>0`;
+    this.increaseCopyTag = this.increaseTag.cloneNode(true);
 
-    // ㅜ 목표 숫자까지 반절씩 5단계로 나눠서 속도의 차이 두기
-    // for (let i = 0; i < 5; i++) {
-    //   _this.point = Math.ceil((_this.goal - _this.point) * 0.5 + _this.point);
-    //   _this.speedPoint.push(_this.point);
-    // }
-    // _this.speedPoint.push(_this.goal);
-    // console.log(_this.speedPoint);
-    // _this.speedAnimation(0);
-    _this.increaseTag.classList.add("umber-animation-increase");
-
-    // ㅜ 증가하는 수치를 감소시키기
-    _this.increaseTag.innerHTML = `TODAY is<br>0`;
+    // ㅜ 반복 실행시키기
     setTimeout(() => {
-      _this.increaseAnimaition();
+      this.increaseAnimaition(this.increaseTag);
       setInterval(() => {
-        _this.increaseTag.innerHTML = `TODAY is<br>0`;
+        this.increaseTag.innerHTML = `TODAY is<br>0`;
         setTimeout(() => {
-          _this.increaseAnimaition();
-        }, 1000);
+          this.increaseAnimaition(this.increaseTag);
+        }, 500);
       }, 20000);
     }, 1000);
+
+    // ㅜ 복사한 태그도 동시에 반복 실행시키기
+    setTimeout(() => {
+      this.increaseAnimaition(this.increaseCopyTag);
+      setInterval(() => {
+        this.increaseCopyTag.innerHTML = `TODAY is<br>0`;
+        setTimeout(() => {
+          this.increaseAnimaition(this.increaseCopyTag);
+        }, 500);
+      }, 20000);
+    }, 1000);
+
+    // ㅜ 목표 숫자까지 반절씩 5단계로 나눠서 속도의 차이를 두기
+    // this.speedTag.innerHTML = 0;
+    // for (let i = 0; i < 5; i++) {
+    //   this.increasePoint = Math.ceil((this.goal - this.increasePoint) * 0.5 + this.increasePoint);
+    //   this.speedincreasePoint.push(this.increasePoint);
+    // }
+    // this.speedincreasePoint.push(this.goal);
+    // this.speedAnimation(0);
   }
+
   // speedAnimation(index) {
-  //   const _this = this;
-  //   _this.speedUp = setInterval(() => {
-  //     _this.increaseTag.innerHTML++;
-  //     if (_this.increaseTag.innerHTML >= _this.speedPoint[index]) {
-  //       clearInterval(_this.speedUp);
-  //       if (index < _this.second.length - 1)
-  //         _this.speedAnimation(index + 1);
+  //   this.speedUp = setInterval(() => {
+  //     this.increaseTag.innerHTML++;
+  //     if (this.increaseTag.innerHTML >= this.speedincreasePoint[index]) {
+  //       clearInterval(this.speedUp);
+  //       if (index < this.second.length - 1)
+  //         this.speedAnimation(index + 1);
   //     }
-  //   }, _this.second[index])
+  //   }, this.second[index])
   // }
-  // ㅜ 1부터 n까지의 합 구하기
+
+  // ㅜ 1부터 n까지의 합을 구하는 함수
   sum(n) {
-    const _this = this;
-    if (n > 1) return n + _this.sum(n - 1);
-    else return 1;
+    if (n > 1) return n + this.sum(n - 1);
+    else if (n > 0) return 1;
+    else return n;
   }
-  // ㅜ 반대로 어떤 숫자가 1부터 몇 까지의 합을 더한 것인지 구하기
+
+  // ㅜ 반대로 어떤 숫자가 1부터 몇 까지의 합을 더하면 되는 것인지 구하는 함수
   againstSum(n) {
-    const _this = this;
     let count = 1;
     while (n > 0) {
-      if (n - _this.sum(count) < 0) return count - 1;
-      else if (n - _this.sum(count) === 0) return count;
+      if (n - this.sum(count) < 0) return count - 1;
+      else if (n - this.sum(count) === 0) return count;
       count++;
     }
+
+    // ㅜ 화살표 함수를 사용해서 재귀 함수로 만들고 싶었는데..
+    // ㅜ count가 매개 변수로 전달되지 않는 이유는 무엇인가?
+    // let fn = null;
+    // (fn = (count) => {
+    //   console.log(count);
+    //   n -= count;
+
+    //   if (n < 0) return count - 1;
+    //   else if (n === 0) return count;
+    //   else fn(count-1);
+    // })();
   }
-  increaseAnimaition() {
-    const _this = this;
+
+  // ㅜ 증가하는 수치를 감소시키는 함수
+  increaseAnimaition(increaseTag) {
+    let increaseFn = null;
     let _setTimeOut = null;
-    _this.point = _this.againstSum(_this.goal) + 1;
-    _this.value = _this.goal - _this.sum(_this.againstSum(_this.goal));
-    _setTimeOut = setTimeout(function increase() {
-      _this.point--;
-      _this.value += _this.point;
-      _this.increaseTag.innerHTML = `TODAY is<br>${_this.value}`;
+
+    // ㅜ 나머지 값에서 시작하기
+    const startValue = this.goal - this.sum(this.againstSum(this.goal));
+    this.value = startValue;
+
+    // ㅜ 1씩 감소되는 증가 값을 더해주기 (값이 변경되는 과정이 보이려면 한 번에 처리되지 않도록 setTimeout의 사용이 필요함)
+    this.increasePoint = this.againstSum(this.goal);
+    _setTimeOut = setTimeout(increaseFn = () => {
+      this.value += this.increasePoint;
+      increaseTag.innerHTML = `TODAY is<br>${this.value}`;
+      this.increasePoint--;
+
+      // ㅜ 증가 값이 0이 될 때까지 반복하기
       _setTimeOut = setTimeout(() => {
-        increase();
-        if (_this.point <= 0) {
+        increaseFn();
+        if (this.increasePoint <= 0) {
           clearTimeout(_setTimeOut);
         }
-      }, 9);
+      }, 15);
     }, 0);
   }
 }
+
+// 07 24 16 수정

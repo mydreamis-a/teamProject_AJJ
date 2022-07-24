@@ -1,4 +1,4 @@
-/* 07 24 07 수정 */
+/* 07 24 19 수정 */
 
 p {
   margin-bottom: 0px;
@@ -213,9 +213,7 @@ textarea {
 }
 
 .cart-total-count-wrapper {
-  margin: -1.8vw 0.781vw -0.521vw 0;
-  position: absolute;
-  padding: 1.563vw;
+  transform: translate(1.5vw, 2.5vh);
 }
 
 .cart-total-count-circle {

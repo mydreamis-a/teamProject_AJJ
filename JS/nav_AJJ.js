@@ -87,7 +87,7 @@ class mainNav {
       }
     });
 
-    window.addEventListener("click", () => {
+    window.addEventListener("click", (e) => {
       let targetClass = e.target.className;
       switch (targetClass) {
         case "chat-delete":

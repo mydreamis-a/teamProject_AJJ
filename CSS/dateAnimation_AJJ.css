@@ -1,6 +1,6 @@
-/* 07 24 07 수정 */
+/* 07 24 19 수정 */
 
-.number-animation-increase {
+.date-animation-increase {
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -9,6 +9,6 @@
     display: flex;
 }
 
-.number-animation-increase:hover {
+.date-animation-increase:hover {
     color: royalblue;
 }

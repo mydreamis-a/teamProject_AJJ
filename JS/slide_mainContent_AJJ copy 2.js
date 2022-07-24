@@ -14,8 +14,8 @@ class JangListSlide {
     this.pageNumberTag = [];
     this.autoPlayFn = "first";
     this.resizeControl = null;
-    this.dragSetTimeOut = null;
-    this.stoppingSetTimeOut = null;
+    this.dragSetTimeout = null;
+    this.stoppingSetTimeout = null;
     this.imgWidth = -this.slideWidth;
     this.prevBtn = document.createElement("div");
     this.nextBtn = document.createElement("div");
@@ -119,7 +119,7 @@ class JangListSlide {
     //     // ㅜ 맨 앞과 맨 뒤에 복사해 둔 사진의 위치일 때는 드래그 막아놓기
     //     if (this.index >= (this.imgTags.length / this.rowImgCount - 1)) return;
     //     if (this.index <= 0) return;
-    //     if (this.dragSetTimeOut !== null) return;
+    //     if (this.dragSetTimeout !== null) return;
     //     if (e.button === 0) {
     //         this.startX = this.pxToVw(e.pageX);
     //         console.log("onmousedown");
@@ -128,9 +128,9 @@ class JangListSlide {
     //         console.log("autoPlayFn out");
     //         this.autoPlayFn = null;
 
-    //         clearTimeout(this.stoppingSetTimeOut);
-    //         console.log("stoppingSetTimeOut out");
-    //         this.stoppingSetTimeOut = null;
+    //         clearTimeout(this.stoppingSetTimeout);
+    //         console.log("stoppingSetTimeout out");
+    //         this.stoppingSetTimeout = null;
     //     }
     // }
 
@@ -164,7 +164,7 @@ class JangListSlide {
 
     // this.slideContainerTag.onmouseleave = (e) => {
     //     if (this.startX === null) return;
-    //     if (this.dragSetTimeOut !== null) return;
+    //     if (this.dragSetTimeout !== null) return;
     //     console.log("mouseleave");
 
     //     this.endX = this.pxToVw(e.pageX);
@@ -178,8 +178,8 @@ class JangListSlide {
       clearInterval(this.autoPlayFn);
       this.autoPlayFn = null;
 
-      clearTimeout(this.stoppingSetTimeOut);
-      this.stoppingSetTimeOut = null;
+      clearTimeout(this.stoppingSetTimeout);
+      this.stoppingSetTimeout = null;
 
       // ㅜ 게이지 바는 버튼을 클릭하자마자 100%로 채워놓기
       this.gage("100%", "");
@@ -263,12 +263,12 @@ class JangListSlide {
         this.gage("0%", `${this.slideSecond}s`);
 
         // ㅜ 이동 후 슬라이드를 잠시 정지 상태로 두기
-        if (this.stoppingSetTimeOut === null) {
-          this.stoppingSetTimeOut = setTimeout(() => {
+        if (this.stoppingSetTimeout === null) {
+          this.stoppingSetTimeout = setTimeout(() => {
             // ㅜ autoPlay()가 짝수 번째마다 실행되도록 텀 두기
-            this.stoppingSetTimeOut = setTimeout(() => {
+            this.stoppingSetTimeout = setTimeout(() => {
               this.isMoving = false;
-              this.stoppingSetTimeOut = null;
+              this.stoppingSetTimeout = null;
               this.gage("100%", `${this.slideSecond}s`);
 
               // ㅜ 맨 뒤에 복사해 둔 첫 번째 사진의 위치로 올 경우 원래 자리로 이동하기
@@ -289,11 +289,11 @@ class JangListSlide {
         this.gage("0%", `${this.slideSecond}s`);
 
         // ㅜ 이동 후 슬라이드를 잠시 정지 상태로 두기
-        if (this.stoppingSetTimeOut === null) {
-          this.stoppingSetTimeOut = setTimeout(() => {
+        if (this.stoppingSetTimeout === null) {
+          this.stoppingSetTimeout = setTimeout(() => {
             // ㅜ autoPlay()가 먼저 실행되기 때문에 같은 시간이면 짝수 번째마다 실행된다.
             this.isMoving = false;
-            this.stoppingSetTimeOut = null;
+            this.stoppingSetTimeout = null;
             this.gage("100%", `${this.slideSecond}s`);
 
             // ㅜ 맨 앞에 복사해 둔 마지막 사진의 위치로 올 경우 원래 자리로 이동하기
@@ -311,8 +311,8 @@ class JangListSlide {
     clearInterval(this.autoPlayFn);
     this.autoPlayFn = null;
 
-    clearTimeout(this.stoppingSetTimeOut);
-    this.stoppingSetTimeOut = null;
+    clearTimeout(this.stoppingSetTimeout);
+    this.stoppingSetTimeout = null;
 
     // ㅜ 게이지 바는 버튼을 클릭하자마자 100%로 채워놓기
     this.gage("100%", "");
@@ -340,10 +340,10 @@ class JangListSlide {
   //         else if (posX < -20) this.move("prev");
 
   //         // ㅜ move() 안에 있는 게이지 바의 100% 트랜지션이 종료됨과 동시에 setInterval의 첫 실행이 이뤄지게 하기
-  //         this.dragSetTimeOut = setTimeout(() => {
+  //         this.dragSetTimeout = setTimeout(() => {
   //             this.startX = null;
   //             this.endX = null;
-  //             this.dragSetTimeOut = null;
+  //             this.dragSetTimeout = null;
 
   //             this.autoPlay();
   //         }, this.slideSecond * 1000);
@@ -353,14 +353,14 @@ class JangListSlide {
   //     else {
   //         this.gage("100%", `${this.slideSecond}s`);
   //         this.slideWrapTag.style.transform = `translateX(${(this.index - 1) * this.imgWidth}vw)`;
-  //         this.dragSetTimeOut = setTimeout(() => {
+  //         this.dragSetTimeout = setTimeout(() => {
   //             this.move("next");
 
   //             // ㅜ move() 안에 있는 게이지 바의 100% 트랜지션이 종료됨과 동시에 setInterval의 첫 실행이 이뤄지게 하기
   //             setTimeout(() => {
   //                 this.startX = null;
   //                 this.endX = null;
-  //                 this.dragSetTimeOut = null;
+  //                 this.dragSetTimeout = null;
 
   //                 this.autoPlay();
   //             }, this.slideSecond * 1000);
