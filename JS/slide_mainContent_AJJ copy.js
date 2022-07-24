@@ -34,15 +34,12 @@ class JangMainSlide {
     window.document.ondragstart = new Function("return false");
 
     // ㅜ HTML 태그 설정하기
-    //section1Tag.insertBefore(slideContainerTag);
-    //section1Tag.insertBefore(slideContainerTag, nextSiblingTag);
     this.section1Tag.appendChild(this.slideContainerTag);
     this.section1Tag.appendChild(this.timerWrapTag);
     this.timerWrapTag.appendChild(this.timerTag);
     this.slideContainerTag.appendChild(this.slideWrapTag);
     this.slideContainerTag.appendChild(this.prevBtn);
     this.slideContainerTag.appendChild(this.nextBtn);
-
     this.slideContainerTag.classList.add(`${classNameValue}-slide-container`);
     this.slideWrapTag.classList.add(`${classNameValue}-slide-wrap`);
     this.timerWrapTag.classList.add(`${classNameValue}-timer-wrap`);
