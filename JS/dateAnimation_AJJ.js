@@ -5,11 +5,10 @@ class dateAnimation {
     this.month = ("0" + (this.today.getMonth() + 1)).slice(-2);
     this.day = ("0" + this.today.getDate()).slice(-2);
     this.goal = this.year + this.month + this.day;
-
     this.value = 0;
     this.increasePoint = 0;
     this.increaseCopyTag = null;
-    this.increaseTag = document.createElement('div');
+    this.increaseTag = document.createElement("div");
     this.init();
 
     // this.speedUp = null;
@@ -18,7 +17,7 @@ class dateAnimation {
   }
 
   init() {
-    this.increaseTag.classList.add('date-animation-increase');
+    this.increaseTag.classList.add("date-animation-increase");
     this.increaseTag.innerHTML = `TODAY is<br>0`;
     this.increaseCopyTag = this.increaseTag.cloneNode(true);
 
@@ -75,23 +74,22 @@ class dateAnimation {
   // ㅜ 반대로 어떤 숫자가 1부터 몇 까지의 합을 더하면 되는 것인지 구하는 함수
   againstSum(n) {
     let count = 1;
-    while (n > 0) {
-      if (n - this.sum(count) < 0) return count - 1;
-      else if (n - this.sum(count) === 0) return count;
-      count++;
-    }
-
-    // ㅜ 화살표 함수를 사용해서 재귀 함수로 만들고 싶었는데..
-    // ㅜ count가 매개 변수로 전달되지 않는 이유는 무엇인가?
-    // let fn = null;
-    // (fn = (count) => {
-    //   console.log(count);
-    //   n -= count;
-
-    //   if (n < 0) return count - 1;
-    //   else if (n === 0) return count;
-    //   else fn(count-1);
-    // })();
+    let fn = null;
+    (fn = () => {
+      n -= count;
+      if (n < 0) return count--;
+      else if (n === 0) return count;
+      else {
+        count++;
+        fn();
+      }
+    })();
+    return count;
+    // while (n > 0) {
+    //   if (n - this.sum(count) < 0) return count - 1;
+    //   else if (n - this.sum(count) === 0) return count;
+    //   count++;
+    // }
   }
 
   // ㅜ 증가하는 수치를 감소시키는 함수
@@ -100,25 +98,29 @@ class dateAnimation {
     let _setTimeOut = null;
 
     // ㅜ 나머지 값에서 시작하기
+    console.log();
     const startValue = this.goal - this.sum(this.againstSum(this.goal));
     this.value = startValue;
 
     // ㅜ 1씩 감소되는 증가 값을 더해주기 (값이 변경되는 과정이 보이려면 한 번에 처리되지 않도록 setTimeout의 사용이 필요함)
     this.increasePoint = this.againstSum(this.goal);
-    _setTimeOut = setTimeout(increaseFn = () => {
-      this.value += this.increasePoint;
-      increaseTag.innerHTML = `TODAY is<br>${this.value}`;
-      this.increasePoint--;
+    _setTimeOut = setTimeout(
+      (increaseFn = () => {
+        this.value += this.increasePoint;
+        increaseTag.innerHTML = `TODAY is<br>${this.value}`;
+        this.increasePoint--;
 
-      // ㅜ 증가 값이 0이 될 때까지 반복하기
-      _setTimeOut = setTimeout(() => {
-        increaseFn();
-        if (this.increasePoint <= 0) {
-          clearTimeout(_setTimeOut);
-        }
-      }, 15);
-    }, 0);
+        // ㅜ 증가 값이 0이 될 때까지 반복하기
+        _setTimeOut = setTimeout(() => {
+          increaseFn();
+          if (this.increasePoint <= 0) {
+            clearTimeout(_setTimeOut);
+          }
+        }, 15);
+      }),
+      0
+    );
   }
 }
 
-// 07 24 19 수정
+// 07 26 17 수정
