@@ -34,7 +34,7 @@ class signUp {
     this.disallowMessages.push("영문, 숫자, 특수 문자 중에서 2가지 이상을 조합하여 6글자 이상 입력해야 합니다.");
     this.disallowMessages.push("동일하게 입력되어야 합니다.");
 
-    // input에 값을 입력했을 때
+    // ㅜ input에 값을 입력했을 때
     this.inputTags.forEach((el, idx) => {
       el.addEventListener("input", () => {
         this.regs[this.regs.length - 1] = new RegExp("^" + this.inputTags[3].value + "$");
@@ -43,7 +43,7 @@ class signUp {
         if (idx === 0) welcomeTag.innerHTML = `${el.value}님 환영합니다!`;
         this.regStyle(rslt, el);
 
-        // 유효성 검증에 허용되는 값을 입력했는지 확인하기
+        // ㅜ 유효성 검증에 허용되는 값을 입력했는지 확인하기
         if (!rslt) this.disallowEvent(el, idx);
         else {
           if (el.nextElementSibling.classList.contains('disallow-massage')) {
@@ -53,7 +53,7 @@ class signUp {
       });
     });
 
-    // submit 기능을 하는 버튼을 클릭했을 때
+    // ㅜ submit이 발생할 때
     this.formTag.addEventListener("submit", (event) => {
       const rsltArr = this.regRslt();
       event.preventDefault();
@@ -66,26 +66,26 @@ class signUp {
     });
   }
 
-  // 유효성 검증의 통과 여부에 따라 class를 적용하는 함수
+  // ㅜ 유효성 검증의 통과 여부에 따라 class를 적용하는 함수
   regStyle(rslt, el) {
 
-    // 통과
+    // ㅜ 통과
     if (rslt) {
       el.classList.remove('is-invalid');
       el.classList.add('is-valid');
     }
     
-    // 불허
+    // ㅜ 불허
     else {
       el.classList.remove('is-valid');
       el.classList.add('is-invalid');
     }
   }
 
-  // 유효성이 허용되지 않았을 때 메세지를 보여주는 함수
+  // ㅜ 유효성이 허용되지 않았을 때 메세지를 보여주는 함수
   disallowEvent(el, idx) {
 
-    // nextElementSibling 다음 형제 태그
+    // ㅜ nextElementSibling 다음 형제 태그
     if (!el.nextElementSibling.classList.contains('disallow-massage')) {
       const smallTag = document.createElement('small');
       smallTag.classList.add('disallow-massage');
@@ -94,7 +94,7 @@ class signUp {
     }
   }
 
-  // 모든 input의 유효성 검증의 통과 여부를 배열에 담는 함수
+  // ㅜ 모든 input의 유효성 검증의 통과 여부를 배열에 담는 함수
   regRslt() {
     let rsltArr = [];
     this.inputTags.forEach((el, idx) => {

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body,
+        html {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .container,
+        [id ^="img"] {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            height: 98vh;
+            width: 100vw;
+        }
+
+        [id ^="img"] {
+            position: absolute;
+            height: 98vh;
+            width: 100vw;
+        }
+
+        #img1 {
+            background-color: red;
+        }
+
+        #img2 {
+            background-color: green;
+        }
+
+        #img3 {
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="img1"></div>
+        <div id="img2"></div>
+        <div id="img3"></div>
+    </div>
+</body>
+<script>
+
+    let index = 1;
+    const second = 2;
+
+    const containerTag = document.querySelector(".container");
+    const imgTags = document.querySelectorAll("[id ^= 'img']");
+
+    imgTags.forEach((el, idx) => el.style.left = `${idx * 100}vw`);
+    
+    setTimeout(() => {
+        
+        
+        move(second);
+        setInterval(() => {
+            
+            move(second);
+        }, second * 2000)
+    }, second * 1000);
+    
+    imgTags.forEach(el => el.addEventListener("click", () => {
+        
+        move(0.5);
+    }))
+    
+    function move(sec) {
+        
+        imgTags.forEach((el, idx) => {
+            
+            const currentLeft = el.style.left.replace("vw", "");
+            
+            index++;
+            el.style.transition = `${sec}s`;
+
+            if (currentLeft <= -100) {
+
+                const copySlideTag = el.cloneNode(true);
+                containerTag.insertBefore(copySlideTag, containerTag.firstChild);
+                copySlideTag.style.left = "-100vw";
+                
+                el.style.transition = "";
+                el.style.left = "100vw";
+                copySlideTag.remove();
+            }
+
+            else el.style.left = `${currentLeft - 100}vw`;
+        })
+    }
+</script>
+
+</html>

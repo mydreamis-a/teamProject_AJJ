@@ -2,7 +2,7 @@ const box = document.querySelector('.box');
 const mainContainer = document.querySelector('.main-container');
 const checkIcon = document.querySelector('.check-icon');
 
-//새로운 만들 div를 담아 놓는 배열
+// 새로운 만들 div를 담아 놓는 배열
 const datediv = new Array();
 
 mainContainer.style.display = "none";
@@ -17,13 +17,13 @@ for (let i = 1; i < 36; i++) {
   box.appendChild(datediv[i]);
 }
 
-//현재 날짜 요일 값
+// 현재 날짜 요일 값
 const date = new Date(Date.now());
 const nowdate = date.getDate();
 
 const day = document.querySelectorAll('.date');
 
-//오늘 날짜 구역을 표시함.
+// 오늘 날짜 구역을 표시함.
 day[nowdate - 1].style.backgroundColor = "white";
 
 const colors = ["green", "pink", "gray", "orange", "tomato", "rgb(204, 204, 255)"];

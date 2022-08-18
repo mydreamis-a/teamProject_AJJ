@@ -1,24 +1,26 @@
 class JangMainSlide {
   constructor(who, parentElement) {
+
     this.index = 1;
-    this.margin = 0;
-    this.endX = null;
+    this.second = 1;
+
+    this.width = 100 - 0.6;
+    this.height = 97.6;
+
     this.startX = null;
-    this.slideSecond = 1;
+    this.endX = null;
+
     this.isMoving = false;
     this.isDragDone = true;
-    this.totalImgCount = 3;
-    this.slideHeight = 97.6;
-    this.copyTagPrev = null;
-    this.copyTagNext = null;
-    this._setTimeout = null;
-    this.autoPlayFn = "first";
+    this.moveControl = null;
     this.resizeControl = null;
-    this.imgTags = new Array();
+    this.autoPlayControl = null;
     this.dragSetTimeout = null;
-    this.slideWidth = 100 - 0.6;
-    this.imgWidth = -this.slideWidth;
+    
+    this.totalImgCount = 3;
+    this.imgTags = new Array();
     this.slideTextTags = new Array();
+
     this.prevBtn = document.createElement('div');
     this.nextBtn = document.createElement('div');
     this.timerTag = document.createElement('div');
@@ -26,8 +28,9 @@ class JangMainSlide {
     this.timerWrapTag = document.createElement('div');
     this.slideContainerTag = document.createElement('div');
     this.section1Tag = document.querySelector(`.${parentElement}`);
+
     this.init(who);
-  }
+  };
 
   init(who) {
 
@@ -38,71 +41,75 @@ class JangMainSlide {
 
     // ㅜ HTML 태그 설정하기
     this.section1Tag.appendChild(this.slideContainerTag);
-    this.section1Tag.appendChild(this.timerWrapTag);
-    this.timerWrapTag.appendChild(this.timerTag);
     this.slideContainerTag.appendChild(this.slideWrapTag);
     this.slideContainerTag.appendChild(this.prevBtn);
     this.slideContainerTag.appendChild(this.nextBtn);
+
+    this.section1Tag.appendChild(this.timerWrapTag);
+    this.timerWrapTag.appendChild(this.timerTag);
+
     this.slideContainerTag.classList.add(`${who}-slide-container`);
     this.slideWrapTag.classList.add(`${who}-slide-wrap`);
     this.timerWrapTag.classList.add(`${who}-timer-wrap`);
     this.timerTag.classList.add(`${who}-timer`);
     this.prevBtn.classList.add(`${who}-prev-btn`);
     this.nextBtn.classList.add(`${who}-next-btn`);
+
     this.prevBtn.innerHTML = "이전";
     this.nextBtn.innerHTML = "다음";
 
     for (let i = 0; i < this.totalImgCount; i++) {
+
       this.imgTags = [...this.imgTags, document.createElement('li')];
-      this.imgTags[i].classList.add(`${who}-img${i}`);
+      this.imgTags[i].classList.add(`${who}-img`);
       this.slideWrapTag.appendChild(this.imgTags[i]);
 
       this.slideTextTags = [...this.slideTextTags, document.createElement('span')];
       this.slideTextTags[i].classList.add(`${who}-slide-text`);
       this.imgTags[i].appendChild(this.slideTextTags[i]);
-    }
+    };
 
-    // ㅜ 이미지 태그 번호 넣기
-    // this.imgTags.forEach((el, idx, arr) => {
-    //     el.children[0].innerHTML += `${idx + 1} / ${arr.length}`;
-    // })
+    // ㅜ 첫 번째와 마지막 사진을 양 끝에 복사해놓기
+    const copyTagPrev = this.imgTags[this.imgTags.length - 1].cloneNode(true);
+    const copyTagNext = this.imgTags[0].cloneNode(true);
 
-    // ㅜ 첫 번째와 마지막 슬라이드를 양 끝에 복사해놓기
-    this.copyTagPrev = this.imgTags[this.imgTags.length - 1].cloneNode(true);
-    this.copyTagNext = this.imgTags[0].cloneNode(true);
-    this.slideWrapTag.insertBefore(this.copyTagPrev, this.imgTags[0]);
-    this.slideWrapTag.appendChild(this.copyTagNext);
-    this.imgTags = document.querySelectorAll(`[class ^= "${who}-img"]`);
+    this.slideWrapTag.insertBefore(copyTagPrev, this.imgTags[0]);
+    this.slideWrapTag.appendChild(copyTagNext);
+
+    this.imgTags = document.querySelectorAll(`.${who}-img`);
     this.slideTextTags = document.querySelectorAll(`.${who}-slide-text`);
 
-    // ㅜ 슬라이드의 width, height, margin 설정하기
-    this.slideContainerTag.style.width = `${this.slideWidth}vw`;
-    this.slideContainerTag.style.height = `${this.slideHeight}vh`;
+    // ㅜ 슬라이드의 width, height 설정하기
+    this.slideContainerTag.style.width = `${this.width}vw`;
+    this.slideContainerTag.style.height = `${this.height}vh`;
+
     this.imgTags.forEach((el) => {
-      el.style.margin = `${this.margin}vw`;
-      el.style.width = `${this.slideWidth - this.margin * 2}vw`;
-      el.style.height = `${this.slideHeight - this.margin * 2}vh`;
+
+      el.style.width = `${this.width}vw`;
+      el.style.height = `${this.height}vh`;
     });
 
-    // ㅜ 첫 화면에 첫 번째의 이미지 태그가 보이게끔 left 조정하기
-    this.slideWrapTag.style.transform = `translateX(${this.imgWidth}vw)`;
+    // ㅜ 첫 화면에 첫 번째 사진이 보이게끔 left 조정하기
+    this.slideWrapTag.style.transform = `translateX(${-this.width}vw)`;
+
     this.autoPlay();
 
     // ㅜ 다음 버튼을 클릭했을 때
-    // ㅜ 복사해 둔 이미지 태그에서는 원래 자리로 이동할 때까지 클릭 막아놓기
     this.nextBtn.addEventListener("click", () => {
+
+      // ㅜ 맨 끝에 복사해 둔 사진에서는 원래 자리로 이동할 때까지 클릭 막아놓기
       if (this.index >= this.imgTags.length - 1) return;
       this.btnControl("next");
     });
 
     // ㅜ 이전 버튼을 클릭했을 때
-    // ㅜ 복사해 둔 이미지 태그에서는 원래 자리로 이동할 때까지 클릭 막아놓기
     this.prevBtn.addEventListener("click", () => {
+
+      // ㅜ 맨 앞에 복사해 둔 사진에서는 원래 자리로 이동할 때까지 클릭 막아놓기
       if (this.index <= 0) return;
       this.btnControl("prev");
     });
 
-    // ㅜ 마우스 왼쪽 버튼을 클릭했을 때
     // this.slideContainerTag.addEventListener("mousedown", (e) => {
     //     // ㅜ 맨 앞과 맨 뒤에 복사해 둔 사진의 위치일 때는 드래그 막아놓기
     //     if (this.index >= (this.imgTags.length - 1)) return;
@@ -112,13 +119,13 @@ class JangMainSlide {
     //         this.startX = this.pxToVw(e.pageX);
     //         console.log("onmousedown");
 
-    //         clearInterval(this.autoPlayFn);
-    //         console.log("autoPlayFn out");
-    //         this.autoPlayFn = null;
+    //         clearInterval(this.autoPlayControl);
+    //         console.log("autoPlayControl out");
+    //         this.autoPlayControl = null;
 
-    //         clearTimeout(this._setTimeout);
-    //         console.log("_setTimeout out");
-    //         this._setTimeout = null;
+    //         clearTimeout(this.moveControl);
+    //         console.log("moveControl out");
+    //         this.moveControl = null;
     //     }
     // });
 
@@ -144,38 +151,32 @@ class JangMainSlide {
 
     //     // 드래그의 정도에 따라 실시간으로 게이지 바와 슬라이드를 변화시키기
     //     let posX = this.startX - this.pxToVw(e.pageX);
-    //     this.slideWrapTag.style.transform = `translateX(${(this.index - 1) * this.imgWidth - posX}vw)`;
+    //     this.slideWrapTag.style.transform = `translateX(${(this.index - 1) * -this.width - posX}vw)`;
 
     //     if (posX < 0) posX = -posX;
     //     this.gage(`${posX}%`, "");
     // });
 
-    // 창의 크기가 변경될 때
+    // ㅜ 창의 크기가 변경될 때
     window.addEventListener("resize", () => {
+
       this.gage("0%", "");
       this.slideWrapTag.style.transition = "";
 
       clearTimeout(this.resizeControl);
-
       this.resizeControl = setTimeout(() => {
-        clearInterval(this.autoPlayFn);
-        this.autoPlayFn = null;
 
-        clearTimeout(this._setTimeout);
-        this._setTimeout = null;
-
-        this.autoPlayFn = "first";
-        setTimeout(() => {
-          this.autoPlay();
-        }, 10);
+        clearInterval(this.autoPlayControl);
+        this.autoPlayControl = null;
+        this.autoPlay();
       }, 500);
     });
 
     // window.addEventListener("resize", (e) => {
     //     this.gage(0, 0);
-    //     clearInterval(this.autoPlayFn);
+    //     clearInterval(this.autoPlayControl);
     //     this.slideWrapTag.style.transition = "";
-    //     this.autoPlayFn = null;
+    //     this.autoPlayControl = null;
     //    if (this.resize === false) this.resize = true;
     //    this.resizeIndex = window.innerHeight;
     //    console.log("this.resizeIndex: "+this.resizeIndex);
@@ -192,7 +193,7 @@ class JangMainSlide {
     //                  {
     //                      this.index = 1;
     //                      this.slideWrapTag.style.transition = "0s";
-    //                      this.slideWrapTag.style.transform = `translateX(${(this.index - 1) * this.imgWidth}vw)`;
+    //                      this.slideWrapTag.style.transform = `translateX(${(this.index - 1) * -this.width}vw)`;
     //                  }
     //                  this.isMoving = false;
     //                  this.autoPlay();
@@ -201,81 +202,88 @@ class JangMainSlide {
     //         }
     //     }, 1000);
     // }, 100);
-  }
+  };
 
   autoPlay() {
-    if (this.autoPlayFn === "first") {
-      this.gage("100%", `${this.slideSecond}s`);
-      this.autoPlayFn = null;
-      this.autoPlay();
-    } else if (this.autoPlayFn === null) {
-      this.autoPlayFn = setInterval(() => {
+
+    this.gage("100%", `${this.second}s`);
+
+    if (this.autoPlayControl === null) {
+      this.autoPlayControl = setInterval(() => {
+
         this.move("next");
-      }, this.slideSecond * 1000);
-    }
-  }
+      }, this.second * 1000);
+    };
+  };
 
   move(str) {
+
     if (!this.isMoving) {
+
       this.isMoving = true;
-      this.slideWrapTag.style.transition = `${this.slideSecond}s`;
+      this.slideWrapTag.style.transition = `${this.second}s`;
 
       // ㅜ 다음 슬라이드로 이동하기
       if (str === "next") {
+
         this.index++;
-        console.log(this.index);
-        this.slideWrapTag.style.transform = `translateX(${this.index * this.imgWidth}vw)`;
-        this.gage("0%", `${this.slideSecond}s`);
+
+        this.slideWrapTag.style.transform = `translateX(${this.index * -this.width}vw)`;
+        this.gage("0%", `${this.second}s`);
 
         // ㅜ 트랜지션이 종료될 때까지 기다리기 (autoPlay()가 짝수 번째마다 실행됨)
-          this._setTimeout = setTimeout(() => {
-            this.isMoving = false;
-            this._setTimeout = null;
-            this.gage("100%", `${this.slideSecond}s`);
+        this.moveControl = setTimeout(() => {
 
-            // ㅜ 맨 뒤에 복사해 둔 이미지 태그일 경우 원래 자리로 이동시키기
-            if (this.index >= this.imgTags.length - 1) {
-              this.index = 1;
-              this.slideWrapTag.style.transition = "";
-              this.slideWrapTag.style.transform = `translateX(${this.imgWidth}vw)`;
-            }
-          }, this.slideSecond * 1000);
+          this.isMoving = false;
+          this.moveControl = null;
+
+          this.gage("100%", `${this.second}s`);
+          console.log("moveControl");
+
+          // ㅜ 맨 뒤에 복사해 둔 이미지 태그일 경우 원래 자리로 이동시키기
+          if (this.index >= this.imgTags.length - 1) {
+
+            this.index = 1;
+
+            this.slideWrapTag.style.transition = "";
+            this.slideWrapTag.style.transform = `translateX(${-this.width}vw)`;
+          };
+        }, this.second * 1000);
       }
 
       // ㅜ 이전 슬라이드로 이동하기
       else if (str === "prev") {
         this.index--;
-        console.log(this.index);
-        this.slideWrapTag.style.transform = `translateX(${this.index * this.imgWidth}vw)`;
-        this.gage("0%", `${this.slideSecond}s`);
+        this.slideWrapTag.style.transform = `translateX(${this.index * -this.width}vw)`;
+        this.gage("0%", `${this.second}s`);
 
         // ㅜ 트랜지션이 종료될 때까지 기다리기 (autoPlay()가 짝수 번째마다 실행됨)
-        if (this._setTimeout === null) {
-          this._setTimeout = setTimeout(() => {
+        if (this.moveControl === null) {
+          this.moveControl = setTimeout(() => {
 
             this.isMoving = false;
-            this._setTimeout = null;
-            this.gage("100%", `${this.slideSecond}s`);
+            this.moveControl = null;
+            this.gage("100%", `${this.second}s`);
 
             // ㅜ 맨 앞에 복사해 둔 이미지 태그일 경우 원래 자리로 이동시키기
             if (this.index <= 0) {
               this.index = this.imgTags.length - 2;
               this.slideWrapTag.style.transition = "";
-              this.slideWrapTag.style.transform = `translateX(${this.index * this.imgWidth}vw)`;
+              this.slideWrapTag.style.transform = `translateX(${this.index * -this.width}vw)`;
             }
-          }, this.slideSecond * 1000);
-        }
-      }
-    }
-  }
+          }, this.second * 1000);
+        };
+      };
+    };
+  };
 
   btnControl(str) {
 
-    clearInterval(this.autoPlayFn);
-    this.autoPlayFn = null;
+    clearInterval(this.autoPlayControl);
+    this.autoPlayControl = null;
 
-    clearTimeout(this._setTimeout);
-    this._setTimeout = null;
+    clearTimeout(this.moveControl);
+    this.moveControl = null;
 
     // ㅜ 게이지 바는 버튼을 클릭하자마자 100%로 채워놓기
     this.gage("100%", "");
@@ -286,11 +294,11 @@ class JangMainSlide {
       this.move(str);
 
       // ㅜ move() 안에 있는 게이지 바의 100% 트랜지션이 종료됨과 동시에 setInterval의 첫 실행이 이뤄지게 하기
-      this._setTimeout = setTimeout(() => {
+      this.moveControl = setTimeout(() => {
         this.autoPlay();
-      }, this.slideSecond * 1000);
+      }, this.second * 1000);
     }, 10);
-  }
+  };
   // dragEvent() {
   //     let this = this;
   //     const posX = this.startX - this.endX;
@@ -309,13 +317,13 @@ class JangMainSlide {
   //             this.dragSetTimeout = null;
 
   //             this.autoPlay();
-  //         }, this.slideSecond * 1000);
+  //         }, this.second * 1000);
   //     }
 
   //     // 슬라이드 이동이 없을 경우
   //     else {
-  //         this.gage("100%", `${this.slideSecond}s`);
-  //         this.slideWrapTag.style.transform = `translateX(${(this.index - 1) * this.imgWidth}vw)`;
+  //         this.gage("100%", `${this.second}s`);
+  //         this.slideWrapTag.style.transform = `translateX(${(this.index - 1) * -this.width}vw)`;
   //         this.dragSetTimeout = setTimeout(() => {
   //             this.move("next");
 
@@ -326,20 +334,20 @@ class JangMainSlide {
   //                 this.dragSetTimeout = null;
 
   //                 this.autoPlay();
-  //             }, this.slideSecond * 1000);
-  //         }, this.slideSecond * 1000);
+  //             }, this.second * 1000);
+  //         }, this.second * 1000);
   //     }
   // }
 
   gage(value, second) {
+
     this.timerTag.style.width = value;
     this.timerTag.style.transition = second;
-  }
+  };
 
   pxToVw(value) {
+
     const bodyWidth = document.body.offsetWidth;
     return (value / bodyWidth) * 100;
-  }
-}
-
-// 07 24 19 최종 수정 제가 더 열심히 할게요 흑흑흑흑흑
+  };
+};

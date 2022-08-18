@@ -8,55 +8,55 @@ class mainNav {
     this.doNotClick = false;
     this.resizeControl = null;
 
-    //리모컨
+    // 리모컨
     this.remocon = document.querySelector('.remocon');
-    //top버튼
+    // top버튼
     this.topIcon = document.querySelector('.top-icon');
-    //chat활성화 버튼
+    // chat활성화 버튼
     this.chatIcon = document.querySelector('.chat-icon');
-    //챗봇박스
+    // 챗봇박스
     this.chatBotTag = document.querySelector('.chat-bot');
-    //챗봇 박스
+    // 챗봇 박스
     this.chatBox = document.querySelector('.chat-box');
-    //챗봇 input
+    // 챗봇 input
     this.chatInput = document.querySelector('.chat-input');
-    //채팅창
+    // 채팅창
     this.chatText = document.querySelector('.chat-text');
-    //챗로봇 알림창
+    // 챗로봇 알림창
     this.chatRobot = document.querySelector('.chat-robot');
-    //챗봇 제출버튼
+    // 챗봇 제출버튼
     this.subMission = document.querySelector('.submission');
-    //제출버튼 백그라운드 색상 배열
+    // 제출버튼 백그라운드 색상 배열
     this.colors = ["green", "pink", "gray", "orange", "tomato", "rgb(204, 204, 255)"];
-    //아직 미구현 채팅창 카운터
+    // 아직 미구현 채팅창 카운터
     this.keypressNumber = 0;
-    //회원가입 삭제버튼 눌렀을때 삭제되게하려고 가져온거
+    // 회원가입 삭제버튼 눌렀을때 삭제되게하려고 가져온거
     this.signupModal = document.querySelector('.sign-up-modal');
-    //출석체크 삭제버튼 눌렀을 때 삭제되게하려고 가져온거
+    // 출석체크 삭제버튼 눌렀을 때 삭제되게하려고 가져온거
     this.mainContainer = document.querySelector('.main-container');
     this.logoTag = document.querySelector('.logo');
-    //섹션 인덱스
+    // 섹션 인덱스
     this.index = 0;
     this.init();
   }
   init() {
 
-    //챗봇박스는 일단 먼저 꺼둔다.
+    // 챗봇박스는 일단 먼저 꺼둔다.
     this.chatBotTag.style.display = "none";
-    //transition에 property(속성)를 넣으면 그 property(속성)에만 적용가능하다.
-    //this.remocon.style.transition = "opacity 10s";
-    //js에서 먼저 설정해줘야함
+    // transition에 property(속성)를 넣으면 그 property(속성)에만 적용가능하다.
+    // this.remocon.style.transition = "opacity 10s";
+    // js에서 먼저 설정해줘야함
     this.remocon.style.opacity = "0";
     this.remocon.style.visibility = "hidden";
     this.chatRobot.style.visibility = "hidden";
 
-    //제출버튼 클릭시 버튼색 바뀜
+    // 제출버튼 클릭시 버튼색 바뀜
     this.subMission.addEventListener("click", () => {
       let random = Math.floor(Math.random() * 6);
       this.subMission.style.background = this.colors[random];
     });
 
-    //유저가 대화창 기능
+    // 유저가 대화창 기능
     this.chatInput.addEventListener("keypress", (e) => {
       if (e.keyCode == 13 && this.keypressNumber == 0) {
         this.chatText.style.bottom = "-240px";
@@ -79,7 +79,7 @@ class mainNav {
       // }
     });
 
-    //챗봇 모달창 클릭기능
+    // 챗봇 모달창 클릭기능
     this.chatIcon.addEventListener("click", () => {
       if (this.chatBotTag.style.display === "none") {
         this.chatBotTag.style.display = "block";
@@ -115,7 +115,7 @@ class mainNav {
       }
     });
 
-    //TOP 버튼 클릭시 메인 페이지로 이동
+    // TOP 버튼 클릭시 메인 페이지로 이동
     this.topIcon.addEventListener("click", () => {
       this.searchTag.remove();
       this.allSectionsTag.style.top = `${0}vh`;
@@ -161,7 +161,7 @@ class mainNav {
     });
   }
 
-  //리모콘 투명도 조절 visibility = "visible"요소를 기본 값으로 설정, visibility = "hidden" 요소를 보여주진 않지만 할당된 공간은 존재
+  // 리모콘 투명도 조절 visibility = "visible"요소를 기본 값으로 설정, visibility = "hidden" 요소를 보여주진 않지만 할당된 공간은 존재
   remoconOff() {
     this.remocon.classList.remove('remoconMoveOn');
     if (this.remocon.style.opacity == "1") {
@@ -170,7 +170,7 @@ class mainNav {
     }
   }
 
-  //리모컨 생성 및 위치 조절
+  // 리모컨 생성 및 위치 조절
   remoconMove(index) {
     if (!this.remocon.classList.contains('remoconMoveOn')) {
       this.remocon.classList.add('remoconMoveOn');
@@ -178,7 +178,7 @@ class mainNav {
     this.remocon.style.top = `${index * 100 + 50}vh`;
   }
 
-  //리사이징 되었을 때 리모컨 transition없애기
+  // 리사이징 되었을 때 리모컨 transition없애기
   remoconReMove() {
     this.remocon.classList.remove('remoconMoveOn');
     this.remocon.style.top = `${this.index * 100 + 50}vh`;

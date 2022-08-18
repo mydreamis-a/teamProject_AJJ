@@ -56,9 +56,7 @@ li {
     display: flex;
 }
 
-[class ^="Ahn-img"],
-[class ^="Joo-img"],
-[class ^="Jang-img"] {
+.Ahn-img, .Joo-img, .Jang-img {
     background-color: skyblue;
     justify-content: center;
     background-size: cover;

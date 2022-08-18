@@ -9,7 +9,7 @@ class AhnSlide {
     this.progress = document.querySelector(".progress");
     // 버튼 안눌렀을 때 초기값
     this.slideCount = 1;
-    //게이지바채우기변수
+    // 게이지바채우기변수
     this._setInterval;
     // 슬라이드 넘어갈때 클릭시 확인용
     this.oneclick = false;
@@ -27,7 +27,7 @@ class AhnSlide {
     _this.makeClone();
     _this.progressMove();
 
-    //이전버튼
+    // 이전버튼
     _this.prev.addEventListener("click", function () {
       _this.progressstop();
       _this.slideCount--;
@@ -63,7 +63,7 @@ class AhnSlide {
       }
     });
 
-    //다음버튼
+    // 다음버튼
     _this.next.addEventListener("click", function () {
       _this.progressstop();
       _this.slideCount++;
@@ -108,7 +108,7 @@ class AhnSlide {
     _this.slideWarp.appendChild(cloneSlidefirst);
     _this.slideWarp.insertBefore(cloneSlidelast, _this.slideWarp.firstElementChild);
   }
-  //게이지바 기능
+  // 게이지바 기능
   progressMove() {
     let _this = this;
     let width = 0;
@@ -128,7 +128,7 @@ class AhnSlide {
       }
     }
   }
-  //슬라이드 기능
+  // 슬라이드 기능
   autoSlide() {
     let _this = this;
     _this.slideCount++;
@@ -164,7 +164,7 @@ class AhnSlide {
       _this.text.innerHTML = "나는 주영";
     }
   }
-  //게이지바,슬라이드 멈추기
+  // 게이지바,슬라이드 멈추기
   progressstop() {
     let _this = this;
     _this.progress.style.width = "0%";
@@ -175,7 +175,7 @@ class AhnSlide {
 
 let _AhnSlide = new AhnSlide();
 
-// //페이지 리사이징
+// // 페이지 리사이징
 // window.onresize = function () {
 //   // _this.slideWarp.style.transition = "0s";
 //   window.resizedFinished = setTimeout(function () {
@@ -215,7 +215,7 @@ let _AhnSlide = new AhnSlide();
 //   }
 // }
 
-//업그레이드 하기전
+// 업그레이드 하기전
 // setInterval(() => {
 //   _this.slideCount++;
 //   if (_this.slideCount == 4) {

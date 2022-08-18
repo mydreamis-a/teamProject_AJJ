@@ -5,7 +5,7 @@ mainEvent.style.display = "none";
 let stop;
 
 function time() {
-  //mainEvent.style.display = "block";
+  // mainEvent.style.display = "block";
   let eventleft = Math.floor(Math.random() * 1851);
   let eventtop = Math.floor(Math.random() * 801);
   mainEvent.style.top = eventtop + "px";

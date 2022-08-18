@@ -3,14 +3,14 @@ class JangListSlide {
     this.index = 1;
     this.endX = null;
     this.margin = 0.5;
-    this.imgTags = []; //이미지 주소값만 배열에 담아서 순서대로
+    this.imgTags = []; // 이미지 주소값만 배열에 담아서 순서대로
     this.startX = null;
     this.slideWidth = 60;
     this.slideSecond = 5;
     this.isMoving = false;
     this.rowImgCount = 10;
     this.isDragDone = true;
-    this.totalImgCount; //슬라이드 배열 방 개수
+    this.totalImgCount; // 슬라이드 배열 방 개수
     this.pageNumberTag = [];
     this.autoPlayFn = "first";
     this.resizeControl = null;
@@ -34,10 +34,10 @@ class JangListSlide {
     // window.document.onselectstart = new Function("return false");
     // window.document.ondragstart = new Function("return false");
 
-    //ㅜ HTML 태그 설정하기
+    // ㅜ HTML 태그 설정하기
     this.sectionTag.insertBefore(this.slideContainerTag, this.nextSiblingTag);
     this.sectionTag.insertBefore(this.slideContainerTag, this.nextSiblingTag);
-    //this.sectionTag.appendChild(this.slideContainerTag);
+    // this.sectionTag.appendChild(this.slideContainerTag);
     this.sectionTag.insertBefore(this.timerWrapTag, this.nextSiblingTag);
     this.timerWrapTag.appendChild(this.timerTag);
     this.slideContainerTag.appendChild(this.slideWrapTag);
