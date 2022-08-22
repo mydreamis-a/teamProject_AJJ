@@ -15,7 +15,7 @@ function time() {
     stop = setTimeout(() => {
       mainEvent.style.display = "block";
       time();
-    }, 1);
+    }, _time);
   } else {
     stop = setTimeout(() => {
       mainEvent.style.display = "none";
