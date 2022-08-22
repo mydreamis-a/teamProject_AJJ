@@ -4,12 +4,15 @@ const fs = require("fs");
 const ejs = require("ejs");
 const path = require("path");
 const mysql = require("mysql2");
+
+// ㅜ 시퀄라이즈 패키지이자 생성자
 const Sql = require("sequelize");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const socketio = require("socket.io");
 const dot = require("dotenv").config();
 const session = require("express-session");
+const { sequelize } = require("./model/index_AJJ");
 const FileStore = require("session-file-store")(session);
 
 //
@@ -34,8 +37,8 @@ app.set("views", path.join(__dirname, "/view"));
 
 // ㅜ 절대 경로 설정
 app.use(express.static(__dirname));
-app.use("/img", express.static(__dirname + "/img_Jang"));
-app.use("/img", express.static(__dirname + "/img_Ahn_Ju"));
+app.use("/img", express.static(path.join(__dirname, "img_Jang")));
+app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 
 app.use(
   session({
@@ -50,9 +53,11 @@ app.use(
   })
 );
 
+sequelize.sync({ force: false }).then(() => { log("AJJ의 DB") }).catch((err) => { log(err) });
+
 // ㅜ 메인 페이지
 app.get("/", (req, res) => {
   res.render("main_AJJ");
 });
 
-// 08.22.16 수정
+// 08.23.01 수정

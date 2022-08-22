@@ -4,12 +4,12 @@ const config = {
   dev: {
     username: "root",
     password: process.env.DATABASE_PASSWORD,
-    database: "AJJ_DB",
+    database: "ajj_project",
     host: "127.0.0.1",
-    dialec: "mysql",
+    dialect: "mysql",
   },
 };
 
 module.exports = config;
 
-// 08.22.16 수정
+// 08.23.02 수정
