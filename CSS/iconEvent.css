@@ -1,0 +1,18 @@
+/* 07 24 19 수정 */
+
+.main-event {
+    animation: move 0.5s alternate infinite;
+    position: relative;
+    z-index: 9999;
+    width: 100px;
+}
+
+@keyframes move {
+    from {
+        transform: rotateY(-30deg);
+    }
+
+    to {
+        transform: rotateY(30deg);
+    }
+}

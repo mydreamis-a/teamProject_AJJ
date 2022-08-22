@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slide_test</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body,
+        html {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #slide-container {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        [id ^="slide-img"] {
+            position: absolute;
+            font-size: 500px;
+            height: 98vh;
+            width: 100vw;
+        }
+
+        #slide-img1 {
+            background-color: red;
+        }
+
+        #slide-img2 {
+            background-color: green;
+        }
+
+        #slide-img3 {
+            background-color: blue;
+        }
+
+        #slide-time-bar {
+            background-color: yellow;
+            position: relative;
+            width: 100vw;
+            height: 2vh;
+            top: 98vh;
+        }
+
+        [id ^="slide-btn-"] {
+            transform: translateY(-50%);
+            position: absolute;
+            font-weight: 900;
+            font-size: 3vw;
+            top: 50%;
+        }
+
+        #slide-btn-prev {
+            left: 5vw;
+        }
+
+        #slide-btn-next {
+            right: 5vw;
+        }
+
+        @keyframes from100-to0 {
+            from {
+                left: 100vw;
+            }
+
+            to {
+                left: 0vw;
+            }
+        }
+
+        @keyframes from0-to-100 {
+            from {
+                left: 0vw;
+            }
+
+            to {
+                left: -100vw;
+            }
+        }
+
+        @keyframes from-100-to100 {
+            from {
+                left: -100vw;
+            }
+
+            to {
+                left: 100vw;
+            }
+        }
+
+        @keyframes from-100-to0 {
+            from {
+                left: -100vw;
+            }
+
+            to {
+                left: 0vw;
+            }
+        }
+
+        @keyframes from0-to100 {
+            from {
+                left: 0vw;
+            }
+
+            to {
+                left: 100vw;
+            }
+        }
+
+        @keyframes from100-to-100 {
+            from {
+                left: 100vw;
+            }
+
+            to {
+                left: -100vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="slide-container">
+        <div id="slide-img1">1</div>
+        <div id="slide-img2">2</div>
+        <div id="slide-img3">3</div>
+
+        <div id="slide-time-bar"></div>
+
+        <div id="slide-btn-prev">Prev</div>
+        <div id="slide-btn-next">Next</div>
+    </div>
+</body>
+<script>
+
+    const second = 5;
+    let btnControl = null;
+    let resizeControl = null;
+    let autoPlayControl = null;
+    let startTimeControl = null;
+
+    const imgTags = document.querySelectorAll("[id ^= 'slide-img']");
+    const containerTag = document.querySelector("#slide-container");
+    const timeBarTag = document.querySelector("#slide-time-bar");
+    const nextBtnTag = document.querySelector("#slide-btn-next");
+    const prevBtnTag = document.querySelector("#slide-btn-prev");
+
+    // ㅜ 우클릭, 블럭, 드래그 방지하기
+    window.document.oncontextmenu = new Function("return false");
+    window.document.onselectstart = new Function("return false");
+    window.document.ondragstart = new Function("return false");
+
+    imgTags.forEach((el, idx, arr) => {
+
+        el.style.animationDuration = `0s`;
+        el.style.animationFillMode = `forwards`;
+
+        if (idx === arr.length - 1) {
+            el.style.animationName = `from100-to-100`;
+        }
+        else el.style.animationName = `from${(idx - 1) * 100}-to${idx * 100}`;
+    });
+
+    autoPlay(moveNext, second, second);
+
+    nextBtnTag.addEventListener("click", () => {
+
+        imgTags.forEach((el, idx) => {
+
+            const currentLeftAnimation = parseInt(el.style.animationName.split("-to")[1]);
+
+            if (currentLeftAnimation >= 100) {
+                el.style.animationDuration = "0s";
+            }
+            else el.style.animationDuration = "1s";
+        });
+
+        moveTimeBar(1, 1, "from0-to-100");
+
+        clearTimeout(btnControl);
+        btnControl = setTimeout(() => {
+
+            autoPlay(moveNext, 0, second);
+        }, 1000);
+    })
+
+    prevBtnTag.addEventListener("click", () => {
+
+        autoPlay(movePrev, 0, second);
+    });
+    window.addEventListener("resize", () => {
+
+        clearInterval(autoPlayControl);
+        clearTimeout(startTimeControl);
+        clearTimeout(resizeControl);
+        moveTimeBar(1, 0, "from0-to-100");
+
+        resizeControl = setTimeout(() => {
+
+            autoPlay(moveNext, second, second);
+        }, 500);
+    });
+
+    // ㅜ function ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ
+    function autoPlay(moveFn, startSec, slideSec) {
+
+        clearInterval(autoPlayControl);
+        clearTimeout(startTimeControl);
+
+        moveTimeBar(1, slideSec, "from-100-to0");
+
+        startTimeControl = setTimeout(() => {
+
+            moveFn();
+            moveTimeBar("infinite", slideSec, "from0-to-100");
+
+            autoPlayControl = setInterval(() => {
+
+                moveNext();
+
+            }, slideSec * 2000);
+        }, startSec * 1000);
+    };
+
+    function moveNext() {
+
+        imgTags.forEach((el, idx) => {
+
+            const currentLeftAnimation = parseInt(el.style.animationName.split("-to")[1]);
+
+            if (currentLeftAnimation <= -100) {
+
+                el.style.animationDuration = `0s`;
+                el.style.animationName = `from-100-to100`;
+            }
+            else {
+                el.style.animationDuration = `${second}s`;
+                el.style.animationName = `from${currentLeftAnimation}-to${currentLeftAnimation - 100}`;
+            };
+        });
+    };
+
+    function movePrev() {
+
+        imgTags.forEach((el, idx) => {
+
+            const currentLeftAnimation = parseInt(el.style.animationName.split("-to")[1]);
+
+            if (currentLeftAnimation >= 100) {
+
+                el.style.animationDuration = `0s`;
+                el.style.animationName = `from100-to-100`;
+            }
+            else {
+                el.style.animationDuration = `${second}s`;
+                el.style.animationName = `from${currentLeftAnimation}-to${currentLeftAnimation + 100}`;
+            }
+        })
+    }
+
+    function moveTimeBar(repeatCount, second, name) {
+
+        timeBarTag.style.animationIterationCount = `${repeatCount}`;
+        timeBarTag.style.animationDirection = `alternate`;
+        timeBarTag.style.animationDuration = `${second}s`;
+        timeBarTag.style.animationFillMode = `forwards`;
+        timeBarTag.style.animationName = `${name}`;
+    };
+
+    // 2022.08.22.02 수정
+</script>
+
+</html>

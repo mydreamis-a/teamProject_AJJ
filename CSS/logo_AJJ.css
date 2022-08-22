@@ -1,0 +1,42 @@
+/* 07 24 19 수정 */
+
+.logo {
+    padding-top: calc((10vh - 3vw) / 2);
+    justify-content: center;
+    letter-spacing: 1vw;
+    align-items: center;
+    display: flex;
+    height: 10vh;
+    width: 19.7vw;
+}
+
+.logo:hover {
+    color: royalblue;
+}
+
+.accent-text {
+    font-weight: 900;
+    font-size: 3vw;
+    transition: 1s;
+}
+
+.typing-text {
+    font-weight: 900;
+    font-size: 2vw;
+    transition: 1s;
+}
+
+.typing-cursor {
+    animation: cursorAnimation 0.5s infinite;
+    font-size: 3vw;
+}
+
+@keyframes cursorAnimation {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}

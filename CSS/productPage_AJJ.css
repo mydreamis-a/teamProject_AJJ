@@ -1,0 +1,258 @@
+/* 07 24 19 수정 */
+
+p {
+  margin-bottom: 0px;
+}
+
+input,
+optgroup,
+select,
+textarea {
+  border: 1px solid royalblue;
+  background-color: skyblue;
+}
+
+.cart-modal {
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+.cart-modal-body {
+  box-shadow: 0 0.104vw 0.156vw 0 rgba(34, 36, 38, 0.15);
+  transform: translateX(-50%) translateY(-50%);
+  background-color: rgb(255, 255, 255);
+  border: 4px solid skyblue;
+  border-radius: 0.521vw;
+  overflow-x: hidden;
+  text-align: center;
+  position: absolute;
+  overflow: scroll;
+  padding: 2.083vw;
+  height: 93%;
+  width: 90%;
+  left: 50%;
+  top: 50%;
+}
+
+.cart-title {
+  box-shadow: 0 0.104vw 0.156vw 0 rgba(34, 36, 38, 0.15);
+  background-color: skyblue;
+  vertical-align: bottom;
+  text-align: center;
+  height: 2.604vw;
+}
+
+.product-list-container {
+  min-width: 51.667vw;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 51.667vw) {
+  .product-list-container {
+    max-width: 50vw;
+  }
+}
+
+@media (min-width: 62.5vw) {
+  .product-list-container {
+    max-width: 59.375vw;
+  }
+}
+
+@media (min-width: 72.917vw) {
+  .product-list-container {
+    max-width: 68.75vw;
+  }
+}
+
+[class$="-list-row"] {
+  padding-top: 15vh;
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.product-list-col {
+  margin-left: 3%;
+  margin-top: 3%;
+  width: 22%;
+}
+
+.product-container {
+  border: 0.052vw solid rgba(0, 0, 0, 0.125);
+  background-color: #fff;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  word-wrap: break-word;
+  display: flex;
+}
+
+.product-box {
+  justify-content: center;
+  flex-direction: column;
+  padding-bottom: 0.5vh;
+  align-items: center;
+  text-align: center;
+  padding-top: 2vh;
+  display: flex;
+}
+
+.product-price {
+  border: 0.052vw solid black;
+  border-radius: 0.5rem;
+  padding: 0.521vw;
+  font-size: 1vw;
+  width: 90%;
+}
+
+[class^="product-name"] {
+  border: 0.052vw solid black;
+  justify-content: center;
+  text-overflow: ellipsis;
+  border-radius: 0.5rem;
+  -webkit-line-clamp: 3;
+  align-items: center;
+  margin-bottom: 1vh;
+  text-align: center;
+  font-size: 1vw;
+  overflow: auto;
+  padding: 0.2vw;
+  height: 6vh;
+  width: 90%;
+}
+
+.product-img {
+  border: 0.052vw solid black;
+  background-size: cover;
+  border-radius: 0.5rem;
+  height: 100%;
+  width: 100%;
+}
+
+.product-img-dark {
+  background: gray;
+  opacity: 0;
+}
+
+.product-img-text {
+  padding-top: 92.5%;
+}
+
+.product-img:hover .product-img-dark {
+  text-align: center;
+  color: #ffffff;
+  opacity: 0.6;
+}
+
+.product-btn-container {
+  padding-top: 1.042vw;
+}
+
+.product-btn-group>input {
+  margin-right: 0.3vw;
+  margin-left: 0.3vw;
+  font-size: 1vw;
+}
+
+.product-show-more-btn {
+  margin: 2.083vw auto auto auto;
+  background-color: skyblue;
+  justify-content: center;
+  width: 10.417vw;
+  height: 6.25vw;
+  display: flex;
+}
+
+.search {
+  background-color: rgba(255, 255, 255, 0.5);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  visibility: hidden;
+  margin: 0 auto;
+  display: flex;
+  width: 100vw;
+  height: 7vh;
+}
+
+.product-search {
+  margin-right: 0.5vw;
+  margin-left: 0.5vw;
+  text-align: center;
+  font-size: 1vw;
+  height: 3.5vh;
+  width: 4.5vw;
+}
+
+.cart-input-search-item {
+  margin-right: 0.5vw;
+  margin-left: 0.5vw;
+  padding-left: 1vw;
+  font-size: 1vw;
+  height: 3.5vh;
+  width: 17vw;
+}
+
+.product-search-last {
+  background-color: rgba(255, 255, 255, 0.5);
+  visibility: hidden;
+  position: absolute;
+  width: 17vw;
+  left: 57vw;
+  top: 17vh;
+}
+
+.log-tag {
+  font-size: 1.563vw;
+  position: absolute;
+  left: 2%;
+}
+
+.cart-total-count-wrapper {
+  transform: translate(1.5vw, 2.5vh);
+}
+
+.cart-total-count-circle {
+  border: 0.781vw solid #ffc107;
+  background-color: #ffc107;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 1.042vw;
+  height: 0.781vw;
+  width: 0.781vw;
+  display: flex;
+}
+
+input[type="button"] {
+  padding-bottom: 0.1vw;
+  padding-right: 0.3vw;
+  padding-left: 0.3vw;
+  padding-top: 0.1vw;
+}
+
+.hit::after {
+  background-color: royalblue;
+  border-radius: 2px;
+  font-size: 1vw;
+  content: "히트";
+  margin: 0 10px;
+  color: white;
+  height: 2vh;
+  width: 2vw;
+}
+
+.donation::after {
+  background-color: royalblue;
+  border-radius: 2px;
+  font-size: 1vw;
+  content: "기부";
+  margin: 0 10px;
+  color: white;
+  height: 2vh;
+  width: 2vw;
+}

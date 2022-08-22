@@ -100,7 +100,7 @@
             this.isMoving = false;
             this.slideSecond = 5;
             this.leftValueArr = [];
-            this._setTimeOut = null;
+            this._setTimeout = null;
             this.imgTagsLength = 40;
             this.pageNumberTags = [];
             this.autoPlayFn = "first";
@@ -172,7 +172,7 @@
             //     // ㅜ 마우스를 올렸을 때
             //     _this.slideContainerTag.onmouseenter = () => {
 
-            //         clearInterval(_this._setTimeOut);
+            //         clearInterval(_this._setTimeout);
             //         clearInterval(_this.autoPlayFn);
 
             //         _this.imgTags[0].style.display = "none";
@@ -182,7 +182,7 @@
             //         _this.slideWrapTag.style.transform = `translateY(0vh)`;
 
             //         // ㅜ 첫 번째 태그의 색상 변화시키기
-            //         _this._setTimeOut = setTimeout(() => {
+            //         _this._setTimeout = setTimeout(() => {
             //             _this.index = 1;
             //             _this.imgTags[_this.index].style.color = "white";
 
@@ -195,7 +195,7 @@
             //     // ㅜ 마우스가 벗어났을 때
             //     _this.slideContainerTag.onmouseleave = () => {
 
-            //         clearInterval(_this._setTimeOut);
+            //         clearInterval(_this._setTimeout);
             //         clearInterval(_this.autoPlayFn);
 
             //         _this.slideWrapTag.style.transform = `translateY(-${_this.imgHeight}vh)`;
@@ -213,7 +213,7 @@
 
             //         // ㅜ 트랜지션을 비롯해서 모두 초기화시키기
             //         clearInterval(_this.resizeControl);
-            //         clearInterval(_this._setTimeOut);
+            //         clearInterval(_this._setTimeout);
             //         clearInterval(_this.autoPlayFn);
             //         _this.slideWrapTag.style.transition = "";
             //         _this.imgTags.forEach((el, idx) => {
@@ -262,7 +262,7 @@
 
                 //     // ㅜ 트랜지션이 끝난 이전 태그는 복사 후 맨 뒤로 보내주고 나서 삭제하기
                 //     if (idx === _this.index) {
-                //         _this._setTimeOut = setTimeout(() => {
+                //         _this._setTimeout = setTimeout(() => {
                 //             const newCopyTag = el.cloneNode(true);
                 //             newCopyTag.style.transition = "";
                 //             _this.slideContainerTag.appendChild(newCopyTag);
@@ -300,10 +300,10 @@
 
                     // ㅜ 트랜지션이 끝나면 이전 태그를 맨 뒤로 보내주기
                     if (idx === _this.index) {
-                        _this._setTimeOut = setTimeout(() => {
+                        _this._setTimeout = setTimeout(() => {
                             el.style.transition = "";
 
-                            _this._setTimeOut = setTimeout(() => {
+                            _this._setTimeout = setTimeout(() => {
                                 if (_this.index >= _this.imgTagsLength - 1) _this.index = 0;
                                 else _this.index++;
 

@@ -1,0 +1,136 @@
+/* 07 24 19 수정 */
+
+.main-slide-container {
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+    display: flex;
+}
+
+.Ahn-slide-container,
+.Joo-slide-container,
+.Jang-slide-container {
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+    display: flex;
+    top: 17vh;
+}
+
+.rank-slide-container {
+    margin: 4vh auto 0vh auto;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+}
+
+.main-slide-wrap,
+.Ahn-slide-wrap,
+.Joo-slide-wrap,
+.Jang-slide-wrap {
+    position: absolute;
+    display: flex;
+    left: 0;
+}
+
+.rank-slide-wrap {
+    flex-direction: column;
+    position: absolute;
+    display: flex;
+    left: 0;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+[class ^="main-img"] {
+    background-color: skyblue;
+    justify-content: center;
+    background-size: cover;
+    align-items: center;
+    display: flex;
+}
+
+.Ahn-img, .Joo-img, .Jang-img {
+    background-color: skyblue;
+    justify-content: center;
+    background-size: cover;
+    align-items: center;
+    display: flex;
+}
+
+[class ^="rank-img"] {
+    justify-content: center;
+    background-size: cover;
+    align-items: center;
+    display: flex;
+}
+
+.main-slide-text {
+    text-align: center;
+    font-weight: 900;
+    font-size: 3vw;
+    color: white;
+}
+
+.slide-text {
+    text-align: center;
+    font-weight: 900;
+    font-size: 1.5vw;
+    color: white;
+}
+
+.rank-slide-text {
+    text-align: center;
+    font-weight: 900;
+    font-size: 1.5vw;
+}
+
+[class $="-next-btn"],
+[class $="-prev-btn"] {
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: translateY(-50%);
+    border-radius: 30px;
+    text-align: center;
+    position: absolute;
+    color: white;
+    margin: 0 5vw;
+    width: 40px;
+    z-index: 10;
+    top: 50%;
+}
+
+[class $="-next-btn"] {
+    right: 0;
+}
+
+.main-timer-wrap {
+    width: calc(100vw - 0.6vw);
+    margin: 0 auto;
+}
+
+.timer-wrap {
+    margin: 0 auto;
+    width: 60vw;
+}
+
+.main-timer {
+    background-color: royalblue;
+    height: 1vh;
+    width: 0%;
+}
+
+.Ahn-timer,
+.Joo-timer,
+.Jang-timer {
+    background-color: royalblue;
+    position: relative;
+    height: 0.5vh;
+    width: 0;
+    top: 17vh;
+}

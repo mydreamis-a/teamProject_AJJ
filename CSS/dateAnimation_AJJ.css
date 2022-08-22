@@ -1,0 +1,14 @@
+/* 07 24 19 수정 */
+
+.date-animation-increase {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: 900;
+    font-size: 7vw;
+    display: flex;
+}
+
+.date-animation-increase:hover {
+    color: royalblue;
+}

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slide_test</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body,
+        html {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #slide-container {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            height: 9vw;
+            width: 86vw;
+        }
+        
+        #slide-wrap {
+            display: flex;
+        }
+
+        [id ^="slide-img"] {
+            background-color: royalblue;
+            position: absolute;
+            font-size: 500px;
+            margin: 0.5vw;
+            height: 8vw;
+            width: 8vw;
+        }
+
+        #slide-time-bar {
+            background-color: yellow;
+            position: relative;
+            width: 100vw;
+            height: 2vh;
+            top: 98vh;
+        }
+
+        [id ^="slide-btn-"] {
+            transform: translateY(-50%);
+            position: absolute;
+            font-weight: 900;
+            font-size: 3vw;
+            top: 50%;
+        }
+
+        #slide-btn-prev {
+            left: 5vw;
+        }
+
+        #slide-btn-next {
+            right: 5vw;
+        }
+
+        @keyframes from100-to0 {
+            from {
+                left: 100vw;
+            }
+
+            to {
+                left: 0vw;
+            }
+        }
+
+        @keyframes from0-to-100 {
+            from {
+                left: 0vw;
+            }
+
+            to {
+                left: -100vw;
+            }
+        }
+
+        @keyframes from-100-to100 {
+            from {
+                left: -100vw;
+            }
+
+            to {
+                left: 100vw;
+            }
+        }
+
+        @keyframes from-100-to0 {
+            from {
+                left: -100vw;
+            }
+
+            to {
+                left: 0vw;
+            }
+        }
+
+        @keyframes from0-to100 {
+            from {
+                left: 0vw;
+            }
+
+            to {
+                left: 100vw;
+            }
+        }
+
+        @keyframes from100-to-100 {
+            from {
+                left: 100vw;
+            }
+
+            to {
+                left: -100vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="slide-container">
+        <div id="slide-wrap">
+            <div id="slide-img1">1</div>
+            <div id="slide-img2">2</div>
+            <div id="slide-img3">3</div>
+            <div id="slide-img4">4</div>
+            <div id="slide-img5">5</div>
+            <div id="slide-img6">6</div>
+            <div id="slide-img7">7</div>
+            <div id="slide-img8">8</div>
+            <div id="slide-img9">9</div>
+            <div id="slide-img10">10</div>
+            <div id="slide-img11">11</div>
+            <div id="slide-img12">12</div>
+            <div id="slide-img13">13</div>
+            <div id="slide-img14">14</div>
+            <div id="slide-img15">15</div>
+            <div id="slide-img16">16</div>
+            <div id="slide-img17">17</div>
+            <div id="slide-img18">18</div>
+            <div id="slide-img19">19</div>
+            <div id="slide-img20">20</div>
+        </div>
+
+        <div id="slide-time-bar"></div>
+
+        <div id="slide-btn-prev">Prev</div>
+        <div id="slide-btn-next">Next</div>
+    </div>
+</body>
+<script>
+
+    const second = 3;
+    let resizeControl = null;
+    let timeBarControl = null;
+    let autoPlayControl = null;
+    let startTimeControl = null;
+
+    const imgTags = document.querySelectorAll("[id ^= 'slide-img']");
+    const containerTag = document.querySelector("#slide-container");
+    const timeBarTag = document.querySelector("#slide-time-bar");
+    const nextBtnTag = document.querySelector("#slide-btn-next");
+    const prevBtnTag = document.querySelector("#slide-btn-prev");
+
+    // ㅜ 우클릭, 블럭, 드래그 방지하기
+    window.document.oncontextmenu = new Function("return false");
+    window.document.onselectstart = new Function("return false");
+    window.document.ondragstart = new Function("return false");
+
+    imgTags.forEach((el, idx, arr) => {
+
+        el.style.animationDuration = `0s`;
+        el.style.animationFillMode = `forwards`;
+
+        if (idx === arr.length - 1) {
+            el.style.animationName = `from100-to-100`;
+        }
+        else el.style.animationName = `from${(idx - 1) * 100}-to${idx * 100}`;
+    });
+
+    autoPlay(moveNext, second, second);
+
+    nextBtnTag.addEventListener("click", () => {
+
+        autoPlay(moveNext, 0, second);
+    });
+
+    prevBtnTag.addEventListener("click", () => {
+
+        autoPlay(movePrev, 0, second);
+    });
+
+    window.addEventListener("resize", () => {
+
+        clearInterval(autoPlayControl);
+        clearTimeout(startTimeControl);
+        clearTimeout(resizeControl);
+        moveTimeBar(1, 0, "from0-to-100");
+
+        resizeControl = setTimeout(() => {
+
+            autoPlay(moveNext, second, second);
+        }, 500);
+    });
+
+    // ㅜ function ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ
+    function autoPlay(moveFn, startSec, slideSec) {
+
+        clearInterval(autoPlayControl);
+        clearTimeout(startTimeControl);
+
+        moveTimeBar(1, slideSec, "from-100-to0");
+
+        startTimeControl = setTimeout(() => {
+
+            moveFn();
+            moveTimeBar("infinite", slideSec, "from0-to-100");
+
+            autoPlayControl = setInterval(() => {
+
+                moveNext();
+
+            }, slideSec * 2000);
+        }, startSec * 1000);
+    };
+
+    function moveNext() {
+
+        imgTags.forEach((el, idx) => {
+
+            const currentLeftAnimation = parseInt(el.style.animationName.split("-to")[1]);
+
+            if (currentLeftAnimation <= -100) {
+
+                el.style.animationDuration = `0s`;
+                el.style.animationName = `from-100-to100`;
+            }
+            else {
+                el.style.animationDuration = `${second}s`;
+                el.style.animationName = `from${currentLeftAnimation}-to${currentLeftAnimation - 100}`;
+            };
+        });
+    };
+
+    function movePrev() {
+
+        imgTags.forEach((el, idx) => {
+
+            const currentLeftAnimation = parseInt(el.style.animationName.split("-to")[1]);
+
+            if (currentLeftAnimation >= 100) {
+
+                el.style.animationDuration = `0s`;
+                el.style.animationName = `from100-to-100`;
+            }
+            else {
+                el.style.animationDuration = `${second}s`;
+                el.style.animationName = `from${currentLeftAnimation}-to${currentLeftAnimation + 100}`;
+            }
+        })
+    }
+
+    function moveTimeBar(repeatCount, second, name) {
+
+        timeBarTag.style.animationIterationCount = `${repeatCount}`;
+        timeBarTag.style.animationDirection = `alternate`;
+        timeBarTag.style.animationDuration = `${second}s`;
+        timeBarTag.style.animationFillMode = `forwards`;
+        timeBarTag.style.animationName = `${name}`;
+    };
+
+    // 2022.08.22.02 수정
+</script>
+
+</html>

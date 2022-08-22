@@ -1,0 +1,120 @@
+/* 07 24 19 수정 */
+
+.sign-up-modal {
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: fixed;
+    z-index: 1000;
+    display: none;
+    height: 100%;
+    width: 100%;
+    outline: 0;
+    left: 0;
+    top: 0;
+}
+
+.sign-up-sub-modal {
+    box-shadow: 0 0.5vw 0.5vw 0 rgba(34, 36, 38, 0.15);
+    background-color: rgb(255, 255, 255);
+    transform: translateY(-50%);
+    border-radius: 0.5vw;
+    position: relative;
+    padding: 2vw;
+    margin: auto;
+    width: 60vw;
+    top: 50%;
+}
+
+.sign-up-delete {
+    position: absolute;
+    cursor: pointer;
+    right: 1vw;
+    top: 1vw;
+}
+
+.form {
+    margin: 0 auto;
+    z-index: 999;
+    width: 35vw;
+    right: 0;
+}
+
+.fieldset {
+    box-shadow: 0.5vw 0.5vw 0.5vw 0.5vw pink;
+    border: 0.2vw solid palevioletred;
+    border-radius: 30px;
+    margin-bottom: 2vw;
+    padding: 1vw;
+}
+
+.legend {
+    text-align: center;
+    font-weight: 900;
+    font-size: 3vw;
+    float: initial;
+    width: initial;
+    margin: 0;
+}
+
+.label {
+    background: url("/img_Jang/tag-fill.svg") no-repeat 0.5vw center /1vw;
+    padding-left: 2vw;
+    font-weight: 900;
+    font-size: 1.5vw;
+}
+
+[id ^="input"] {
+    border: 0.05vw solid palevioletred;
+    background-color: white;
+    font-size: 1.5vw;
+    padding: 0.25vw;
+    height: 2vw;
+    width: 100%;
+}
+
+#inputEmail,
+#inputPw {
+    margin-bottom: 1vw;
+    width: 30vw;
+}
+
+[id ^="input"]::placeholder {
+    font-size: 1.5vw;
+}
+
+[id ^="input"].is-invalid {
+    outline: 0.05vw solid red;
+    border: 0.05vw solid red;
+}
+
+[id ^="input"].is-valid {
+    outline: 0.05vw solid palevioletred;
+    border: 0.05vw solid palevioletred;
+}
+
+.disallow-massage {
+    color: palevioletred;
+    font-weight: 900;
+    display: block;
+}
+
+.welcome-msg {
+    margin: 1vw 0px 0px 0px;
+    text-align: center;
+    font-weight: 900;
+    font-size: 1.5vw;
+    color: red;
+}
+
+.submit-btn {
+    border: 0.1vw solid palevioletred;
+    background-color: palevioletred;
+    border-radius: 30px;
+    padding: 0vw 0.5vw;
+    font-size: 1.5vw;
+    font-weight: 900;
+    margin: 0 auto;
+    display: block;
+    color: white;
+}
