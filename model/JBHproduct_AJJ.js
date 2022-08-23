@@ -1,33 +1,39 @@
 const Sql = require("sequelize");
 
-class User extends Sql.Model {
+class JBHproduct extends Sql.Model {
   static init(sequelize) {
     return super.init(
       {
-        user_id: {
-          type: Sql.STRING(20),
-          allowNull: false,
-          unique: true,
-        },
-        password: {
-          type: Sql.STRING(255),
-          allowNull: false,
-        },
         name: {
-          type: Sql.STRING(20),
-          allowNull: false,
-        },
-        phone: {
-          type: Sql.INTEGER,
-          allowNull: false,
-        },
-        email: {
           type: Sql.STRING(40),
           allowNull: false,
           unique: true,
         },
-        point: {
+        price: {
           type: Sql.INTEGER,
+          allowNull: false,
+        },
+        img: {
+          type: Sql.STRING(40),
+          allowNull: false,
+        },
+        stock: {
+          type: Sql.INTEGER,
+          allowNull: false,
+        },
+        category: {
+          type: Sql.STRING(40),
+          allowNull: false,
+        },
+        tag: {
+          type: Sql.STRING(20),
+        },
+        content: {
+          type: Sql.STRING(100),
+        },
+        like_count: {
+          type: Sql.INTEGER,
+          allowNull: false,
           defaultValue: 0,
         },
       },
@@ -35,8 +41,8 @@ class User extends Sql.Model {
         sequelize,
         timestamps: true,
         underscored: true,
-        modelName: "User",
-        tableName: "users",
+        modelName: "JBHproduct",
+        tableName: "jbhproducts",
         paranoid: false,
         charset: "utf8",
         collate: "utf8_general_ci",
@@ -44,10 +50,9 @@ class User extends Sql.Model {
     );
   }
   static associate(db) {
-    db.User.hasMany(db.Cart, { sourceKey: "id" });
-    db.User.hasMany(db.Comment, { sourceKey: "id" });
-    db.User.hasMany(db.DailyCheck, { sourceKey: "id" });
+    db.JBHproduct.belongsTo(db.Cart, { foreignKey: "jbhproduct_num", sourceKey: "id" });
+    db.JBHproduct.hasMany(db.Comment, { foreignKey: "JBHproduct_num", sourceKey: "id" })
   }
 }
 
-module.exports = User;
+module.exports = JBHproduct;

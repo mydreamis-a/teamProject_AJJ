@@ -7,15 +7,7 @@ class Cart extends Sql.Model {
         product_count: {
           type: Sql.INTEGER,
           allowNull: false,
-        },
-        email: {
-          type: Sql.STRING(40),
-          allowNull: false,
-          unique: true,
-        },
-        point: {
-          type: Sql.INTEGER,
-          defaultValue: 0,
+          defaultValue: 1,
         },
       },
       {
@@ -32,6 +24,9 @@ class Cart extends Sql.Model {
   }
   static associate(db) {
     db.Cart.belongsTo(db.User, { targetKey: "id" });
+    db.Cart.hasMany(db.AJYproduct, { foreignKey: "AJYproduct_num", sourceKey: "id" })
+    db.Cart.hasMany(db.JBHproduct, { foreignKey: "JBHproduct_num", sourceKey: "id" })
+    db.Cart.hasMany(db.JJWproduct, { foreignKey: "JJWproduct_num", sourceKey: "id" })
   }
 }
 
