@@ -53,7 +53,15 @@ app.use(
   })
 );
 
-sequelize.sync({ force: false }).then(() => { log("AJJ의 DB") }).catch((err) => { log(err) });
+// ㅜ 서버 실행 시 MySQL 연동
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    log("AJJ의 DB");
+  })
+  .catch((err) => {
+    log(err);
+  });
 
 // ㅜ 메인 페이지
 app.get("/", (req, res) => {
