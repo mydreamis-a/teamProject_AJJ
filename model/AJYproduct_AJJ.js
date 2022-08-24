@@ -18,7 +18,7 @@ class AJYproduct extends Sql.Model {
         },
         // ㅜ 이미지 경로
         img: {
-          type: Sql.STRING(40),
+          type: Sql.STRING(100),
           allowNull: false,
         },
         // ㅜ 재고 수량
@@ -61,8 +61,9 @@ class AJYproduct extends Sql.Model {
   static associate(db) {
     db.AJYproduct.hasOne(db.Like, { foreignKey: "ajyproduct_num", sourceKey: "id" });
     db.AJYproduct.hasMany(db.Comment, { foreignKey: "ajyproduct_num", sourceKey: "id" });
-    db.AJYproduct.belongsToMany(db.ProductKeyword, { through: "ajyproduct_num" });
   }
 }
 
 module.exports = AJYproduct;
+
+// 08.24.21 수정

@@ -45,7 +45,6 @@ app.use("/img", express.static(path.join(__dirname, "img_Jang")));
 app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 
 // ㅜ 라우터 설정
-app.use(createProducts);
 app.use("/example", example);
 
 app.use(
@@ -70,6 +69,8 @@ sequelize
   .catch((err) => {
     log(err);
   });
+
+app.use(createProducts);
 
 // ㅜ 메인 페이지
 app.get("/", (req, res) => {

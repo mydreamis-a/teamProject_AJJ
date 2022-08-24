@@ -15,7 +15,7 @@ class JJWproduct extends Sql.Model {
           allowNull: false,
         },
         img: {
-          type: Sql.STRING(40),
+          type: Sql.STRING(100),
           allowNull: false,
         },
         stock: {
@@ -53,8 +53,9 @@ class JJWproduct extends Sql.Model {
   static associate(db) {
     db.JJWproduct.hasOne(db.Like, { foreignKey: "jjwproduct_num", sourceKey: "id" });
     db.JJWproduct.hasMany(db.Comment, { foreignKey: "jjwproduct_num", sourceKey: "id" });
-    db.JJWproduct.belongsToMany(db.ProductKeyword, { through: "jjwproduct_num" });
   }
 }
 
 module.exports = JJWproduct;
+
+// 08.24.21 수정
