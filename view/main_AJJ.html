@@ -6,6 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>안주장의 홈페이지</title>
+  <!-- socketio -->
+  <script src="/socket.io/socket.io.js"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
@@ -101,18 +104,10 @@
             <path
               d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" />
           </svg> 문의하기
+          <div class="two-btn">
+            <button class="live-btn">실시간 상담</button><button class="call-btn">전화 상담</button>
+          </div>
           <div class="chat-box">
-            <div class="chat-text">
-            </div>
-            <div class="chat-robot">연락처를 남겨주시면 상담원이 연락 드립니다.
-              <div>이름<div>
-                  <input type="text" placeholder="정확하게 입력해주세요.">
-                </div>휴대폰 번호<div>
-                  <input type="text" placeholder="숫자만 입력해주세요.">
-                </div>
-                <div class="submission">제출하기</div>
-              </div>
-            </div>
           </div>
         </div>
         <div class="chat-other">

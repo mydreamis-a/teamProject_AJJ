@@ -7,7 +7,6 @@ class mainNav {
     this.searchTag = document.createElement('div');
     this.doNotClick = false;
     this.resizeControl = null;
-
     // 리모컨
     this.remocon = document.querySelector('.remocon');
     // top버튼
@@ -20,12 +19,13 @@ class mainNav {
     this.chatBox = document.querySelector('.chat-box');
     // 챗봇 input
     this.chatInput = document.querySelector('.chat-input');
-    // 채팅창
-    this.chatText = document.querySelector('.chat-text');
     // 챗로봇 알림창
     this.chatRobot = document.querySelector('.chat-robot');
     // 챗봇 제출버튼
     this.subMission = document.querySelector('.submission');
+    this.callBtn = document.querySelector(".call-btn");
+    this.liveBtn = document.querySelector(".live-btn");
+    this.twoBtn = document.querySelector(".tow-btn");
     // 제출버튼 백그라운드 색상 배열
     this.colors = ["green", "pink", "gray", "orange", "tomato", "rgb(204, 204, 255)"];
     // 아직 미구현 채팅창 카운터
@@ -48,36 +48,93 @@ class mainNav {
     // js에서 먼저 설정해줘야함
     this.remocon.style.opacity = "0";
     this.remocon.style.visibility = "hidden";
-    this.chatRobot.style.visibility = "hidden";
+    // this.chatRobot.style.display = "none";
 
-    // 제출버튼 클릭시 버튼색 바뀜
-    this.subMission.addEventListener("click", () => {
-      let random = Math.floor(Math.random() * 6);
-      this.subMission.style.background = this.colors[random];
+    // // 전화상담버튼
+    // this.callBtn.addEventListener("click", () => {
+    //   setTimeout(() => {
+    //     this.chatRobot.style.display = "block";
+    //   }, 500);
+    // });
+    // socketio
+    const socket = io.connect();
+
+    // 소켓 (유저 텍스트 추가)
+    socket.on("to-message",(data) => {
+      this.chatBox.innerHTML += `
+      <div class="chat-p">
+      ${data.message}
+      </div>
+      `;
+      this.chatInput.value = null;
+      this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
     });
 
-    // 유저가 대화창 기능
-    this.chatInput.addEventListener("keypress", (e) => {
+    // 유저 채팅 소켓 이벤트
+    this.chatInput.addEventListener("keydown", (e) => {
       if (e.keyCode == 13 && this.keypressNumber == 0) {
-        this.chatText.style.bottom = "-240px";
-        let chatInputValue = this.chatInput.value;
-        this.chatText.innerHTML = chatInputValue;
-        this.chatInput.value = null;
-        setTimeout(() => {
-          this.chatText.style.bottom = 0 + "px";
-          this.chatRobot.style.visibility = "visible";
-        }, 500);
+        socket.emit("message", {
+          message : this.chatInput.value,
+        });
       }
-      // } else if((e.keyCode == 13) && (this.keypressNumber == 1)){
-      //   newDiv = document.createElement('div');
-      //   newDiv.className = "chat-text";
-      //   this.chatBox.appendChild(newDiv);
-      //   console.log(chatInput.value);
-      //   let chatInputValue2 = this.chatInput.value;
-      //   this.chatText.innerHTML = chatInputValue2;
-      //   this.chatInput.value = null;
-      // }
     });
+
+    // 전화상담 버튼 소켓
+    socket.on("callChat2", () => {
+      const chat = document.createElement("div");
+      chat.classList.add("chat-robot");
+      chat.innerHTML = "연락처를 남겨주시면 상담원이 연락 드립니다.";
+      
+      const chatName = document.createElement("div");
+      chatName.innerHTML = "이름";
+      
+      const inputName = document.createElement("input");
+      inputName.setAttribute("type","text");
+      inputName.setAttribute("placeholder","정확하게 입력해주세요");
+      
+      const chatNumber = document.createElement("div");
+      chatNumber.innerHTML = "휴대폰 번호";
+      
+      const inputNumber = document.createElement("input");
+      inputNumber.setAttribute("type","text");
+      inputNumber.setAttribute("placeholder","정확하게 입력해주세요");
+      
+      const submit = document.createElement("div");
+      submit.classList.add("submission");
+      submit.innerHTML="제출하기";
+      
+      chat.appendChild(chatName);
+      chat.appendChild(inputName);
+      chat.appendChild(chatNumber);
+      chat.appendChild(inputNumber);
+      chat.appendChild(submit);
+      this.chatBox.appendChild(chat);
+      this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
+          submit.addEventListener("click", () => {
+            const random = Math.floor(Math.random() * 6);
+            submit.style.background = this.colors[random];
+            alert("기다려라 ㅋ.");
+          });
+    });
+
+    socket.on("liveChat2",() => {
+      
+    });
+    
+    // 전화상담 버튼 누르면 
+    this.callBtn.addEventListener("click", () => {
+      setTimeout(() => {
+      socket.emit("callChat", {});
+    }, 500);
+    });
+
+    this.liveBtn.addEventListener("click",() => {
+      alert("5초 뒤 상담원과 연결됩니다.");
+      setTimeout(() => {
+        socket.emit("liveChat", {});
+      }, 5000);
+    });
+
 
     // 챗봇 모달창 클릭기능
     this.chatIcon.addEventListener("click", () => {
@@ -88,16 +145,14 @@ class mainNav {
       }
     });
 
+  
     window.addEventListener("click", (e) => {
       let targetClass = e.target.className;
       switch (targetClass) {
         case "chat-delete":
           if (this.chatBotTag.style.display === "block") {
             this.chatBotTag.style.display = "none";
-            this.chatText.innerHTML = null;
-            this.chatRobot.style.visibility = "hidden";
-            this.remocon.style.visibility = "visible";
-            this.subMission.style.background = "rgb(204, 204, 255)";
+            this.remocon.style.visibility = "block";
           }
           break;
         case "sign-up-delete":
