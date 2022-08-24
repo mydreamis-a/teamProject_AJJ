@@ -3,8 +3,6 @@ const express = require("express");
 const router = express.Router();
 const { log } = console;
 
-router.get("/", (req, res) => {
-  User.findAll({}).then((e) => log(e));
-});
+router.get("/", (req, res) => {});
 
 module.exports = router;
