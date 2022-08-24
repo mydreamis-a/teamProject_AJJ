@@ -14,6 +14,7 @@ class User extends Sql.Model {
         phone: {
           type: Sql.INTEGER,
           allowNull: false,
+          unique: true,
         },
         // ㅜ 이메일
         email: {
