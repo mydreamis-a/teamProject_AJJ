@@ -1,5 +1,6 @@
 const Sql = require("sequelize");
 
+// ㅜ 장지원 상점의 상품 테이블
 class JJWproduct extends Sql.Model {
   static init(sequelize) {
     return super.init(
@@ -50,8 +51,9 @@ class JJWproduct extends Sql.Model {
     );
   }
   static associate(db) {
-    db.JJWproduct.belongsTo(db.Cart, { foreignKey: "jjwproduct_num", sourceKey: "id" });
-    db.JJWproduct.hasMany(db.Comment, { foreignKey: "JJWproduct_num", sourceKey: "id" })
+    db.JJWproduct.hasOne(db.Like, { foreignKey: "jjwproduct_num", sourceKey: "id" });
+    db.JJWproduct.hasMany(db.Comment, { foreignKey: "jjwproduct_num", sourceKey: "id" });
+    db.JJWproduct.belongsToMany(db.ProductKeyword, { through: "jjwproduct_num" });
   }
 }
 

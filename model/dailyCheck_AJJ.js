@@ -1,10 +1,10 @@
 const Sql = require("sequelize");
 
+// ㅜ 회원의 출석 체크 테이블
 class DailyCheck extends Sql.Model {
   static init(sequelize) {
     return super.init(
-      {
-      },
+      {},
       {
         sequelize,
         timestamps: true,

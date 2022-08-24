@@ -1,5 +1,6 @@
 const Sql = require("sequelize");
 
+// ㅜ 주병현 상점의 상품 테이블
 class JBHproduct extends Sql.Model {
   static init(sequelize) {
     return super.init(
@@ -50,8 +51,9 @@ class JBHproduct extends Sql.Model {
     );
   }
   static associate(db) {
-    db.JBHproduct.belongsTo(db.Cart, { foreignKey: "jbhproduct_num", sourceKey: "id" });
-    db.JBHproduct.hasMany(db.Comment, { foreignKey: "JBHproduct_num", sourceKey: "id" })
+    db.JBHproduct.hasOne(db.Like, { foreignKey: "jbhproduct_num", sourceKey: "id" });
+    db.JBHproduct.hasMany(db.Comment, { foreignKey: "jbhproduct_num", sourceKey: "id" });
+    db.JBHproduct.belongsToMany(db.ProductKeyword, { through: "jbhproduct_num" });
   }
 }
 
