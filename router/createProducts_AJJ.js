@@ -1,9 +1,7 @@
 const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
 const { log } = console;
-
-<<<<<<< HEAD
 router.get("/", (req, res) => {});
-=======
+
 module.exports = function createProducts() {
   JJWproduct.findAll({}).then((data) => {
     //
