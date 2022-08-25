@@ -169,6 +169,7 @@ class mainNav {
         };
       };
     });
+
     // 실시간 상담 처음 들어왔을 때 알림
     socket.on("liveHi2",(data) => {
       if(data.name != admin){
@@ -180,6 +181,7 @@ class mainNav {
         this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
       }
     });
+
     // 소켓 (유저 텍스트 추가)
     socket.on("to-message",(data) => {
       if(data.name == admin){
@@ -198,15 +200,6 @@ class mainNav {
       this.chatInput.value = null;
       this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
     });
-
-    // 유저 채팅 소켓 이벤트
-    // this.chatInput.addEventListener("keydown", (e) => {
-    //   if (e.keyCode == 13 && this.keypressNumber == 0) {
-    //     socket.emit("message", {
-    //       message : this.chatInput.value,
-    //     });
-    //   }
-    // });
 
     // 전화상담 버튼 누르면 
     this.callBtn.addEventListener("click", () => {
@@ -228,7 +221,6 @@ class mainNav {
       this.chatInput.addEventListener("click", this.bb);
     });
 
-
     // 챗봇 모달창 클릭기능
     this.chatIcon.addEventListener("click", () => {
       if (this.chatBotTag.style.display === "none") {
@@ -238,7 +230,6 @@ class mainNav {
       }
     });
 
-  
     window.addEventListener("click", (e) => {
       let targetClass = e.target.className;
       switch (targetClass) {
