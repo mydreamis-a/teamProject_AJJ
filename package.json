@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "nodemon app_AJJ.js"
+    "start": "nodemon router/socketio_AJJ.js"
   },
   "dependencies": {
     "ejs": "^3.1.8",
