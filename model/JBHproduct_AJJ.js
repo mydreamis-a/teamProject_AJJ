@@ -6,7 +6,7 @@ class JBHproduct extends Sql.Model {
     return super.init(
       {
         name: {
-          type: Sql.STRING(40),
+          type: Sql.STRING(200),
           allowNull: false,
           unique: true,
         },
@@ -15,7 +15,7 @@ class JBHproduct extends Sql.Model {
           allowNull: false,
         },
         img: {
-          type: Sql.STRING(100),
+          type: Sql.STRING(200),
           allowNull: false,
         },
         stock: {

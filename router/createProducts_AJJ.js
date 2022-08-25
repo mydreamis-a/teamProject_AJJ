@@ -1,13 +1,10 @@
-const { sequelize, User, Cart, Like, Comment, AJYproduct, JBHproduct, JJWproduct, DailyCheck } = require("../model/index_AJJ");
-const express = require("express");
-const router = express.Router();
+const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
 const { log } = console;
 
-router.get("/", (req, res) => {
-  //
+module.exports = function createProducts() {
   JJWproduct.findAll({}).then((data) => {
     //
-    log(!data[0]);
+    log(`데이터가 없다면 true: ${!data[0]}`);
     if (data[0]) return;
     //
     AJYproduct.bulkCreate([
@@ -1116,6 +1113,4 @@ router.get("/", (req, res) => {
       },
     ]);
   });
-});
-
-module.exports = router;
+};

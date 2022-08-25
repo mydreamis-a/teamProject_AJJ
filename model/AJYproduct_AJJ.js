@@ -7,7 +7,7 @@ class AJYproduct extends Sql.Model {
       {
         // ㅜ 상품명
         name: {
-          type: Sql.STRING(40),
+          type: Sql.STRING(200),
           allowNull: false,
           unique: true,
         },
@@ -18,7 +18,7 @@ class AJYproduct extends Sql.Model {
         },
         // ㅜ 이미지 경로
         img: {
-          type: Sql.STRING(100),
+          type: Sql.STRING(200),
           allowNull: false,
         },
         // ㅜ 재고 수량

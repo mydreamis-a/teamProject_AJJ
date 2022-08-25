@@ -70,11 +70,11 @@ sequelize
     log(err);
   });
 
-app.use(createProducts);
-
 // ㅜ 메인 페이지
 app.get("/", (req, res) => {
+  //
+  createProducts();
   res.render("main_AJJ");
 });
 
-// 08.23.01 수정
+// 08.25.10 수정
