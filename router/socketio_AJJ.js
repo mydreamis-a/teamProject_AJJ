@@ -6,7 +6,6 @@ const fs = require("fs");
 const ejs = require("ejs");
 const mysql = require("mysql2");
 const path = require("path");
-
 const app = express();
 const PORT = 3000;
 const server = app.listen(PORT, () => {
