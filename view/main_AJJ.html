@@ -6,9 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>안주장의 홈페이지</title>
+  <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
   <!-- socketio -->
   <script src="/socket.io/socket.io.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
@@ -295,7 +295,7 @@
 <script src="/JS/slide_mainContent_AJJ copy 2.js"></script>
 <script src="/JS/slide_mainContent_AJJ copy.js"></script>
 <script src="/JS/signIn_AJJ.js"></script>
-<script src="/JS/signUp_AJJ.js"></script>
+<script src="/JS/signUp_AJJ2.js"></script>
 <script src="/JS/rankSlide_AJJ.js"></script>
 <script src="/JS/attendanceCheck_AJJ.js"></script>
 <script src="/JS/iconEvent_AJJ.js"></script>
@@ -306,7 +306,7 @@
   const _mainNav = new mainNav();
   const _logo = new logo();
   const _JangMainSlide = new JangMainSlide("main", "section1");
-  const _signUp = new signUp();
+  const _signUp = new signUp2();
   let _searchRankSlide = new JangRankSlide("rank");
 
   // ㅜ 슬라이드에 메세지 넣기
@@ -320,21 +320,7 @@
 
 <script>
   const _productsPage = new productsPage();
-  _productsPage.getProductsData().then((result) => {
-    asdproductData = result;
-    ahnproductData = asdproductData.filter((el) => el.designerName === "AJY");
-    ajycartUserImg = ahnproductData.map(a => a.img);
 
-    jbhproductData = asdproductData.filter((el) => el.designerName === "JBH");
-    jbhcartUserImg = jbhproductData.map(a => a.img);
-
-    jjwproductData = asdproductData.filter((el) => el.designerName === "JJW");
-    jjwcartUserImg = jjwproductData.map(a => a.img);
-
-    const _AhnlistSlide = new JangListSlide("Ahn", 2, "Ahn-product-list", ajycartUserImg);
-    const _JoolistSlide = new JangListSlide("Joo", 3, "Ju-product-list", jbhcartUserImg);
-    const _JanglistSlide = new JangListSlide("Jang", 4, "Jang-product-list", jjwcartUserImg);
-  });
 </script>
 
 </html>
