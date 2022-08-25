@@ -1,4 +1,4 @@
-const PORT = 3000;
+const PORT = 8282;
 const { log } = console;
 const fs = require("fs");
 const ejs = require("ejs");
@@ -14,6 +14,10 @@ const dot = require("dotenv").config();
 const session = require("express-session");
 const { sequelize } = require("./model/index_AJJ");
 const FileStore = require("session-file-store")(session);
+const createProducts = require("./router/createProducts_AJJ");
+
+// ㅜ 라우터 예시
+const example = require("./router/example_AJJ");
 
 //
 const app = express();
@@ -39,6 +43,10 @@ app.set("views", path.join(__dirname, "/view"));
 app.use(express.static(__dirname));
 app.use("/img", express.static(path.join(__dirname, "img_Jang")));
 app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
+
+// ㅜ 라우터 설정
+app.use(createProducts);
+app.use("/example", example);
 
 app.use(
   session({
