@@ -6,9 +6,9 @@ class signUp {
     this.regPassword = /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?=[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{6,}$/;
     this.regs = [this.regName, this.regTel, this.regEmail, this.regPassword, ,];
     this.disallowMessages = new Array();
-    this.formTag = document.querySelector('form');
-    this.signupIcon = document.querySelector('.sign-up-icon');
-    this.signupModal = document.querySelector('.sign-up-modal');
+    this.formTag = document.querySelector("form");
+    this.signupIcon = document.querySelector(".sign-up-icon");
+    this.signupModal = document.querySelector(".sign-up-modal");
     this.inputTags = document.querySelectorAll('[id ^= "input-"]');
     // this.signUpDelete = document.querySelector('.sign-up-delete');
     this.init();
@@ -24,9 +24,9 @@ class signUp {
       }
     });
 
-    Object.prototype.insertAfter = (newNode) => {
-      this.parentNode.insertBefore(newNode, this.nextSibling);
-    };
+    // Object.prototype.insertAfter = (newNode) => {
+    //   this.parentNode.insertBefore(newNode, this.nextSibling);
+    // };
 
     this.disallowMessages.push("한글 또는 영어로 2글자 이상 입력해야 합니다.");
     this.disallowMessages.push("0으로 시작하는 숫자 9~12자리를 입력해야 합니다.");
@@ -39,14 +39,14 @@ class signUp {
       el.addEventListener("input", () => {
         this.regs[this.regs.length - 1] = new RegExp("^" + this.inputTags[3].value + "$");
         const rslt = this.regs[idx].test(el.value);
-        const welcomeTag = document.querySelector('.welcome-msg');
+        const welcomeTag = document.querySelector(".welcome-msg");
         if (idx === 0) welcomeTag.innerHTML = `${el.value}님 환영합니다!`;
         this.regStyle(rslt, el);
 
         // ㅜ 유효성 검증에 허용되는 값을 입력했는지 확인하기
         if (!rslt) this.disallowEvent(el, idx);
         else {
-          if (el.nextElementSibling.classList.contains('disallow-massage')) {
+          if (el.nextElementSibling.classList.contains("disallow-massage")) {
             el.nextElementSibling.remove();
           }
         }
@@ -59,7 +59,7 @@ class signUp {
       event.preventDefault();
       event.stopPropagation();
       if (rsltArr.every((value) => value === true)) {
-        const userName = document.querySelector('#input-name').value;
+        const userName = document.querySelector("#input-name").value;
         alert(userName + "님, 환영합니다.\n회원가입이 완료되었습니다.");
         this.formTag.submit();
       }
@@ -68,27 +68,25 @@ class signUp {
 
   // ㅜ 유효성 검증의 통과 여부에 따라 class를 적용하는 함수
   regStyle(rslt, el) {
-
     // ㅜ 통과
     if (rslt) {
-      el.classList.remove('is-invalid');
-      el.classList.add('is-valid');
+      el.classList.remove("is-invalid");
+      el.classList.add("is-valid");
     }
-    
+
     // ㅜ 불허
     else {
-      el.classList.remove('is-valid');
-      el.classList.add('is-invalid');
+      el.classList.remove("is-valid");
+      el.classList.add("is-invalid");
     }
   }
 
   // ㅜ 유효성이 허용되지 않았을 때 메세지를 보여주는 함수
   disallowEvent(el, idx) {
-
     // ㅜ nextElementSibling 다음 형제 태그
-    if (!el.nextElementSibling.classList.contains('disallow-massage')) {
-      const smallTag = document.createElement('small');
-      smallTag.classList.add('disallow-massage');
+    if (!el.nextElementSibling.classList.contains("disallow-massage")) {
+      const smallTag = document.createElement("small");
+      smallTag.classList.add("disallow-massage");
       smallTag.innerHTML = this.disallowMessages[idx];
       el.insertAfter(smallTag);
     }

@@ -18,6 +18,7 @@ const createProducts = require("./router/createProducts_AJJ");
 
 // ㅜ 라우터 예시
 const example = require("./router/example_AJJ");
+const productPage = require("./router/productsPage_AJJ");
 
 //
 const app = express();
@@ -46,6 +47,7 @@ app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 
 // ㅜ 해당 요청 주소에 대해서 라우터 설정
 app.use("/example", example);
+app.use(productPage);
 
 app.use(
   session({
@@ -74,7 +76,11 @@ sequelize
 app.get("/", (req, res) => {
   //
   createProducts();
-  res.render("main_AJJ");
+  //
+  const AJYproducts = new Array();
+  const JBHproducts = new Array();
+  const JJWproducts = new Array();
+  res.render("main_AJJ", { AJYproducts, JBHproducts, JJWproducts });
 });
 
 // 08.25.10 수정

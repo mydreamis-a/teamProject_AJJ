@@ -12,7 +12,7 @@ class User extends Sql.Model {
         },
         // ㅜ 전화 번호
         phone: {
-          type: Sql.INTEGER,
+          type: Sql.STRING(20),
           allowNull: false,
           unique: true,
         },
