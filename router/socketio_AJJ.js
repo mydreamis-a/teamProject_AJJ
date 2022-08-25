@@ -45,21 +45,23 @@ io.sockets.on("connection", (socket) => {
         socket.emit("callChat2", () => {
         });
     });
+
     // 유저의 실시간 상담
     socket.on("liveChat", () => {
         socket.emit("liveChat2", () => {
         });
     });
+
     // 관리자 or 유저 채팅
     socket.on("message", (data) => {
         if (!data.message) return;
         // console.log(data);
         io.emit("to-message", data);
     });
+    
     // 상담하기 누르면 안녕하세요 띄우는거
     socket.on("liveHi", (data) => {
         console.log(data);
         socket.emit("liveHi2",data);
     });
 });
-

@@ -6,7 +6,7 @@ class JBHproduct extends Sql.Model {
     return super.init(
       {
         name: {
-          type: Sql.STRING(40),
+          type: Sql.STRING(200),
           allowNull: false,
           unique: true,
         },
@@ -15,7 +15,7 @@ class JBHproduct extends Sql.Model {
           allowNull: false,
         },
         img: {
-          type: Sql.STRING(40),
+          type: Sql.STRING(200),
           allowNull: false,
         },
         stock: {
@@ -53,8 +53,9 @@ class JBHproduct extends Sql.Model {
   static associate(db) {
     db.JBHproduct.hasOne(db.Like, { foreignKey: "jbhproduct_num", sourceKey: "id" });
     db.JBHproduct.hasMany(db.Comment, { foreignKey: "jbhproduct_num", sourceKey: "id" });
-    db.JBHproduct.belongsToMany(db.ProductKeyword, { through: "jbhproduct_num" });
   }
 }
 
 module.exports = JBHproduct;
+
+// 08.24.21 수정
