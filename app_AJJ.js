@@ -44,7 +44,7 @@ app.use(express.static(__dirname));
 app.use("/img", express.static(path.join(__dirname, "img_Jang")));
 app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 
-// ㅜ 라우터 설정
+// ㅜ 해당 요청 주소에 대해서 라우터 설정
 app.use("/example", example);
 
 app.use(
