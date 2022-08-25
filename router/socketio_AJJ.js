@@ -28,14 +28,13 @@ app.engine("html", ejs.renderFile);
 app.set("views", path.join(__dirname, "../view"));
 
 // ㅜ 절대 경로 설정
-
-app.use(express.static(path.join(__dirname,'..')));
+app.use(express.static(path.join(__dirname, "..")));
 
 app.use("/img", express.static(path.join(__dirname, "/img_Jang")));
 app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 
 app.get("/", (req, res) => {
-    res.render("main_AJJ");
+  res.render("main_AJJ");
 });
 
 // 유저의 실시간 채팅
@@ -66,4 +65,3 @@ io.sockets.on("connection", (socket) => {
         socket.emit("liveHi2",data);
     });
 });
-

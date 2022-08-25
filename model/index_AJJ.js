@@ -8,7 +8,6 @@ const AJYproduct = require("./AJYproduct_AJJ");
 const JBHproduct = require("./JBHproduct_AJJ");
 const JJWproduct = require("./JJWproduct_AJJ");
 const DailyCheck = require("./dailyCheck_AJJ");
-const ProductKeyword = require("./productKeyword_AJJ");
 const config = require("../config/config_AJJ").dev;
 
 // ㅜ MySQL 연결 객체 생성
@@ -25,7 +24,6 @@ db.AJYproduct = AJYproduct;
 db.JBHproduct = JBHproduct;
 db.JJWproduct = JJWproduct;
 db.DailyCheck = DailyCheck;
-db.ProductKeyword = ProductKeyword;
 
 User.init(sequelize);
 Cart.init(sequelize);
@@ -35,7 +33,6 @@ AJYproduct.init(sequelize);
 JBHproduct.init(sequelize);
 JJWproduct.init(sequelize);
 DailyCheck.init(sequelize);
-ProductKeyword.init(sequelize);
 
 User.associate(db);
 Cart.associate(db);
@@ -45,8 +42,7 @@ AJYproduct.associate(db);
 JBHproduct.associate(db);
 JJWproduct.associate(db);
 DailyCheck.associate(db);
-ProductKeyword.associate(db);
 
-module.exports = { sequelize, User, Cart, Like, Comment, AJYproduct, JBHproduct, JJWproduct, DailyCheck, ProductKeyword };
+module.exports = { sequelize, User, Cart, Like, Comment, AJYproduct, JBHproduct, JJWproduct, DailyCheck };
 
-// 08.23.02 수정
+// 08.24.21 수정

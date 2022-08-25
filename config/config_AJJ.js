@@ -7,6 +7,9 @@ const config = {
     database: "ajj_project",
     host: "127.0.0.1",
     dialect: "mysql",
+    //
+    // ㅜ 쿼리 로그 비활성화
+    logging: false,
   },
 };
 

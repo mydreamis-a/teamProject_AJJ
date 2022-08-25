@@ -1,4 +1,4 @@
-const PORT = 3000;
+const PORT = 8282;
 const { log } = console;
 const fs = require("fs");
 const ejs = require("ejs");
@@ -14,6 +14,10 @@ const dot = require("dotenv").config();
 const session = require("express-session");
 const { sequelize } = require("./model/index_AJJ");
 const FileStore = require("session-file-store")(session);
+const createProducts = require("./router/createProducts_AJJ");
+
+// ㅜ 라우터 예시
+const example = require("./router/example_AJJ");
 
 //
 const app = express();
@@ -40,6 +44,9 @@ app.use(express.static(__dirname));
 app.use("/img", express.static(path.join(__dirname, "img_Jang")));
 app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 
+// ㅜ 해당 요청 주소에 대해서 라우터 설정
+app.use("/example", example);
+
 app.use(
   session({
     secret: process.env.JU_SECRET_KEY,
@@ -65,7 +72,9 @@ sequelize
 
 // ㅜ 메인 페이지
 app.get("/", (req, res) => {
+  //
+  createProducts();
   res.render("main_AJJ");
 });
 
-// 08.23.01 수정
+// 08.25.10 수정
