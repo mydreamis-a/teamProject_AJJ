@@ -56,7 +56,7 @@ function createProducts(shopName, products) {
         <p class="product-price">${el.price} 원</p>
         <div class="product-btn-container">
           <div class="product-btn-group">
-            <input class="in-cart-btn${idx}" data-shopName=${shopName} type="button" value="장바구니에 담기" onclick="incart(${shopName}, ${idx})">
+            <input class="in-cart-btn${idx}" data-shopName=${shopName} type="button" value="장바구니에 담기" onclick="incart('${shopName}', ${idx})">
             <input class="show-product-btn${idx}" type="button" value="상품 보기">
           </div>
         </div>
