@@ -31,12 +31,7 @@ class User extends Sql.Model {
         point: {
           type: Sql.INTEGER,
           defaultValue: 0,
-        },
-        // ㅜ 비밀 번호
-        refresh: {
-          type: Sql.STRING(255),
-          allowNull: true,
-        },
+        }
       },
       {
         sequelize,

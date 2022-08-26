@@ -4,17 +4,23 @@ const fs = require("fs");
 const ejs = require("ejs");
 const path = require("path");
 const mysql = require("mysql2");
-
+let boolCheck = false;
+let loginCheck = 0;
+let userToken = 0;
+let user = 0;
 // ㅜ 시퀄라이즈 패키지이자 생성자
 const Sql = require("sequelize");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const socketio = require("socket.io");
 const dot = require("dotenv").config();
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
+const session = require("express-session")({
+  secret: process.env.JU_SECRET_KEY,
+  resave: true,
+  saveUninitialized: true,
+});
 const { sequelize,User } = require("./model/index_AJJ");
-const FileStore = require("session-file-store")(session);
+// const FileStore = require("session-file-store")(session);
 const createProducts = require("./router/createProducts_AJJ");
 
 // ㅜ 라우터 예시
@@ -47,20 +53,12 @@ app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 // ㅜ 해당 요청 주소에 대해서 라우터 설정
 app.use("/example", example);
 
-
 // 220825 추가부분 주병현
-let accessToken = process.env.JU_ACCESS_TOKEN;
-let refreshToken = process.env.JU_REFRESH_TOKEN;
 
 // 220825 추가부분 주병현
 const sharedsession = require("express-socket.io-session");
-io.use(sharedsession(session({
-  secret: process.env.JU_SECRET_KEY,
-  resave: true,
-  saveUninitialized: true,
-  store : new FileStore(),
-})));
-
+app.use(session);
+io.use(sharedsession(session)); 
 // app.use(
 //   session({
 //     secret: process.env.JU_SECRET_KEY,
@@ -92,10 +90,12 @@ app.get("/", (req, res) => {
 
 // 220825 추가부분 주병현
 io.on("connection", (socket) => {
+  
+  socket.emit("signCheck");
   socket.on("login",(userInfor) => {
-
-      const userInputEmail = userInfor.userInputEmail;
-      const userInputPw = userInfor.userInputPw;
+      socket.emit("signCheck");
+      const userInputEmail = userInfor.userInputEmail; // 유저가 입력한 이메일 값
+      const userInputPw = userInfor.userInputPw; // 유저가 입력한 패수워드 값
       const a = 0;
       User.findAll({
               where: {
@@ -107,30 +107,32 @@ io.on("connection", (socket) => {
               password : user[0].password,
               type : "JWT",
             },
-            accessToken,
+            process.env.JU_ACCESS_TOKEN,
             {
               issuer : "주병현",
-              expiresIn : "5s"
+              expiresIn : "1m"
             })
           let rT = jwt.sign({
               password : user[0].password,
               type : "JWT",
             },
-            refreshToken,
+            process.env.JU_REFRESH_TOKEN,
             {
               issuer : "주병현",                
-              expiresIn : "30s"
+              expiresIn : "3m"
             })
             socket.handshake.session.aT = aT;
+            socket.handshake.session.rT = rT;
+            socket.handshake.session.name = user[0].name;
             socket.handshake.session.save();
-            socket.handshake.cookies.rT = rT;
-              socket.emit("loginSuccess", user[0].name);
+            console.log(socket);
+              socket.emit("loginSuccess",user[0].name);
           }).catch((e) => {
               console.log(e);
           })
       })
     socket.on("signUp",(inputName,inputTel,inputEmail,inputPassword)=>{
-      console.log(socket);
+    socket.emit("signCheck");
       const inputNameData = inputName;
       const inputTelData = inputTel;
       const inputEmailData = inputEmail;
@@ -147,16 +149,21 @@ io.on("connection", (socket) => {
         password : inputPasswordData
       },
     }).then((e)=>{
-      console.log(e)
       socket.emit("signSuccess",inputNameData);
     }).catch((e)=>{
       console.log(e);
     })
   })
-
   socket.on("signCheck",()=>{
-    jwt.verify()
+    let userName = socket.handshake.session.name;
+    jwt.verify(socket.handshake.session.aT,process.env.JU_ACCESS_TOKEN,(err,decoded)=>{
+    if(err){
+      console.log("로그인 해주세요");
+    }
+    else if(decoded){
+      socket.emit("loginSuccess",userName);
+    }
   })
 })
-
+})
 // 08.25.10 수정
