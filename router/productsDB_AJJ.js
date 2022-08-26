@@ -1,10 +1,10 @@
 const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
 const { log } = console;
 
-module.exports = function createProducts() {
+module.exports = function productsDB() {
   JJWproduct.findAll({}).then((data) => {
     //
-    log(`데이터가 없다면 true: ${!data[0]}`);
+    log(`productsDB nothing? so create: ${!data[0]}`);
     if (data[0]) return;
     //
     AJYproduct.bulkCreate([

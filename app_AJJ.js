@@ -14,11 +14,11 @@ const dot = require("dotenv").config();
 const session = require("express-session");
 const { sequelize } = require("./model/index_AJJ");
 const FileStore = require("session-file-store")(session);
-const createProducts = require("./router/createProducts_AJJ");
 
 // ㅜ 라우터 예시
 const example = require("./router/example_AJJ");
-const productPage = require("./router/productsPage_AJJ");
+const productsDB = require("./router/productsDB_AJJ");
+const productsPage = require("./router/productsPage_router_AJJ");
 
 //
 const app = express();
@@ -47,7 +47,7 @@ app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 
 // ㅜ 해당 요청 주소에 대해서 라우터 설정
 app.use("/example", example);
-app.use(productPage);
+app.use(productsPage);
 
 app.use(
   session({
@@ -66,21 +66,17 @@ app.use(
 sequelize
   .sync({ force: false })
   .then(() => {
-    log("AJJ의 DB");
+    log("AJJ's DB connection");
   })
   .catch((err) => {
     log(err);
   });
 
 // ㅜ 메인 페이지
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   //
-  createProducts();
-  //
-  const AJYproducts = new Array();
-  const JBHproducts = new Array();
-  const JJWproducts = new Array();
-  res.render("main_AJJ", { AJYproducts, JBHproducts, JJWproducts });
+  await productsDB();
+  res.render("main_AJJ");
 });
 
-// 08.25.10 수정
+// 08.26.11 수정
