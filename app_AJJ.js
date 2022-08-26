@@ -4,12 +4,10 @@ const fs = require("fs");
 const ejs = require("ejs");
 const path = require("path");
 const mysql = require("mysql2");
-let boolCheck = false;
-let loginCheck = 0;
-let userToken = 0;
-let user = 0;
 
-// ㅜ 시퀄라이즈 패키지이자 생성자
+/**
+ * 시퀄라이즈 패키지이자 생성자
+ */
 const Sql = require("sequelize");
 const express = require("express");
 const jwt = require("jsonwebtoken");
@@ -38,6 +36,12 @@ const server = app.listen(PORT, () => {
   log("localhost:", PORT);
 });
 const io = socketio(server);
+
+//
+let boolCheck = false;
+let loginCheck = 0;
+let userToken = 0;
+let user = 0;
 
 // ㅜ body-parser
 app.use(express.urlencoded({ extended: false }));

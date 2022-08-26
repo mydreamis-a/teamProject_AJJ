@@ -49,6 +49,7 @@ class AJYproduct extends Sql.Model {
       {
         sequelize,
         timestamps: true,
+        updatedAt: false,
         underscored: true,
         modelName: "AJYproduct",
         tableName: "ajyproducts",

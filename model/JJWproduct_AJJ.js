@@ -41,6 +41,7 @@ class JJWproduct extends Sql.Model {
       {
         sequelize,
         timestamps: true,
+        updatedAt: false,
         underscored: true,
         modelName: "JJWproduct",
         tableName: "jjwproducts",
