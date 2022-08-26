@@ -20,12 +20,6 @@ class Cart extends Sql.Model {
           type: Sql.INTEGER,
           allowNull: false,
         },
-        // ㅜ 장바구니에 담은 상품의 수량
-        product_count: {
-          type: Sql.INTEGER,
-          allowNull: false,
-          defaultValue: 1,
-        },
       },
       {
         sequelize,

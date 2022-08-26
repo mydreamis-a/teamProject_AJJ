@@ -5,7 +5,21 @@ const { log } = console;
 
 router.post("/:products", (req, res) => {
   //
-  log(req.params.products);
+  const shopName = req.params.products.slice(0, 3);
+  const productNum = req.params.products.replace(shopName, "");
+  //
+  switch (shopName) {
+    //
+    case "AJY":
+      Cart.create({
+        ajyproduct_num: productNum,
+        user_id: 
+      });
+      break;
+
+    default:
+      break;
+  }
 });
 
 module.exports = router;

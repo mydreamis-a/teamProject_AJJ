@@ -90,8 +90,9 @@ sequelize
 // ㅜ 메인 페이지
 app.get("/", (req, res) => {
   //
-  productsDB();
-  res.render("main_AJJ");
+  productsDB().then(() => {
+    res.render("main_AJJ");
+  });
 });
 
 io.on("connection", (socket) => {

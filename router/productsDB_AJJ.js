@@ -2,7 +2,7 @@ const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
 const { log } = console;
 
 module.exports = function productsDB() {
-  JJWproduct.findAll({}).then((data) => {
+  return JJWproduct.findAll({}).then((data) => {
     //
     log(`productsDB nothing? so create: ${!data[0]}`);
     if (data[0]) return;
