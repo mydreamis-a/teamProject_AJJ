@@ -6,8 +6,9 @@ const { log } = console;
 router.post("/Ahn-shop", (req, res) => {
   AJYproduct.findAll({}).then((AJYproducts) => {
     //
-    const productsTag = createProducts(AJYproducts);
-    res.send({ name: "AJY", productsTag });
+    const shopName = "AJY";
+    const productsTag = createProducts(shopName, AJYproducts);
+    res.send({ shopName, productsTag });
   });
 });
 
@@ -15,8 +16,9 @@ router.post("/Ju-shop", (req, res) => {
   //
   JBHproduct.findAll({}).then((JBHproducts) => {
     //
-    const productsTag = createProducts(JBHproducts);
-    res.send({ name: "JBH", productsTag });
+    const shopName = "JBH";
+    const productsTag = createProducts(shopName, JBHproducts);
+    res.send({ shopName, productsTag });
   });
 });
 
@@ -24,8 +26,9 @@ router.post("/Jang-shop", (req, res) => {
   //
   JJWproduct.findAll({}).then((JJWproducts) => {
     //
-    const productsTag = createProducts(JJWproducts);
-    res.send({ name: "JJW", productsTag });
+    const shopName = "JJW";
+    const productsTag = createProducts(shopName, JJWproducts);
+    res.send({ shopName, productsTag });
   });
 });
 
@@ -34,11 +37,11 @@ router.post("/Jang-shop", (req, res) => {
  * @param {array} products 각 상점의 상품 DB
  * @returns 필요한 HTML 태그
  */
-function createProducts(products) {
+function createProducts(shopName, products) {
   const productsTag = new Array();
   //
   const _products = products.map((el) => el.dataValues);
-  _products.forEach((el) => {
+  _products.forEach((el, idx) => {
     //
     productsTag.push(`
     <div class="product-list-col">
@@ -53,8 +56,8 @@ function createProducts(products) {
         <p class="product-price">${el.price} 원</p>
         <div class="product-btn-container">
           <div class="product-btn-group">
-            <input class="in-cart-btn0" type="button" value="장바구니에 담기">
-            <input class="show-product-btn0" type="button" value="상품 보기">
+            <input class="in-cart-btn${idx}" data-shopName=${shopName} type="button" value="장바구니에 담기" onclick="incart(${shopName}, ${idx})">
+            <input class="show-product-btn${idx}" type="button" value="상품 보기">
           </div>
         </div>
       </div>
@@ -67,4 +70,4 @@ function createProducts(products) {
 
 module.exports = router;
 
-// 08.26.10 수정
+// 08.26.13 수정

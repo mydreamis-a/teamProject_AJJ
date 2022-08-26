@@ -8,15 +8,16 @@ shopBtnTags.forEach((el) => {
   //
   el.addEventListener("click", () => {
     let tag = null;
+    const shopName = el.className.replace("-btn", "");
     //
     $.ajax({
       //
-      url: `/${el.className.replace("-btn", "")}`,
+      url: `/${shopName}`,
       type: "post",
       //
       // ㅜ 각 상점의 상품 목록 태그를 생성해주는 함수
       success: (sendResult) => {
-        switch (sendResult.name) {
+        switch (sendResult.shopName) {
           //
           case "AJY":
             tag = document.querySelector(".Ahn-product-list").querySelector(".product-list-row");

@@ -17,6 +17,7 @@ const FileStore = require("session-file-store")(session);
 
 // ㅜ 라우터 예시
 const example = require("./router/example_AJJ");
+const cart = require("./router/cart_router_AJJ");
 const productsDB = require("./router/productsDB_AJJ");
 const productsPage = require("./router/productsPage_router_AJJ");
 
@@ -47,7 +48,8 @@ app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 
 // ㅜ 해당 요청 주소에 대해서 라우터 설정
 app.use("/example", example);
-app.use(productsPage);
+app.use("/", productsPage);
+app.use("/cart", cart);
 
 app.use(
   session({
@@ -73,9 +75,9 @@ sequelize
   });
 
 // ㅜ 메인 페이지
-app.get("/", async (req, res) => {
+app.get("/", (req, res) => {
   //
-  await productsDB();
+  productsDB();
   res.render("main_AJJ");
 });
 
