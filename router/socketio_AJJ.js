@@ -6,7 +6,6 @@ const fs = require("fs");
 const ejs = require("ejs");
 const mysql = require("mysql2");
 const path = require("path");
-
 const app = express();
 const PORT = 3000;
 const server = app.listen(PORT, () => {
@@ -39,21 +38,29 @@ app.get("/", (req, res) => {
 
 // 유저의 실시간 채팅
 io.sockets.on("connection", (socket) => {
-  // 유저의 실시간 채팅
-  socket.on("message", (data) => {
-    socket.emit("to-message", data);
-  });
-  // 유저의 전화상담
-  socket.on("callChat", () => {
-    socket.emit("callChat2", () => {});
-  });
-  // 유저의 실시간 상담
-  socket.on("liveChat", () => {
-    socket.emit("liveChat2", () => {});
-  });
-});
+    console.log("새로운 유저 : ", socket.id);
+    // 유저의 전화상담
+    socket.on("callChat", () => {
+        socket.emit("callChat2", () => {
+        });
+    });
 
-// 유저의 실시간 상담
-// io.sockets.on("connection", () => {
-//     socket.on("")
-// });
+    // 유저의 실시간 상담
+    socket.on("liveChat", () => {
+        socket.emit("liveChat2", () => {
+        });
+    });
+
+    // 관리자 or 유저 채팅
+    socket.on("message", (data) => {
+        if (!data.message) return;
+        // console.log(data);
+        io.emit("to-message", data);
+    });
+    
+    // 상담하기 누르면 안녕하세요 띄우는거
+    socket.on("liveHi", (data) => {
+        console.log(data);
+        socket.emit("liveHi2",data);
+    });
+});

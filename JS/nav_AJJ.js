@@ -39,6 +39,16 @@ class mainNav {
     this.index = 0;
     this.init();
   }
+  // 처음 인풋 막기(실시간 상담 버튼 누르게 하기)
+  aa() {
+    alert("실시간 상담을 눌러.");
+    this.readOnly = true;
+  }
+  // 두번째 인풋 막기(상담 버튼 누른 후 상담하기 버튼 누르게 하기)
+  bb() {
+    alert("닉네임을 써야지 ㅋ.");
+    this.readOnly = true;
+  }
   init() {
 
     // 챗봇박스는 일단 먼저 꺼둔다.
@@ -50,40 +60,22 @@ class mainNav {
     this.remocon.style.visibility = "hidden";
     // this.chatRobot.style.display = "none";
 
-    // // 전화상담버튼
-    // this.callBtn.addEventListener("click", () => {
-    //   setTimeout(() => {
-    //     this.chatRobot.style.display = "block";
-    //   }, 500);
-    // });
     // socketio
     const socket = io.connect();
+        //관리자 계정 ㅋ
+    const admin = "admin";
 
-    // 소켓 (유저 텍스트 추가)
-    socket.on("to-message",(data) => {
-      this.chatBox.innerHTML += `
-      <div class="chat-p">
-      ${data.message}
-      </div>
-      `;
-      this.chatInput.value = null;
-      this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
-    });
+    // 유저 계정을 넣을 변수
+    let userLiveName;
 
-    // 유저 채팅 소켓 이벤트
-    this.chatInput.addEventListener("keydown", (e) => {
-      if (e.keyCode == 13 && this.keypressNumber == 0) {
-        socket.emit("message", {
-          message : this.chatInput.value,
-        });
-      }
-    });
+    // 첫번째 인풋에 이벤트
+    this.chatInput.addEventListener("click", this.aa);
 
     // 전화상담 버튼 소켓
     socket.on("callChat2", () => {
       const chat = document.createElement("div");
       chat.classList.add("chat-robot");
-      chat.innerHTML = "연락처를 남겨주시면 상담원이 연락 드립니다.";
+      chat.innerHTML = "연락처를 남겨 그러면 상담원이 연락해준다.";
       
       const chatName = document.createElement("div");
       chatName.innerHTML = "이름";
@@ -110,17 +102,105 @@ class mainNav {
       chat.appendChild(submit);
       this.chatBox.appendChild(chat);
       this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
-          submit.addEventListener("click", () => {
-            const random = Math.floor(Math.random() * 6);
-            submit.style.background = this.colors[random];
-            alert("기다려라 ㅋ.");
-          });
+      
+      // 전화상담 정규식 이름, 번호
+      const chatNameJ = /^[가-힣]{2,4}$/;
+      const chatNumberJ = /^[0-9]{11,11}$/;
+
+      submit.addEventListener("click", () => {
+        const random = Math.floor(Math.random() * 6);
+        submit.style.background = this.colors[random];
+        if(!chatNameJ.test(inputName.value)){
+          alert("이름은 한글 2~4글자만 가능");
+          return false;
+        }
+        if(!chatNumberJ.test(inputNumber.value))
+        {
+          alert("번호는 11자리 숫자만 가능")
+          return false;
+        }
+        else{
+          alert("기다려라 ㅋ.");
+        }
+      });
     });
 
     socket.on("liveChat2",() => {
+      const chat = document.createElement("div");
+      chat.classList.add("lcn");
+      chat.innerHTML = "실시간 상담을 위해 이름을 입력해주세요.";
       
-    });
+      const liveChatName = document.createElement("input");
+      liveChatName.setAttribute("type","text");
+      liveChatName.setAttribute("placeholder","정확하게 입력해주세요");
+
+      const liveSubmit = document.createElement("div");
+      liveSubmit.classList.add("submission");
+      liveSubmit.innerHTML="상담하기";
+      
+      chat.appendChild(liveChatName);
+      chat.appendChild(liveSubmit);
+      this.chatBox.appendChild(chat);
+      this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
     
+      liveSubmit.onclick = () => {
+        // 상당하기 누르면 이름 떠서 안녕하세요 띄우기
+        socket.emit("liveHi", {
+          name : liveChatName.value,
+        });
+      if(!liveChatName.value)return alert("이름쓰라고 ^^");
+      // 두번째 인풋 막은거 다시 풀기.
+      this.chatInput.removeEventListener("click", this.bb);
+      this.chatInput.readOnly = false;
+
+        userLiveName = liveChatName.value;
+        liveChatName.value = null;
+        const random = Math.floor(Math.random() * 6);
+        liveSubmit.style.background = this.colors[random]; 
+
+        // 유저 실시간 채팅 이벤트 연결
+        this.chatInput.onkeydown = (e) => {
+          if (e.keyCode == 13 && this.keypressNumber == 0) {
+            socket.emit("message", {
+              name : userLiveName,
+              message : this.chatInput.value,
+            });
+          }
+        };
+      };
+    });
+
+    // 실시간 상담 처음 들어왔을 때 알림
+    socket.on("liveHi2",(data) => {
+      if(data.name != admin){
+        this.chatBox.innerHTML += `
+        <div class="liveHi">
+        ${data.name}님 왜 왔니?
+        </div>
+        `;
+        this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
+      }
+    });
+
+    // 소켓 (유저 텍스트 추가)
+    socket.on("to-message",(data) => {
+      if(data.name == admin){
+        this.chatBox.innerHTML += `
+        <div class="chat-admin">
+        ${data.message}
+        </div>
+        `;
+      } else if(data.name != admin){
+        this.chatBox.innerHTML += `
+        <div class="chat-user">
+        ${data.message}
+        </div>
+        `;
+      }
+      this.chatInput.value = null;
+      this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
+    });
+
     // 전화상담 버튼 누르면 
     this.callBtn.addEventListener("click", () => {
       setTimeout(() => {
@@ -128,13 +208,18 @@ class mainNav {
     }, 500);
     });
 
+    // 실시간 상담 누르면
     this.liveBtn.addEventListener("click",() => {
-      alert("5초 뒤 상담원과 연결됩니다.");
+      userLiveName = null;
+      // 처음 인풋 막은거 다시 풀기.
+      this.chatInput.removeEventListener("click", this.aa);
+      this.chatInput.readOnly = false;
+      alert("기다려.");
       setTimeout(() => {
-        socket.emit("liveChat", {});
-      }, 5000);
+        socket.emit("liveChat",{});
+      }, 500);
+      this.chatInput.addEventListener("click", this.bb);
     });
-
 
     // 챗봇 모달창 클릭기능
     this.chatIcon.addEventListener("click", () => {
@@ -145,7 +230,6 @@ class mainNav {
       }
     });
 
-  
     window.addEventListener("click", (e) => {
       let targetClass = e.target.className;
       switch (targetClass) {
