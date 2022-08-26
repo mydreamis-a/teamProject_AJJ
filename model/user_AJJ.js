@@ -12,7 +12,7 @@ class User extends Sql.Model {
         },
         // ㅜ 전화 번호
         phone: {
-          type: Sql.INTEGER,
+          type: Sql.STRING(30),
           allowNull: false,
           unique: true,
         },
@@ -31,6 +31,11 @@ class User extends Sql.Model {
         point: {
           type: Sql.INTEGER,
           defaultValue: 0,
+        },
+        // ㅜ 비밀 번호
+        refresh: {
+          type: Sql.STRING(255),
+          allowNull: true,
         },
       },
       {

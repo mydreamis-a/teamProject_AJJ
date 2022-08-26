@@ -73,7 +73,6 @@ io.use(sharedsession(session({
 //     store: new FileStore(),
 //   })
 // );
-
 // ㅜ 서버 실행 시 MySQL 연동
 sequelize
   .sync({ force: false })
@@ -111,7 +110,7 @@ io.on("connection", (socket) => {
             accessToken,
             {
               issuer : "주병현",
-              expiresIn : "5m"
+              expiresIn : "5s"
             })
           let rT = jwt.sign({
               password : user[0].password,
@@ -120,7 +119,7 @@ io.on("connection", (socket) => {
             refreshToken,
             {
               issuer : "주병현",                
-              expiresIn : "30m"
+              expiresIn : "30s"
             })
             socket.handshake.session.aT = aT;
             socket.handshake.session.save();
@@ -131,6 +130,7 @@ io.on("connection", (socket) => {
           })
       })
     socket.on("signUp",(inputName,inputTel,inputEmail,inputPassword)=>{
+      console.log(socket);
       const inputNameData = inputName;
       const inputTelData = inputTel;
       const inputEmailData = inputEmail;
@@ -152,6 +152,10 @@ io.on("connection", (socket) => {
     }).catch((e)=>{
       console.log(e);
     })
+  })
+
+  socket.on("signCheck",()=>{
+    jwt.verify()
   })
 })
 
