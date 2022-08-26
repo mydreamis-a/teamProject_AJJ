@@ -87,6 +87,7 @@ io.sockets.on("connection", (socket) => {
         io.to(data.name).emit("usersChat",{name : '관리자', message : data.message});
         // 자기 자신에게 보내는 소세지
         //socket.emit("usersChat",data);
+        // 아 진자 너무 소켓 지옥 에바야~
     });
 
 
