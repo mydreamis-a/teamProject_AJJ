@@ -7,8 +7,12 @@ const shopBtnTags = [AhnShopBtnTag, JuShopBtnTag, JangShopBtnTag];
 shopBtnTags.forEach((el) => {
   //
   el.addEventListener("click", () => {
+    //
     let tag = null;
     const shopName = el.className.replace("-btn", "");
+    //
+    const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
+    cartTotalCountNumberTag.innerHTML = 0;
     //
     $.ajax({
       //
@@ -16,23 +20,23 @@ shopBtnTags.forEach((el) => {
       type: "post",
       //
       // ㅜ 각 상점의 상품 목록 태그를 생성해주는 함수
-      success: (sendResult) => {
-        switch (sendResult.shopName) {
+      success: (result) => {
+        switch (result.shopName) {
           //
           case "AJY":
             tag = document.querySelector(".Ahn-product-list").querySelector(".product-list-row");
             //
-            tag.innerHTML = sendResult.productsTag.join("");
+            tag.innerHTML = result.productsTag.join("");
             break;
           //
           case "JBH":
             tag = document.querySelector(".Ju-product-list").querySelector(".product-list-row");
-            tag.innerHTML = sendResult.productsTag.join("");
+            tag.innerHTML = result.productsTag.join("");
             break;
           //
           case "JJW":
             tag = document.querySelector(".Jang-product-list").querySelector(".product-list-row");
-            tag.innerHTML = sendResult.productsTag.join("");
+            tag.innerHTML = result.productsTag.join("");
             break;
           //
           default:
@@ -43,4 +47,4 @@ shopBtnTags.forEach((el) => {
   });
 });
 
-// 08.26.10 수정
+// 08.28.04 수정

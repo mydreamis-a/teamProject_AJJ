@@ -341,6 +341,7 @@ class productsPage {
               // ㅜ 장바구니에 담기 버튼을 클릭했을 때
               cartTotalCountNumberTag.innerHTML = cartTotalCount;
               inCartBtnTags[key].addEventListener("click", () => {
+                
                 // ㅜ 장바구니에 담은 상품 수
                 cartTotalCount++;
                 cartTotalCountNumberTag.innerHTML = cartTotalCount;
