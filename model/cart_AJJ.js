@@ -8,15 +8,23 @@ class Cart extends Sql.Model {
         // ㅜ 안주영 상점의 상품일 경우에 담은 상품 번호
         ajyproduct_num: {
           type: Sql.INTEGER,
+          unique: true,
         },
         // ㅜ 주병현 상점의 상품일 경우에 담은 상품 번호
         jbhproduct_num: {
           type: Sql.INTEGER,
+          unique: true,
         },
         // ㅜ 장지원 상점의 상품일 경우에 담은 상품 번호
         jjwproduct_num: {
           type: Sql.INTEGER,
+          unique: true,
         },
+        product_count: {
+          type: Sql.INTEGER,
+          allowNull: false,
+          defaultValue: 1,
+        }
       },
       {
         sequelize,

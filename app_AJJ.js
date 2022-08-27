@@ -1,4 +1,4 @@
-const PORT = 8282;
+const PORT = 3000;
 const { log } = console;
 const fs = require("fs");
 const ejs = require("ejs");
