@@ -24,10 +24,10 @@ const { sequelize, User, AJYproduct } = require("./model/index_AJJ");
 const sharedsession = require("express-socket.io-session");
 // const FileStore = require("session-file-store")(session);
 
-// ㅜ 라우터 예시
-const example = require("./router/example_AJJ");
+// ㅜ 라우터
 const cartDB = require("./router/cartDB_router_AJJ");
 const productsDB = require("./router/productsDB_AJJ");
+const example = require("./router/example_router_AJJ");
 const cartPage = require("./router/cartPage_router_AJJ");
 const productsPage = require("./router/productsPage_router_AJJ");
 

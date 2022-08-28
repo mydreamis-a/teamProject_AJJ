@@ -87,7 +87,7 @@ class productsPage {
       showProductList(JangShopBtnTag, JangProductListTag, JangProducts, 0);
 
       // ㅜ 장바구니의 합계 금액 태그에 대해 설정하기
-      cartTotalAmountTag.classList.add("cart-total-amount");
+      cartTotalAmountTag.classList.add("cart-total-price");
       cartTotalAmountTag.innerHTML = "총 합계 금액: " + cartTotalAmount;
       cartListRowTag.after(cartTotalAmountTag);
 

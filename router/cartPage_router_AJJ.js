@@ -20,7 +20,6 @@ router.post("/", async (req, res) => {
         .then(jjwproducts => {
             cartProducts.jjwproducts = jjwproducts.map(value => value.dataValues);
         });
-        // await Cart.sum({ where: , include: { model: }} )
     res.send(cartProducts);
 });
 

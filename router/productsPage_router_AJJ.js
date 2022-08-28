@@ -1,4 +1,5 @@
 const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
+const cartListCount = require("./cartListCount_AJJ");
 const express = require("express");
 const router = express.Router();
 const { log } = console;
@@ -7,8 +8,10 @@ router.post("/Ahn-shop", (req, res) => {
   AJYproduct.findAll({}).then((AJYproducts) => {
     //
     const shopName = "ajy";
+    const count = cartListCount(res);
+    log(count)
     const productTags = createProducts(shopName, AJYproducts);
-    res.send({ shopName, productTags });
+    res.send({ shopName, count, productTags });
   });
 });
 
@@ -17,8 +20,9 @@ router.post("/Ju-shop", (req, res) => {
   JBHproduct.findAll({}).then((JBHproducts) => {
     //
     const shopName = "jbh";
+    const count = cartListCount(res);
     const productTags = createProducts(shopName, JBHproducts);
-    res.send({ shopName, productTags });
+    res.send({ shopName, count, productTags });
   });
 });
 
@@ -27,8 +31,9 @@ router.post("/Jang-shop", (req, res) => {
   JJWproduct.findAll({}).then((JJWproducts) => {
     //
     const shopName = "jjw";
+    const count = cartListCount(res);
     const productTags = createProducts(shopName, JJWproducts);
-    res.send({ shopName, productTags });
+    res.send({ shopName, count, productTags });
   });
 });
 
