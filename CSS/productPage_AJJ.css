@@ -1,4 +1,4 @@
-/* 07 24 19 수정 */
+/* 08 29 01 수정 */
 
 p {
   margin-bottom: 0px;
@@ -71,7 +71,7 @@ textarea {
 }
 
 [class$="-list-row"] {
-  padding-top: 15vh;
+  padding-bottom: 3vh;
   flex-wrap: wrap;
   display: flex;
 }

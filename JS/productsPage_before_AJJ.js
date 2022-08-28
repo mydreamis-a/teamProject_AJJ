@@ -101,7 +101,6 @@ class productsPage {
       productSearchPriceStartTag.classList.add("product-search");
       productSearchPriceStartTag.setAttribute("type", "number");
       searchTag.appendChild(productSearchPriceStartTag);
-      S;
 
       productSearchPriceEndTag.id = "product-search-price-end";
       productSearchPriceEndTag.classList.add("product-search");

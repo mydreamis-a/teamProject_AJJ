@@ -23,20 +23,20 @@ shopBtnTags.forEach((el) => {
       success: (result) => {
         switch (result.shopName) {
           //
-          case "AJY":
+          case "ajy":
             tag = document.querySelector(".Ahn-product-list").querySelector(".product-list-row");
             //
-            tag.innerHTML = result.productsTag.join("");
+            tag.innerHTML = result.productTags.join("");
             break;
           //
-          case "JBH":
+          case "jbh":
             tag = document.querySelector(".Ju-product-list").querySelector(".product-list-row");
-            tag.innerHTML = result.productsTag.join("");
+            tag.innerHTML = result.productTags.join("");
             break;
           //
-          case "JJW":
+          case "jjw":
             tag = document.querySelector(".Jang-product-list").querySelector(".product-list-row");
-            tag.innerHTML = result.productsTag.join("");
+            tag.innerHTML = result.productTags.join("");
             break;
           //
           default:

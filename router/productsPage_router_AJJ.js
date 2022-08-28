@@ -6,9 +6,9 @@ const { log } = console;
 router.post("/Ahn-shop", (req, res) => {
   AJYproduct.findAll({}).then((AJYproducts) => {
     //
-    const shopName = "AJY";
-    const productsTag = createProducts(shopName, AJYproducts);
-    res.send({ shopName, productsTag });
+    const shopName = "ajy";
+    const productTags = createProducts(shopName, AJYproducts);
+    res.send({ shopName, productTags });
   });
 });
 
@@ -16,9 +16,9 @@ router.post("/Ju-shop", (req, res) => {
   //
   JBHproduct.findAll({}).then((JBHproducts) => {
     //
-    const shopName = "JBH";
-    const productsTag = createProducts(shopName, JBHproducts);
-    res.send({ shopName, productsTag });
+    const shopName = "jbh";
+    const productTags = createProducts(shopName, JBHproducts);
+    res.send({ shopName, productTags });
   });
 });
 
@@ -26,9 +26,9 @@ router.post("/Jang-shop", (req, res) => {
   //
   JJWproduct.findAll({}).then((JJWproducts) => {
     //
-    const shopName = "JJW";
-    const productsTag = createProducts(shopName, JJWproducts);
-    res.send({ shopName, productsTag });
+    const shopName = "jjw";
+    const productTags = createProducts(shopName, JJWproducts);
+    res.send({ shopName, productTags });
   });
 });
 
@@ -38,36 +38,36 @@ router.post("/Jang-shop", (req, res) => {
  * @returns 필요한 HTML 태그
  */
 function createProducts(shopName, products) {
-  const productsTag = new Array();
+  const productTags = new Array();
   //
   const _products = products.map((el) => el.dataValues);
   _products.forEach((el, idx) => {
     //
-    productsTag.push(`
-    <div class="product-list-col">
-    <div class="product-container">
-      <div class="product-img" style="background-image: url('${el.img}');">
-        <div class="product-img-dark">
-          <p class="product-img-text">사진 크게 보기</p>
-        </div>
-      </div>
-      <div class="product-box">
-        <p class="product-name">${el.name}</p>
-        <p class="product-price">${el.price} 원</p>
-        <div class="product-btn-container">
-          <div class="product-btn-group">
-            <input class="in-cart-btn${idx}" data-shopName=${shopName} type="button" value="장바구니에 담기" onclick="incart('${shopName}', ${idx})">
-            <input class="show-product-btn${idx}" type="button" value="상품 보기">
+    productTags.push(`
+      <div class="product-list-col">
+        <div class="product-container">
+          <div class="product-img" style="background-image: url('${el.img}');">
+            <div class="product-img-dark">
+              <p class="product-img-text">사진 크게 보기</p>
+            </div>
+          </div>
+          <div class="product-box">
+            <p class="product-name">${el.name}</p>
+            <p class="product-price">${el.price} 원</p>
+            <div class="product-btn-container">
+              <div class="product-btn-group">
+                <input class="in-cart-btn${idx}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="incart('${shopName}', ${idx})">
+                <input class="show-product-btn${idx}" type="button" value="상품 보기">
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
     `);
   });
-  return productsTag;
+  return productTags;
 }
 
 module.exports = router;
 
-// 08.26.13 수정
+// 08.28.05 수정
