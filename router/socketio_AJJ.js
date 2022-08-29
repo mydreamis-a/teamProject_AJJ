@@ -88,11 +88,8 @@ io.sockets.on("connection", (socket) => {
 
     socket.on("adminmessage", (data) => {
         if (!data.message) return;
-        console.log(data);
         // 관리자한테 보내는 메세지
         io.to(data.name).emit("usersChat",{name : 'admin', message : data.message});
-        // 자기 자신에게 보내는 소세지
-        // socket.emit("usersChat",data);
     });
 });
 
