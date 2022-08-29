@@ -20,7 +20,12 @@ const session = require("express-session")({
   saveUninitialized: true,
 });
 
-const { sequelize, User, AJYproduct } = require("./model/index_AJJ");
+const {
+  sequelize,
+  User,
+  AJYproduct,
+  DailyCheck,
+} = require("./model/index_AJJ");
 const sharedsession = require("express-socket.io-session");
 // const FileStore = require("session-file-store")(session);
 
@@ -30,6 +35,7 @@ const example = require("./router/example_AJJ");
 const cartPage = require("./router/cartPage_AJJ");
 const productsDB = require("./controller/productsDB_AJJ");
 const productsPage = require("./router/productsPage_AJJ");
+const dailyCheck = require("./router/dailyCheck_AJJ");
 
 //
 const app = express();
@@ -66,6 +72,7 @@ app.use("/cartList", cartPage);
 app.use("/example", example);
 app.use("/", productsPage);
 app.use("/cart", cartDB);
+app.use("/dailyCheck", dailyCheck);
 
 app.use(session);
 io.use(sharedsession(session));
@@ -98,9 +105,25 @@ app.get("/", (req, res) => {
   //
   AJYproduct.findAll({}).then((value) => {
     //
-    if (value[0]) res.render("main_AJJ");
-    //
-    else productsDB().then(res.render("main_AJJ"));
+    if (value[0]) {
+      //
+      User.create({
+        name: "똥",
+        phone: "01024242424",
+        email: "a@a.com",
+        password: "acca3434",
+      }).then(() => res.render("main_AJJ"));
+      //
+    } else
+      productsDB().then(() => {
+        //
+        User.create({
+          name: "똥",
+          phone: "01024242424",
+          email: "a@a.com",
+          password: "acca3434",
+        }).then(() => res.render("main_AJJ"));
+      });
   });
 });
 
@@ -179,13 +202,17 @@ io.on("connection", (socket) => {
   });
   socket.on("signCheck", () => {
     let userName = socket.handshake.session.name;
-    jwt.verify(socket.handshake.session.aT, process.env.JU_ACCESS_TOKEN, (err, decoded) => {
-      if (err) {
-        console.log("로그인 해주세요");
-      } else if (decoded) {
-        socket.emit("loginSuccess", userName);
+    jwt.verify(
+      socket.handshake.session.aT,
+      process.env.JU_ACCESS_TOKEN,
+      (err, decoded) => {
+        if (err) {
+          console.log("로그인 해주세요");
+        } else if (decoded) {
+          socket.emit("loginSuccess", userName);
+        }
       }
-    });
+    );
   });
 });
 
@@ -196,53 +223,54 @@ let userArray = new Array();
 
 // 유저의 실시간 채팅
 io.sockets.on("connection", (socket) => {
-    
-    // 유저의 전화상담
-    socket.on("callChat", () => {
-        socket.emit("callChat2", () => {
-        });
-    });
+  // 유저의 전화상담
+  socket.on("callChat", () => {
+    socket.emit("callChat2", () => {});
+  });
 
-    // 유저의 실시간 상담
-    socket.on("liveChat", () => {
-        socket.emit("liveChat2");
-    });
+  // 유저의 실시간 상담
+  socket.on("liveChat", () => {
+    socket.emit("liveChat2");
+  });
 
-    // 상담하기 누르면 안녕하세요 띄우는거
-    socket.on("liveHi", (data) => {
-        // userArray.push(data.name);
-        // userArray.forEach(el => {
-            // });
-        socket.join(data.name);
-        // 유저 들어왔을 때 알림 이벤트 요청
-        socket.emit("liveHi2",data);
-        // 유저 들어오면 관리자 소켓아이디 통해서 옵션 추가 이벤트
-        io.to(adminArray[0]).emit("addOption", data);
-    });
+  // 상담하기 누르면 안녕하세요 띄우는거
+  socket.on("liveHi", (data) => {
+    // userArray.push(data.name);
+    // userArray.forEach(el => {
+    // });
+    socket.join(data.name);
+    // 유저 들어왔을 때 알림 이벤트 요청
+    socket.emit("liveHi2", data);
+    // 유저 들어오면 관리자 소켓아이디 통해서 옵션 추가 이벤트
+    io.to(adminArray[0]).emit("addOption", data);
+  });
 
-    socket.on("change", (data) => {
-        socket.join(data);
-        // io.to(data).emit("message",data);
-    });
-    // 관리자가 로그인하면 관리자 소켓을 배열 첫번째에 담는다
-    socket.on("admin", () => {
-        adminArray.push(socket.id);
-        socket.emit("adminHi",);
-    });
+  socket.on("change", (data) => {
+    socket.join(data);
+    // io.to(data).emit("message",data);
+  });
+  // 관리자가 로그인하면 관리자 소켓을 배열 첫번째에 담는다
+  socket.on("admin", () => {
+    adminArray.push(socket.id);
+    socket.emit("adminHi");
+  });
 
-    socket.on("message", (data) => {
-        if (!data.message) return;
-        // 관리자한테 보내는 메세지
-        io.to(adminArray[0]).emit("adminChat",data);
-        // 자기 자신에게 보내는 소세지
-        socket.emit("usersChat",data);
-    });
+  socket.on("message", (data) => {
+    if (!data.message) return;
+    // 관리자한테 보내는 메세지
+    io.to(adminArray[0]).emit("adminChat", data);
+    // 자기 자신에게 보내는 소세지
+    socket.emit("usersChat", data);
+  });
 
-    socket.on("adminmessage", (data) => {
-        if (!data.message) return;
-        // 관리자한테 보내는 메세지
-        io.to(data.name).emit("usersChat",{name : 'admin', message : data.message});
+  socket.on("adminmessage", (data) => {
+    if (!data.message) return;
+    // 관리자한테 보내는 메세지
+    io.to(data.name).emit("usersChat", {
+      name: "admin",
+      message: data.message,
     });
+  });
 });
 
 // 08.26.16 merge
