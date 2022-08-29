@@ -9,7 +9,6 @@ router.post("/Ahn-shop", (req, res) => {
     //
     const shopName = "ajy";
     const count = cartListCount(res);
-    log(count)
     const productTags = createProducts(shopName, AJYproducts);
     res.send({ shopName, count, productTags });
   });

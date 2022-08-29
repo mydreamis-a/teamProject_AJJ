@@ -36,6 +36,7 @@ shopBtnTags.forEach((el) => {
             break;
         }
         parentTag.innerHTML = result.productTags.join("");
+        console.log(result.count);
         cartTotalCountNumberTag.innerHTML = result.count;
         createSearchTags();
       },
@@ -80,12 +81,12 @@ function createSearchTags() {
 
 /**
  * px 단위의 너비를 vw 단위의 너비로 반환해주는 함수
- * @param {number} value 
+ * @param {number} value
  * @returns vw 단위의 너비
  */
 function widthFromPxToVw(value) {
   const bodyWidth = document.querySelector("body").offsetWidth;
-  return value / bodyWidth * 100;
+  return (value / bodyWidth) * 100;
 }
 
 // 08.29.03 수정
