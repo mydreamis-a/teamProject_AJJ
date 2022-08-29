@@ -1,15 +1,13 @@
-const PORT = 8282;
+const PORT = 3000;
 const { log } = console;
 const fs = require("fs");
 const ejs = require("ejs");
 const path = require("path");
 const mysql = require("mysql2");
-let boolCheck = false;
-let loginCheck = 0;
-let userToken = 0;
-let user = 0;
 
-// ㅜ 시퀄라이즈 패키지이자 생성자
+/**
+ * 시퀄라이즈 패키지이자 생성자
+ */
 const Sql = require("sequelize");
 const express = require("express");
 const jwt = require("jsonwebtoken");
@@ -22,15 +20,16 @@ const session = require("express-session")({
   saveUninitialized: true,
 });
 
-const { sequelize, User } = require("./model/index_AJJ");
+const { sequelize, User, AJYproduct } = require("./model/index_AJJ");
 const sharedsession = require("express-socket.io-session");
 // const FileStore = require("session-file-store")(session);
 
-// ㅜ 라우터 예시
+// ㅜ 라우터
+const cartDB = require("./router/cartDB_AJJ");
 const example = require("./router/example_AJJ");
-const cart = require("./router/cart_router_AJJ");
-const productsDB = require("./router/productsDB_AJJ");
-const productsPage = require("./router/productsPage_router_AJJ");
+const cartPage = require("./router/cartPage_AJJ");
+const productsDB = require("./controller/productsDB_AJJ");
+const productsPage = require("./router/productsPage_AJJ");
 
 //
 const app = express();
@@ -38,6 +37,12 @@ const server = app.listen(PORT, () => {
   log("localhost:", PORT);
 });
 const io = socketio(server);
+
+//
+let boolCheck = false;
+let loginCheck = 0;
+let userToken = 0;
+let user = 0;
 
 // ㅜ body-parser
 app.use(express.urlencoded({ extended: false }));
@@ -57,9 +62,10 @@ app.use("/img", express.static(path.join(__dirname, "img_Jang")));
 app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 
 // ㅜ 해당 요청 주소에 대해서 라우터 설정
+app.use("/cartList", cartPage);
 app.use("/example", example);
 app.use("/", productsPage);
-app.use("/cart", cart);
+app.use("/cart", cartDB);
 
 app.use(session);
 io.use(sharedsession(session));
@@ -79,7 +85,7 @@ io.use(sharedsession(session));
 
 // ㅜ 서버 실행 시 MySQL 연동
 sequelize
-  .sync({ force: false })
+  .sync({ force: true })
   .then(() => {
     log("AJJ's DB connection");
   })
@@ -90,8 +96,12 @@ sequelize
 // ㅜ 메인 페이지
 app.get("/", (req, res) => {
   //
-  productsDB();
-  res.render("main_AJJ");
+  AJYproduct.findAll({}).then((value) => {
+    //
+    if (value[0]) res.render("main_AJJ");
+    //
+    else productsDB().then(res.render("main_AJJ"));
+  });
 });
 
 // ㅜ 병현님 코드

@@ -8,6 +8,7 @@ class Like extends Sql.Model {
       {
         sequelize,
         timestamps: true,
+        updatedAt: false,
         underscored: true,
         modelName: "Like",
         tableName: "likes",

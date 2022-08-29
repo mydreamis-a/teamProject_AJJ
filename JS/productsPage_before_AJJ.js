@@ -87,7 +87,7 @@ class productsPage {
       showProductList(JangShopBtnTag, JangProductListTag, JangProducts, 0);
 
       // ㅜ 장바구니의 합계 금액 태그에 대해 설정하기
-      cartTotalAmountTag.classList.add("cart-total-amount");
+      cartTotalAmountTag.classList.add("cart-total-price");
       cartTotalAmountTag.innerHTML = "총 합계 금액: " + cartTotalAmount;
       cartListRowTag.after(cartTotalAmountTag);
 
@@ -101,7 +101,6 @@ class productsPage {
       productSearchPriceStartTag.classList.add("product-search");
       productSearchPriceStartTag.setAttribute("type", "number");
       searchTag.appendChild(productSearchPriceStartTag);
-      S;
 
       productSearchPriceEndTag.id = "product-search-price-end";
       productSearchPriceEndTag.classList.add("product-search");
@@ -341,6 +340,7 @@ class productsPage {
               // ㅜ 장바구니에 담기 버튼을 클릭했을 때
               cartTotalCountNumberTag.innerHTML = cartTotalCount;
               inCartBtnTags[key].addEventListener("click", () => {
+                
                 // ㅜ 장바구니에 담은 상품 수
                 cartTotalCount++;
                 cartTotalCountNumberTag.innerHTML = cartTotalCount;

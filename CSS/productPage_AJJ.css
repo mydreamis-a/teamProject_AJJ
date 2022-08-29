@@ -1,4 +1,4 @@
-/* 07 24 19 수정 */
+/* 08 29 03 수정 */
 
 p {
   margin-bottom: 0px;
@@ -46,6 +46,12 @@ textarea {
   height: 2.604vw;
 }
 
+.cart-list-low {
+  padding-bottom: 3vh;
+  flex-wrap: wrap;
+  display: flex;
+}
+
 .product-list-container {
   min-width: 51.667vw;
   margin-right: auto;
@@ -70,7 +76,7 @@ textarea {
   }
 }
 
-[class$="-list-row"] {
+.product-list-row {
   padding-top: 15vh;
   flex-wrap: wrap;
   display: flex;
@@ -173,9 +179,7 @@ textarea {
   align-items: center;
   text-align: center;
   visibility: hidden;
-  margin: 0 auto;
   display: flex;
-  width: 100vw;
   height: 7vh;
 }
 

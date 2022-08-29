@@ -14,6 +14,7 @@ class DailyCheck extends Sql.Model {
       {
         sequelize,
         timestamps: true,
+        updatedAt: false,
         underscored: true,
         modelName: "DailyCheck",
         tableName: "dailychecks",

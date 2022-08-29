@@ -49,6 +49,7 @@ class AJYproduct extends Sql.Model {
       {
         sequelize,
         timestamps: true,
+        updatedAt: false,
         underscored: true,
         modelName: "AJYproduct",
         tableName: "ajyproducts",
@@ -60,10 +61,11 @@ class AJYproduct extends Sql.Model {
   }
   static associate(db) {
     db.AJYproduct.hasOne(db.Like, { foreignKey: "ajyproduct_num", sourceKey: "id" });
+    db.AJYproduct.hasOne(db.Cart, { foreignKey: "ajyproduct_num", sourceKey: "id" });
     db.AJYproduct.hasMany(db.Comment, { foreignKey: "ajyproduct_num", sourceKey: "id" });
   }
 }
 
 module.exports = AJYproduct;
 
-// 08.24.21 수정
+// 08.29.01 수정
