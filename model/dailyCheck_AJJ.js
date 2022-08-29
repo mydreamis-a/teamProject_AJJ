@@ -4,7 +4,13 @@ const Sql = require("sequelize");
 class DailyCheck extends Sql.Model {
   static init(sequelize) {
     return super.init(
-      {},
+      {
+        createde_at: {
+          type: Sql.DATE,
+          allowNull: false,
+          defaultValue: Sql.NOW,
+        },
+      },
       {
         sequelize,
         timestamps: true,

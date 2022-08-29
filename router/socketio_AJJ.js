@@ -1,5 +1,9 @@
 const { log } = console;
 
+// ㅜ 라우터는 이렇게 사용
+// const express = require("express");
+// const router = express.Router(); 
+
 const express = require("express");
 const socketio = require("socket.io");
 const fs = require("fs");
@@ -64,13 +68,14 @@ io.sockets.on("connection", (socket) => {
         io.to(adminArray[0]).emit("addOption", data);
     });
 
-    socket.on("aa", (data) => {
+    socket.on("change", (data) => {
         socket.join(data);
-        io.to(data).emit("message",data);
+        // io.to(data).emit("message",data);
     });
     // 관리자가 로그인하면 관리자 소켓을 배열 첫번째에 담는다
     socket.on("admin", () => {
         adminArray.push(socket.id);
+        socket.emit("adminHi",);
     });
 
     socket.on("message", (data) => {
@@ -83,12 +88,12 @@ io.sockets.on("connection", (socket) => {
 
     socket.on("adminmessage", (data) => {
         if (!data.message) return;
+        console.log(data);
         // 관리자한테 보내는 메세지
-        io.to(data.name).emit("usersChat",{name : '관리자', message : data.message});
+        io.to(data.name).emit("usersChat",{name : 'admin', message : data.message});
         // 자기 자신에게 보내는 소세지
-        //socket.emit("usersChat",data);
-        // 아 진자 너무 소켓 지옥 에바야~
+        // socket.emit("usersChat",data);
     });
-
-
 });
+
+// module.exports = router;
