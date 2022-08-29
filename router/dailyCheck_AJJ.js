@@ -7,7 +7,7 @@ const { log } = console;
 router.get("/:id", (req, res) => {
     DailyCheck.bulkCreate({
         create_at: ""
-        user_id: id
+
     },
     {},
     {})
