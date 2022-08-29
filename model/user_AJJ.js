@@ -46,11 +46,13 @@ class User extends Sql.Model {
     );
   }
   static associate(db) {
-    db.User.hasOne(db.Like, { sourceKey: "id" });
-    db.User.hasMany(db.Cart, { sourceKey: "id" });
-    db.User.hasMany(db.Comment, { sourceKey: "id" });
-    db.User.hasMany(db.DailyCheck, { sourceKey: "id" });
+    db.User.hasOne(db.Like, { foreignKey: "user_id", sourceKey: "id" });
+    db.User.hasMany(db.Cart, { foreignKey: "user_id", sourceKey: "id" });
+    db.User.hasMany(db.Comment, { foreignKey: "user_id", sourceKey: "id" });
+    db.User.hasMany(db.DailyCheck, { foreignKey: "user_id", sourceKey: "id" });
   }
 }
 
 module.exports = User;
+
+// 08.29.18 수정

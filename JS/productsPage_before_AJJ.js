@@ -149,6 +149,7 @@ class productsPage {
 
       // ㅜ 가격 범위를 입력하고 검색 버튼을 클릭 했을 때
       productSearchPriceBtnTag.addEventListener("click", () => {
+        //
         // ㅜ 입력한 가격의 범위 안에 해당하는 상품 목록 추출하기
         let resultProducts = new Array();
         const min = productSearchPriceStartTag.value;
@@ -245,6 +246,7 @@ class productsPage {
 
       // ㅜ 추출한 상품 목록을 각 상점별로 분류하고 보여주는 함수
       function showResultProducts(resultProducts) {
+        //
         // ㅜ 각 상점별로 상품 목록 분류하기
         const AhnResultProducts = sortByDesignerName(resultProducts, "AJY");
         const JuResultProducts = sortByDesignerName(resultProducts, "JBH");
@@ -340,7 +342,7 @@ class productsPage {
               // ㅜ 장바구니에 담기 버튼을 클릭했을 때
               cartTotalCountNumberTag.innerHTML = cartTotalCount;
               inCartBtnTags[key].addEventListener("click", () => {
-                
+                //
                 // ㅜ 장바구니에 담은 상품 수
                 cartTotalCount++;
                 cartTotalCountNumberTag.innerHTML = cartTotalCount;
@@ -358,6 +360,7 @@ class productsPage {
 
                 // ㅜ 삭제하기 버튼을 클릭했을 때
                 cartDeleteBtnTag.addEventListener("click", () => {
+                  //
                   // ㅜ 장바구니에 담은 상품 수
                   cartTotalCount--;
                   cartTotalCountNumberTag.innerHTML = cartTotalCount;
@@ -451,4 +454,4 @@ class productsPage {
   }
 }
 
-// 07 24 19 수정
+// 07 29 14 수정

@@ -19,7 +19,7 @@ class Like extends Sql.Model {
     );
   }
   static associate(db) {
-    db.Like.belongsTo(db.User, { targetKey: "id" });
+    db.Like.belongsTo(db.User, { foreignKey: "user_id", targetKey: "id" });
     db.Like.belongsTo(db.AJYproduct, { foreignKey: "ajyproduct_num", targetKey: "id" });
     db.Like.belongsTo(db.JBHproduct, { foreignKey: "jbhproduct_num", targetKey: "id" });
     db.Like.belongsTo(db.JJWproduct, { foreignKey: "jjwproduct_num", targetKey: "id" });
@@ -27,3 +27,5 @@ class Like extends Sql.Model {
 }
 
 module.exports = Like;
+
+// 08.29.18 수정

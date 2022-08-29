@@ -36,7 +36,6 @@ shopBtnTags.forEach((el) => {
             break;
         }
         parentTag.innerHTML = result.productTags.join("");
-        console.log(result.count);
         cartTotalCountNumberTag.innerHTML = result.count;
         createSearchTags();
       },

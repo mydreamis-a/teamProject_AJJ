@@ -25,8 +25,10 @@ class DailyCheck extends Sql.Model {
     );
   }
   static associate(db) {
-    db.DailyCheck.belongsTo(db.User, { targetKey: "id" });
+    db.DailyCheck.belongsTo(db.User, { foreignKey: "user_id", targetKey: "id" });
   }
 }
 
 module.exports = DailyCheck;
+
+// 08.29.18 수정

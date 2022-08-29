@@ -35,7 +35,7 @@ class Comment extends Sql.Model {
     );
   }
   static associate(db) {
-    db.Comment.belongsTo(db.User, { targetKey: "id" });
+    db.Comment.belongsTo(db.User, { foreignKey: "user_id", targetKey: "id" });
     db.Comment.belongsTo(db.AJYproduct, { foreignKey: "ajyproduct_num", targetKey: "id" });
     db.Comment.belongsTo(db.JBHproduct, { foreignKey: "jbhproduct_num", targetKey: "id" });
     db.Comment.belongsTo(db.JJWproduct, { foreignKey: "jjwproduct_num", targetKey: "id" });
@@ -43,3 +43,5 @@ class Comment extends Sql.Model {
 }
 
 module.exports = Comment;
+
+// 08.29.18 수정

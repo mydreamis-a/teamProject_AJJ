@@ -24,7 +24,7 @@ class Cart extends Sql.Model {
           type: Sql.INTEGER,
           allowNull: false,
           defaultValue: 1,
-        }
+        },
       },
       {
         sequelize,
@@ -40,7 +40,7 @@ class Cart extends Sql.Model {
     );
   }
   static associate(db) {
-    db.Cart.belongsTo(db.User, { targetKey: "id" });
+    db.Cart.belongsTo(db.User, { foreignKey: "user_id", targetKey: "id" });
     db.Cart.belongsTo(db.AJYproduct, { foreignKey: "ajyproduct_num", targetKey: "id" });
     db.Cart.belongsTo(db.JBHproduct, { foreignKey: "jbhproduct_num", targetKey: "id" });
     db.Cart.belongsTo(db.JJWproduct, { foreignKey: "jjwproduct_num", targetKey: "id" });
@@ -49,4 +49,4 @@ class Cart extends Sql.Model {
 
 module.exports = Cart;
 
-// 08.29 01 수정
+// 08.29.18 수정
