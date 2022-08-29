@@ -5,10 +5,11 @@ const router = express.Router();
 const { log } = console;
 
 router.post("/Ahn-shop", (req, res) => {
-  AJYproduct.findAll({}).then((AJYproducts) => {
+  AJYproduct.findAll({}).then( async (AJYproducts) => {
     //
     const shopName = "ajy";
-    const count = cartListCount(res);
+    const count = await cartListCount(res);
+    log(count);
     const productTags = createProducts(shopName, AJYproducts);
     res.send({ shopName, count, productTags });
   });
@@ -16,10 +17,10 @@ router.post("/Ahn-shop", (req, res) => {
 
 router.post("/Ju-shop", (req, res) => {
   //
-  JBHproduct.findAll({}).then((JBHproducts) => {
+  JBHproduct.findAll({}).then( async (JBHproducts) => {
     //
     const shopName = "jbh";
-    const count = cartListCount(res);
+    const count = await cartListCount(res);
     const productTags = createProducts(shopName, JBHproducts);
     res.send({ shopName, count, productTags });
   });
@@ -27,10 +28,10 @@ router.post("/Ju-shop", (req, res) => {
 
 router.post("/Jang-shop", (req, res) => {
   //
-  JJWproduct.findAll({}).then((JJWproducts) => {
+  JJWproduct.findAll({}).then( async (JJWproducts) => {
     //
     const shopName = "jjw";
-    const count = cartListCount(res);
+    const count = await cartListCount(res);
     const productTags = createProducts(shopName, JJWproducts);
     res.send({ shopName, count, productTags });
   });
@@ -60,7 +61,7 @@ function createProducts(shopName, products) {
             <p class="product-price">${el.price} 원</p>
             <div class="product-btn-container">
               <div class="product-btn-group">
-                <input class="in-cart-btn${idx}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="incart('${shopName}', ${idx})">
+                <input class="in-cart-btn${idx}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="incart('${shopName}', ${idx + 1})">
                 <input class="show-product-btn${idx}" type="button" value="상품 보기">
               </div>
             </div>
@@ -74,4 +75,4 @@ function createProducts(shopName, products) {
 
 module.exports = router;
 
-// 08.28.05 수정
+// 08.28.11 수정
