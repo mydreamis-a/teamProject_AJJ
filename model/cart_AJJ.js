@@ -5,21 +5,6 @@ class Cart extends Sql.Model {
   static init(sequelize) {
     return super.init(
       {
-        // // ㅜ 안주영 상점의 상품일 경우에 담은 상품 번호
-        // ajyproduct_num: {
-        //   type: Sql.INTEGER,
-        //   unique: true,
-        // },
-        // // ㅜ 주병현 상점의 상품일 경우에 담은 상품 번호
-        // jbhproduct_num: {
-        //   type: Sql.INTEGER,
-        //   unique: true,
-        // },
-        // // ㅜ 장지원 상점의 상품일 경우에 담은 상품 번호
-        // jjwproduct_num: {
-        //   type: Sql.INTEGER,
-        //   unique: true,
-        // },
         product_count: {
           type: Sql.INTEGER,
           allowNull: false,
@@ -29,7 +14,6 @@ class Cart extends Sql.Model {
       {
         sequelize,
         timestamps: true,
-        updatedAt: false,
         underscored: true,
         modelName: "Cart",
         tableName: "carts",
@@ -49,4 +33,4 @@ class Cart extends Sql.Model {
 
 module.exports = Cart;
 
-// 08.29.18 수정
+// 08.30.07 수정

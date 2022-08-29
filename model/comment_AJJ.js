@@ -7,7 +7,7 @@ class Comment extends Sql.Model {
       {
         // ㅜ 댓글 내용
         content: {
-          type: Sql.STRING(100),
+          type: Sql.STRING(200),
           allowNull: false,
         },
         // ㅜ 대댓글을 위한 현재 댓글의 id

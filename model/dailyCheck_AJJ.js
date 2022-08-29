@@ -5,7 +5,8 @@ class DailyCheck extends Sql.Model {
   static init(sequelize) {
     return super.init(
       {
-        createde_at: {
+        // ㅜ 출석 체크한 날짜
+        date: {
           type: Sql.DATE,
           allowNull: false,
           defaultValue: Sql.NOW,
@@ -31,4 +32,4 @@ class DailyCheck extends Sql.Model {
 
 module.exports = DailyCheck;
 
-// 08.29.18 수정
+// 08.30.08 수정

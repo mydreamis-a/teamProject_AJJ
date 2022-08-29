@@ -5,44 +5,48 @@ const ejs = require("ejs");
 const path = require("path");
 const mysql = require("mysql2");
 
-/**
- * 시퀄라이즈 패키지이자 생성자
- */
+// ㅜ 시퀄라이즈 패키지이자 생성자
 const Sql = require("sequelize");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const socketio = require("socket.io");
 const dot = require("dotenv").config();
 
+// ㅜ session 설정
 const session = require("express-session")({
   secret: process.env.JU_SECRET_KEY,
-  resave: true,
+  //
+  // ㅜ 저장하고 불러올 때 다시 저장할 지 여부
   saveUninitialized: true,
+  //
+  // ㅜ 저장 시 초기화 여부
+  resave: true,
+  // store: new FileStore(),
 });
 
-const { sequelize, User, AJYproduct } = require("./model/index_AJJ");
 const sharedsession = require("express-socket.io-session");
 // const FileStore = require("session-file-store")(session);
 
-// ㅜ 라우터
+// ㅜ model
+const { sequelize, User } = require("./model/index_AJJ");
+
+// ㅜ router
 const cartDB = require("./router/cartDB_AJJ");
 const example = require("./router/example_AJJ");
 const cartPage = require("./router/cartPage_AJJ");
-const productsDB = require("./controller/productsDB_AJJ");
+const keywordDB = require("./router/keywordDB_AJJ");
 const productsPage = require("./router/productsPage_AJJ");
+const dailyCheckPage = require("./router/dailyCheckPage_AJJ");
 
-//
+// ㅜ controller
+const productsDB = require("./controller/productsDB_AJJ");
+
+// ㅜ server 연결
 const app = express();
 const server = app.listen(PORT, () => {
   log("localhost:", PORT);
 });
 const io = socketio(server);
-
-//
-let boolCheck = false;
-let loginCheck = 0;
-let userToken = 0;
-let user = 0;
 
 // ㅜ body-parser
 app.use(express.urlencoded({ extended: false }));
@@ -61,27 +65,16 @@ app.use(express.static(__dirname));
 app.use("/img", express.static(path.join(__dirname, "img_Jang")));
 app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 
-// ㅜ 해당 요청 주소에 대해서 라우터 설정
+// ㅜ 라우터의 요청 주소에 대한 설정
+app.use("/dailyCheck", dailyCheckPage);
 app.use("/cartList", cartPage);
+app.use("/keyword", keywordDB);
 app.use("/example", example);
 app.use("/", productsPage);
 app.use("/cart", cartDB);
 
 app.use(session);
 io.use(sharedsession(session));
-
-// app.use(
-//   session({
-//     secret: process.env.JU_SECRET_KEY,
-//     //
-//     // ㅜ 저장하고 불러올 때 다시 저장할 지 여부
-//     resave: false,
-//     //
-//     // ㅜ 저장 시 초기화 여부
-//     saveUninitialized: true,
-//     store: new FileStore(),
-//   })
-// );
 
 // ㅜ 서버 실행 시 MySQL 연동
 sequelize
@@ -96,18 +89,10 @@ sequelize
 // ㅜ 메인 페이지
 app.get("/", (req, res) => {
   //
-  AJYproduct.findAll({}).then((value) => {
+  User.findAll({}).then((value) => {
     //
-    if (value[0]) {
-      //
-      User.create({
-        name: "똥",
-        phone: "01024242424",
-        email: "a@a.com",
-        password: "acca3434",
-      }).then(() => res.render("main_AJJ"));
-      //
-    } else
+    if (value[0]) res.render("main_AJJ");
+    else {
       productsDB().then(() => {
         //
         User.create({
@@ -117,10 +102,16 @@ app.get("/", (req, res) => {
           password: "acca3434",
         }).then(() => res.render("main_AJJ"));
       });
+    }
   });
 });
 
 // ㅜ 병현님 코드
+let boolCheck = false;
+let loginCheck = 0;
+let userToken = 0;
+let user = 0;
+
 io.on("connection", (socket) => {
   socket.emit("signCheck");
   socket.on("login", (userInfor) => {
@@ -214,7 +205,7 @@ let userArray = new Array();
 io.sockets.on("connection", (socket) => {
   // 유저의 전화상담
   socket.on("callChat", () => {
-    socket.emit("callChat2", () => {});
+    socket.emit("callChat2", () => { });
   });
 
   // 유저의 실시간 상담
@@ -259,4 +250,4 @@ io.sockets.on("connection", (socket) => {
   });
 });
 
-// 08.26.16 merge
+// 08.30.08 수정

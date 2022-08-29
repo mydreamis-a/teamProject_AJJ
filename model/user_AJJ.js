@@ -49,10 +49,11 @@ class User extends Sql.Model {
     db.User.hasOne(db.Like, { foreignKey: "user_id", sourceKey: "id" });
     db.User.hasMany(db.Cart, { foreignKey: "user_id", sourceKey: "id" });
     db.User.hasMany(db.Comment, { foreignKey: "user_id", sourceKey: "id" });
+    db.User.hasMany(db.Keyword, { foreignKey: "user_id", sourceKey: "id" });
     db.User.hasMany(db.DailyCheck, { foreignKey: "user_id", sourceKey: "id" });
   }
 }
 
 module.exports = User;
 
-// 08.29.18 수정
+// 08.30.07 수정

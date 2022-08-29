@@ -61,9 +61,9 @@ function createSearchTags() {
     <input id="product-sort-new" class="product-search" type="button" value="신상품순">
     <input id="product-sort-low-price" class="product-search" type="button" value="낮은가격순">
     <input id="product-sort-high-price" class="product-search" type="button" value="높은가격순">
-    <input id="product-search-keyword" class="cart-input-search-item" type="search">
-    <input name="q" id="product-search-keyword-btn" class="product-search" type="button" value="검색">
-    <div class="product-search-last">최근검색어</div>
+    <input id="product-keyword" class="cart-input-search-item" type="search">
+    <input name="q" id="product-keyword-btn" class="product-search" type="button" value="검색">
+    <div class="product-keyword-last">최근검색어</div>
     `;
 
   const mainHeaderTag = document.querySelector(".main-header");
@@ -88,4 +88,4 @@ function widthFromPxToVw(value) {
   return (value / bodyWidth) * 100;
 }
 
-// 08.29.03 수정
+// 08.30.08 수정
