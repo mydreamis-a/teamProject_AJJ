@@ -25,11 +25,11 @@ const sharedsession = require("express-socket.io-session");
 // const FileStore = require("session-file-store")(session);
 
 // ㅜ 라우터
-const cartDB = require("./router/cartDB_router_AJJ");
-const productsDB = require("./router/productsDB_AJJ");
-const example = require("./router/example_router_AJJ");
-const cartPage = require("./router/cartPage_router_AJJ");
-const productsPage = require("./router/productsPage_router_AJJ");
+const cartDB = require("./router/cartDB_AJJ");
+const example = require("./router/example_AJJ");
+const cartPage = require("./router/cartPage_AJJ");
+const productsDB = require("./controller/productsDB_AJJ");
+const productsPage = require("./router/productsPage_AJJ");
 
 //
 const app = express();
@@ -102,7 +102,7 @@ app.get("/", (req, res) => {
     //
     else productsDB().then(res.render("main_AJJ"));
   });
-})
+});
 
 io.on("connection", (socket) => {
   socket.emit("signCheck");

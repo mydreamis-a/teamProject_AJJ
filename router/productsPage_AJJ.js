@@ -1,11 +1,11 @@
 const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
-const cartListCount = require("./cartListCount_AJJ");
+const cartListCount = require("../controller/cartListCount_AJJ");
 const express = require("express");
 const router = express.Router();
 const { log } = console;
 
 router.post("/Ahn-shop", (req, res) => {
-  AJYproduct.findAll({}).then( async (AJYproducts) => {
+  AJYproduct.findAll({}).then(async (AJYproducts) => {
     //
     const shopName = "ajy";
     const count = await cartListCount(res);
@@ -17,7 +17,7 @@ router.post("/Ahn-shop", (req, res) => {
 
 router.post("/Ju-shop", (req, res) => {
   //
-  JBHproduct.findAll({}).then( async (JBHproducts) => {
+  JBHproduct.findAll({}).then(async (JBHproducts) => {
     //
     const shopName = "jbh";
     const count = await cartListCount(res);
@@ -28,7 +28,7 @@ router.post("/Ju-shop", (req, res) => {
 
 router.post("/Jang-shop", (req, res) => {
   //
-  JJWproduct.findAll({}).then( async (JJWproducts) => {
+  JJWproduct.findAll({}).then(async (JJWproducts) => {
     //
     const shopName = "jjw";
     const count = await cartListCount(res);

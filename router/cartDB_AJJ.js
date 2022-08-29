@@ -1,4 +1,4 @@
-const cartListCount = require("./cartListCount_AJJ");
+const cartListCount = require("../controller/cartListCount_AJJ");
 const { Cart } = require("../model/index_AJJ");
 const { Op } = require("sequelize");
 const express = require("express");
@@ -20,21 +20,19 @@ router.post("/:products", (req, res) => {
           Cart.create({ ajyproduct_num: productNum })
             //
             .then(() => {
-              cartListCount(res).then(count => res.send({ count }));
+              cartListCount(res).then((count) => res.send({ count }));
             })
             //
             .catch(() => {
-              Cart.increment({ product_count: 1 }, { where: { ajyproduct_num: productNum } })
-                .then(() => {
-                  cartListCount(res).then(count => res.send({ count }));
-                });
+              Cart.increment({ product_count: 1 }, { where: { ajyproduct_num: productNum } }).then(() => {
+                cartListCount(res).then((count) => res.send({ count }));
+              });
             });
         } else {
-          Cart.increment({ product_count: 1 }, { where: { ajyproduct_num: productNum } })
-            .then(() => {
-              cartListCount(res).then(count => res.send({ count }));
-            });
-        };
+          Cart.increment({ product_count: 1 }, { where: { ajyproduct_num: productNum } }).then(() => {
+            cartListCount(res).then((count) => res.send({ count }));
+          });
+        }
       });
       break;
     case "jbh":
@@ -44,21 +42,19 @@ router.post("/:products", (req, res) => {
           Cart.create({ jbhproduct_num: productNum })
             //
             .then(() => {
-              cartListCount(res).then(count => res.send({ count }));
+              cartListCount(res).then((count) => res.send({ count }));
             })
             //
             .catch(() => {
-              Cart.increment({ product_count: 1 }, { where: { jbhproduct_num: productNum } })
-                .then(() => {
-                  cartListCount(res).then(count => res.send({ count }));
-                });
+              Cart.increment({ product_count: 1 }, { where: { jbhproduct_num: productNum } }).then(() => {
+                cartListCount(res).then((count) => res.send({ count }));
+              });
             });
         } else {
-          Cart.increment({ product_count: 1 }, { where: { jbhproduct_num: productNum } })
-            .then(() => {
-              cartListCount(res).then(count => res.send({ count }));
-            });
-        };
+          Cart.increment({ product_count: 1 }, { where: { jbhproduct_num: productNum } }).then(() => {
+            cartListCount(res).then((count) => res.send({ count }));
+          });
+        }
       });
       break;
     case "jjw":
@@ -68,21 +64,19 @@ router.post("/:products", (req, res) => {
           Cart.create({ jjwproduct_num: productNum })
             //
             .then(() => {
-              cartListCount(res).then(count => res.send({ count }));
+              cartListCount(res).then((count) => res.send({ count }));
             })
             //
             .catch(() => {
-              Cart.increment({ product_count: 1 }, { where: { jjwproduct_num: productNum } })
-                .then(() => {
-                  cartListCount(res).then(count => res.send({ count }));
-                });
+              Cart.increment({ product_count: 1 }, { where: { jjwproduct_num: productNum } }).then(() => {
+                cartListCount(res).then((count) => res.send({ count }));
+              });
             });
         } else {
-          Cart.increment({ product_count: 1 }, { where: { jjwproduct_num: productNum } })
-            .then(() => {
-              cartListCount(res).then(count => res.send({ count }));
-            });
-        };
+          Cart.increment({ product_count: 1 }, { where: { jjwproduct_num: productNum } }).then(() => {
+            cartListCount(res).then((count) => res.send({ count }));
+          });
+        }
       });
       break;
     default:
