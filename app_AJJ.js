@@ -104,6 +104,7 @@ app.get("/", (req, res) => {
   });
 });
 
+// ㅜ 병현님 코드
 io.on("connection", (socket) => {
   socket.emit("signCheck");
   socket.on("login", (userInfor) => {
@@ -187,5 +188,8 @@ io.on("connection", (socket) => {
     });
   });
 });
+
+// ㅜ 주영님 코드
+
 
 // 08.26.16 merge
