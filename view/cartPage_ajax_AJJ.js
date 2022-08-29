@@ -17,14 +17,10 @@ cartIconTag.addEventListener("click", () => {
       let totalprice = 0;
       //
       cartListRowTag.innerHTML = "";
+      //
       for (const key in cartProducts) {
         if (Object.hasOwnProperty.call(cartProducts, key)) {
           //
-          if (cartListRowTag.children.length) {
-            //
-            // const removeTags = [...cartListRowTag.children];
-            // removeTags.forEach((el) => el.remove());
-          }
           switch (key) {
             //
             case "ajyproducts":
@@ -51,7 +47,6 @@ cartIconTag.addEventListener("click", () => {
     },
   });
 });
-
 // ㅜ 장바구니 화면에서 나가기 버튼을 클릭했을 때
 cartExitBtnTag.addEventListener("click", () => {
   cartModalContainerTag.style.display = "none";
