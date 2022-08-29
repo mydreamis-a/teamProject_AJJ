@@ -86,7 +86,7 @@ class mainNav {
 
       const chatName = document.createElement("div");
       chatName.innerHTML = "이름";
-
+ 
       const inputName = document.createElement("input");
       inputName.setAttribute("type", "text");
       inputName.setAttribute("placeholder", "정확하게 입력해주세요");
@@ -129,7 +129,6 @@ class mainNav {
         }
       });
     });
-
     socket.on("liveChat2", () => {
       const chat = document.createElement("div");
       chat.classList.add("lcn");
@@ -156,12 +155,7 @@ class mainNav {
           socket.emit("liveHi", {
             name: liveChatName.value,
           });
-        }
-            // list = document.createElement("option");
-            // list.setAttribute("value", liveChatName.value);
-            // list.classList.add(liveChatName.value);
-            // list.innerHTML = liveChatName.value;
-            // this.rooms.appendChild(list);
+        };
 
         if (!liveChatName.value) return alert("이름쓰라고 ^^");
         // 두번째 인풋 막은거 다시 풀기.
@@ -180,6 +174,7 @@ class mainNav {
             {
               socket.emit("adminmessage", {
                 name: room == null ?  userLiveName : room,
+                // name : userLiveName,
                 message: this.chatInput.value,
               });
             }
@@ -195,11 +190,20 @@ class mainNav {
       };
     });
 
-    // 실시간 상담 처음 들어왔을 때 알림
+    // 유저 실시간 상담 처음 들어왔을 때 알림
     socket.on("liveHi2", (data) => {
         this.chatBox.innerHTML += `
         <div class="liveHi">
         ${data.name}님 왜 왔니?
+        </div>
+        `;
+        this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
+    });
+    // 관리자 실시간 상담 처음 들어왔을 때 알림
+    socket.on("adminHi", (data) => {
+        this.chatBox.innerHTML += `
+        <div class="liveHi">
+        대장님 들어왔다 인사 박아라 ㅋ
         </div>
         `;
         this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
@@ -248,17 +252,11 @@ class mainNav {
       ${data.name}
       </option>
       `;
-
-      // let room = this.rooms.options[this.rooms.selectedIndex].value;
-      // console.log(room);
-      // socket.emit("aa", {
-      //   room
-      // });
     });
 
     this.rooms.onchange = function(){
       room = this.options[this.selectedIndex].value;
-      socket.emit("aa", room);
+      socket.emit("change", room);
     }
 
 

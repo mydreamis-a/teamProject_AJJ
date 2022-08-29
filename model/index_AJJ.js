@@ -7,7 +7,7 @@ const Comment = require("./comment_AJJ");
 const AJYproduct = require("./AJYproduct_AJJ");
 const JBHproduct = require("./JBHproduct_AJJ");
 const JJWproduct = require("./JJWproduct_AJJ");
-const DailyCheck = require("./dailyCheck_AJJ");
+const DailyCheck = require("./dailyCheck_model_AJJ");
 const config = require("../config/config_AJJ").dev;
 
 // ㅜ MySQL 연결 객체 생성
