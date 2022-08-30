@@ -6,10 +6,10 @@ class DailyCheck extends Sql.Model {
     return super.init(
       {
         // ㅜ 출석 체크한 날짜
-        date: {
-          type: Sql.DATE,
+        day: {
+          type: Sql.INTEGER,
           allowNull: false,
-          defaultValue: Sql.NOW,
+          unique: true,
         },
       },
       {
@@ -32,4 +32,4 @@ class DailyCheck extends Sql.Model {
 
 module.exports = DailyCheck;
 
-// 08.30.08 수정
+// 08.30.11 수정

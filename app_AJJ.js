@@ -78,7 +78,7 @@ io.use(sharedsession(session));
 
 // ㅜ 서버 실행 시 MySQL 연동
 sequelize
-  .sync({ force: false })
+  .sync({ force: true })
   .then(() => {
     log("AJJ's DB connection");
   })
@@ -109,96 +109,6 @@ app.get("/", (req, res) => {
           });
         }
       });
-    });
-  });
-});
-
-// ㅜ 병현님 코드
-let boolCheck = false;
-let loginCheck = 0;
-let userToken = 0;
-let user = 0;
-
-io.on("connection", (socket) => {
-  socket.emit("signCheck");
-  socket.on("login", (userInfor) => {
-    socket.emit("signCheck");
-    const userInputEmail = userInfor.userInputEmail; // 유저가 입력한 이메일 값
-    const userInputPw = userInfor.userInputPw; // 유저가 입력한 패수워드 값
-    const a = 0;
-    User.findAll({
-      where: {
-        email: userInputEmail,
-        password: userInputPw,
-      },
-    })
-      .then((user) => {
-        let aT = jwt.sign(
-          {
-            password: user[0].password,
-            type: "JWT",
-          },
-          process.env.JU_ACCESS_TOKEN,
-          {
-            issuer: "주병현",
-            expiresIn: "1m",
-          }
-        );
-        let rT = jwt.sign(
-          {
-            password: user[0].password,
-            type: "JWT",
-          },
-          process.env.JU_REFRESH_TOKEN,
-          {
-            issuer: "주병현",
-            expiresIn: "3m",
-          }
-        );
-        socket.handshake.session.aT = aT;
-        socket.handshake.session.rT = rT;
-        socket.handshake.session.name = user[0].name;
-        socket.handshake.session.save();
-        console.log(socket);
-        socket.emit("loginSuccess", user[0].name);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  });
-  socket.on("signUp", (inputName, inputTel, inputEmail, inputPassword) => {
-    socket.emit("signCheck");
-    const inputNameData = inputName;
-    const inputTelData = inputTel;
-    const inputEmailData = inputEmail;
-    const inputPasswordData = inputPassword;
-    User.findOrCreate({
-      where: {
-        phone: inputTelData,
-        email: inputEmailData,
-      },
-      defaults: {
-        name: inputNameData,
-        phone: inputTelData,
-        email: inputEmailData,
-        password: inputPasswordData,
-      },
-    })
-      .then((e) => {
-        socket.emit("signSuccess", inputNameData);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  });
-  socket.on("signCheck", () => {
-    let userName = socket.handshake.session.name;
-    jwt.verify(socket.handshake.session.aT, process.env.JU_ACCESS_TOKEN, (err, decoded) => {
-      if (err) {
-        console.log("로그인 해주세요");
-      } else if (decoded) {
-        socket.emit("loginSuccess", userName);
-      }
     });
   });
 });
