@@ -34,10 +34,10 @@ class JangMainSlide {
 
   init(who) {
 
-    // ㅜ 우클릭, 블럭, 드래그 방지하기
-    window.document.oncontextmenu = new Function("return false");
-    window.document.onselectstart = new Function("return false");
-    window.document.ondragstart = new Function("return false");
+    // // ㅜ 우클릭, 블럭, 드래그 방지하기
+    // window.document.oncontextmenu = new Function("return false");
+    // window.document.onselectstart = new Function("return false");
+    // window.document.ondragstart = new Function("return false");
 
     // ㅜ HTML 태그 설정하기
     this.section1Tag.appendChild(this.slideContainerTag);
@@ -238,7 +238,6 @@ class JangMainSlide {
           this.moveControl = null;
 
           this.gage("100%", `${this.second}s`);
-          console.log("moveControl");
 
           // ㅜ 맨 뒤에 복사해 둔 이미지 태그일 경우 원래 자리로 이동시키기
           if (this.index >= this.imgTags.length - 1) {

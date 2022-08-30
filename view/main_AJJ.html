@@ -74,6 +74,11 @@
     </div>
     <div class="search">
     </div>
+    <% if(userName){%>
+      <h2><%= userName %>님 환영합니다</h2>
+    <% }else{%>
+      <h2><%= errorCode %></h2>
+    <% } %>
   </header>
   <div class="main-event">
     <svg xmlns="http://www.w3.org/2000/svg" width="80px" height="80px" fill="currentColor"
@@ -99,6 +104,7 @@
             <path
               d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
           </svg>
+          
         </div>
         <div class="chat-start"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
             class="bi bi-send-fill" viewBox="0 0 16 16">
@@ -129,7 +135,7 @@
       </div>
       <div class="sign-up-modal">
         <div class="sign-up-sub-modal">
-          <form class="form" autocomplete="off">
+          <form action="/signUp" method="post">
             <fieldset class="fieldset">
               <legend class="legend">회 원 가 입</legend>
               <div class="sign-up-delete"><svg xmlns="http://www.w3.org/2000/svg" width="49.997px" height="49.997px"
@@ -139,13 +145,13 @@
                 </svg>
               </div>
               <label class="label" for="input-name">이 름</label>
-              <input type="text" id="input-name" placeholder="한글과 영어로만 입력해주세요.">
+              <input type="text" id="input-name" placeholder="한글과 영어로만 입력해주세요." name="name">
               <label class="label" for="input-tel">전화번호</label>
-              <input type="tel" id="input-tel" placeholder="숫자만 입력해주세요.">
+              <input type="tel" id="input-tel" placeholder="숫자만 입력해주세요." name="phone">
               <label class="label" for="input-email">이메일</label>
-              <input type="email" id="input-email" placeholder="ex) iloveyou@ann-joo-jang.com">
+              <input type="email" id="input-email" placeholder="ex) iloveyou@ann-joo-jang.com" name="email">
               <label class="label" for="input-password">비밀번호</label>
-              <input type="password" id="input-password" placeholder="영어, 숫자, 특수 문자 중에서 6자리 이상 입력해주세요.">
+              <input type="password" id="input-password" placeholder="영어, 숫자, 특수 문자 중에서 6자리 이상 입력해주세요." name="password">
               <label class="label" for="input-password-check">비밀번호 확인</label>
               <input type="password" id="input-password-check" placeholder="동일하게 입력해주세요.">
               <p class="welcome-msg"></p>
@@ -162,17 +168,19 @@
         </svg>
       </div>
       <div class="modal">
+      <form action="/login" method="post">
         <div class="modal-body">
           <p class="modal-title">로그인하기</p>
           <label for="sign-in-email">이메일</label>
-          <input type="email" id="sign-in-email">
+          <input type="email" id="sign-in-email" name="email">
           <label for="sign-in-password">패스워드</label>
-          <input type="password" id="sign-in-password">
+          <input type="password" id="sign-in-password" name="password">
           <div class="sign-in-btn-group">
-            <input type="button" value="로그인" class="sign-in-btn">
+            <button type="submit">로그인</button>
             <input type="button" value="나가기" class="sign-in-exit-btn">
           </div>
         </div>
+      </form> 
       </div>
       <div class="person-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="2.344vw" height="2.344vw" fill="currentColor"
@@ -326,7 +334,8 @@
   _JangMainSlide.slideTextTags[2].innerHTML = "'안'녕하세요!<br>저희는 '주'말에도 비가 오나 눈이 오나 지치지 않고<br>열심히 '장'인 정신으로 공부하는 안주장 팀입니다.";
   _JangMainSlide.slideTextTags[3].innerHTML = "저희 홈페이지에서는<br>여러분들에게 맛나고 즐거운 안주처럼, 따뜻한 에너지를 선사해줄 수 있는 요소들을 찾아<br>소개해드리고 있습니다. 부디 여러분 모두가 이 인생에서 편안히 안주할 수 있기를<br>바라는 마음으로 정성 들여서 만들었습니다.<br>항상 행복하세요!<br>";
   _JangMainSlide.slideTextTags[0].innerHTML = _JangMainSlide.slideTextTags[3].innerHTML;
-  _JangMainSlide.slideTextTags[_JangMainSlide.slideTextTags.length - 1].appendChild(_dateAnimation.increaseCopyTag);
+  _JangMainSlide.slideTextTags[_JangMainSlide.slideTextTags.length-1].appendChild(_dateAnimation.increaseCopyTag);
+
 </script>
 </html>
 
