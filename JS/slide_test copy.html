@@ -19,20 +19,20 @@
         }
 
         #slide-container {
+            border: 1px solid black;
             position: relative;
             overflow: hidden;
-            display: flex;
+            margin: 0 auto;
             height: 9vw;
             width: 86vw;
         }
-        
+
         #slide-wrap {
             display: flex;
         }
 
         [id ^="slide-img"] {
             background-color: royalblue;
-            position: absolute;
             font-size: 500px;
             margin: 0.5vw;
             height: 8vw;
@@ -65,61 +65,61 @@
 
         @keyframes from100-to0 {
             from {
-                left: 100vw;
+                transform: translateX(100vw);
             }
 
             to {
-                left: 0vw;
+                transform: translateX(0vw);
             }
         }
 
         @keyframes from0-to-100 {
             from {
-                left: 0vw;
+                transform: translateX(0vw);
             }
 
             to {
-                left: -100vw;
+                transform: translateX(-100vw);
             }
         }
 
         @keyframes from-100-to100 {
             from {
-                left: -100vw;
+                transform: translateX(-100vw);
             }
 
             to {
-                left: 100vw;
+                transform: translateX(100vw);
             }
         }
 
         @keyframes from-100-to0 {
             from {
-                left: -100vw;
+                transform: translateX(-100vw);
             }
 
             to {
-                left: 0vw;
+                transform: translateX(0vw);
             }
         }
 
         @keyframes from0-to100 {
             from {
-                left: 0vw;
+                transform: translateX(0vw);
             }
 
             to {
-                left: 100vw;
+                transform: translateX(100vw);
             }
         }
 
         @keyframes from100-to-100 {
             from {
-                left: 100vw;
+                transform: translateX(100vw);
             }
 
             to {
-                left: -100vw;
+                transform: translateX(-100vw);
             }
         }
     </style>
@@ -127,7 +127,7 @@
 
 <body>
     <div id="slide-container">
-        <div id="slide-wrap">
+        <div id="slide-wrap1">
             <div id="slide-img1">1</div>
             <div id="slide-img2">2</div>
             <div id="slide-img3">3</div>
@@ -138,6 +138,8 @@
             <div id="slide-img8">8</div>
             <div id="slide-img9">9</div>
             <div id="slide-img10">10</div>
+        </div>
+        <div id="slide-wrap2">
             <div id="slide-img11">11</div>
             <div id="slide-img12">12</div>
             <div id="slide-img13">13</div>
@@ -159,6 +161,7 @@
 <script>
 
     const second = 3;
+    let distance = -8;
     let resizeControl = null;
     let timeBarControl = null;
     let autoPlayControl = null;
@@ -180,10 +183,15 @@
         el.style.animationDuration = `0s`;
         el.style.animationFillMode = `forwards`;
 
-        if (idx === arr.length - 1) {
-            el.style.animationName = `from100-to-100`;
-        }
-        else el.style.animationName = `from${(idx - 1) * 100}-to${idx * 100}`;
+        // if (idx === arr.length - 1) {
+        //     el.style.animationName = `from100-to-100`;a
+
+        
+        // }
+        // else el.style.animationName = `from${(idx - 1) * 100}-to${idx * 100}`;
+
+        el.style.transform = `translateX(${distance}vw)`;
+        distance += 8;
     });
 
     autoPlay(moveNext, second, second);
