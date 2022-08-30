@@ -9,7 +9,7 @@ class DailyCheck extends Sql.Model {
         day: {
           type: Sql.INTEGER,
           allowNull: false,
-          unique : true,
+          unique: true,
         },
       },
       {

@@ -11,27 +11,26 @@ router.post("/today", (req, res) => {
   let userId = null;
   User.findOne({
     where: { email: email },
-  })
-    .then((e) => {
-        userId = e.id;
-      DailyCheck.findOne({
-        where: {
+  }).then((e) => {
+    userId = e.id;
+    DailyCheck.findOne({
+      where: {
+        day: date,
+        user_id: userId,
+      },
+    }).then((e) => {
+      if (!e) {
+        DailyCheck.create({
           day: date,
           user_id: userId,
-        },
-      }).then((e) => {
-        if (!e) {
-          DailyCheck.create({
-            day: date,
-            user_id: userId,
-          }).then(() => {
-            res.send({ result : date });
-          });
-        } else {
-          res.send({ done: "already" });
-        }
-      });
-    })
+        }).then(() => {
+          res.send({ result: date });
+        });
+      } else {
+        res.send({ done: "already" });
+      }
+    });
+  });
 });
 
 // ㅜ 이전 출쳌
