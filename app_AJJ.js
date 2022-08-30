@@ -28,7 +28,7 @@ const sharedsession = require("express-socket.io-session");
 // const FileStore = require("session-file-store")(session);
 
 // ㅜ model
-const { sequelize, User } = require("./model/index_AJJ");
+const { sequelize, User, Cart, Keyword } = require("./model/index_AJJ");
 
 // ㅜ router
 const cartDB = require("./router/cartDB_AJJ");
@@ -89,20 +89,27 @@ sequelize
 // ㅜ 메인 페이지
 app.get("/", (req, res) => {
   //
-  User.findAll({}).then((value) => {
-    //
-    if (value[0]) res.render("main_AJJ");
-    else {
-      productsDB().then(() => {
+  // ㅜ 비회원 정보 삭제
+  Cart.destroy({ where: { user_id: null } }).then(() => {
+    Keyword.destroy({ where: { user_id: null } }).then(() => {
+      //
+      User.findOne({}).then((value) => {
         //
-        User.create({
-          name: "똥",
-          phone: "01024242424",
-          email: "a@a.com",
-          password: "acca3434",
-        }).then(() => res.render("main_AJJ"));
+        if (value !== null) res.render("main_AJJ");
+        //
+        // ㅜ 회원 정보가 하나도 없을 경우 테스트용 데이터 넣기
+        else {
+          productsDB().then(() => {
+            User.create({
+              name: "똥",
+              phone: "8282",
+              email: "ajj@ajj.com",
+              password: "acca3434",
+            }).then(() => res.render("main_AJJ"));
+          });
+        }
       });
-    }
+    });
   });
 });
 
@@ -250,4 +257,4 @@ io.sockets.on("connection", (socket) => {
   });
 });
 
-// 08.30.08 수정
+// 08.30.16 수정
