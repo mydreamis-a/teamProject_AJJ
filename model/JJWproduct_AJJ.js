@@ -53,6 +53,8 @@ class JJWproduct extends Sql.Model {
   static associate(db) {
     db.JJWproduct.hasOne(db.Like, { foreignKey: "jjwproduct_num", sourceKey: "id" });
     db.JJWproduct.hasMany(db.Comment, { foreignKey: "jjwproduct_num", sourceKey: "id" });
+    // 추가
+    db.JJWproduct.hasMany(db.BestItem, { foreignKey: "jjwproduct_num", sourceKey: "id" });
   }
 }
 

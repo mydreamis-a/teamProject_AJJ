@@ -104,6 +104,7 @@
             <path
               d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
           </svg>
+          
         </div>
         <div class="chat-start"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
             class="bi bi-send-fill" viewBox="0 0 16 16">
@@ -131,7 +132,7 @@
       </div>
       <div class="sign-up-modal">
         <div class="sign-up-sub-modal">
-          <form class="form" autocomplete="off">
+          <form action="/signUp" method="post">
             <fieldset class="fieldset">
               <legend class="legend">회 원 가 입</legend>
               <div class="sign-up-delete"><svg xmlns="http://www.w3.org/2000/svg" width="49.997px" height="49.997px"
@@ -141,13 +142,13 @@
                 </svg>
               </div>
               <label class="label" for="input-name">이 름</label>
-              <input type="text" id="input-name" placeholder="한글과 영어로만 입력해주세요.">
+              <input type="text" id="input-name" placeholder="한글과 영어로만 입력해주세요." name="name">
               <label class="label" for="input-tel">전화번호</label>
-              <input type="tel" id="input-tel" placeholder="숫자만 입력해주세요.">
+              <input type="tel" id="input-tel" placeholder="숫자만 입력해주세요." name="phone">
               <label class="label" for="input-email">이메일</label>
-              <input type="email" id="input-email" placeholder="ex) iloveyou@ann-joo-jang.com">
+              <input type="email" id="input-email" placeholder="ex) iloveyou@ann-joo-jang.com" name="email">
               <label class="label" for="input-password">비밀번호</label>
-              <input type="password" id="input-password" placeholder="영어, 숫자, 특수 문자 중에서 6자리 이상 입력해주세요.">
+              <input type="password" id="input-password" placeholder="영어, 숫자, 특수 문자 중에서 6자리 이상 입력해주세요." name="password">
               <label class="label" for="input-password-check">비밀번호 확인</label>
               <input type="password" id="input-password-check" placeholder="동일하게 입력해주세요.">
               <p class="welcome-msg"></p>

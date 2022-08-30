@@ -1,8 +1,9 @@
-const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
+const { AJYproduct, JBHproduct, JJWproduct,Like,User } = require("../model/index_AJJ");
 const express = require("express");
 const router = express.Router();
 const { log } = console;
-
+const session = require("express-session");
+const FileStore = require("session-file-store")(session);
 router.post("/Ahn-shop", (req, res) => {
   AJYproduct.findAll({}).then((AJYproducts) => {
     //
@@ -38,8 +39,10 @@ router.post("/Jang-shop", (req, res) => {
  * @returns 필요한 HTML 태그
  */
 function createProducts(shopName, products) {
+
+  
+
   const productsTag = new Array();
-  //
   const _products = products.map((el) => el.dataValues);
   _products.forEach((el, idx) => {
     //
@@ -56,10 +59,11 @@ function createProducts(shopName, products) {
         <p class="product-price">${el.price} 원</p>
         <div class="product-btn-container">
           <div class="product-btn-group">
-            <input class="in-cart-btn${idx}" data-shopName=${shopName} type="button" value="장바구니에 담기" onclick="incart('${shopName}', ${idx})">
-            <input class="show-product-btn${idx}" type="button" value="상품 보기">
+            <input class="in-cart-btn${idx+1}" data-shopName=${shopName} type="button" value="장바구니에 담기" onclick="incart('${shopName}', ${idx+1})">
+            <input class="show-product-btn${idx+1}" type="button" value="상품 보기">
           </div>
         </div>
+        <input type="button" value="${idx}" id="like_Btn${idx}">
       </div>
     </div>
   </div>

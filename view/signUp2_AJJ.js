@@ -56,20 +56,19 @@ class signUp2 {
 
     // ㅜ submit이 발생할 때
     this.formTag.addEventListener("submit", (event) => {
+      document.querySelector("#signUpForm").action = "/signUp";
+      document.querySelector("#signUpForm").method = "post";
         const rsltArr = this.regRslt();
         event.preventDefault();
         event.stopPropagation();
         if (rsltArr.every((value) => value === true)) {
-            let inputName = document.querySelector("#input-name").value;
-            let inputTel = document.querySelector("#input-tel").value;
-            let inputEmail = document.querySelector("#input-email").value;
-            let inputPassword = document.querySelector("#input-password").value;
-            socket.emit("signUp", inputName, inputTel, inputEmail, inputPassword);
-            socket.on("signSuccess", (inputName) => {
-              alert(inputName + "님, 환영합니다.\n회원가입이 완료되었습니다.");
-              this.signupModal.style.display = "none";
-              return;
-            });
+          this.formTag.addEventListener("submit", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+          })
+        }
+        else{
+          return;
         }
     });
   }

@@ -4,7 +4,6 @@ const fs = require("fs");
 const ejs = require("ejs");
 const path = require("path");
 const mysql = require("mysql2");
-
 // ㅜ 시퀄라이즈 패키지이자 생성자
 const Sql = require("sequelize");
 const express = require("express");
@@ -12,13 +11,15 @@ const jwt = require("jsonwebtoken");
 const socketio = require("socket.io");
 const dot = require("dotenv").config();
 const session = require("express-session")
-const { sequelize, User } = require("./model/index_AJJ");
+const { sequelize, User,Like } = require("./model/index_AJJ");
 const FileStore = require("session-file-store")(session);
 const example = require("./router/example_AJJ");
 const cart = require("./router/cart_router_AJJ");
 const productsDB = require("./router/productsDB_AJJ");
 const productsPage = require("./router/productsPage_router_AJJ");
-
+const signIn = require("./router/signIn_AJJ");
+const signUp = require("./router/signUp_AJJ");
+const bcrypt = require("bcrypt");
 const app = express();
 const server = app.listen(PORT, () => {
   log("localhost:", PORT);
@@ -45,6 +46,8 @@ app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 app.use("/example", example);
 app.use("/", productsPage);
 app.use("/cart", cart);
+app.use("/",signIn);
+app.use("/",signUp);
 
 app.use(
   session({
@@ -69,73 +72,29 @@ sequelize
 app.get("/", (req, res) => {
   let userName = "";
   let errorCode = "";
-  jwt.verify(req.session.aT, process.env.JU_ACCESS_TOKEN, (err, decoded) => {
-    if (err) {
-      errorCode = "로그인을 해주세요";
-      userName = "";
-    } 
-    else if(decoded){
-      errorCode = "";
-      userName = req.session.name;
-    }
-  });
+      jwt.verify(req.session.aT, process.env.JU_ACCESS_TOKEN, (err, decoded) => {
+        if (err) {
+          errorCode = "로그인을 해주세요";
+          userName = "";
+        } 
+        else if(decoded){
+          errorCode = "";
+          userName = req.session.name;
+          console.log(err);
+          errorCode = err;
+        }
+      });
   productsDB();
   res.render("main_AJJ",{userName,errorCode});
 });
 
-app.post("/login",(req,res)=>{
-  let aT = req.session.aT;
-  jwt.verify(aT, process.env.JU_ACCESS_TOKEN, (err, decoded) => {
-    if (err) {
-      const {email,password} = req.body;
-      req.session.name = null;
-      User.findAll({
-        where: {
-          email: email,
-          password: password,
-        },
-      })
-        .then((user) => {
-          let aT = jwt.sign(
-            {
-              password: user[0].password,
-              type: "JWT",
-            },
-            process.env.JU_ACCESS_TOKEN,
-            {
-              issuer: "주병현",
-              expiresIn: "10s",
-            }
-          );
-          let rT = jwt.sign(
-            {
-              password: user[0].password,
-              type: "JWT",
-            },
-            process.env.JU_REFRESH_TOKEN,
-            {
-              issuer: "주병현",
-              expiresIn: "10s",
-            }
-          );
-          req.session.aT = aT;
-          req.session.rT = rT;
-          req.session.name = user[0].name;
-          console.log(req);
-          productsDB();
-          res.render("main_AJJ",{userName:req.session.name});
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    } 
-    else if(decoded){
-      console.log("이미 로그인 되어있습니다.");
-      productsDB();
-      res.render("main_AJJ",{userName:req.session.name});
-    }
-  });
+app.get("/like/:idx",(req,res)=>{
+ 
+  let productId = req.params.idx;
+
 })
+
+
 io.on("connection", (socket) => {
   
 });
