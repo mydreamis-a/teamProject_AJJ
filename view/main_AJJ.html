@@ -28,7 +28,7 @@
 
 <body>
   <header class="main-header">
-    <div class="logo" OnClick="location.href ='main_AJJ.html'">
+    <div class="logo" OnClick="location.href ='/'">
       <span class="accent-text"></span>
       <span class="typing-text"></span>
       <span class="typing-cursor">|</span>
@@ -74,6 +74,11 @@
     </div>
     <div class="search">
     </div>
+    <% if(userName){%>
+      <h2><%= userName %>님 환영합니다</h2>
+    <% }else{%>
+      <h2><%= errorCode %></h2>
+    <% } %>
   </header>
   <div class="main-event">
     <svg xmlns="http://www.w3.org/2000/svg" width="80px" height="80px" fill="currentColor"
@@ -159,17 +164,19 @@
         </svg>
       </div>
       <div class="modal">
+      <form action="/login" method="post">
         <div class="modal-body">
           <p class="modal-title">로그인하기</p>
           <label for="sign-in-email">이메일</label>
-          <input type="email" id="sign-in-email">
+          <input type="email" id="sign-in-email" name="email">
           <label for="sign-in-password">패스워드</label>
-          <input type="password" id="sign-in-password">
+          <input type="password" id="sign-in-password" name="password">
           <div class="sign-in-btn-group">
-            <input type="button" value="로그인" class="sign-in-btn">
+            <button type="submit">로그인</button>
             <input type="button" value="나가기" class="sign-in-exit-btn">
           </div>
         </div>
+      </form> 
       </div>
       <div class="person-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="2.344vw" height="2.344vw" fill="currentColor"

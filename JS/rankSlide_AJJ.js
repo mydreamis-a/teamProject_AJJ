@@ -17,10 +17,10 @@ class JangRankSlide {
   }
   init(classNameValue) {
 
-    // ㅜ 드래그, 우클릭, 블럭 방지하기
-    window.document.ondragstart = new Function("return false");
-    window.document.oncontextmenu = new Function("return false");
-    window.document.onselectstart = new Function("return false");
+    // // ㅜ 드래그, 우클릭, 블럭 방지하기
+    // window.document.ondragstart = new Function("return false");
+    // window.document.oncontextmenu = new Function("return false");
+    // window.document.onselectstart = new Function("return false");
 
     // ㅜ 태그의 번호 넣기
     this.imgTags.forEach((el, idx) => {

@@ -4,7 +4,6 @@ const { log } = console;
 module.exports = function productsDB() {
   JJWproduct.findAll({}).then((data) => {
     //
-    log(`productsDB nothing? so create: ${!data[0]}`);
     if (data[0]) return;
     //
     AJYproduct.bulkCreate([

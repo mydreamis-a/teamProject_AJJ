@@ -56,27 +56,10 @@ class signUp2 {
 
     // ㅜ submit이 발생할 때
     this.formTag.addEventListener("submit", (event) => {
-      socket.emit("signCheck", (boolCheck) => {
-        if (boolCheck == false) {
-          loginCheck = 0;
-        } else if (boolCheck == true) {
-          loginCheck = 1;
-        }
-      });
-      if (loginCheck == 1) {
-        alert("이미 로그인 정보가 있습니다");
-        return;
-      } else if (loginCheck == 0) {
         const rsltArr = this.regRslt();
         event.preventDefault();
         event.stopPropagation();
         if (rsltArr.every((value) => value === true)) {
-          socket.emit("loginSuccess");
-          socket.emit("signCheck");
-          if (socket.handshake.session.aT) {
-            alert(socket.handshake.session.aT + "님은 이미 정보가 있습니당");
-            return;
-          } else if (!socket.handshake.session.aT) {
             let inputName = document.querySelector("#input-name").value;
             let inputTel = document.querySelector("#input-tel").value;
             let inputEmail = document.querySelector("#input-email").value;
@@ -87,9 +70,7 @@ class signUp2 {
               this.signupModal.style.display = "none";
               return;
             });
-          }
         }
-      }
     });
   }
   // ㅜ 유효성 검증의 통과 여부에 따라 class를 적용하는 함수
