@@ -36,11 +36,7 @@ const example = require("./router/example_AJJ");
 const cartPage = require("./router/cartPage_AJJ");
 const keywordDB = require("./router/keywordDB_AJJ");
 const productsPage = require("./router/productsPage_AJJ");
-<<<<<<< HEAD
-const dailyCheck = require("./router/dailyCheckPage_AJJ");
-=======
 const dailyCheckPage = require("./router/dailyCheckPage_AJJ");
->>>>>>> 30e5a778b3963ced55577ce248205e7c9c6a05b6
 
 // ㅜ controller
 const productsDB = require("./controller/productsDB_AJJ");
