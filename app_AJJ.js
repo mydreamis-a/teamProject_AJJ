@@ -10,7 +10,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const socketio = require("socket.io");
 const dot = require("dotenv").config();
-const session = require("express-session")
+const session = require("express-session");
 const FileStore = require("session-file-store")(session);
 const signIn = require("./router/signIn_AJJ");
 const signUp = require("./router/signUp_AJJ");
@@ -60,8 +60,8 @@ app.use("/keyword", keywordDB);
 app.use("/example", example);
 app.use("/", productsPage);
 app.use("/cart", cartDB);
-app.use("/",signIn);
-app.use("/",signUp);
+app.use("/", signIn);
+app.use("/", signUp);
 
 // ㅜ session 설정
 app.use(
@@ -88,18 +88,17 @@ sequelize
 app.get("/", (req, res) => {
   let userName = "";
   let errorCode = "";
-      jwt.verify(req.session.aT, process.env.JU_ACCESS_TOKEN, (err, decoded) => {
-        if (err) {
-          errorCode = "로그인을 해주세요";
-          userName = "";
-        } 
-        else if(decoded){
-          errorCode = "";
-          userName = req.session.name;
-          console.log(err);
-          errorCode = err;
-        }
-      });
+  jwt.verify(req.session.aT, process.env.JU_ACCESS_TOKEN, (err, decoded) => {
+    if (err) {
+      errorCode = "로그인을 해주세요";
+      userName = "";
+    } else if (decoded) {
+      errorCode = "";
+      userName = req.session.name;
+      console.log(err);
+      errorCode = err;
+    }
+  });
 
   // ㅜ 비회원 정보 삭제
   Cart.destroy({ where: { user_id: null } }).then(() => {
@@ -107,7 +106,7 @@ app.get("/", (req, res) => {
       //
       User.findOne({}).then((value) => {
         //
-        if (value !== null) res.render("main_AJJ",{userName,errorCode});
+        if (value !== null) res.render("main_AJJ", { userName, errorCode });
         //
         // ㅜ 회원 정보가 하나도 없을 경우 테스트용 데이터 넣기
         else {
@@ -117,7 +116,7 @@ app.get("/", (req, res) => {
               phone: "8282",
               email: "ajj@ajj.com",
               password: "acca3434",
-            }).then(() => res.render("main_AJJ",{userName,errorCode}));
+            }).then(() => res.render("main_AJJ", { userName, errorCode }));
           });
         }
       });
@@ -125,15 +124,14 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/like/:idx/:shopName",(req,res)=>{
+app.get("/like/:idx/:shopName", (req, res) => {
   let productId = req.params.idx;
   let productShopName = req.params.shopName;
   console.log(productId);
   console.log(productShopName);
-})
+});
 
 // ㅜ 주영님 코드
-
 let adminArray = new Array();
 let userArray = new Array();
 

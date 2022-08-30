@@ -84,7 +84,6 @@ function showKeyword(id) {
 
   // ㅜ 검색 창의 focus 여부에 따라 최근 검색어 보여주고 숨겨주기
   productKeywordTag.addEventListener("focus", () => {
-    log("Dfdf");
     //
     $.ajax({
       url: "/keyword/last",
