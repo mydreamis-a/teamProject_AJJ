@@ -35,7 +35,7 @@ const example = require("./router/example_AJJ");
 const cartPage = require("./router/cartPage_AJJ");
 const productsDB = require("./controller/productsDB_AJJ");
 const productsPage = require("./router/productsPage_AJJ");
-const dailyCheck = require("./router/dailyCheck_AJJ");
+const dailyCheck = require("./router/dailyCheckPage_AJJ");
 
 //
 const app = express();
