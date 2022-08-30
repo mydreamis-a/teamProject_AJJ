@@ -46,25 +46,29 @@ function saveKeyword(id) {
   //
   const productKeywordBtnTag = document.querySelector("#product-keyword-btn");
   const productKeywordTag = document.querySelector("#product-keyword");
-  const keyword = productKeywordTag.value;
-
+  
   // ㅜ 검색 창에 검색어를 입력하고 검색 버튼을 클릭했을 때
   productKeywordBtnTag.addEventListener("click", () => {
-    saveKeywordAjax(id, keyword);
+    //
+    if (!productKeywordTag.value) return;
+    saveKeywordAjax(id);
   });
-
+  
   // ㅜ 검색 창에 검색어를 입력하고 엔터를 입력했을 때
   productKeywordTag.addEventListener("keypress", (e) => {
     if (e.code === "Enter") {
-      saveKeywordAjax(id, keyword);
+      //
+      if (!productKeywordTag.value) return;
+      saveKeywordAjax(id);
     }
   });
 
   /**
    * 검색어의 ajax에 대한 함수
    */
-  function saveKeywordAjax(id, keyword) {
+  function saveKeywordAjax(id) {
     //
+    const keyword = productKeywordTag.value;
     $.ajax({
       url: "/keyword",
       type: "post",
@@ -75,18 +79,28 @@ function saveKeyword(id) {
 
 function showKeyword(id) {
   //
-  const productKeywordTag = document.querySelector(".product-keyword-last");
-  $.ajax({
-    url: "/lastKeyword",
-    type: "post",
-    data: { id },
-  });
+  const productLastKeywordsTag = document.querySelector(".product-keyword-last");
+  const productKeywordTag = document.querySelector("#product-keyword");
 
   // ㅜ 검색 창의 focus 여부에 따라 최근 검색어 보여주고 숨겨주기
   productKeywordTag.addEventListener("focus", () => {
+    log("Dfdf")
+    //
+    $.ajax({
+      url: "/keyword/last",
+      type: "post",
+      data: { id },
+      success: (result) => {
+        log(result);
+      }
+    });
     productLastKeywordsTag.style.visibility = "visible";
   });
+
   productKeywordTag.addEventListener("focusout", () => {
     productLastKeywordsTag.style.visibility = "hidden";
   });
+
+
+
 }

@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const { log } = console;
 
-// ㅜ 로그인 여부 확인 및 로그인 정보 연동 필요
+// ㅜ 검색어 저장
 router.post("/", (req, res) => {
   //
   let { id, keyword } = req.body;
@@ -20,6 +20,17 @@ router.post("/", (req, res) => {
     } else Keyword.increment({ count: 1 }, { where: { name: keyword, user_id: id } });
   });
 });
+
+// ㅜ 최근 검색어
+router.post("/last", (req, res) => {
+  //
+  let { id } = req.body;
+
+  // ㅜ 비회원일 경우
+  if (id === "") id = null;
+
+  Keyword.findAll({ where: { user_id: id } }).then((value) => res.send(value));
+})
 
 module.exports = router;
 

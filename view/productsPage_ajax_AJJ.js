@@ -42,6 +42,7 @@ shopBtnTags.forEach((el) => {
         //
         createSearchTags();
         saveKeyword(id);
+        showKeyword(id);
       },
     });
   });
