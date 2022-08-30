@@ -60,8 +60,8 @@ function createProducts(shopName, products) {
             <p class="product-price">${el.price} 원</p>
             <div class="product-btn-container">
               <div class="product-btn-group">
-                <input class="in-cart-btn${idx}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="incart('${shopName}', ${idx + 1})">
-                <input class="show-product-btn${idx}" type="button" value="상품 보기">
+                <input class="in-cart-btn${idx + 1}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="incart('${shopName}', ${idx + 1})">
+                <input class="show-product-btn${idx + 1}" type="button" value="상품 보기">
               </div>
             </div>
           </div>
@@ -74,4 +74,4 @@ function createProducts(shopName, products) {
 
 module.exports = router;
 
-// 08.28.11 수정
+// 08.29.20 수정

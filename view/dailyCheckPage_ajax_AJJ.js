@@ -1,6 +1,6 @@
-const box = document.querySelector('.box');
-const mainContainer = document.querySelector('.main-container');
-const checkIcon = document.querySelector('.check-icon');
+const box = document.querySelector(".box");
+const mainContainer = document.querySelector(".main-container");
+const checkIcon = document.querySelector(".check-icon");
 
 // 새로운 만들 div를 담아 놓는 배열
 const datediv = new Array();
@@ -11,7 +11,7 @@ checkIcon.addEventListener("click", () => {
 });
 
 for (let i = 1; i < 36; i++) {
-  datediv[i] = document.createElement('div');
+  datediv[i] = document.createElement("div");
   datediv[i].className = "date";
   datediv[i].innerHTML = i;
   box.appendChild(datediv[i]);
@@ -21,7 +21,7 @@ for (let i = 1; i < 36; i++) {
 const date = new Date(Date.now());
 const nowdate = date.getDate();
 
-const day = document.querySelectorAll('.date');
+const day = document.querySelectorAll(".date");
 
 // 오늘 날짜 구역을 표시함.
 day[nowdate - 1].style.backgroundColor = "white";
@@ -36,41 +36,40 @@ day[nowdate - 1].addEventListener("mouseenter", () => {
 });
 
 // ㅜ 로그인된 회원의 아이디(이메일) 임의 지정
-const loginEmail = "a@a.com";
+const loginEmail = "ajj@ajj.com";
 
-day[nowdate - 1].addEventListener("click",() => {
+day[nowdate - 1].addEventListener("click", () => {
   $.ajax({
-    url : "/dailyCheck/today",
-    type : "post",
-    data : { 
-      email : loginEmail,
-      date : nowdate
+    url: "/dailyCheck/today",
+    type: "post",
+    data: {
+      email: loginEmail,
+      date: nowdate,
     },
-    success : function(result){
+    success: function (result) {
       log(result);
-      if(result.done == "already"){
+      if (result.done == "already") {
         alert("욕심부리지마라");
-      } else{
+      } else {
         log("gd");
-        day[result.result-1].style.backgroundColor = "royalblue";
+        day[result.result - 1].style.backgroundColor = "royalblue";
       }
-    }
-  })
+    },
+  });
 });
-
 
 checkIcon.addEventListener("click", () => {
   $.ajax({
-    url : "/dailyCheck/last",
-    type : "post",
-    data :  { email : loginEmail },
-    success: function(result){
+    url: "/dailyCheck/last",
+    type: "post",
+    data: { email: loginEmail },
+    success: function (result) {
       console.log(result);
-      result.data.forEach(el => {
-        day[el-1].style.backgroundColor = "royalblue";
+      result.data.forEach((el) => {
+        day[el - 1].style.backgroundColor = "royalblue";
       });
-    }
-  })
+    },
+  });
 });
 
 day[30].style.visibility = "hidden";
