@@ -1,4 +1,4 @@
-/* 07 24 19 수정 */
+/* 08 29 03 수정 */
 
 @font-face {
     font-family: "Lee";
@@ -30,13 +30,12 @@ body {
     border-right: 0.3vw solid black;
     border-left: 0.3vw solid black;
     border-top: 0.3vw solid black;
-    justify-content: center;
     flex-wrap: wrap;
     position: fixed;
     display: flex;
     z-index: 999;
     width: 100vw;
-    height: 8vh;
+    height: 10.5vh;
 }
 
 [class^="section"] {

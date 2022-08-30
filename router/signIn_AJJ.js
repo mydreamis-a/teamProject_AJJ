@@ -6,8 +6,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const FileStore = require("session-file-store")(session);
-const productsDB = require("./productsDB_AJJ");
-
 router.use(
     session({
       secret: process.env.JU_SECRET_KEY,
@@ -54,14 +52,12 @@ router.post("/login",(req,res)=>{
           req.session.rT = rT;
           req.session.name = user.name;
           req.session.email = user.email;
-          productsDB();
           res.render("main_AJJ",{userName:req.session.name,errorCode});
         }
         else if(err){
           console.log(err+"1");
           errorCode  = "비밀번호 틀림";
           userName = "";
-          productsDB();
           res.render("main_AJJ",{userName,errorCode});
         }
       })
@@ -69,7 +65,6 @@ router.post("/login",(req,res)=>{
       console.log(err+"2");
       errorCode = "계정없음"
       userName = "";
-      productsDB();
       res.render("main_AJJ",{userName,errorCode});
     });
 })

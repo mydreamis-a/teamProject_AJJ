@@ -3,12 +3,15 @@ const AhnShopBtnTag = document.querySelector(".Ahn-shop-btn");
 const JangShopBtnTag = document.querySelector(".Jang-shop-btn");
 
 const shopBtnTags = [AhnShopBtnTag, JuShopBtnTag, JangShopBtnTag];
-
 shopBtnTags.forEach((el) => {
   //
   el.addEventListener("click", () => {
-    let tag = null;
+    //
+    // ㅜ 비회원으로 가정
+    const id = null;
+    let parentTag = null;
     const shopName = el.className.replace("-btn", "");
+    const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
     //
     $.ajax({
       //
@@ -16,31 +19,33 @@ shopBtnTags.forEach((el) => {
       type: "post",
       //
       // ㅜ 각 상점의 상품 목록 태그를 생성해주는 함수
-      success: (sendResult) => {
-        switch (sendResult.shopName) {
+      success: (result) => {
+        switch (result.shopName) {
           //
-          case "AJY":
-            tag = document.querySelector(".Ahn-product-list").querySelector(".product-list-row");
-            //
-            tag.innerHTML = sendResult.productsTag.join("");
+          case "ajy":
+            parentTag = document.querySelector(".Ahn-product-list").querySelector(".product-list-row");
             break;
           //
-          case "JBH":
-            tag = document.querySelector(".Ju-product-list").querySelector(".product-list-row");
-            tag.innerHTML = sendResult.productsTag.join("");
+          case "jbh":
+            parentTag = document.querySelector(".Ju-product-list").querySelector(".product-list-row");
             break;
           //
-          case "JJW":
-            tag = document.querySelector(".Jang-product-list").querySelector(".product-list-row");
-            tag.innerHTML = sendResult.productsTag.join("");
+          case "jjw":
+            parentTag = document.querySelector(".Jang-product-list").querySelector(".product-list-row");
             break;
           //
           default:
             break;
         }
+        parentTag.innerHTML = result.productTags.join("");
+        cartTotalCountNumberTag.innerHTML = result.count;
+        //
+        createSearchTags();
+        saveKeyword(id);
+        showKeyword(id);
       },
     });
   });
 });
 
-// 08.26.10 수정
+// 08.30.08 수정

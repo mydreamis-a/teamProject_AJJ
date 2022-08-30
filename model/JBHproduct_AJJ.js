@@ -41,6 +41,7 @@ class JBHproduct extends Sql.Model {
       {
         sequelize,
         timestamps: true,
+        updatedAt: false,
         underscored: true,
         modelName: "JBHproduct",
         tableName: "jbhproducts",
@@ -52,6 +53,7 @@ class JBHproduct extends Sql.Model {
   }
   static associate(db) {
     db.JBHproduct.hasOne(db.Like, { foreignKey: "jbhproduct_num", sourceKey: "id" });
+    db.JBHproduct.hasOne(db.Cart, { foreignKey: "jbhproduct_num", sourceKey: "id" });
     db.JBHproduct.hasMany(db.Comment, { foreignKey: "jbhproduct_num", sourceKey: "id" });
     // 추가
     db.JBHproduct.hasMany(db.BestItem, { foreignKey: "jbhproduct_num", sourceKey: "id" });
@@ -62,4 +64,4 @@ class JBHproduct extends Sql.Model {
 
 module.exports = JBHproduct;
 
-// 08.24.21 수정
+// 08.29.01 수정

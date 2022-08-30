@@ -41,6 +41,7 @@ class JJWproduct extends Sql.Model {
       {
         sequelize,
         timestamps: true,
+        updatedAt: false,
         underscored: true,
         modelName: "JJWproduct",
         tableName: "jjwproducts",
@@ -52,6 +53,7 @@ class JJWproduct extends Sql.Model {
   }
   static associate(db) {
     db.JJWproduct.hasOne(db.Like, { foreignKey: "jjwproduct_num", sourceKey: "id" });
+    db.JJWproduct.hasOne(db.Cart, { foreignKey: "jjwproduct_num", sourceKey: "id" });
     db.JJWproduct.hasMany(db.Comment, { foreignKey: "jjwproduct_num", sourceKey: "id" });
     // 추가
     db.JJWproduct.hasMany(db.BestItem, { foreignKey: "jjwproduct_num", sourceKey: "id" });
@@ -60,4 +62,4 @@ class JJWproduct extends Sql.Model {
 
 module.exports = JJWproduct;
 
-// 08.24.21 수정
+// 08.29.01 수정
