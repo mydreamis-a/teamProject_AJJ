@@ -78,7 +78,7 @@ io.use(sharedsession(session));
 
 // ㅜ 서버 실행 시 MySQL 연동
 sequelize
-  .sync({ force: true })
+  .sync({ force: false })
   .then(() => {
     log("AJJ's DB connection");
   })
@@ -205,7 +205,7 @@ let userArray = new Array();
 io.sockets.on("connection", (socket) => {
   // 유저의 전화상담
   socket.on("callChat", () => {
-    socket.emit("callChat2", () => { });
+    socket.emit("callChat2", () => {});
   });
 
   // 유저의 실시간 상담

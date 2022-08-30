@@ -8,7 +8,8 @@ class Keyword extends Sql.Model {
         // ㅜ 검색어 이름
         name: {
           type: Sql.STRING(100),
-          allowNull: false,i
+          allowNull: false,
+          unique: true,
         },
         // ㅜ 검색 횟수
         count: {
@@ -30,10 +31,10 @@ class Keyword extends Sql.Model {
     );
   }
   static associate(db) {
-    db.Keyword.belongsTo(db.User, { foreignKey: "user_id", sourceKey: "id" });
+    db.Keyword.belongsTo(db.User, { foreignKey: "user_id", targetKey: "id" });
   }
 }
 
 module.exports = Keyword;
 
-// 08.30.08 수정
+// 08.30.09 수정

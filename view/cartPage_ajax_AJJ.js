@@ -1,5 +1,3 @@
-const { log } = console;
-
 const cartModalContainerTag = document.querySelector(".cart-modal-container");
 const cartExitBtnTag = document.querySelector(".cart-exit-btn");
 const cartListRowTag = document.querySelector(".cart-list-row");
