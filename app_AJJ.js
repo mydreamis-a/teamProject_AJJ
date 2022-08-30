@@ -88,10 +88,11 @@ app.get("/", (req, res) => {
   res.render("main_AJJ",{userName,errorCode});
 });
 
-app.get("/like/:idx",(req,res)=>{
- 
+app.get("/like/:idx/:shopName",(req,res)=>{
   let productId = req.params.idx;
-
+  let productShopName = req.params.shopName;
+  console.log(productId);
+  console.log(productShopName);
 })
 
 

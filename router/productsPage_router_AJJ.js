@@ -41,7 +41,6 @@ router.post("/Jang-shop", (req, res) => {
 function createProducts(shopName, products) {
 
   
-
   const productsTag = new Array();
   const _products = products.map((el) => el.dataValues);
   _products.forEach((el, idx) => {
@@ -63,7 +62,7 @@ function createProducts(shopName, products) {
             <input class="show-product-btn${idx+1}" type="button" value="상품 보기">
           </div>
         </div>
-        <input type="button" value="${idx}" id="like_Btn${idx}">
+        <button><a href="/like${idx+1}${shopName}">좋아요</a></button>
       </div>
     </div>
   </div>
