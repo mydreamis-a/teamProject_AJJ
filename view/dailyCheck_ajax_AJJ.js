@@ -35,27 +35,42 @@ day[nowdate - 1].addEventListener("mouseenter", () => {
   }
 });
 
-day.forEach((el, index) => {
-  let idx = index + 1;
-  el.addEventListener("click", () => {
-    if (userSignInInfor.email == "" && userSignInInfor.pw == "") {
-      alert("로그인을 해주세요!(출석해서 파란색 모찌로 만들어보세요!)");
-      document.querySelector('.main-container').style.display = "none";
-    } else if (idx == nowdate) {
-      if (day[index].style.backgroundColor == "royalblue") {
-        alert(userSignInInfor.name + " 님은 이미 출석 하셨습니다");
-        document.querySelector('.main-container').style.display = "none";
-      } else if (!(day[nowdate - 1].style.backgroundColor == "royalblue")) {
-        day[index].style.backgroundColor = "royalblue";
-        signInCheck = document.createElement('p');
-        signInCheck.classList.add('sign-in-check');
-        signInCheck.innerHTML = "출석체크 완료!";
-        signInText.appendChild(signInCheck);
-        document.querySelector('.main-container').style.display = "none";
-        alert("출석체크 완료!");
+// ㅜ 로그인된 회원의 아이디(이메일) 임의 지정
+const loginEmail = "a@a.com";
+
+day[nowdate - 1].addEventListener("click",() => {
+  $.ajax({
+    url : "/dailyCheck/today",
+    type : "post",
+    data : { 
+      email : loginEmail,
+      date : nowdate
+    },
+    success : function(result){
+      log(result);
+      if(result.done == "already"){
+        alert("욕심부리지마라");
+      } else{
+        log("gd");
+        day[result.result-1].style.backgroundColor = "royalblue";
       }
     }
-  });
+  })
+});
+
+
+checkIcon.addEventListener("click", () => {
+  $.ajax({
+    url : "/dailyCheck/last",
+    type : "post",
+    data :  { email : loginEmail },
+    success: function(result){
+      console.log(result);
+      result.data.forEach(el => {
+        day[el-1].style.backgroundColor = "royalblue";
+      });
+    }
+  })
 });
 
 day[30].style.visibility = "hidden";

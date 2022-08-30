@@ -49,7 +49,7 @@ class User extends Sql.Model {
     db.User.hasOne(db.Like, { sourceKey: "id" });
     db.User.hasMany(db.Cart, { sourceKey: "id" });
     db.User.hasMany(db.Comment, { sourceKey: "id" });
-    db.User.hasMany(db.DailyCheck, { sourceKey: "id" });
+    db.User.hasMany(db.DailyCheck, { foreignKey: "user_id", sourceKey: "id" });
   }
 }
 

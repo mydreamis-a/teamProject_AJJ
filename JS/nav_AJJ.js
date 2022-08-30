@@ -36,8 +36,8 @@ class mainNav {
       "tomato",
       "rgb(204, 204, 255)",
     ];
-    // 아직 미구현 채팅창 카운터
-    this.keypressNumber = 0;
+    // // 아직 미구현 채팅창 카운터
+    // this.keypressNumber = 0;
     // 회원가입 삭제버튼 눌렀을때 삭제되게하려고 가져온거
     this.signupModal = document.querySelector(".sign-up-modal");
     // 출석체크 삭제버튼 눌렀을 때 삭제되게하려고 가져온거
