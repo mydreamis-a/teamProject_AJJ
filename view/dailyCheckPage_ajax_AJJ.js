@@ -72,7 +72,7 @@ checkIcon.addEventListener("click", () => {
   });
 });
 
-day[30].style.visibility = "hidden";
+// day[30].style.visibility = "hidden";
 day[31].style.visibility = "hidden";
 day[32].style.visibility = "hidden";
 day[33].style.visibility = "hidden";
