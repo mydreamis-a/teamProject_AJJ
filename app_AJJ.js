@@ -12,24 +12,21 @@ const socketio = require("socket.io");
 const dot = require("dotenv").config();
 const session = require("express-session")
 const FileStore = require("session-file-store")(session);
-const signIn = require("./router/signIn_AJJ");
-const signUp = require("./router/signUp_AJJ");
+const signIn = require("./router/login_router_AJJ");
+const signUp = require("./router/signUp_router_AJJ");
 const bcrypt = require("bcrypt");
 
 // ㅜ model
 const { sequelize, User, Cart, Keyword } = require("./model/index_AJJ");
 
 // ㅜ router
-const cartDB = require("./router/cartDB_AJJ");
-const example = require("./router/example_AJJ");
-const cartPage = require("./router/cartPage_AJJ");
-const keywordDB = require("./router/keywordDB_AJJ");
-const productsPage = require("./router/productsPage_AJJ");
-const dailyCheckPage = require("./router/dailyCheckPage_AJJ");
-const iconEventPage = require("./router/iconEventPage_AJJ");
+const example = require("./router/example_router_AJJ");
+const productsPage = require("./router/products_router_AJJ");
+const dailyCheckPage = require("./router/dailyCheck_router_AJJ");
+const iconEventPage = require("./router/iconEvent_router_AJJ");
 
 // ㅜ controller
-const productsDB = require("./controller/productsDB_AJJ");
+const productsDB = require("./controller/addProductData_AJJ");
 
 // ㅜ server 연결
 const app = express();
@@ -57,11 +54,8 @@ app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 // ㅜ 라우터의 요청 주소에 대한 설정
 app.use("/dailyCheck", dailyCheckPage);
 app.use("/dailyPoint", iconEventPage);
-app.use("/cartList", cartPage);
-app.use("/keyword", keywordDB);
 app.use("/example", example);
 app.use("/", productsPage);
-app.use("/cart", cartDB);
 app.use("/",signIn);
 app.use("/",signUp);
 

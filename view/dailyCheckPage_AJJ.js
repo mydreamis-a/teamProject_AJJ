@@ -54,7 +54,7 @@ day[nowdate - 1].addEventListener("click", () => {
         alert("욕심부리지마라");
       } else {
         day[result.result - 1].style.backgroundColor = "royalblue";
-      }
+      }  
     },
   });
 });

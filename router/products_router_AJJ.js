@@ -1,5 +1,5 @@
 const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
-const cartListCount = require("../controller/cartListCount_AJJ");
+const cartListCount = require("../controller/cartTotalCount_AJJ");
 const express = require("express");
 const router = express.Router();
 const { log } = console;
