@@ -3,8 +3,9 @@ const express = require("express");
 const router = express.Router();
 const { log } = console;
 
-// ㅜ 검색어 저장
-router.post("/", (req, res) => {
+//////////////////////////////////
+// ㅜ 검색 창에 검색어를 입력했을 때
+router.post("/save", (req, res) => {
   //
   let { id, keyword } = req.body;
 
@@ -12,16 +13,21 @@ router.post("/", (req, res) => {
   if (id === "") id = null;
 
   Keyword.findOne({ where: { name: keyword, user_id: id } }).then((value) => {
+    log(value);
     if (value === null) {
       Keyword.create({
         name: keyword,
         user_id: id,
+      }).then(log(e));
+    } else
+      Keyword.increment({ count: 1 }, { where: { name: keyword, user_id: id } }).then((e) => {
+        res.end();
       });
-    } else Keyword.increment({ count: 1 }, { where: { name: keyword, user_id: id } });
   });
 });
 
-// ㅜ 최근 검색어
+///////////////////////////////////
+// ㅜ 검색 창 아래의 최근 검색어 화면
 router.post("/last", (req, res) => {
   //
   let { id } = req.body;
@@ -37,4 +43,4 @@ router.post("/last", (req, res) => {
 
 module.exports = router;
 
-// 08.30.16 수정
+// 08.31.14 수정

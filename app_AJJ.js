@@ -20,15 +20,14 @@ const bcrypt = require("bcrypt");
 const { sequelize, User, Cart, Keyword } = require("./model/index_AJJ");
 
 // ㅜ router
-const cartDB = require("./router/cartDB_AJJ");
 const example = require("./router/example_AJJ");
-const cartPage = require("./router/cartPage_AJJ");
-const keywordDB = require("./router/keywordDB_AJJ");
-const productsPage = require("./router/productsPage_AJJ");
+const cart = require("./router/cart_router_AJJ");
+const keyword = require("./router/keyword_router_AJJ");
+const products = require("./router/products_router_AJJ");
 const dailyCheckPage = require("./router/dailyCheckPage_AJJ");
 
 // ㅜ controller
-const productsDB = require("./controller/productsDB_AJJ");
+const addProductData = require("./controller/addProductData_AJJ");
 
 // ㅜ server 연결
 const app = express();
@@ -54,12 +53,12 @@ app.use("/img", express.static(path.join(__dirname, "img_Jang")));
 app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 
 // ㅜ 라우터의 요청 주소에 대한 설정
+
 app.use("/dailyCheck", dailyCheckPage);
-app.use("/cartList", cartPage);
-app.use("/keyword", keywordDB);
 app.use("/example", example);
-app.use("/", productsPage);
-app.use("/cart", cartDB);
+app.use("/keyword", keyword);
+app.use("/shop", products);
+app.use("/cart", cart);
 app.use("/", signIn);
 app.use("/", signUp);
 
@@ -99,7 +98,6 @@ app.get("/", (req, res) => {
       errorCode = err;
     }
   });
-
   // ㅜ 비회원 정보 삭제
   Cart.destroy({ where: { user_id: null } }).then(() => {
     Keyword.destroy({ where: { user_id: null } }).then(() => {
@@ -110,7 +108,7 @@ app.get("/", (req, res) => {
         //
         // ㅜ 회원 정보가 하나도 없을 경우 테스트용 데이터 넣기
         else {
-          productsDB().then(() => {
+          addProductData().then(() => {
             User.create({
               name: "똥",
               phone: "8282",
@@ -124,12 +122,12 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/like/:idx/:shopName", (req, res) => {
-  let productId = req.params.idx;
-  let productShopName = req.params.shopName;
-  console.log(productId);
-  console.log(productShopName);
-});
+// app.get("/like/:idx/:shopName", (req, res) => {
+//   let productId = req.params.idx;
+//   let productShopName = req.params.shopName;
+//   console.log(productId);
+//   console.log(productShopName);
+// });
 
 // ㅜ 주영님 코드
 let adminArray = new Array();
