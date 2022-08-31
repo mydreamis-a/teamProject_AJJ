@@ -10,14 +10,13 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const socketio = require("socket.io");
 const dot = require("dotenv").config();
-const session = require("express-session")
+const session = require("express-session");
 const FileStore = require("session-file-store")(session);
 const signIn = require("./router/login_router_AJJ");
 const signUp = require("./router/signUp_router_AJJ");
-const bcrypt = require("bcrypt");
 
 // ㅜ model
-const { sequelize, User, Cart, Keyword } = require("./model/index_AJJ");
+const { sequelize, User, Cart, Keyword,AJYproduct,JBHproduct,JJWproduct, BestItem } = require("./model/index_AJJ");
 
 // ㅜ router
 const example = require("./router/example_router_AJJ");
@@ -120,16 +119,7 @@ app.get("/", (req, res) => {
     });
   });
 });
-
-app.get("/like/:idx/:shopName",(req,res)=>{
-  let productId = req.params.idx;
-  let productShopName = req.params.shopName;
-  console.log(productId);
-  console.log(productShopName);
-})
-
 // ㅜ 주영님 코드
-
 let adminArray = new Array();
 let userArray = new Array();
 
@@ -180,6 +170,76 @@ io.sockets.on("connection", (socket) => {
     // 관리자한테 보내는 메세지
     io.to(data.name).emit("usersChat", { name: "admin", message: data.message });
   });
+
+  socket.on("likeInsert", async(shopName,productIndex,userEmail)=>{
+    let arr1;
+    let arr2;
+    let arr3;
+  await JBHproduct.findOne({
+      where : {
+        name : shopName,
+        id : productIndex
+      },
+    }).then((data)=>{
+      if(data){
+        JBHproduct.update(   
+          {
+            like_count: data.like_count+1,
+          },
+          {
+            where: { id: data.id, name:data.name  },
+          }
+        )
+      }
+    }).catch((err)=>{
+      arr1 = err;
+    })
+    if(arr1 ==null){
+      await JJWproduct.findOne({
+        where : {
+          name : shopName,
+          id : productIndex
+        },
+      }).then((data)=>{
+        if(data){
+          JJWproduct.update(   
+            {
+              like_count: data.like_count+1,
+            },
+            {
+              where: { id: data.id, name:data.name  },
+            }
+          )
+        }
+      }).catch((err)=>{
+        arr1 = err;
+      })
+    }
+    if(arr1==null){
+      await AJYproduct.findOne({
+        where : {
+          name : shopName,
+          id : productIndex
+        },
+      }).then((data)=>{
+        if(data){
+          AJYproduct.update(   
+            {
+              like_count: data.like_count+1,
+            },
+            {
+              where: { id: data.id, name:data.name  },
+            }
+          )
+        }
+      }).catch((err)=>{
+        arr1 = err;
+      })
+    }
+    if(arr1==null){
+      return arr1 = "셋다 없음"
+    }
+  })
 });
 
 // 08.30.16 수정

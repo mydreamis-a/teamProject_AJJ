@@ -5,7 +5,6 @@ const { log } = console;
 
 // ㅜ 검색어 저장
 router.post("/", (req, res) => {
-  //
   let { id, keyword } = req.body;
 
   // ㅜ 비회원일 경우

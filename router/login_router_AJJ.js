@@ -56,14 +56,14 @@ router.post("/login",(req,res)=>{
         }
         else if(err){
           console.log(err+"1");
-          errorCode  = "비밀번호 틀림";
+          errorCode  = "계정없음";
           userName = "";
           res.render("main_AJJ",{userName,errorCode});
         }
       })
     }).catch((e) => {
       console.log(err+"2");
-      errorCode = "계정없음"
+      errorCode = "비밀번호 틀림"
       userName = "";
       res.render("main_AJJ",{userName,errorCode});
     });
