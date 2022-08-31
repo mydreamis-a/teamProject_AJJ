@@ -26,6 +26,7 @@ const cartPage = require("./router/cartPage_AJJ");
 const keywordDB = require("./router/keywordDB_AJJ");
 const productsPage = require("./router/productsPage_AJJ");
 const dailyCheckPage = require("./router/dailyCheckPage_AJJ");
+const iconEventPage = require("./router/iconEventPage_AJJ");
 
 // ㅜ controller
 const productsDB = require("./controller/productsDB_AJJ");
@@ -55,6 +56,7 @@ app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 
 // ㅜ 라우터의 요청 주소에 대한 설정
 app.use("/dailyCheck", dailyCheckPage);
+app.use("/dailyPoint", iconEventPage);
 app.use("/cartList", cartPage);
 app.use("/keyword", keywordDB);
 app.use("/example", example);
