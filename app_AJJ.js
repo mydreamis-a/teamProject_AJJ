@@ -12,7 +12,7 @@ const socketio = require("socket.io");
 const dot = require("dotenv").config();
 const session = require("express-session");
 const FileStore = require("session-file-store")(session);
-const signIn = require("./router/signIn_AJJ");
+const login = require("./router/signIn_AJJ");
 const signUp = require("./router/signUp_AJJ");
 const bcrypt = require("bcrypt");
 
