@@ -523,7 +523,7 @@ module.exports = async function addProductData() {
     {
       name: "술잔 옆에 안주로 따뜻한 음악 하나, 꼭 챙겨드세요.",
       price: 100,
-      img: "",
+      img: "/img_Jang/01_ 사는게 뭔지.jpg",
       stock: 100,
       category: "firstContent",
     },
