@@ -15,5 +15,5 @@ module.exports = function cartTotalCount(res) {
       })
   );
 };
-
-// 08.31.15 수정
+//
+// 09.01.08 수정

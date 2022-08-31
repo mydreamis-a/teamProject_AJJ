@@ -1,12 +1,12 @@
 const JuShopBtnTag = document.querySelector(".Ju-shop-btn");
 const AhnShopBtnTag = document.querySelector(".Ahn-shop-btn");
 const JangShopBtnTag = document.querySelector(".Jang-shop-btn");
-
+//
 // ㅜ 각 상점의 버튼을 클릭했을 때
 const shopBtnTags = [AhnShopBtnTag, JuShopBtnTag, JangShopBtnTag];
 shopBtnTags.forEach((el, idx) => {
   //
-  el.addEventListener("click", () => {
+  el.addEventListener("click", async() => {
     //
     // ㅜ 비회원으로 가정
     const id = null;
@@ -27,7 +27,7 @@ shopBtnTags.forEach((el, idx) => {
         break;
     }
     // ㅜ 각 상점의 상품 목록 태그 생성 및 장바구니 기능에 대하여
-    const cartTotalCount = createProductTagsAjax(shopName);
+    const cartTotalCount = await createProductTagsAjax(shopName);
     cartTotalCountNumberTag.innerHTML = cartTotalCount;
     _cart.clickCartIcon();
     //
@@ -35,24 +35,27 @@ shopBtnTags.forEach((el, idx) => {
     _search.createSearchTags();
     _search.saveKeyword(id);
     _search.showKeyword(id);
-
+    //
     // ㅜ 신상품순의 버튼을 클릭했을 때
     const productSortNewBtnTag = document.querySelector("#product-sort-new");
     productSortNewBtnTag.addEventListener("click", () => {
+      //
       _search.sortProducts("new");
     });
-
+    //
     // ㅜ 낮은 가격순의 버튼을 클릭했을 때
-    // const productSortLowPriceBtnTag = ducument.querySelector("#product-sort-low-price");
-    // productSortLowPriceBtnTag.addEventListener("click", () => {
-    //   _search.sortProducts("lowPrice");
-    // });
-
-    // // ㅜ 높은 가격순의 버튼을 클릭했을 때
-    // const productSortHighPriceBtnTag = ducument.querySelector("#product-sort-high-price");
-    // productSortHighPriceBtnTag.addEventListener("click", () => {
-    //   _search.sortProducts("highPrice");
-    // });
+    const productSortLowPriceBtnTag = document.querySelector("#product-sort-low-price");
+    productSortLowPriceBtnTag.addEventListener("click", () => {
+      //
+      _search.sortProducts("lowPrice");
+    });
+    //
+    // ㅜ 높은 가격순의 버튼을 클릭했을 때
+    const productSortHighPriceBtnTag = document.querySelector("#product-sort-high-price");
+    productSortHighPriceBtnTag.addEventListener("click", () => {
+      //
+      _search.sortProducts("highPrice");
+    });
   });
 });
 
@@ -73,7 +76,7 @@ const createProductTagsAjax = function (url) {
      * @returns 장바구니의 총 수량
      */
     success: (result) => {
-      switch (result._shopName) {
+      switch (result.shopName) {
         //
         case "ajy":
           parentTag = document.querySelector(".Ahn-product-list").querySelector(".product-list-row");
@@ -91,9 +94,9 @@ const createProductTagsAjax = function (url) {
           break;
       }
       parentTag.innerHTML = result.productTags.join("");
-      return result._cartTotalCount;
+      return result.cartTotalCount;
     },
   });
 };
-
-// 08.31.15 수정
+//
+// 09.01.08 수정
