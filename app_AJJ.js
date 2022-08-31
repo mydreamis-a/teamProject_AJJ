@@ -16,7 +16,7 @@ const signIn = require("./router/signIn_AJJ");
 const signUp = require("./router/signUp_AJJ");
 
 // ㅜ model
-const { sequelize, User, Cart, Keyword,AJYproduct,JBHproduct,JJWproduct } = require("./model/index_AJJ");
+const { sequelize, User, Cart, Keyword,AJYproduct,JBHproduct,JJWproduct, BestItem } = require("./model/index_AJJ");
 
 // ㅜ router
 const cartDB = require("./router/cartDB_AJJ");
@@ -193,7 +193,7 @@ io.sockets.on("connection", (socket) => {
           {
             where: { id: data.id, name:data.name  },
           }
-        );
+        )
       }
     }).catch((err)=>{
       arr1 = err;
@@ -213,7 +213,7 @@ io.sockets.on("connection", (socket) => {
             {
               where: { id: data.id, name:data.name  },
             }
-          );
+          )
         }
       }).catch((err)=>{
         arr1 = err;
@@ -234,7 +234,7 @@ io.sockets.on("connection", (socket) => {
             {
               where: { id: data.id, name:data.name  },
             }
-          );
+          )
         }
       }).catch((err)=>{
         arr1 = err;
@@ -243,7 +243,6 @@ io.sockets.on("connection", (socket) => {
     if(arr1==null){
       return arr1 = "셋다 없음"
     }
-    console.log(arr1);
   })
 });
 

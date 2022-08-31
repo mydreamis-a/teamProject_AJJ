@@ -8,6 +8,10 @@ class BestItem extends Sql.Model {
         name : {
           type: Sql.STRING(100),
           allowNull: false,
+        },
+        email : {
+          type : Sql.STRING(100),
+          allowNull : false
         }
       },
       {
@@ -26,6 +30,7 @@ class BestItem extends Sql.Model {
     db.BestItem.belongsTo(db.AJYproduct, { foreignKey: "ajyproduct_num", targetKey: "id" });
     db.BestItem.belongsTo(db.JBHproduct, { foreignKey: "jbhproduct_num", targetKey: "id" });
     db.BestItem.belongsTo(db.JJWproduct, { foreignKey: "jjwproduct_num", targetKey: "id" });
+    db.BestItem.belongsTo(db.User, { foreignKey: "email", targetKey: "email" });
   }
 }
 /*
