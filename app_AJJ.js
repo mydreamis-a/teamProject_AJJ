@@ -22,6 +22,7 @@ const { sequelize, User, Cart, Keyword,AJYproduct,JBHproduct,JJWproduct, BestIte
 const example = require("./router/example_router_AJJ");
 const productsPage = require("./router/products_router_AJJ");
 const dailyCheckPage = require("./router/dailyCheck_router_AJJ");
+const iconEventPage = require("./router/iconEvent_router_AJJ");
 
 // ㅜ controller
 const productsDB = require("./controller/addProductData_AJJ");
@@ -51,6 +52,7 @@ app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 
 // ㅜ 라우터의 요청 주소에 대한 설정
 app.use("/dailyCheck", dailyCheckPage);
+app.use("/dailyPoint", iconEventPage);
 app.use("/example", example);
 app.use("/", productsPage);
 app.use("/",signIn);

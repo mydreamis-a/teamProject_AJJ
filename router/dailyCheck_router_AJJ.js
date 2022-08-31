@@ -40,18 +40,22 @@ router.post("/last", (req, res) => {
   User.findOne({
     where: { email: email },
   }).then((e) => {
-    DailyCheck.findAll({
-      where: { user_id: e.id },
-    }).then((e) => {
-      let dates = e;
-      // if조건이 왜 안필요한지 모르겠음..?
-      // if(e[0] !== null){
-      dates = e.map((el) => el.dataValues.day);
-      // }
-      res.send({
-        data: dates,
+    if (e == null) {
+      res.send({ data: "null" });
+    } else {
+      DailyCheck.findAll({
+        where: { user_id: e.id },
+      }).then((e) => {
+        let dates = e;
+        // if조건이 왜 안필요한지 모르겠음..?
+        // if(e[0] !== null){
+        dates = e.map((el) => el.dataValues.day);
+        // }
+        res.send({
+          data: dates,
+        });
       });
-    });
+    }
   });
 });
 
