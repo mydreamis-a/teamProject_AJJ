@@ -1,9 +1,10 @@
 const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
+
 /**
- * 모든 상점의 상품 데이터를 MySQL에 순서대로 추가하는 함수
+ * 순서대로 상품의 DB를 생성하는 함수
  * @returns then 함수를 사용하기 위해 promise 함수를 반환
  */
-module.exports = async function addProductData() {
+module.exports = async function productsDB() {
   await AJYproduct.bulkCreate([
     {
       name: "고오스빵",
@@ -523,7 +524,7 @@ module.exports = async function addProductData() {
     {
       name: "술잔 옆에 안주로 따뜻한 음악 하나, 꼭 챙겨드세요.",
       price: 100,
-      img: "",
+      img: "undefined",
       stock: 100,
       category: "firstContent",
     },
@@ -1111,4 +1112,4 @@ module.exports = async function addProductData() {
   ]);
 };
 
-// 08.31.12 수정
+// 08.29.02 수정
