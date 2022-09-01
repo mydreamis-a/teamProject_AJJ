@@ -14,7 +14,6 @@ class signUp2 {
     this.init();
   }
   init() {
-    const socket = io.connect();
     this.signupModal.style.display = "none";
     this.signupIcon.addEventListener("click", () => {
       if (userSignInInfor.email != "" && userSignInInfor.pw != "") {

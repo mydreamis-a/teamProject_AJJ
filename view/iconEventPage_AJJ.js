@@ -44,16 +44,13 @@ mainEvent.addEventListener("click", () => {
       email : loginEmail,
     },
     success : function(result){
-      console.log(result);
       if(result.data == "null"){
         alert(" 로그인하시면 포인트 받을 수 있음 ^^7 ");
       } else{
-        console.log(result.data);
         alert(result.data + "적립");
       }
     }
   })
-  // console.log(loginEmail);
   time();
 });
 

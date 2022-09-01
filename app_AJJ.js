@@ -135,6 +135,7 @@ let userArray = new Array();
 
 // 유저의 실시간 채팅
 io.sockets.on("connection", (socket) => {
+  console.log("하이", socket.id)
   // 유저의 전화상담
   socket.on("callChat", () => {
     socket.emit("callChat2", () => {});

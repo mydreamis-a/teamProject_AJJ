@@ -40,9 +40,9 @@ shopBtnTags.forEach((el) => {
         parentTag.innerHTML = result.productTags.join("");
         cartTotalCountNumberTag.innerHTML = result.count;
         //
-        createSearchTags();
-        saveKeyword(id);
-        showKeyword(id);
+        // createSearchTags();
+        // saveKeyword(id);
+        // showKeyword(id);
       },
     });
   });

@@ -37,7 +37,7 @@ class mainNav {
       "rgb(204, 204, 255)",
     ];
     // // 아직 미구현 채팅창 카운터
-    // this.keypressNumber = 0;
+    this.keypressNumber = 0;
     // 회원가입 삭제버튼 눌렀을때 삭제되게하려고 가져온거
     this.signupModal = document.querySelector(".sign-up-modal");
     // 출석체크 삭제버튼 눌렀을 때 삭제되게하려고 가져온거
@@ -170,6 +170,7 @@ class mainNav {
         // 유저가 관리자에게 보내는 실시간 채팅입력 이벤트 요청
         this.chatInput.onkeydown = (e) => {
           if (e.keyCode == 13 && this.keypressNumber == 0) {
+            console.log("#$#$#$#$#$#$#$#$#")
             if(userLiveName === admin)
             {
               socket.emit("adminmessage", {
@@ -180,6 +181,7 @@ class mainNav {
             }
             else
             { 
+              console.log("#################");
               socket.emit("message", {
                 name: userLiveName,
                 message: this.chatInput.value,
