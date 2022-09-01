@@ -13,7 +13,7 @@ const dot = require("dotenv").config();
 const session = require("express-session");
 
 // ㅜ model
-const { sequelize, User, Cart, Keyword, JBHproduct, JJWproduct, AJYproduct } = require("./model/index_AJJ");
+const { sequelize, User, Cart, Keyword, JBHproduct, JJWproduct, AJYproduct,Like } = require("./model/index_AJJ");
 //
 // ㅜ router
 const cart = require("./router/cart_router_AJJ");
@@ -74,6 +74,7 @@ app.use("/cart", cart);
 app.use("/", signUp);
 app.use("/", login);
 //
+
 // ㅜ 서버 실행 시 MySQL 연동
 sequelize
   .sync({ force: false })
@@ -184,27 +185,29 @@ io.sockets.on("connection", (socket) => {
 
   socket.on("likeInsert", async (shopName, productIndex, userEmail) => {
     let arr1;
+    await User.findAll({
+      where : {
+        email : userEmail
+      }
+    })
     await JBHproduct.findOne({
       where: {
         name: shopName,
         id: productIndex,
       },
-    })
-      .then((data) => {
-        if (data) {
-          console.log(data);
-
+    }).then((jbhData) => {
+        if (jbhData) {
+          console.log(jbhData);
           JBHproduct.update(
             {
-              like_count: data.like_count + 1,
+              like_count: jbhData.like_count + 1,
             },
             {
-              where: { id: data.id, name: data.name },
+              where: { id: jbhData.id, name: jbhData.name },
             }
-          );
+          )
         }
-      })
-      .catch((err) => {
+      }).catch((err) => {
         arr1 = err;
       });
     if (arr1 == null) {
@@ -213,21 +216,18 @@ io.sockets.on("connection", (socket) => {
           name: shopName,
           id: productIndex,
         },
-      })
-        .then((data) => {
-          if (data) {
-            console.log(data);
+      }).then((jjwData) => {
+          if (jjwData) {
             JJWproduct.update(
               {
-                like_count: data.like_count + 1,
+                like_count: jjwData.like_count + 1,
               },
               {
-                where: { id: data.id, name: data.name },
+                where: { id: jjwData.id, name: jjwData.name },
               }
-            );
+            )
           }
-        })
-        .catch((err) => {
+        }).catch((err) => {
           arr1 = err;
         });
     }
@@ -237,21 +237,19 @@ io.sockets.on("connection", (socket) => {
           name: shopName,
           id: productIndex,
         },
-      })
-        .then((data) => {
-          if (data) {
-            console.log(data);
+      }).then((ajyData) => {
+          if (ajyData) {
+            console.log(ajyData);
             AJYproduct.update(
               {
-                like_count: data.like_count + 1,
+                like_count: ajyData.like_count + 1,
               },
               {
-                where: { id: data.id, name: data.name },
+                where: { id: ajyData.id, name: ajyData.name },
               }
-            );
+            )
           }
-        })
-        .catch((err) => {
+        }).catch((err) => {
           arr1 = err;
         });
     }

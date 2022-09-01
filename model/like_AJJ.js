@@ -4,7 +4,13 @@ const Sql = require("sequelize");
 class Like extends Sql.Model {
   static init(sequelize) {
     return super.init(
-      {},
+      {
+        user_id: {
+          type: Sql.STRING(100),
+          allowNull: false,
+          unique: true,
+        },
+      },
       {
         sequelize,
         timestamps: true,
@@ -19,7 +25,7 @@ class Like extends Sql.Model {
     );
   }
   static associate(db) {
-    db.Like.belongsTo(db.User, { foreignKey: "user_id", targetKey: "id" });
+    db.Like.belongsTo(db.User, { foreignKey: "user_id", targetKey: "email" });
     db.Like.belongsTo(db.AJYproduct, { foreignKey: "ajyproduct_num", targetKey: "id" });
     db.Like.belongsTo(db.JBHproduct, { foreignKey: "jbhproduct_num", targetKey: "id" });
     db.Like.belongsTo(db.JJWproduct, { foreignKey: "jjwproduct_num", targetKey: "id" });
