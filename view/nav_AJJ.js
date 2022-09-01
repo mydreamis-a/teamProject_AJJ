@@ -59,7 +59,7 @@ class mainNav {
     // this.chatRobot.style.display = "none";
 
     // socketio
-    const socket = io.connect();
+    // const socket = io.connect();
     //관리자 계정 ㅋ
     const admin = "admin";
     let list = null;

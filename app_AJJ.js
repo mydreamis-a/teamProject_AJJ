@@ -14,7 +14,7 @@ const session = require("express-session");
 const FileStore = require("session-file-store")(session);
 //
 // ㅜ model
-const { sequelize, User, Cart, Keyword } = require("./model/index_AJJ");
+const { sequelize, User, Cart, Keyword, JBHproduct, JJWproduct, AJYproduct } = require("./model/index_AJJ");
 //
 // ㅜ router
 const cart = require("./router/cart_router_AJJ");
@@ -186,8 +186,6 @@ io.sockets.on("connection", (socket) => {
 
   socket.on("likeInsert", async (shopName, productIndex, userEmail) => {
     let arr1;
-    let arr2;
-    let arr3;
     await JBHproduct.findOne({
       where: {
         name: shopName,
@@ -196,6 +194,8 @@ io.sockets.on("connection", (socket) => {
     })
       .then((data) => {
         if (data) {
+          console.log(data);
+
           JBHproduct.update(
             {
               like_count: data.like_count + 1,
@@ -218,6 +218,7 @@ io.sockets.on("connection", (socket) => {
       })
         .then((data) => {
           if (data) {
+            console.log(data);
             JJWproduct.update(
               {
                 like_count: data.like_count + 1,
@@ -241,6 +242,7 @@ io.sockets.on("connection", (socket) => {
       })
         .then((data) => {
           if (data) {
+            console.log(data);
             AJYproduct.update(
               {
                 like_count: data.like_count + 1,
