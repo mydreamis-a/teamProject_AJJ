@@ -129,7 +129,7 @@ Search.prototype.showKeyword = function (id) {
  * 현재 보고 있는 상점의 상품 목록을 정렬하기 위해 어느 상점인지 구별하는 함수
  * @param {string} method 상품 목록의 정렬 방법
  */
-Search.prototype.sortProducts = function (method) {
+Search.prototype.sortProducts = function (method, skipCount, limitCount) {
   //
   const allSectionsTag = document.querySelector(".all-sections");
   let top = allSectionsTag.style.top;
@@ -138,11 +138,11 @@ Search.prototype.sortProducts = function (method) {
   //
   switch (top) {
     case -100:
-      createProductTagsAjax(`/${method}/ajy`);
+      createProductTagsAjax(method, "ajy", skipCount, limitCount);
     case -200:
-      createProductTagsAjax(`/${method}/jbh`);
+      createProductTagsAjax(method, "jbh", skipCount, limitCount);
     case -300:
-      createProductTagsAjax(`/${method}/jjw`);
+      createProductTagsAjax(method, "jjw", skipCount, limitCount);
     default:
       break;
   }
@@ -154,6 +154,7 @@ Search.prototype.sortProducts = function (method) {
  */
 Search.prototype.searchPriceProducts = function () {
   //
+  const limitCount = 20;
   const productSearchPriceStartTag = document.querySelector("#product-search-price-start");
   const productSearchPriceEndTag = document.querySelector("#product-search-price-end");
   //
@@ -172,7 +173,7 @@ Search.prototype.searchPriceProducts = function () {
     productSearchPriceEndTag.value = 99999999;
     max = 99999999;
   }
-  _search.sortProducts(`sortPrice/${min}/${max}`);
+  _search.sortProducts(`sortPrice/${min}/${max}`, limitCount);
   /**
    * 가격 범위를 제대로 입력하지 않은 경우에 대한 함수
    */
@@ -184,4 +185,4 @@ Search.prototype.searchPriceProducts = function () {
   }
 };
 //
-// 09.01.17 수정
+// 09.01.18 수정

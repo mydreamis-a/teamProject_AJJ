@@ -11,15 +11,21 @@ router.post("/list", async (req, res) => {
   const cartProducts = {};
   //
   // ㅜ 비회원의 장바구니 DB 연동
-  await Cart.findAll({ where: { user_id: { [Op.is]: null }, ajyproduct_num: { [Op.not]: null } } }).then((ajyproducts) => {
-    cartProducts.ajyproducts = ajyproducts.map((value) => value.dataValues);
-  });
-  await Cart.findAll({ where: { user_id: { [Op.is]: null }, jbhproduct_num: { [Op.not]: null } } }).then((jbhproducts) => {
-    cartProducts.jbhproducts = jbhproducts.map((value) => value.dataValues);
-  });
-  await Cart.findAll({ where: { user_id: { [Op.is]: null }, jjwproduct_num: { [Op.not]: null } } }).then((jjwproducts) => {
-    cartProducts.jjwproducts = jjwproducts.map((value) => value.dataValues);
-  });
+  await Cart.findAll({ where: { user_id: { [Op.is]: null }, ajyproduct_num: { [Op.not]: null } } })
+    //
+    .then((ajyproducts) => {
+      cartProducts.ajyproducts = ajyproducts.map((value) => value.dataValues);
+    });
+  await Cart.findAll({ where: { user_id: { [Op.is]: null }, jbhproduct_num: { [Op.not]: null } } })
+    //
+    .then((jbhproducts) => {
+      cartProducts.jbhproducts = jbhproducts.map((value) => value.dataValues);
+    });
+  await Cart.findAll({ where: { user_id: { [Op.is]: null }, jjwproduct_num: { [Op.not]: null } } })
+    //
+    .then((jjwproducts) => {
+      cartProducts.jjwproducts = jjwproducts.map((value) => value.dataValues);
+    });
   res.send(cartProducts);
 });
 
@@ -37,61 +43,32 @@ router.post("/:products", (req, res) => {
   //
   switch (shopName) {
     case "ajy":
-      Cart.findOne({ where: { ajyproduct_num: productNum, user_id: id } }).then((value) => {
-        //
-        if (value === null) {
-          Cart.create({ ajyproduct_num: productNum, user_id: id })
-            //
-            .then(() => {
-              cartTotalCount(res).then((count) => res.send({ count }));
-            });
-        } else {
-          Cart.increment({ product_count: 1 }, { where: { ajyproduct_num: productNum, user_id: id } }).then(() => {
-            //
-            cartTotalCount(res).then((count) => res.send({ count }));
-          });
-        }
-      });
+      saveCartProducts({ ajyproduct_num: productNum, user_id: id });
       break;
     case "jbh":
-      Cart.findOne({ where: { jbhproduct_num: productNum, user_id: id } }).then((value) => {
-        //
-        if (value === null) {
-          Cart.create({ jbhproduct_num: productNum, user_id: id })
-            //
-            .then(() => {
-              cartTotalCount(res).then((count) => res.send({ count }));
-            });
-        } else {
-          Cart.increment({ product_count: 1 }, { where: { jbhproduct_num: productNum, user_id: id } }).then(() => {
-            //
-            cartTotalCount(res).then((count) => res.send({ count }));
-          });
-        }
-      });
+      saveCartProducts({ jbhproduct_num: productNum, user_id: id });
       break;
     case "jjw":
-      Cart.findOne({ where: { jjwproduct_num: productNum, user_id: id } }).then((value) => {
-        //
-        if (value === null) {
-          Cart.create({ jjwproduct_num: productNum, user_id: id })
-            //
-            .then(() => {
-              cartTotalCount(res).then((count) => res.send({ count }));
-            });
-        } else {
-          Cart.increment({ product_count: 1 }, { where: { jjwproduct_num: productNum, user_id: id } }).then(() => {
-            //
-            cartTotalCount(res).then((count) => res.send({ count }));
-          });
-        }
-      });
+      saveCartProducts({ jjwproduct_num: productNum, user_id: id });
       break;
     default:
       break;
   }
+  /**
+   * 장바구니에 담기 버튼을 클릭한 상품 정보를 저장하는 함수
+   * @param {*} data 찾거나 추가할 데이터 내용
+   */
+  const saveCartProducts = (data) => {
+    Cart.findOne({ where: data }).then((value) => {
+      //
+      if (value === null) Cart.create(data).then(() => cartTotalCount(res).then((count) => res.send({ count })));
+      else {
+        Cart.increment({ product_count: 1 }, { where: data }).then(() => cartTotalCount(res).then((count) => res.send({ count })));
+      }
+    });
+  };
 });
 //
 module.exports = router;
 //
-// 09.01.13 수정
+// 09.01.19 수정

@@ -1,4 +1,4 @@
-/* 08 30 08 수정 */
+/* 09.01.21 수정 */
 
 p {
   margin-bottom: 0px;
@@ -164,7 +164,7 @@ textarea {
   font-size: 1vw;
 }
 
-.product-show-more-btn {
+[class ^= "product-show-more-btn"] {
   margin: 2.083vw auto auto auto;
   background-color: skyblue;
   justify-content: center;

@@ -3,6 +3,7 @@ const { log } = console;
  * 해당하는 상품 목록의 태그 생성을 위해 문자열의 HTML 태그로 담은 함수
  * @param {string} shopName 상점 이름
  * @param {array} products 각 상점별로 분류된 상품 목록
+ * @param {string} userEmail 상품의 좋아요 기능을 위한 회원의 이메일
  * @returns 문자열의 HTML 태그
  */
 module.exports = function createProductTags(shopName, products, userEmail) {
@@ -39,4 +40,4 @@ module.exports = function createProductTags(shopName, products, userEmail) {
   return productTags;
 };
 //
-// 09.01.17 수정
+// 09.01.19 수정
