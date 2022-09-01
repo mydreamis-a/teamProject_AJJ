@@ -1,5 +1,6 @@
 const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
 const createProductTags = require("./createProductTags_AJJ");
+const { log } = console;
 //
 module.exports = function sendProductTags(shopName, userEmail, res, condition, cartTotalCount) {
   //
@@ -30,4 +31,4 @@ module.exports = function sendProductTags(shopName, userEmail, res, condition, c
   }
 };
 //
-// 09.01.08 수정
+// 09.01.17 수정

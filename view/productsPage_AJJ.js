@@ -27,8 +27,7 @@ shopBtnTags.forEach((el, idx) => {
         break;
     }
     // ㅜ 각 상점의 상품 목록 태그 생성 및 장바구니 기능에 대하여
-    const cartTotalCount = await createProductTagsAjax(shopName);
-    cartTotalCountNumberTag.innerHTML = cartTotalCount;
+    createProductTagsAjax(shopName).then((result) => (cartTotalCountNumberTag.innerHTML = result.cartTotalCount));
     _cart.clickCartIcon();
     //
     // ㅜ 검색 창 태그 생성 및 검색어 기능에 대하여
@@ -56,6 +55,14 @@ shopBtnTags.forEach((el, idx) => {
       //
       _search.sortProducts("highPrice");
     });
+    //
+    //
+    // ㅜ 가격 범위를 입력하고 검색 버튼을 클릭했을 때
+    const productSearchPriceBtnTag = document.querySelector("#product-search-price-btn");
+    productSearchPriceBtnTag.addEventListener("click", () => {
+      //
+      log(_search.searchPriceProducts());
+    });
   });
 });
 
@@ -67,7 +74,7 @@ shopBtnTags.forEach((el, idx) => {
 const createProductTagsAjax = function (url) {
   let parentTag = null;
   //
-  $.ajax({
+  return $.ajax({
     url: `/shop/${url}`,
     type: "post",
     /**
@@ -94,9 +101,8 @@ const createProductTagsAjax = function (url) {
           break;
       }
       parentTag.innerHTML = result.productTags.join("");
-      return result.cartTotalCount;
     },
   });
 };
 //
-// 09.01.08 수정
+// 09.01.17 수정

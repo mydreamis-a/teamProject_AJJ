@@ -147,5 +147,41 @@ Search.prototype.sortProducts = function (method) {
       break;
   }
 };
+
+/**
+ *
+ * @returns
+ */
+Search.prototype.searchPriceProducts = function () {
+  //
+  const productSearchPriceStartTag = document.querySelector("#product-search-price-start");
+  const productSearchPriceEndTag = document.querySelector("#product-search-price-end");
+  //
+  let min = productSearchPriceStartTag.value;
+  let max = productSearchPriceEndTag.value;
+  //
+  if (min < 0 || max < 0) return inputPriceAlert();
+  if (max !== "" && max < min) return inputPriceAlert();
+  if (min === "" && max === "") return inputPriceAlert();
+  //
+  if (min === "") {
+    productSearchPriceStartTag.value = 0;
+    min = 0;
+  }
+  if (max === "") {
+    productSearchPriceEndTag.value = 99999999;
+    max = 99999999;
+  }
+  _search.sortProducts(`sortPrice/${min}/${max}`);
+  /**
+   * 가격 범위를 제대로 입력하지 않은 경우에 대한 함수
+   */
+  function inputPriceAlert() {
+    //
+    alert("다시 입력해주세요.");
+    productSearchPriceEndTag.value = "";
+    productSearchPriceStartTag.value = "";
+  }
+};
 //
-// 09.01.13 수정
+// 09.01.17 수정

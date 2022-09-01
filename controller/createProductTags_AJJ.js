@@ -1,3 +1,4 @@
+const { log } = console;
 /**
  * 해당하는 상품 목록의 태그 생성을 위해 문자열의 HTML 태그로 담은 함수
  * @param {string} shopName 상점 이름
@@ -8,6 +9,7 @@ module.exports = function createProductTags(shopName, products, userEmail) {
   const productTags = new Array();
   //
   const _products = products.map((el) => el.dataValues);
+  log(_products);
   _products.forEach((el, idx) => {
     //
     productTags.push(`
@@ -37,4 +39,4 @@ module.exports = function createProductTags(shopName, products, userEmail) {
   return productTags;
 };
 //
-// 09.01.13 수정
+// 09.01.17 수정

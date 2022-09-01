@@ -1,6 +1,7 @@
 const sendProductTags = require("../controller/sendProductTags_AJJ");
 const cartTotalCount = require("../controller/cartTotalCount_AJJ");
 //
+const { Op } = require("sequelize");
 const express = require("express");
 const router = express.Router();
 const { log } = console;
@@ -47,6 +48,19 @@ router.post("/highPrice/:shopName", (req, res) => {
   const _shopName = req.params.shopName;
   const order = { order: [["price", "DESC"]] };
   sendProductTags(_shopName, userEmail, res, order, _cartTotalCount);
+});
+
+//////////////////////////////////////////////////////////////
+// ㅜ 가격 범위를 입력하고 검색 버튼을 클릭했을 때의 상품 목록 화면
+router.post("/sortPrice/:min/:max/:shopName", (req, res) => {
+  //
+  const min = req.params.min;
+  const max = req.params.max;
+  const _cartTotalCount = null;
+  const userEmail = req.session.email;
+  const _shopName = req.params.shopName;
+  const where = { where: { price: { [Op.gte]: min, [Op.lte]: max } } };
+  sendProductTags(_shopName, userEmail, res, where, _cartTotalCount);
 });
 //
 module.exports = router;

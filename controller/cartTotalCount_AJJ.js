@@ -1,3 +1,4 @@
+const { log } = console;
 const { Op } = require("sequelize");
 const { Cart } = require("../model/index_AJJ");
 /**
@@ -14,4 +15,4 @@ module.exports = function cartTotalCount() {
   );
 };
 //
-// 09.01.13 수정
+// 09.01.17 수정
