@@ -8,21 +8,15 @@ const { log } = console;
 router.post("/save", (req, res) => {
   //
   let { id, keyword } = req.body;
-
+  //
   // ㅜ 비회원일 경우
   if (id === "") id = null;
-
+  //
   Keyword.findOne({ where: { name: keyword, user_id: id } }).then((value) => {
-    log(value);
     if (value === null) {
-      Keyword.create({
-        name: keyword,
-        user_id: id,
-      }).then(log(e));
+      Keyword.create({ name: keyword, user_id: id }).then(res.end());
     } else
-      Keyword.increment({ count: 1 }, { where: { name: keyword, user_id: id } }).then((e) => {
-        res.end();
-      });
+      Keyword.increment({ count: 1 }, { where: { name: keyword, user_id: id } }).then(res.end());
   });
 });
 
@@ -31,16 +25,14 @@ router.post("/save", (req, res) => {
 router.post("/last", (req, res) => {
   //
   let { id } = req.body;
-
+  //
   // ㅜ 비회원일 경우
   if (id === "") id = null;
-
-  Keyword.findAll({ where: { user_id: id }, order: [["updated_at", "DESC"]], limit: 5 }).then((value) => {
-    //
-    res.send(value.slice(-5).map((el) => el.name));
-  });
+  //
+  Keyword.findAll({ where: { user_id: id }, order: [["updated_at", "DESC"]], limit: 5 })
+    .then((value) => { res.send(value.map((el) => el.name)) });
 });
-
+//
 module.exports = router;
-
-// 08.31.14 수정
+//
+// 08.31.22 수정

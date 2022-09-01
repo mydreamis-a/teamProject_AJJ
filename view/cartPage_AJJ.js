@@ -2,7 +2,7 @@
  * 장바구니에 대한 클래스
  */
 class Cart {
-  constructor() {}
+  constructor() { }
 }
 
 ///////////////////////////////////////////////////////
@@ -104,16 +104,18 @@ Cart.prototype.createCartProducts = function (products, shopName) {
     for (let i = 0; i < el.product_count; i++) {
       //
       const inCartBtnTag = document.querySelector(`[class = "in-cart-btn${productNum}"][data-name = "${shopName}"]`);
-
+      //
       const copyTag = inCartBtnTag.closest(".product-list-col").cloneNode(true);
       const cartDeleteBtnTag = copyTag.querySelector(`.in-cart-btn${productNum}`);
-
+      //
       cartDeleteBtnTag.className = `cart-delete-btn${productNum}`;
       cartDeleteBtnTag.setAttribute("value", "삭제하기");
       cartDeleteBtnTag.removeAttribute("onclick");
+      //
+      const cartListRowTag = document.querySelector(".cart-list-row");
       cartListRowTag.appendChild(copyTag);
     }
   });
 };
-
-// 08.31.15 수정
+//
+// 09.01.08 수정
