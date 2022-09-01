@@ -2,7 +2,7 @@
  * 검색 창에 대한 클래스
  */
 class Search {
-  constructor() {}
+  constructor() { }
 }
 
 ///////////////////////////////////////
@@ -129,32 +129,34 @@ Search.prototype.showKeyword = function (id) {
  * 현재 보고 있는 상점의 상품 목록을 정렬하기 위해 어느 상점인지 구별하는 함수
  * @param {string} method 상품 목록의 정렬 방법
  */
-Search.prototype.sortProducts = function (method, skipCount, limitCount) {
+Search.prototype.sortProducts = function (method, priceScope) {
   //
   const allSectionsTag = document.querySelector(".all-sections");
   let top = allSectionsTag.style.top;
   top = top.replace("vh", "");
   top = Number(top);
+  limitCount = 20;
+  skipCount = 0;
   //
   switch (top) {
     case -100:
-      createProductTagsAjax(method, "ajy", skipCount, limitCount);
+      createProductTagsAjax(method, "ajy", priceScope, skipCount, limitCount);
     case -200:
-      createProductTagsAjax(method, "jbh", skipCount, limitCount);
+      createProductTagsAjax(method, "jbh", priceScope, skipCount, limitCount);
     case -300:
-      createProductTagsAjax(method, "jjw", skipCount, limitCount);
+      createProductTagsAjax(method, "jjw", priceScope, skipCount, limitCount);
     default:
       break;
   }
 };
 
+///////////////////////////
 /**
- *
+ * 가격 검색 기능에 대한 함수
  * @returns
  */
 Search.prototype.searchPriceProducts = function () {
   //
-  const limitCount = 20;
   const productSearchPriceStartTag = document.querySelector("#product-search-price-start");
   const productSearchPriceEndTag = document.querySelector("#product-search-price-end");
   //
@@ -173,9 +175,9 @@ Search.prototype.searchPriceProducts = function () {
     productSearchPriceEndTag.value = 99999999;
     max = 99999999;
   }
-  _search.sortProducts(`sortPrice/${min}/${max}`, limitCount);
+  _search.sortProducts("sortPrice", `${min}/${max}`);
   /**
-   * 가격 범위를 제대로 입력하지 않은 경우에 대한 함수
+   * 가격의 범위를 제대로 입력하지 않은 경우에 대한 함수
    */
   function inputPriceAlert() {
     //
@@ -185,4 +187,4 @@ Search.prototype.searchPriceProducts = function () {
   }
 };
 //
-// 09.01.18 수정
+// 09.01.22 수정
