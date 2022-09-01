@@ -22,7 +22,6 @@ Cart.prototype.clickCartIcon = function () {
     $.ajax({
       url: "/cart/list",
       type: "post",
-      //
       /**
        * 장바구니에 담긴 상품 목록을 태그로 생성하기 위해 각 상점별로 분류하는 함수
        * @param {object} cartProducts { ajyproducts, jbhproducts, jjwproducts }
@@ -104,16 +103,18 @@ Cart.prototype.createCartProducts = function (products, shopName) {
     for (let i = 0; i < el.product_count; i++) {
       //
       const inCartBtnTag = document.querySelector(`[class = "in-cart-btn${productNum}"][data-name = "${shopName}"]`);
-
+      //
       const copyTag = inCartBtnTag.closest(".product-list-col").cloneNode(true);
       const cartDeleteBtnTag = copyTag.querySelector(`.in-cart-btn${productNum}`);
-
+      //
       cartDeleteBtnTag.className = `cart-delete-btn${productNum}`;
       cartDeleteBtnTag.setAttribute("value", "삭제하기");
       cartDeleteBtnTag.removeAttribute("onclick");
+      //
+      const cartListRowTag = document.querySelector(".cart-list-row");
       cartListRowTag.appendChild(copyTag);
     }
   });
 };
-
-// 08.31.15 수정
+//
+// 09.01.08 수정

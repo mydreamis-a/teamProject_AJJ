@@ -22,21 +22,27 @@
             position: relative;
             overflow: hidden;
             display: flex;
-            height: 9vw;
-            width: 86vw;
-        }
-        
-        #slide-wrap {
-            display: flex;
+            height: 100vh;
+            width: 100vw;
         }
 
         [id ^="slide-img"] {
-            background-color: royalblue;
             position: absolute;
             font-size: 500px;
-            margin: 0.5vw;
-            height: 8vw;
-            width: 8vw;
+            height: 98vh;
+            width: 100vw;
+        }
+
+        #slide-img1 {
+            background-color: red;
+        }
+
+        #slide-img2 {
+            background-color: green;
+        }
+
+        #slide-img3 {
+            background-color: blue;
         }
 
         #slide-time-bar {
@@ -127,28 +133,9 @@
 
 <body>
     <div id="slide-container">
-        <div id="slide-wrap">
-            <div id="slide-img1">1</div>
-            <div id="slide-img2">2</div>
-            <div id="slide-img3">3</div>
-            <div id="slide-img4">4</div>
-            <div id="slide-img5">5</div>
-            <div id="slide-img6">6</div>
-            <div id="slide-img7">7</div>
-            <div id="slide-img8">8</div>
-            <div id="slide-img9">9</div>
-            <div id="slide-img10">10</div>
-            <div id="slide-img11">11</div>
-            <div id="slide-img12">12</div>
-            <div id="slide-img13">13</div>
-            <div id="slide-img14">14</div>
-            <div id="slide-img15">15</div>
-            <div id="slide-img16">16</div>
-            <div id="slide-img17">17</div>
-            <div id="slide-img18">18</div>
-            <div id="slide-img19">19</div>
-            <div id="slide-img20">20</div>
-        </div>
+        <div id="slide-img1">1</div>
+        <div id="slide-img2">2</div>
+        <div id="slide-img3">3</div>
 
         <div id="slide-time-bar"></div>
 
@@ -158,9 +145,9 @@
 </body>
 <script>
 
-    const second = 3;
+    const second = 5;
+    let btnControl = null;
     let resizeControl = null;
-    let timeBarControl = null;
     let autoPlayControl = null;
     let startTimeControl = null;
 
@@ -190,14 +177,29 @@
 
     nextBtnTag.addEventListener("click", () => {
 
-        autoPlay(moveNext, 0, second);
-    });
+        imgTags.forEach((el, idx) => {
+
+            const currentLeftAnimation = parseInt(el.style.animationName.split("-to")[1]);
+
+            if (currentLeftAnimation >= 100) {
+                el.style.animationDuration = "0s";
+            }
+            else el.style.animationDuration = "1s";
+        });
+
+        moveTimeBar(1, 1, "from0-to-100");
+
+        clearTimeout(btnControl);
+        btnControl = setTimeout(() => {
+
+            autoPlay(moveNext, 0, second);
+        }, 1000);
+    })
 
     prevBtnTag.addEventListener("click", () => {
 
         autoPlay(movePrev, 0, second);
     });
-
     window.addEventListener("resize", () => {
 
         clearInterval(autoPlayControl);

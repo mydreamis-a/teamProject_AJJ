@@ -28,16 +28,7 @@ class mainNav {
     this.twoBtn = document.querySelector(".tow-btn");
     this.rooms = document.querySelector(".room");
     // 제출버튼 백그라운드 색상 배열
-    this.colors = [
-      "green",
-      "pink",
-      "gray",
-      "orange",
-      "tomato",
-      "rgb(204, 204, 255)",
-    ];
-    // // 아직 미구현 채팅창 카운터
-    // this.keypressNumber = 0;
+    this.colors = ["green", "pink", "gray", "orange", "tomato", "rgb(204, 204, 255)"];
     // 회원가입 삭제버튼 눌렀을때 삭제되게하려고 가져온거
     this.signupModal = document.querySelector(".sign-up-modal");
     // 출석체크 삭제버튼 눌렀을 때 삭제되게하려고 가져온거
@@ -68,7 +59,7 @@ class mainNav {
     // this.chatRobot.style.display = "none";
 
     // socketio
-    const socket = io.connect();
+    // const socket = io.connect();
     //관리자 계정 ㅋ
     const admin = "admin";
     let list = null;
@@ -86,7 +77,7 @@ class mainNav {
 
       const chatName = document.createElement("div");
       chatName.innerHTML = "이름";
- 
+
       const inputName = document.createElement("input");
       inputName.setAttribute("type", "text");
       inputName.setAttribute("placeholder", "정확하게 입력해주세요");
@@ -150,12 +141,12 @@ class mainNav {
         // 관리자 socket.id 인지 유저 socket.id인지 확인 이벤트 요청
         if (liveChatName.value === admin) {
           socket.emit("admin");
-        } else{
+        } else {
           // admin이 아니면 상담하기 누르면 이름 떠서 안녕하세요 띄우고, 관리자 옵션(방) 추가하기
           socket.emit("liveHi", {
             name: liveChatName.value,
           });
-        };
+        }
 
         if (!liveChatName.value) return alert("이름쓰라고 ^^");
         // 두번째 인풋 막은거 다시 풀기.
@@ -169,17 +160,14 @@ class mainNav {
 
         // 유저가 관리자에게 보내는 실시간 채팅입력 이벤트 요청
         this.chatInput.onkeydown = (e) => {
-          if (e.keyCode == 13 && this.keypressNumber == 0) {
-            if(userLiveName === admin)
-            {
+          if (e.keyCode == 13) {
+            if (userLiveName === admin) {
               socket.emit("adminmessage", {
-                name: room == null ?  userLiveName : room,
+                name: room == null ? userLiveName : room,
                 // name : userLiveName,
                 message: this.chatInput.value,
               });
-            }
-            else
-            { 
+            } else {
               socket.emit("message", {
                 name: userLiveName,
                 message: this.chatInput.value,
@@ -192,21 +180,21 @@ class mainNav {
 
     // 유저 실시간 상담 처음 들어왔을 때 알림
     socket.on("liveHi2", (data) => {
-        this.chatBox.innerHTML += `
+      this.chatBox.innerHTML += `
         <div class="liveHi">
         ${data.name}님 왜 왔니?
         </div>
         `;
-        this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
+      this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
     });
     // 관리자 실시간 상담 처음 들어왔을 때 알림
     socket.on("adminHi", (data) => {
-        this.chatBox.innerHTML += `
+      this.chatBox.innerHTML += `
         <div class="liveHi">
         대장님 들어왔다 인사 박아라 ㅋ
         </div>
         `;
-        this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
+      this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
     });
 
     // 유저/관리자 채팅 출력
@@ -247,19 +235,17 @@ class mainNav {
 
     // 관리자 화면에 유저 옵션 추가
     socket.on("addOption", (data) => {
-      this.rooms.innerHTML +=`
+      this.rooms.innerHTML += `
       <option value="${data.name}">
       ${data.name}
       </option>
       `;
     });
 
-    this.rooms.onchange = function(){
+    this.rooms.onchange = function () {
       room = this.options[this.selectedIndex].value;
       socket.emit("change", room);
-    }
-
-
+    };
 
     // 전화상담 버튼 누르면
     this.callBtn.addEventListener("click", () => {

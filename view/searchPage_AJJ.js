@@ -28,10 +28,10 @@ Search.prototype.createSearchTags = function () {
     <input name="q" id="product-keyword-btn" class="product-search" type="button" value="검색">
     <div class="product-keyword-last">최근검색어</div>
     `;
-
+  //
   const mainHeaderTag = document.querySelector(".main-header");
   mainHeaderTag.style.backgroundColor = "white";
-
+  //
   // ㅜ TOP 버튼을 클릭했을 때 검색 창 태그 숨기기
   const topIconTag = document.querySelector(".top-icon");
   topIconTag.addEventListener("click", () => {
@@ -61,14 +61,14 @@ Search.prototype.saveKeyword = function (id) {
   //
   const productKeywordBtnTag = document.querySelector("#product-keyword-btn");
   const productKeywordTag = document.querySelector("#product-keyword");
-
+  //
   // ㅜ 검색 창에 검색어를 입력하고 검색 버튼을 클릭했을 때
   productKeywordBtnTag.addEventListener("click", () => {
     //
     if (!productKeywordTag.value) return;
     this.saveKeywordAjax(id);
   });
-
+  //
   // ㅜ 검색 창에 검색어를 입력하고 엔터를 입력했을 때
   productKeywordTag.addEventListener("keypress", (e) => {
     if (e.code === "Enter") {
@@ -119,7 +119,6 @@ Search.prototype.showKeyword = function (id) {
     });
     productLastKeywordsTag.style.visibility = "visible";
   });
-
   productKeywordTag.addEventListener("focusout", () => {
     productLastKeywordsTag.style.visibility = "hidden";
   });
@@ -136,7 +135,7 @@ Search.prototype.sortProducts = function (method) {
   let top = allSectionsTag.style.top;
   top = top.replace("vh", "");
   top = Number(top);
-
+  //
   switch (top) {
     case -100:
       createProductTagsAjax(`/${method}/ajy`);
@@ -148,5 +147,5 @@ Search.prototype.sortProducts = function (method) {
       break;
   }
 };
-
-// 08.31.16 수정
+//
+// 09.01.13 수정

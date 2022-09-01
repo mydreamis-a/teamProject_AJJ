@@ -7,7 +7,9 @@ const datediv = new Array();
 
 mainContainer.style.display = "none";
 checkIcon.addEventListener("click", () => {
-  mainContainer.style.display = "block";
+  if(mainContainer.style.display == "none"){
+    mainContainer.style.display = "block";
+  }
 });
 
 for (let i = 1; i < 36; i++) {
@@ -37,6 +39,7 @@ day[nowdate - 1].addEventListener("mouseenter", () => {
 
 // ㅜ 로그인된 회원의 아이디(이메일) 임의 지정
 const loginEmail = "ajj@ajj.com";
+// const loginEmail = null;
 
 day[nowdate - 1].addEventListener("click", () => {
   $.ajax({
@@ -47,13 +50,11 @@ day[nowdate - 1].addEventListener("click", () => {
       date: nowdate,
     },
     success: function (result) {
-      log(result);
       if (result.done == "already") {
         alert("욕심부리지마라");
       } else {
-        log("gd");
         day[result.result - 1].style.backgroundColor = "royalblue";
-      }
+      }  
     },
   });
 });
@@ -64,15 +65,19 @@ checkIcon.addEventListener("click", () => {
     type: "post",
     data: { email: loginEmail },
     success: function (result) {
-      console.log(result);
-      result.data.forEach((el) => {
-        day[el - 1].style.backgroundColor = "royalblue";
-      });
+      if(result.data == "null"){
+        alert("로그인하라고 아 ㅋㅋ");
+        mainContainer.style.display = "none";
+      }else{
+        result.data.forEach((el) => {
+          day[el - 1].style.backgroundColor = "royalblue";
+        });
+      }
     },
   });
 });
 
-day[30].style.visibility = "hidden";
+// day[30].style.visibility = "hidden";
 day[31].style.visibility = "hidden";
 day[32].style.visibility = "hidden";
 day[33].style.visibility = "hidden";
