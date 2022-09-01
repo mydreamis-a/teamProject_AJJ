@@ -1,4 +1,4 @@
-const mainEvent = document.querySelector('.main-event');
+const mainEvent = document.querySelector(".main-event");
 
 mainEvent.style.display = "none";
 
@@ -37,22 +37,22 @@ mainEvent.addEventListener("click", () => {
   userPoint = point[eventPoint];
   mainEvent.style.display = "none";
   $.ajax({
-    url : "/dailyPoint",
-    type : "post",
-    data : { 
-      userPoint : userPoint,
-      email : loginEmail,
+    url: "/dailyPoint",
+    type: "post",
+    data: {
+      userPoint: userPoint,
+      email: loginEmail,
     },
-    success : function(result){
+    success: function (result) {
       console.log(result);
-      if(result.data == "null"){
+      if (result.data == "null") {
         alert(" 로그인하시면 포인트 받을 수 있음 ^^7 ");
-      } else{
+      } else {
         console.log(result.data);
         alert(result.data + "적립");
       }
-    }
-  })
+    },
+  });
   // console.log(loginEmail);
   time();
 });

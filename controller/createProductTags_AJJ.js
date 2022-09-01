@@ -4,7 +4,7 @@
  * @param {array} products 각 상점별로 분류된 상품 목록
  * @returns 문자열의 HTML 태그
  */
-module.exports = function createProductTags(shopName, products) {
+module.exports = function createProductTags(shopName, products, userEmail) {
   const productTags = new Array();
   //
   const _products = products.map((el) => el.dataValues);
@@ -25,6 +25,8 @@ module.exports = function createProductTags(shopName, products) {
                 <div class="product-btn-group">
                   <input class="in-cart-btn${idx + 1}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="_cart.inCartAjax('${shopName}', ${idx + 1})">
                   <input class="show-product-btn${idx + 1}" type="button" value="상품 보기">
+                  <input class="like-product-btn${idx + 1}" type="button" value="좋아요" onclick="likeInsert('${el.name}','${idx + 1}','${userEmail}')">
+                  <h2>${el.like_count}</h2>
                 </div>
               </div>
             </div>
@@ -34,5 +36,5 @@ module.exports = function createProductTags(shopName, products) {
   });
   return productTags;
 };
-
-// 08.31.15 수정
+//
+// 09.01.13 수정

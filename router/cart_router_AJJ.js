@@ -36,7 +36,6 @@ router.post("/:products", (req, res) => {
   const productNum = parseInt(req.params.products.replace(shopName, ""));
   //
   switch (shopName) {
-    //
     case "ajy":
       Cart.findOne({ where: { ajyproduct_num: productNum, user_id: id } }).then((value) => {
         //
@@ -92,6 +91,7 @@ router.post("/:products", (req, res) => {
       break;
   }
 });
+//
 module.exports = router;
-
-// 08.31.12 수정
+//
+// 09.01.13 수정
