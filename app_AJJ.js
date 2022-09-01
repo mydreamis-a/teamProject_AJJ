@@ -120,13 +120,6 @@ app.get("/", (req, res) => {
     });
 });
 
-// app.get("/like/:idx/:shopName", (req, res) => {
-//   let productId = req.params.idx;
-//   let productShopName = req.params.shopName;
-//   console.log(productId);
-//   console.log(productShopName);
-// });
-
 ////////////////
 // ㅜ 주영님 코드
 let adminArray = new Array();
