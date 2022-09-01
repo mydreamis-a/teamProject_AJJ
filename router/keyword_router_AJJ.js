@@ -14,8 +14,9 @@ router.post("/save", (req, res) => {
   //
   Keyword.findOne({ where: { name: keyword, user_id: id } }).then((value) => {
     if (value === null) {
-      Keyword.create({ name: keyword, user_id: id }).then(res.end());
-    } else Keyword.increment({ count: 1 }, { where: { name: keyword, user_id: id } }).then(res.end());
+      Keyword.create({ name: keyword, user_id: id }).then(() => res.end());
+      //
+    } else Keyword.increment({ count: 1 }, { where: { name: keyword, user_id: id } }).then(() => res.end());
   });
 });
 
@@ -35,4 +36,4 @@ router.post("/last", (req, res) => {
 //
 module.exports = router;
 //
-// 08.31.22 수정
+// 09.01.13 수정

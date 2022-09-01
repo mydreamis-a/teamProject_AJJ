@@ -14,7 +14,7 @@ class signUp2 {
     this.init();
   }
   init() {
-    const socket = io.connect();
+    //const socket = io.connect();
     this.signupModal.style.display = "none";
     this.signupIcon.addEventListener("click", () => {
       if (userSignInInfor.email != "" && userSignInInfor.pw != "") {
@@ -58,18 +58,17 @@ class signUp2 {
     this.formTag.addEventListener("submit", (event) => {
       document.querySelector("#signUpForm").action = "/signUp";
       document.querySelector("#signUpForm").method = "post";
-        const rsltArr = this.regRslt();
-        event.preventDefault();
-        event.stopPropagation();
-        if (rsltArr.every((value) => value === true)) {
-          this.formTag.addEventListener("submit", (event) => {
-            event.preventDefault();
-            event.stopPropagation();
-          })
-        }
-        else{
-          return;
-        }
+      const rsltArr = this.regRslt();
+      event.preventDefault();
+      event.stopPropagation();
+      if (rsltArr.every((value) => value === true)) {
+        this.formTag.addEventListener("submit", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+        });
+      } else {
+        return;
+      }
     });
   }
   // ㅜ 유효성 검증의 통과 여부에 따라 class를 적용하는 함수

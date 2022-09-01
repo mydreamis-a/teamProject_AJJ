@@ -22,7 +22,6 @@ Cart.prototype.clickCartIcon = function () {
     $.ajax({
       url: "/cart/list",
       type: "post",
-      //
       /**
        * 장바구니에 담긴 상품 목록을 태그로 생성하기 위해 각 상점별로 분류하는 함수
        * @param {object} cartProducts { ajyproducts, jbhproducts, jjwproducts }

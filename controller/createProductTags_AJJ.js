@@ -36,5 +36,5 @@ module.exports = function createProductTags(shopName, products, userEmail) {
   });
   return productTags;
 };
-
-// 08.31.15 수정
+//
+// 09.01.13 수정

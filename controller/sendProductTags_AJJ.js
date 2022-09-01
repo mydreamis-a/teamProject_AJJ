@@ -1,6 +1,6 @@
 const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
 const createProductTags = require("./createProductTags_AJJ");
-
+//
 module.exports = function sendProductTags(shopName, userEmail, res, condition, cartTotalCount) {
   //
   switch (shopName) {
@@ -29,5 +29,5 @@ module.exports = function sendProductTags(shopName, userEmail, res, condition, c
       break;
   }
 };
-
+//
 // 09.01.08 수정

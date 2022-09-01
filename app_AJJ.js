@@ -34,6 +34,19 @@ const app = express();
 const server = app.listen(PORT, () => {
   log("localhost:", PORT);
 });
+// ㅜ session 설정
+app.use(
+  session({
+    secret: process.env.JU_SECRET_KEY,
+    //
+    // ㅜ 저장하고 불러올 때 다시 저장할 지 여부
+    resave: false,
+    //
+    // ㅜ 저장 시 초기화 여부
+    saveUninitialized: true,
+    // store: new FileStore(),
+  })
+);
 const io = socketio(server);
 //
 // ㅜ body-parser
@@ -63,24 +76,10 @@ app.use("/cart", cart);
 app.use("/", signUp);
 app.use("/", login);
 //
-// ㅜ session 설정
-app.use(
-  session({
-    secret: process.env.JU_SECRET_KEY,
-    //
-    // ㅜ 저장하고 불러올 때 다시 저장할 지 여부
-    resave: false,
-    //
-    // ㅜ 저장 시 초기화 여부
-    saveUninitialized: true,
-    // store: new FileStore(),
-  })
-);
-//
 // ㅜ 서버 실행 시 MySQL 연동
 sequelize
   .sync({ force: false })
-  .then(log("AJJ's DB connection"))
+  .then(() => log("AJJ's DB connection"))
   .catch((err) => log(err));
 //
 // ㅜ 메인 페이지
@@ -100,23 +99,23 @@ app.get("/", (req, res) => {
   });
   // ㅜ 비회원 데이터 삭제
   Cart.destroy({ where: { user_id: null } })
-    .then(Keyword.destroy({ where: { user_id: null } }))
+    .then(() => Keyword.destroy({ where: { user_id: null } }))
     //
-    .then(User.findOne({}))
+    // ㅜ 등록된 회원 데이터가 하나도 없으면 테스트용 데이터 넣기
+    .then(() => User.findOne({}))
     .then((value) => {
       if (value !== null) res.render("main_AJJ", { userName, errorCode });
       else {
-        // ㅜ 등록된 회원 데이터가 하나도 없을 경우 테스트용 데이터 넣기
         addProductData()
-          .then(
+          .then(() => {
             User.create({
               name: "똥",
               phone: "8282",
               email: "ajj@ajj.com",
               password: "acca3434",
-            })
-          )
-          .then(res.render("main_AJJ", { userName, errorCode }));
+            });
+          })
+          .then(() => res.render("main_AJJ", { userName, errorCode }));
       }
     });
 });
@@ -128,6 +127,7 @@ app.get("/", (req, res) => {
 //   console.log(productShopName);
 // });
 
+////////////////
 // ㅜ 주영님 코드
 let adminArray = new Array();
 let userArray = new Array();
@@ -153,6 +153,7 @@ io.sockets.on("connection", (socket) => {
     // 유저 들어왔을 때 알림 이벤트 요청
     socket.emit("liveHi2", data);
     // 유저 들어오면 관리자 소켓아이디 통해서 옵션 추가 이벤트
+    console.log(adminArray[0]);
     io.to(adminArray[0]).emit("addOption", data);
   });
 
@@ -177,7 +178,10 @@ io.sockets.on("connection", (socket) => {
   socket.on("adminmessage", (data) => {
     if (!data.message) return;
     // 관리자한테 보내는 메세지
-    io.to(data.name).emit("usersChat", { name: "admin", message: data.message });
+    io.to(data.name).emit("usersChat", {
+      name: "admin",
+      message: data.message,
+    });
   });
 
   socket.on("likeInsert", async (shopName, productIndex, userEmail) => {
@@ -256,5 +260,5 @@ io.sockets.on("connection", (socket) => {
     }
   });
 });
-
-// 09.01.09 수정
+//
+// 09.01.13 수정

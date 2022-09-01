@@ -2,10 +2,8 @@ const { Op } = require("sequelize");
 const { Cart } = require("../model/index_AJJ");
 /**
  * 장바구니 DB에서 장바구니에 담은 총 수량을 반환하는 함수
- * @param {*} res
  */
-module.exports = function cartTotalCount(res) {
-  // ㅜ 비회원일 경우
+module.exports = function cartTotalCount() {
   return (
     Cart.sum("product_count", { where: { user_id: { [Op.is]: null } } })
       //
@@ -16,4 +14,4 @@ module.exports = function cartTotalCount(res) {
   );
 };
 //
-// 09.01.08 수정
+// 09.01.13 수정
