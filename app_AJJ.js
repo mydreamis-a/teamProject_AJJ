@@ -23,6 +23,7 @@ const signUp = require("./router/signUp_router_AJJ");
 const example = require("./router/example_router_AJJ");
 const keyword = require("./router/keyword_router_AJJ");
 const products = require("./router/products_router_AJJ");
+const iconEvent = require("./router/iconEvent_router_AJJ");
 const dailyCheck = require("./router/dailyCheck_router_AJJ");
 //
 // ㅜ controller
@@ -54,7 +55,7 @@ app.use("/img", express.static(path.join(__dirname, "/img_Ahn_Ju")));
 //
 // ㅜ 라우터의 요청 주소에 대한 설정
 app.use("/dailyCheck", dailyCheck);
-app.use("/dailyPoint", iconEventPage);
+app.use("/dailyPoint", iconEvent);
 app.use("/example", example);
 app.use("/keyword", keyword);
 app.use("/shop", products);
