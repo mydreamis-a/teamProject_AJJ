@@ -5,13 +5,11 @@ const app = express();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
-const FileStore = require("session-file-store")(session);
 router.use(
     session({
       secret: process.env.JU_SECRET_KEY,
       resave: false,
       saveUninitialized: true,
-      store: new FileStore(),
     })
   );
 

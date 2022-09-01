@@ -11,7 +11,6 @@ const jwt = require("jsonwebtoken");
 const socketio = require("socket.io");
 const dot = require("dotenv").config();
 const session = require("express-session");
-const FileStore = require("session-file-store")(session);
 const signIn = require("./router/login_router_AJJ");
 const signUp = require("./router/signUp_router_AJJ");
 
@@ -66,7 +65,6 @@ app.use(
     resave: false,
     // ㅜ 저장 시 초기화 여부
     saveUninitialized: true,
-    store: new FileStore(),
   })
 );
 // ㅜ 서버 실행 시 MySQL 연동

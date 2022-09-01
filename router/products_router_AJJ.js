@@ -2,7 +2,6 @@ const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
 const cartListCount = require("../controller/cartTotalCount_AJJ");
 const express = require("express");
 const session = require("express-session");
-const FileStore = require("session-file-store")(session);
 const router = express.Router();
 const { log } = console;
 
@@ -11,7 +10,6 @@ router.use(
     secret: process.env.JU_SECRET_KEY,
     resave: false,
     saveUninitialized: true,
-    store: new FileStore(),
   })
 );
 
