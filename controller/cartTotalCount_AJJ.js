@@ -13,10 +13,5 @@ module.exports = function cartListCount(res) {
             else return 0;
         });
 };
-<<<<<<< HEAD
 
 // 08.29.11 수정
-=======
-//
-// 09.01.08 수정
->>>>>>> 3bca3fb (정렬 기능 최적화 구현 완료)

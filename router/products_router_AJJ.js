@@ -1,18 +1,11 @@
 const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
-<<<<<<< HEAD
 const cartListCount = require("../controller/cartTotalCount_AJJ");
-=======
-const createProductTags = require("../controller/createProductTags_AJJ");
-const sendProductTags = require("../controller/sendProductTags_AJJ");
-const cartTotalCount = require("../controller/cartTotalCount_AJJ");
->>>>>>> 3bca3fb (정렬 기능 최적화 구현 완료)
 const express = require("express");
 const session = require("express-session");
 const FileStore = require("session-file-store")(session);
 const router = express.Router();
 const { log } = console;
 
-<<<<<<< HEAD
 router.use(
   session({
     secret: process.env.JU_SECRET_KEY,
@@ -50,46 +43,6 @@ router.post("/Jang-shop", (req, res) => {
     const productTags = createProducts(shopName, JJWproducts,userEmail);
     res.send({ shopName, count, productTags });
   });
-=======
-////////////////////////////////////////////////
-// ㅜ 각 상점의 버튼을 클릭했을 때의 상품 목록 화면
-router.post("/:shopName", async (req, res) => {
-  //
-  const order = {};
-  const _shopName = req.params.shopName;
-  const _cartTotalCount = await cartTotalCount(res);
-  sendProductTags(_shopName, res, order, _cartTotalCount);
-});
-
-/////////////////////////////////////////////////
-// ㅜ 신상품순의 버튼을 클릭했을 때의 상품 목록 화면
-router.post("/new/:shopName", (req, res) => {
-  //
-  const _cartTotalCount = null;
-  const _shopName = req.params.shopName;
-  const order = { order: [["id", "DESC"]] };
-  sendProductTags(_shopName, res, order, _cartTotalCount);
-});
-
-///////////////////////////////////////////////////
-// ㅜ 낮은 가격순의 버튼을 클릭했을 때의 상품 목록 화면
-router.post("/lowPrice/:shopName", (req, res) => {
-  //
-  const _cartTotalCount = null;
-  const _shopName = req.params.shopName;
-  const order = { order: [["price", "ASC"]] };
-  sendProductTags(_shopName, res, order, _cartTotalCount);
-});
-
-///////////////////////////////////////////////////
-// ㅜ 높은 가격순의 버튼을 클릭했을 때의 상품 목록 화면
-router.post("/highPrice/:shopName", (req, res) => {
-  //
-  const _cartTotalCount = null;
-  const _shopName = req.params.shopName;
-  const order = { order: [["price", "DESC"]] };
-  sendProductTags(_shopName, res, order, _cartTotalCount);
->>>>>>> 3bca3fb (정렬 기능 최적화 구현 완료)
 });
 
 /**
@@ -133,8 +86,4 @@ function createProducts(shopName, products,userEmail) {
 
 module.exports = router;
 
-<<<<<<< HEAD
 // 08.29.20 수정
-=======
-// 09.01.08 수정
->>>>>>> 3bca3fb (정렬 기능 최적화 구현 완료)

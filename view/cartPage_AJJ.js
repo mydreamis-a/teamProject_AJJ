@@ -1,16 +1,7 @@
-<<<<<<< HEAD
 const cartModalContainerTag = document.querySelector(".cart-modal-container");
 const cartExitBtnTag = document.querySelector(".cart-exit-btn");
 const cartListRowTag = document.querySelector(".cart-list-row");
 const cartIconTag = document.querySelector(".cart-icon");
-=======
-/**
- * 장바구니에 대한 클래스
- */
-class Cart {
-  constructor() { }
-}
->>>>>>> 3bca3fb (정렬 기능 최적화 구현 완료)
 
 // ㅜ 장바구니 아이콘을 클릭했을 때
 cartIconTag.addEventListener("click", () => {
@@ -72,24 +63,16 @@ function createCartProducts(products, shopName) {
     for (let i = 0; i < el.product_count; i++) {
       //
       const inCartBtnTag = document.querySelector(`[class = "in-cart-btn${productNum}"][data-name = "${shopName}"]`);
-      //
+
       const copyTag = inCartBtnTag.closest(".product-list-col").cloneNode(true);
       const cartDeleteBtnTag = copyTag.querySelector(`.in-cart-btn${productNum}`);
-      //
+
       cartDeleteBtnTag.className = `cart-delete-btn${productNum}`;
       cartDeleteBtnTag.setAttribute("value", "삭제하기");
       cartDeleteBtnTag.removeAttribute("onclick");
-      //
-      const cartListRowTag = document.querySelector(".cart-list-row");
       cartListRowTag.appendChild(copyTag);
     }
   });
-<<<<<<< HEAD
 }
 
 // 08.29.02 수정
-=======
-};
-//
-// 09.01.08 수정
->>>>>>> 3bca3fb (정렬 기능 최적화 구현 완료)
