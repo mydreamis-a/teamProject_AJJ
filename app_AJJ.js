@@ -132,7 +132,8 @@ let adminArray = new Array();
 let userArray = new Array();
 
 // 유저의 실시간 채팅
-io.sockets.on("connection", (socket) => {
+io.sockets.on("connection", async (socket) => {
+  
   // 유저의 전화상담
   socket.on("callChat", () => {
     socket.emit("callChat2", () => {});
@@ -182,80 +183,121 @@ io.sockets.on("connection", (socket) => {
       message: data.message,
     });
   });
-
-  socket.on("likeInsert", async (shopName, productIndex, userEmail) => {
-    let arr1;
-    await User.findAll({
+  socket.on("likeCheck",async (shopName,productIndex,userEmail)=>{
+    await Like.findAll({
       where : {
-        email : userEmail
+        user_id : userEmail,
+        jbhproduct_num : productIndex,
       }
+    }).then((data)=>{
+      if(data){
+        console.log("들어오냐?");
+        Like.destroy({
+          where :{
+            user_id : data[0].user_id,
+            jbhproduct_num : data[0].jbhproduct_num
+          }
+        })
+      }
+    }).catch((err)=>{
+      console.log("좋아요 눌렀습니다");
     })
-    await JBHproduct.findOne({
-      where: {
-        name: shopName,
-        id: productIndex,
-      },
-    }).then((jbhData) => {
-        if (jbhData) {
-          console.log(jbhData);
-          JBHproduct.update(
-            {
-              like_count: jbhData.like_count + 1,
-            },
-            {
-              where: { id: jbhData.id, name: jbhData.name },
+  })
+  socket.on("likeInsert", async (shopName, productIndex, userEmail) => {
+    console.log("들?");
+    let arr1;
+    await User.findOne({where : {
+      email : userEmail
+    }}).then((userData)=>{
+       JBHproduct.findOne({
+        where: {
+          name: shopName,
+          id: productIndex,
+        },
+      }).then((jbhData) => {
+          if (jbhData) {
+            JBHproduct.update(
+              {
+                like_count: jbhData.like_count + 1,
+              },
+              {
+                where: { id: jbhData.id, name: jbhData.name },
+              }
+            ).then(()=>{
+              Like.findOrCreate(
+                  {
+                    where : {
+                      user_id : userData.email,
+                      jbhproduct_num : jbhData.id,
+                      like_check : 1
+                    },
+                    defaults : {
+                      user_id : userData.email,
+                      jbhproduct_num : jbhData.id,
+                      like_check : 1
+                    }
+                  }
+                ).then((data)=>{
+                  console.log(1);
+              }).catch((err)=>{
+                console.log(2);
+              })
+            }).catch((err)=>{
+              console.log(err+"1");
+            })
+          }
+        }).catch((err) => {
+          console.log(err+"2");
+        });
+      if (arr1 == null) {
+         JJWproduct.findOne({
+          where: {
+            name: shopName,
+            id: productIndex,
+          },
+        }).then((jjwData) => {
+            if (jjwData) {
+              JJWproduct.update(
+                {
+                  like_count: jjwData.like_count + 1,
+                },
+                {
+                  where: { id: jjwData.id, name: jjwData.name },
+                }
+              )
             }
-          )
-        }
-      }).catch((err) => {
-        arr1 = err;
-      });
-    if (arr1 == null) {
-      await JJWproduct.findOne({
-        where: {
-          name: shopName,
-          id: productIndex,
-        },
-      }).then((jjwData) => {
-          if (jjwData) {
-            JJWproduct.update(
-              {
-                like_count: jjwData.like_count + 1,
-              },
-              {
-                where: { id: jjwData.id, name: jjwData.name },
-              }
-            )
-          }
-        }).catch((err) => {
-          arr1 = err;
-        });
-    }
-    if (arr1 == null) {
-      await AJYproduct.findOne({
-        where: {
-          name: shopName,
-          id: productIndex,
-        },
-      }).then((ajyData) => {
-          if (ajyData) {
-            console.log(ajyData);
-            AJYproduct.update(
-              {
-                like_count: ajyData.like_count + 1,
-              },
-              {
-                where: { id: ajyData.id, name: ajyData.name },
-              }
-            )
-          }
-        }).catch((err) => {
-          arr1 = err;
-        });
-    }
-    if (arr1 == null) {
-      return (arr1 = "셋다 없음");
-    }
+          }).catch((err) => {
+            console.log(err+"3");
+          });
+      }
+      if (arr1 == null) {
+         AJYproduct.findOne({
+          where: {
+            name: shopName,
+            id: productIndex,
+          },
+        }).then((ajyData) => {
+            if (ajyData) {
+              AJYproduct.update(
+                {
+                  like_count: ajyData.like_count + 1,
+                },
+                {
+                  where: { id: ajyData.id, name: ajyData.name },
+                }
+              )
+            }
+          }).catch((err) => {
+            console.log(err+"4");
+          });
+      }
+      if (arr1 == null) {
+        return (arr1 = "셋다 없음");
+      }
+    }).catch((err)=>{
+      console.log(err+"3");
+    })
+
   });
 });
 //

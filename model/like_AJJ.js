@@ -8,8 +8,11 @@ class Like extends Sql.Model {
         user_id: {
           type: Sql.STRING(100),
           allowNull: false,
-          unique: true,
         },
+        like_check : {
+          type: Sql.INTEGER,
+          allowNull : false
+        }
       },
       {
         sequelize,
