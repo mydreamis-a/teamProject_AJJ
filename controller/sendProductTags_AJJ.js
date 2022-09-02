@@ -11,7 +11,6 @@ const { log } = console;
  */
 module.exports = function sendProductTags(shopName, userEmail, res, condition, cartTotalCount) {
   //
-  log(condition);
   switch (shopName) {
     case "ajy":
       AJYproduct.findAndCountAll(condition).then((products) => _sendProductTags(products));
@@ -37,4 +36,4 @@ module.exports = function sendProductTags(shopName, userEmail, res, condition, c
   };
 };
 //
-// 09.02.09 수정
+// 09.02.10 수정

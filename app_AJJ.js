@@ -97,27 +97,25 @@ app.get("/", (req, res) => {
       errorCode = err;
     }
   });
-  // ㅜ 비회원 데이터 삭제
-  Cart.destroy({ where: { user_id: null } })
-    .then(() => Keyword.destroy({ where: { user_id: null } }))
+  // ㅜ 등록된 회원 데이터가 하나도 없으면 테스트용 데이터 넣기
+  User.findOne({}).then((value) => {
     //
-    // ㅜ 등록된 회원 데이터가 하나도 없으면 테스트용 데이터 넣기
-    .then(() => User.findOne({}))
-    .then((value) => {
-      if (value !== null) res.render("main_AJJ", { userName, errorCode });
-      else {
-        addProductData()
-          .then(() => {
-            User.create({
-              name: "똥",
-              phone: "8282",
-              email: "ajj@ajj.com",
-              password: "acca3434",
-            });
-          })
-          .then(() => res.render("main_AJJ", { userName, errorCode }));
-      }
-    });
+    if (value !== null) {
+      res.render("main_AJJ", { userName, errorCode });
+      //
+    } else {
+      addProductData()
+        .then(() => {
+          User.create({
+            name: "똥",
+            phone: "8282",
+            email: "ajj@ajj.com",
+            password: "acca3434",
+          });
+        })
+        .then(() => res.render("main_AJJ", { userName, errorCode }));
+    }
+  });
 });
 
 ////////////////
@@ -256,4 +254,4 @@ io.sockets.on("connection", (socket) => {
   });
 });
 //
-// 09.01.13 수정
+// 09.02.16 수정

@@ -1,39 +1,24 @@
+const shopName = ["ajy", "jbh", "jjw"];
 const JuShopBtnTag = document.querySelector(".Ju-shop-btn");
 const AhnShopBtnTag = document.querySelector(".Ahn-shop-btn");
 const JangShopBtnTag = document.querySelector(".Jang-shop-btn");
+const shopBtnTags = [AhnShopBtnTag, JuShopBtnTag, JangShopBtnTag];
 //
 // ㅜ 각 상점의 버튼을 클릭했을 때
-const shopBtnTags = [AhnShopBtnTag, JuShopBtnTag, JangShopBtnTag];
 shopBtnTags.forEach((el, idx) => {
-  //
   el.addEventListener("click", async () => {
     //
     let method = null;
-    let shopName = null;
     const skipCount = 0;
-    const limitCount = 20;
     let priceScope = null;
+    const limitCount = 20;
     //
     // ㅜ 비회원으로 가정
     const id = null;
     const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
     //
-    switch (idx) {
-      case 0:
-        shopName = "ajy";
-        break;
-      case 1:
-        shopName = "jbh";
-        break;
-      case 2:
-        shopName = "jjw";
-        break;
-      default:
-        break;
-    }
     // ㅜ 각 상점의 상품 목록 태그 생성 및 장바구니 기능에 대하여
-    log(priceScope, "dd");
-    createProductTagsAjax(method, shopName, priceScope, skipCount, limitCount)
+    createProductTagsAjax(method, shopName[idx], priceScope, skipCount, limitCount)
       //
       .then((result) => (cartTotalCountNumberTag.innerHTML = result.cartTotalCount));
     _cart.clickCartIcon();
@@ -124,7 +109,6 @@ const createProductTagsAjax = function (method, shopName, priceScope, skipCount,
   if (priceScope !== null) url = `shop/${method}/${shopName}/${priceScope}`;
   if (method !== null) url = `shop/${method}/${shopName}`;
   else url = `shop/${shopName}`;
-  log(url);
   //
   return $.ajax({
     url: url,
