@@ -24,12 +24,12 @@ router.post("/signUp",(req,res)=>{
           console.log(e+"3");
           let userName = "회원가입이 완료되었습니다";
           let errorCode = "";
-          res.render("main_AJJ",{userName,errorCode});
+          res.render("main_AJJ",{data : {userName},errorCode});
         }).catch((e) => {
           console.log(e+"4");
           let userName = "이미 중복된 값이 있습니다";
           let errorCode = "";
-          res.render("main_AJJ",{userName,errorCode});
+          res.render("main_AJJ",{data : {userName},errorCode});
         });
       }
     })

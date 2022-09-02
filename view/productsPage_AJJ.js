@@ -47,6 +47,7 @@ shopBtnTags.forEach((el, idx) => {
     const productSortLowPriceBtnTag = document.querySelector("#product-sort-low-price");
     productSortLowPriceBtnTag.addEventListener("click", () => {
       //
+
       _search.sortProducts("lowPrice");
     });
     //

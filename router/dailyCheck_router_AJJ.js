@@ -7,7 +7,8 @@ const { log } = console;
 // ㅜ 당일 출쳌
 router.post("/today", (req, res) => {
   // 유저가 누른 오늘 날짜와 이메일을 담아옴
-  const { email, date } = req.body;
+  const { date } = req.body;
+  let email = req.session.email;
   let userId = null;
   User.findOne({
     where: { email: email },
@@ -36,10 +37,12 @@ router.post("/today", (req, res) => {
 // ㅜ 이전 출쳌
 router.post("/last", (req, res) => {
   // 유저 이메일을 담아옴
-  const { email } = req.body;
+  const email = req.session.email;
   User.findOne({
     where: { email: email },
   }).then((e) => {
+    console.log(e);
+    console.log(email);
     if (e == null) {
       res.send({ data: "null" });
     } else {

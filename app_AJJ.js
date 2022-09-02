@@ -85,15 +85,23 @@ sequelize
 app.get("/", (req, res) => {
   let userName = "";
   let errorCode = "";
+  let userPoint;
   jwt.verify(req.session.aT, process.env.JU_ACCESS_TOKEN, (err, decoded) => {
     if (err) {
       errorCode = "로그인을 해주세요";
       userName = "";
+      // req.session.email = "";
+      // req.session.name = "";
+      // req.session.Point = "";
+      // req.session.aT = "";
+      // req.session.rT = "";
     } else if (decoded) {
       errorCode = "";
       userName = req.session.name;
+      userPoint = req.session.Point;
       console.log(err);
       errorCode = err;
+      console.log(userPoint);
     }
   });
   // ㅜ 비회원 데이터 삭제
@@ -103,7 +111,7 @@ app.get("/", (req, res) => {
     // ㅜ 등록된 회원 데이터가 하나도 없으면 테스트용 데이터 넣기
     .then(() => User.findOne({}))
     .then((value) => {
-      if (value !== null) res.render("main_AJJ", { userName, errorCode });
+      if (value !== null) res.render("main_AJJ", { data : { userName, userPoint}, errorCode });
       else {
         addProductData()
           .then(() => {
@@ -118,13 +126,6 @@ app.get("/", (req, res) => {
       }
     });
 });
-
-// app.get("/like/:idx/:shopName", (req, res) => {
-//   let productId = req.params.idx;
-//   let productShopName = req.params.shopName;
-//   console.log(productId);
-//   console.log(productShopName);
-// });
 
 ////////////////
 // ㅜ 주영님 코드
@@ -146,20 +147,16 @@ io.sockets.on("connection", async (socket) => {
 
   // 상담하기 누르면 안녕하세요 띄우는거
   socket.on("liveHi", (data) => {
-    // userArray.push(data.name);
-    // userArray.forEach(el => {
-    // });
+  
     socket.join(data.name);
     // 유저 들어왔을 때 알림 이벤트 요청
     socket.emit("liveHi2", data);
     // 유저 들어오면 관리자 소켓아이디 통해서 옵션 추가 이벤트
-    console.log(adminArray[0]);
     io.to(adminArray[0]).emit("addOption", data);
   });
 
   socket.on("change", (data) => {
     socket.join(data);
-    // io.to(data).emit("message",data);
   });
   // 관리자가 로그인하면 관리자 소켓을 배열 첫번째에 담는다
   socket.on("admin", () => {
