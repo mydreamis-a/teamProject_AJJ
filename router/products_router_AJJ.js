@@ -60,7 +60,7 @@ router.post("/highPrice/:shopName", (req, res) => {
 
 //////////////////////////////////////////////////////////////
 // ㅜ 가격 범위를 입력하고 검색 버튼을 클릭했을 때의 상품 목록 화면
-router.post("/sortPrice/:min/:max/:shopName", (req, res) => {
+router.post("/sortPrice/:shopName/:min/:max", (req, res) => {
   //
   const min = req.params.min;
   const max = req.params.max;
@@ -75,4 +75,4 @@ router.post("/sortPrice/:min/:max/:shopName", (req, res) => {
 //
 module.exports = router;
 //
-// 09.01.20 수정
+// 09.02.09 수정

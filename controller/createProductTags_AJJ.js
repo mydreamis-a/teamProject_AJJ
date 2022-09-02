@@ -10,7 +10,6 @@ module.exports = function createProductTags(shopName, products, userEmail) {
   const productTags = new Array();
   //
   const _products = products.map((el) => el.dataValues);
-  log(_products);
   _products.forEach((el, idx) => {
     //
     productTags.push(`
@@ -40,4 +39,4 @@ module.exports = function createProductTags(shopName, products, userEmail) {
   return productTags;
 };
 //
-// 09.01.19 수정
+// 09.02.09 수정

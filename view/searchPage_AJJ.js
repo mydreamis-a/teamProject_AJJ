@@ -2,7 +2,7 @@
  * 검색 창에 대한 클래스
  */
 class Search {
-  constructor() { }
+  constructor() {}
 }
 
 ///////////////////////////////////////
@@ -133,10 +133,11 @@ Search.prototype.sortProducts = function (method, priceScope) {
   //
   const allSectionsTag = document.querySelector(".all-sections");
   let top = allSectionsTag.style.top;
+  const limitCount = 20;
+  const skipCount = 0;
+  //
   top = top.replace("vh", "");
   top = Number(top);
-  limitCount = 20;
-  skipCount = 0;
   //
   switch (top) {
     case -100:
@@ -187,4 +188,4 @@ Search.prototype.searchPriceProducts = function () {
   }
 };
 //
-// 09.01.22 수정
+// 09.02.09 수정
