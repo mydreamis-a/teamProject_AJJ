@@ -41,11 +41,7 @@ router.post("/last", (req, res) => {
   User.findOne({
     where: { email: email },
   }).then((e) => {
-    console.log(e);
-    console.log(email);
-    if (e == null) {
-      res.send({ data: "null" });
-    } else {
+    if (e != null) {
       DailyCheck.findAll({
         where: { user_id: e.id },
       }).then((e) => {
@@ -59,6 +55,8 @@ router.post("/last", (req, res) => {
         });
       });
     }
+  }).catch((e) => {
+    res.send({ data: "null" });
   });
 });
 
