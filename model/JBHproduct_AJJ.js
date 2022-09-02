@@ -56,7 +56,7 @@ class JBHproduct extends Sql.Model {
     db.JBHproduct.hasOne(db.Cart, { foreignKey: "jbhproduct_num", sourceKey: "id" });
     db.JBHproduct.hasMany(db.Comment, { foreignKey: "jbhproduct_num", sourceKey: "id" });
     // 추가
-    db.JBHproduct.hasMany(db.BestItem, { foreignKey: "jbhproduct_num", sourceKey: "id" });
+    db.JBHproduct.hasMany(db.BestItem, { foreignKey: "jbhproduct_num", sourceKey: "id" }); 
   }
 }
 

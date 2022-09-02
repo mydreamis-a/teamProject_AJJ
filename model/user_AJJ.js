@@ -18,7 +18,7 @@ class User extends Sql.Model {
         },
         // ㅜ 이메일
         email: {
-          type: Sql.STRING(40),
+          type: Sql.STRING(100),
           allowNull: false,
           unique: true,
         },
@@ -46,8 +46,8 @@ class User extends Sql.Model {
     );
   }
   static associate(db) {
-    db.User.hasOne(db.Like, { foreignKey: "user_id", sourceKey: "id" });
-    db.User.hasOne(db.BestItem, { foreignKey: "email", sourceKey: "email" });
+    db.User.hasMany(db.Like, { foreignKey: "user_id", sourceKey: "email"});
+    db.User.hasMany(db.BestItem, { foreignKey: "email", sourceKey: "email" });
     db.User.hasMany(db.Cart, { foreignKey: "user_id", sourceKey: "id" });
     db.User.hasMany(db.Comment, { foreignKey: "user_id", sourceKey: "id" });
     db.User.hasMany(db.Keyword, { foreignKey: "user_id", sourceKey: "id" });

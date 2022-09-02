@@ -11,10 +11,9 @@ const jwt = require("jsonwebtoken");
 const socketio = require("socket.io");
 const dot = require("dotenv").config();
 const session = require("express-session");
-const FileStore = require("session-file-store")(session);
-//
+
 // ㅜ model
-const { sequelize, User, Cart, Keyword, JBHproduct, JJWproduct, AJYproduct } = require("./model/index_AJJ");
+const { sequelize, User, Cart, Keyword, JBHproduct, JJWproduct, AJYproduct,Like } = require("./model/index_AJJ");
 //
 // ㅜ router
 const cart = require("./router/cart_router_AJJ");
@@ -44,7 +43,6 @@ app.use(
     //
     // ㅜ 저장 시 초기화 여부
     saveUninitialized: true,
-    // store: new FileStore(),
   })
 );
 const io = socketio(server);
@@ -76,6 +74,7 @@ app.use("/cart", cart);
 app.use("/", signUp);
 app.use("/", login);
 //
+
 // ㅜ 서버 실행 시 MySQL 연동
 sequelize
   .sync({ force: false })
@@ -134,7 +133,8 @@ let adminArray = new Array();
 let userArray = new Array();
 
 // 유저의 실시간 채팅
-io.sockets.on("connection", (socket) => {
+io.sockets.on("connection", async (socket) => {
+  
   // 유저의 전화상담
   socket.on("callChat", () => {
     socket.emit("callChat2", () => {});
@@ -180,83 +180,121 @@ io.sockets.on("connection", (socket) => {
       message: data.message,
     });
   });
-
-  socket.on("likeInsert", async (shopName, productIndex, userEmail) => {
-    let arr1;
-    await JBHproduct.findOne({
-      where: {
-        name: shopName,
-        id: productIndex,
-      },
+  socket.on("likeCheck",async (shopName,productIndex,userEmail)=>{
+    await Like.findAll({
+      where : {
+        user_id : userEmail,
+        jbhproduct_num : productIndex,
+      }
+    }).then((data)=>{
+      if(data){
+        console.log("들어오냐?");
+        Like.destroy({
+          where :{
+            user_id : data[0].user_id,
+            jbhproduct_num : data[0].jbhproduct_num
+          }
+        })
+      }
+    }).catch((err)=>{
+      console.log("좋아요 눌렀습니다");
     })
-      .then((data) => {
-        if (data) {
-          console.log(data);
-
-          JBHproduct.update(
-            {
-              like_count: data.like_count + 1,
-            },
-            {
-              where: { id: data.id, name: data.name },
+  })
+  socket.on("likeInsert", async (shopName, productIndex, userEmail) => {
+    console.log("들?");
+    let arr1;
+    await User.findOne({where : {
+      email : userEmail
+    }}).then((userData)=>{
+       JBHproduct.findOne({
+        where: {
+          name: shopName,
+          id: productIndex,
+        },
+      }).then((jbhData) => {
+          if (jbhData) {
+            JBHproduct.update(
+              {
+                like_count: jbhData.like_count + 1,
+              },
+              {
+                where: { id: jbhData.id, name: jbhData.name },
+              }
+            ).then(()=>{
+              Like.findOrCreate(
+                  {
+                    where : {
+                      user_id : userData.email,
+                      jbhproduct_num : jbhData.id,
+                      like_check : 1
+                    },
+                    defaults : {
+                      user_id : userData.email,
+                      jbhproduct_num : jbhData.id,
+                      like_check : 1
+                    }
+                  }
+                ).then((data)=>{
+                  console.log(1);
+              }).catch((err)=>{
+                console.log(2);
+              })
+            }).catch((err)=>{
+              console.log(err+"1");
+            })
+          }
+        }).catch((err) => {
+          console.log(err+"2");
+        });
+      if (arr1 == null) {
+         JJWproduct.findOne({
+          where: {
+            name: shopName,
+            id: productIndex,
+          },
+        }).then((jjwData) => {
+            if (jjwData) {
+              JJWproduct.update(
+                {
+                  like_count: jjwData.like_count + 1,
+                },
+                {
+                  where: { id: jjwData.id, name: jjwData.name },
+                }
+              )
             }
-          );
-        }
-      })
-      .catch((err) => {
-        arr1 = err;
-      });
-    if (arr1 == null) {
-      await JJWproduct.findOne({
-        where: {
-          name: shopName,
-          id: productIndex,
-        },
-      })
-        .then((data) => {
-          if (data) {
-            console.log(data);
-            JJWproduct.update(
-              {
-                like_count: data.like_count + 1,
-              },
-              {
-                where: { id: data.id, name: data.name },
-              }
-            );
-          }
-        })
-        .catch((err) => {
-          arr1 = err;
-        });
-    }
-    if (arr1 == null) {
-      await AJYproduct.findOne({
-        where: {
-          name: shopName,
-          id: productIndex,
-        },
-      })
-        .then((data) => {
-          if (data) {
-            console.log(data);
-            AJYproduct.update(
-              {
-                like_count: data.like_count + 1,
-              },
-              {
-                where: { id: data.id, name: data.name },
-              }
-            );
-          }
-        })
-        .catch((err) => {
-          arr1 = err;
-        });
-    }
-    if (arr1 == null) {
-      return (arr1 = "셋다 없음");
-    }
+          }).catch((err) => {
+            console.log(err+"3");
+          });
+      }
+      if (arr1 == null) {
+         AJYproduct.findOne({
+          where: {
+            name: shopName,
+            id: productIndex,
+          },
+        }).then((ajyData) => {
+            if (ajyData) {
+              AJYproduct.update(
+                {
+                  like_count: ajyData.like_count + 1,
+                },
+                {
+                  where: { id: ajyData.id, name: ajyData.name },
+                }
+              )
+            }
+          }).catch((err) => {
+            console.log(err+"4");
+          });
+      }
+      if (arr1 == null) {
+        return (arr1 = "셋다 없음");
+      }
+    }).catch((err)=>{
+      console.log(err+"3");
+    })
+
   });
 });
 //
