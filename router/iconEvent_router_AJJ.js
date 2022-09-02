@@ -4,9 +4,9 @@ const { log } = console;
 const express = require("express");
 const router = express.Router();
 
-
 router.post("/", (req, res) => {
-    const { userPoint, email } = req.body;
+    const email = req.session.email;
+    const { userPoint } = req.body;
     const money = Number(userPoint);
     if(email === ""){
         res.send({ data : "null" })

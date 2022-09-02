@@ -6,6 +6,37 @@ const express = require("express");
 const router = express.Router();
 const { log } = console;
 
+
+router.post("/Ahn-shop", (req, res) => {
+  AJYproduct.findAll({}).then(async (AJYproducts) => {
+    const shopName = "ajy";
+    const count = await cartListCount(res);
+    const userEmail = req.session.email;
+    const productTags = createProducts(shopName, AJYproducts,userEmail);
+    res.send({ shopName, count, productTags });
+  });
+});
+
+router.post("/Ju-shop", (req, res) => {
+  JBHproduct.findAll({}).then(async (JBHproducts) => {
+    const shopName = "jbh";
+    const count = await cartListCount(res);
+    const userEmail = req.session.email;
+    const productTags = createProducts(shopName, JBHproducts,userEmail);
+    res.send({ shopName, count, productTags });
+  });
+});
+
+router.post("/Jang-shop", (req, res) => {
+  JJWproduct.findAll({}).then(async (JJWproducts) => {
+    const shopName = "jjw";
+    const count = await cartListCount(res);
+    const userEmail = req.session.email;
+    const productTags = createProducts(shopName, JJWproducts,userEmail);
+    res.send({ shopName, count, productTags });
+  });
+});
+
 ////////////////////////////////////////////////
 // ㅜ 각 상점의 버튼을 클릭했을 때의 상품 목록 화면
 router.post("/:shopName", async (req, res) => {

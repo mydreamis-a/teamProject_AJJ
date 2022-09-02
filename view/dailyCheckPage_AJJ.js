@@ -37,16 +37,12 @@ day[nowdate - 1].addEventListener("mouseenter", () => {
   }
 });
 
-// ㅜ 로그인된 회원의 아이디(이메일) 임의 지정
-const loginEmail = "ajj@ajj.com";
-// const loginEmail = null;
 
 day[nowdate - 1].addEventListener("click", () => {
   $.ajax({
     url: "/dailyCheck/today",
     type: "post",
     data: {
-      email: loginEmail,
       date: nowdate,
     },
     success: function (result) {
@@ -63,7 +59,7 @@ checkIcon.addEventListener("click", () => {
   $.ajax({
     url: "/dailyCheck/last",
     type: "post",
-    data: { email: loginEmail },
+    data: { },
     success: function (result) {
       if(result.data == "null"){
         alert("로그인하라고 아 ㅋㅋ");

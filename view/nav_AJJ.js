@@ -27,6 +27,7 @@ class mainNav {
     this.liveBtn = document.querySelector(".live-btn");
     this.twoBtn = document.querySelector(".tow-btn");
     this.rooms = document.querySelector(".room");
+
     // 제출버튼 백그라운드 색상 배열
     this.colors = ["green", "pink", "gray", "orange", "tomato", "rgb(204, 204, 255)"];
     // 회원가입 삭제버튼 눌렀을때 삭제되게하려고 가져온거
