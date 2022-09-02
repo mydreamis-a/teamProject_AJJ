@@ -90,15 +90,14 @@ app.get("/", (req, res) => {
     if (err) {
       errorCode = "로그인을 해주세요";
       userName = "";
-      // req.session.email = "";
-      // req.session.name = "";
-      // req.session.Point = "";
-      // req.session.aT = "";
-      // req.session.rT = "";
+      req.session.email = "";
+      req.session.name = "";
+      req.session.aT = "";
+      req.session.rT = "";
     } else if (decoded) {
       errorCode = "";
       userName = req.session.name;
-      userPoint = req.session.Point;
+      userPoint = req.session.point;
       console.log(err);
       errorCode = err;
       console.log(userPoint);
