@@ -14,7 +14,7 @@ router.post("/login", (req, res) => {
     },
   })
     .then((user) => {
-      bcrypt.compare(password, user?.password, (err, same) => {
+      bcrypt.compare(password, user?.password, (err,same) => {
         if (same) {
           let aT = jwt.sign(
             {
@@ -24,7 +24,7 @@ router.post("/login", (req, res) => {
             process.env.JU_ACCESS_TOKEN,
             {
               issuer: "주병현",
-              expiresIn: "10s",
+              expiresIn: "15s",
             }
           );
           let rT = jwt.sign(
@@ -35,19 +35,20 @@ router.post("/login", (req, res) => {
             process.env.JU_REFRESH_TOKEN,
             {
               issuer: "주병현",
-              expiresIn: "10s",
+              expiresIn: "15s",
             }
           );
           req.session.aT = aT;
           req.session.rT = rT;
           req.session.name = user.name;
           req.session.email = user.email;
-          res.render("main_AJJ", { userName: req.session.name, errorCode });
+          req.session.point = user.point;
+          res.redirect("/");
         } else if (err) {
           console.log(err + "1");
           errorCode = "계정없음";
           userName = "";
-          res.render("main_AJJ", { userName, errorCode });
+          res.redirect("/");
         }
       });
     })
@@ -58,5 +59,6 @@ router.post("/login", (req, res) => {
       res.render("main_AJJ", { userName, errorCode });
     });
 });
+
 
 module.exports = router;

@@ -86,15 +86,23 @@ sequelize
 app.get("/", (req, res) => {
   let userName = "";
   let errorCode = "";
+  let userPoint;
   jwt.verify(req.session.aT, process.env.JU_ACCESS_TOKEN, (err, decoded) => {
     if (err) {
       errorCode = "로그인을 해주세요";
       userName = "";
+      // req.session.email = "";
+      // req.session.name = "";
+      // req.session.Point = "";
+      // req.session.aT = "";
+      // req.session.rT = "";
     } else if (decoded) {
       errorCode = "";
       userName = req.session.name;
+      userPoint = req.session.Point;
       console.log(err);
       errorCode = err;
+      console.log(userPoint);
     }
   });
   // ㅜ 비회원 데이터 삭제
@@ -104,7 +112,7 @@ app.get("/", (req, res) => {
     // ㅜ 등록된 회원 데이터가 하나도 없으면 테스트용 데이터 넣기
     .then(() => User.findOne({}))
     .then((value) => {
-      if (value !== null) res.render("main_AJJ", { userName, errorCode });
+      if (value !== null) res.render("main_AJJ", { data : { userName, userPoint}, errorCode });
       else {
         addProductData()
           .then(() => {
