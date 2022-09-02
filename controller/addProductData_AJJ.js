@@ -1,5 +1,5 @@
 const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
-
+const { log } = console;
 /**
  * 순서대로 상품의 DB를 생성하는 함수
  * @returns then 함수를 사용하기 위해 promise 함수를 반환
@@ -1112,4 +1112,4 @@ module.exports = async function addProductData() {
   ]);
 };
 //
-// 09.01.13 수정
+// 09.01.17 수정

@@ -11,9 +11,10 @@ class Cart {
  */
 Cart.prototype.clickCartIcon = function () {
   //
+  // const email = null;
+  const email = "ajj@ajj.com";
   const cartModalContainerTag = document.querySelector(".cart-modal-container");
   const cartExitBtnTag = document.querySelector(".cart-exit-btn");
-  const cartListRowTag = document.querySelector(".cart-list-row");
   const cartIconTag = document.querySelector(".cart-icon");
   //
   cartIconTag.addEventListener("click", () => {
@@ -22,41 +23,35 @@ Cart.prototype.clickCartIcon = function () {
     $.ajax({
       url: "/cart/list",
       type: "post",
+      data: { email },
       /**
        * 장바구니에 담긴 상품 목록을 태그로 생성하기 위해 각 상점별로 분류하는 함수
        * @param {object} cartProducts { ajyproducts, jbhproducts, jjwproducts }
        */
       success: (cartProducts) => {
-        let totalprice = 0;
         //
+        let idx = 0;
+        let totalprice = 0;
+        const cartTotalAmountTag = document.querySelector(".cart-total-price");
+        const cartListRowTag = document.querySelector(".cart-list-row");
         cartListRowTag.innerHTML = "";
         //
         for (const key in cartProducts) {
           if (Object.hasOwnProperty.call(cartProducts, key)) {
             //
-            switch (key) {
+            const shopProducts = cartProducts[key];
+            this.createCartProducts(shopProducts, shopName[idx]);
+            //
+            shopProducts.forEach((el) => {
               //
-              case "ajyproducts":
-                const ajyProducts = cartProducts[key];
-                this.createCartProducts(ajyProducts, "ajy");
-                break;
-              //
-              case "jbhproducts":
-                const jbhProducts = cartProducts[key];
-                this.createCartProducts(jbhProducts, "jbh");
-                break;
-              //
-              case "jjwproducts":
-                const jjwProducts = cartProducts[key];
-                this.createCartProducts(jjwProducts, "jjw");
-                break;
-              default:
-                break;
-            }
+              const upperCase = shopName[idx].toUpperCase();
+              const price = el[`${upperCase}product`].price;
+              totalprice += price * el.product_count;
+            });
+            idx++;
           }
         }
-        const cartTotalAmountTag = document.querySelector(".cart-total-price");
-        cartTotalAmountTag.innerHTML = `총 합계 금액: 0000000000 원`;
+        cartTotalAmountTag.innerHTML = `총 합계 금액: ${totalprice} 원`;
       },
     });
   });
@@ -74,13 +69,13 @@ Cart.prototype.clickCartIcon = function () {
  */
 Cart.prototype.inCartAjax = function (shopName, productNum) {
   //
-  // ㅜ 비회원으로 가정
-  const id = null;
+  // const email = null;
+  const email = "ajj@ajj.com";
   $.ajax({
     //
-    url: `/cart/${shopName}${productNum}`,
+    url: `/cart/${shopName}/${productNum}`,
     type: "post",
-    data: { id },
+    data: { email },
     //
     success: (result) => {
       const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
@@ -104,6 +99,7 @@ Cart.prototype.createCartProducts = function (products, shopName) {
       //
       const inCartBtnTag = document.querySelector(`[class = "in-cart-btn${productNum}"][data-name = "${shopName}"]`);
       //
+      const cartListRowTag = document.querySelector(".cart-list-row");
       const copyTag = inCartBtnTag.closest(".product-list-col").cloneNode(true);
       const cartDeleteBtnTag = copyTag.querySelector(`.in-cart-btn${productNum}`);
       //
@@ -111,10 +107,15 @@ Cart.prototype.createCartProducts = function (products, shopName) {
       cartDeleteBtnTag.setAttribute("value", "삭제하기");
       cartDeleteBtnTag.removeAttribute("onclick");
       //
-      const cartListRowTag = document.querySelector(".cart-list-row");
       cartListRowTag.appendChild(copyTag);
+
+      // ㅜ 장바구니 화면에서 삭제하기 버튼을 클릭했을 때
+      cartDeleteBtnTag.addEventListener("click", () => {
+        //
+        cartDeleteBtnTag.remove();
+      });
     }
   });
 };
 //
-// 09.01.08 수정
+// 09.02.12 수정

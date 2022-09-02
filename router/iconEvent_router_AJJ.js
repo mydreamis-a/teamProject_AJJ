@@ -8,20 +8,19 @@ router.post("/", (req, res) => {
     const email = req.session.email;
     const { userPoint } = req.body;
     const money = Number(userPoint);
-    if(email === ""){
+    User.findOne({
+        where : { email : email }
+    }).then((e) => {
+        e.point += money;
+        User.update(
+            { point :  e.point},
+            { where :  { email : email }}
+        );
+        res.send({ data : money });
+    })
+    .catch(() => {
         res.send({ data : "null" })
-    } else{
-        User.findOne({
-            where : { email : email }
-        }).then((e) => {
-            e.point += money;
-            User.update(
-                { point :  e.point},
-                { where :  { email : email }}
-            );
-        });
-        res.send({ data : money })
-    }
+    });
 });
 
 module.exports = router;

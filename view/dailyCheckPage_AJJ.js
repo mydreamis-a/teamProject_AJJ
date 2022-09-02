@@ -6,11 +6,6 @@ const checkIcon = document.querySelector(".check-icon");
 const datediv = new Array();
 
 mainContainer.style.display = "none";
-checkIcon.addEventListener("click", () => {
-  if(mainContainer.style.display == "none"){
-    mainContainer.style.display = "block";
-  }
-});
 
 for (let i = 1; i < 36; i++) {
   datediv[i] = document.createElement("div");
@@ -65,6 +60,7 @@ checkIcon.addEventListener("click", () => {
         alert("로그인하라고 아 ㅋㅋ");
         mainContainer.style.display = "none";
       }else{
+        mainContainer.style.display = "block";
         result.data.forEach((el) => {
           day[el - 1].style.backgroundColor = "royalblue";
         });
