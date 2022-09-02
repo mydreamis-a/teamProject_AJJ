@@ -65,6 +65,7 @@ class AJYproduct extends Sql.Model {
     db.AJYproduct.hasMany(db.Comment, { foreignKey: "ajyproduct_num", sourceKey: "id" });
     // 추가
     db.AJYproduct.hasMany(db.BestItem, { foreignKey: "ajyproduct_num", sourceKey: "id" });
+    // 추가
   }
 }
 
