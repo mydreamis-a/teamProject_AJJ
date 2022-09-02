@@ -318,14 +318,10 @@
 <script src="JS/slide_mainContent_AJJ copy.js"></script>
 <script src="JS/rankSlide_AJJ.js"></script>
 <script src="JS/dateAnimation_AJJ.js"></script>
-
-
 <script src="view/cartPage_AJJ.js"></script>
 <script>const _cart = new Cart();</script>
-
 <script src="view/searchPage_AJJ.js"></script>
 <script>const _search = new Search();</script>
-
 <script src="view/nav_AJJ.js"></script>
 <script src="view/loginPage_AJJ.js"></script>
 <script src="view/signUpPage_AJJ.js"></script>
@@ -354,7 +350,7 @@
   _JangMainSlide.slideTextTags[_JangMainSlide.slideTextTags.length - 1].appendChild(_dateAnimation.increaseCopyTag);
 
   let check = false;
-  function likeInsert(shopName,productIndex,userEmail) { 
+  function likeInsert(shopName,productIndex,userEmail) {
     if(check)
     {
       socket.emit("likeCheck",shopName,productIndex,userEmail);
@@ -363,7 +359,6 @@
       socket.emit("likeInsert",shopName,productIndex,userEmail);
       check = true;
     }
-
   }
 </script>
 </html>
