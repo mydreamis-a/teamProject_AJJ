@@ -18,11 +18,11 @@ class Cart {
     type: "post",
     /**
      * 장바구니에 담은 상품의 정보를 저장하고 장바구니에 담긴 모든 상품의 수량을 반환하는 함수
-     * @param {number} result { count }
+     * @param {number} result { _cartTotalCount }
      */
     success: (result) => {
       const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
-      cartTotalCountNumberTag.innerHTML = result.count;
+      cartTotalCountNumberTag.innerHTML = result._cartTotalCount;
     },
   });
 };
@@ -114,4 +114,4 @@ Cart.prototype.createCartProducts = function (products, shopName) {
   });
 };
 //
-// 09.03.10 수정
+// 09.03.12 수정

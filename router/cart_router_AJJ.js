@@ -11,17 +11,15 @@ router.post("/list", async (req, res) => {
   const cartProducts = {};
   //
   // ㅜ 비회원일 경우
-  if (!req.session.email) {
-    //
-    if (req.session.cart) {
-    }
-  }
+  // [ { ajyproduct_num: number, product_count: number, AJYproduct: { price: number } } ]
+  if (!req.session.email) res.send(req.session.cart)
+  //
   // ㅜ 로그인한 회원일 경우
   else {
     let id;
-    const _email = req.session.email;
+    const email = req.session.email;
     //
-    await User.findOne({ where: { email: _email }, attributes: ["id"] }).then((User) => {
+    await User.findOne({ where: { email: email }, attributes: ["id"] }).then((User) => {
       id = User.dataValues.id;
     });
     //
@@ -51,7 +49,6 @@ router.post("/list", async (req, res) => {
     }).then((jbhproducts) => {
       jbhproducts = jbhproducts.map((Cart) => Cart.dataValues);
       jbhproducts.map((Cart) => (Cart.JBHproduct = Cart.JBHproduct.dataValues));
-      log(jbhproducts)
       //
       cartProducts.jbhproducts = jbhproducts;
     });
@@ -79,22 +76,85 @@ router.post("/list", async (req, res) => {
 router.post("/:shopName/:productNum", (req, res) => {
   //
   const { shopName, productNum } = req.params;
+  let _cartTotalCount = 0;
+  let increment = false;
   //
-  log(req.session)
-  log(req.session.email)
   // ㅜ 비회원일 경우
   if (!req.session.email) {
     //
-    if (!req.session.cart) req.session.cart = [];
-    else req.session.cart.push({shopName: shopName, product_num: productNum, product_count: 1})
-    //
+    // ㅜ 첫 접속 시
+    if (!req.session.cart) {
+      req.session.cart = new Object();
+      req.session.cart.ajyproduct = new Array();
+      req.session.cart.jbhproduct = new Array();
+      req.session.cart.jjwproduct = new Array();
+    }
+    let price;
+    const cartSession = req.session.cart;
+    switch (shopName) {
+      //
+      case "ajy":
+        AJYproduct.findOne({ where: { id: productNum }, attributes: ["price"] })
+          .then(AJYproduct => price = AJYproduct.dataValues.price);
+        //
+        cartSession.ajyproduct.forEach(el => {
+          if (el.ajyproduct_num === productNum) {
+            el.product_count++;
+            increment = true;
+            return;
+          }
+        })
+        if (!increment) {
+          cartSession.ajyproduct.push({ ajyproduct_num: productNum, product_count: 1, AJYproduct: { price: price } });
+        }
+        break;
+      //
+      case "jbh":
+        JBHproduct.findOne({ where: { id: productNum }, attributes: ["price"] })
+          .then(JBHproduct => price = JBHproduct.dataValues.price);
+        //
+        cartSession.jbhproduct.forEach(el => {
+          if (el.jbhproduct_num === productNum) {
+            el.product_count++;
+            increment = true;
+            return;
+          }
+        })
+        if (!increment) {
+          cartSession.jbhproduct.push({ jbhproduct_num: productNum, product_count: 1, JBHproduct: { price: price } });
+        }
+        break;
+      //
+      case "jjw":
+        JJWproduct.findOne({ where: { id: productNum }, attributes: ["price"] })
+          .then(JJWproduct => price = JJWproduct.dataValues.price);
+        //
+        cartSession.jjwproduct.forEach(el => {
+          if (el.jjwproduct_num === productNum) {
+            el.product_count++;
+            increment = true;
+            return;
+          }
+        })
+        if (!increment) {
+          cartSession.jjwproduct.push({ jjwproduct_num: productNum, product_count: 1, JJWproduct: { price: price } });
+        }
+        break;
+      default:
+        break;
+    }
+    // ㅜ 비회원의 장바구니 수량
+    _cartTotalCount = cartSession.ajyproduct.reduce((prev, curr) => prev += curr.product_count, _cartTotalCount);
+    _cartTotalCount = cartSession.jbhproduct.reduce((prev, curr) => prev += curr.product_count, _cartTotalCount);
+    _cartTotalCount = cartSession.jjwproduct.reduce((prev, curr) => prev += curr.product_count, _cartTotalCount);
+    res.send({ _cartTotalCount });
   }
   // ㅜ 로그인한 회원일 경우
   else {
     let id;
-    const _email = req.session.email;
-    log(_email)
-    User.findOne({ where: { email: _email }, attributes: ["id"] }).then((User) => {
+    const email = req.session.email;
+    //
+    User.findOne({ where: { email: email }, attributes: ["id"] }).then((User) => {
       id = User.dataValues.id;
       //
       switch (shopName) {
@@ -119,13 +179,16 @@ router.post("/:shopName/:productNum", (req, res) => {
   function saveCartProducts(data, id) {
     Cart.findOne({ where: data }).then((value) => {
       //
-      if (value === null) Cart.create(data).then(() => cartTotalCount(id).then((count) => res.send({ count })));
+      if (value === null) Cart.create(data)
+        .then(() => cartTotalCount(id).then((_cartTotalCount) => res.send({ _cartTotalCount })));
+      //
       else {
-        Cart.increment({ product_count: 1 }, { where: data }).then(() => cartTotalCount(id).then((count) => res.send({ count })));
+        Cart.increment({ product_count: 1 }, { where: data })
+          .then(() => cartTotalCount(id).then((_cartTotalCount) => res.send({ _cartTotalCount })));
       }
     });
   }
 });
 module.exports = router;
 //
-// 09.03.10 수정
+// 09.03.12 수정
