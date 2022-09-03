@@ -55,10 +55,10 @@ class signUp2 {
     });
 
     // ㅜ submit이 발생할 때
-    this.formTag.addEventListener("submit", (event) => {
+    this.formTag.addEventListener("submit", (e) => {
       const rsltArr = this.regRslt();
-      event.preventDefault();
-      event.stopPropagation();
+      e.preventDefault();
+      e.stopPropagation();
       if (rsltArr.every((value) => value === true)) {
         const userName = document.querySelector("#input-name").value;
         alert(userName + "님, 환영합니다.\n회원가입이 완료되었습니다.");
@@ -66,21 +66,6 @@ class signUp2 {
       }
     });
 
-    // this.formTag.addEventListener("submit", (event) => {
-    //   document.querySelector("#signUpForm").action = "/signUp";
-    //   document.querySelector("#signUpForm").method = "post";
-    //   const rsltArr = this.regRslt();
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    //   if (rsltArr.every((value) => value === true)) {
-    //     this.formTag.addEventListener("submit", (event) => {
-    //       event.preventDefault();
-    //       event.stopPropagation();
-    //     });
-    //   } else {
-    //     return;
-    //   }
-    // });
   }
   // ㅜ 유효성 검증의 통과 여부에 따라 class를 적용하는 함수
   regStyle(rslt, el) {
@@ -118,4 +103,4 @@ class signUp2 {
   }
 }
 
-// 09.03.16 수정
+// 09.03.22 수정

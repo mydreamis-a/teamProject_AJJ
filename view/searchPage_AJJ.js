@@ -2,7 +2,7 @@
  * 검색 창에 대한 클래스
  */
 class Search {
-  constructor() {}
+  constructor() { }
 }
 
 ///////////////////////////////////////
@@ -24,10 +24,8 @@ Search.prototype.createSearchTags = function () {
     <input id="product-sort-new" class="product-search" type="button" value="신상품순">
     <input id="product-sort-low-price" class="product-search" type="button" value="낮은가격순">
     <input id="product-sort-high-price" class="product-search" type="button" value="높은가격순">
-    <form action="/keyword/save" method="post" id="keyword-form">
-      <input id="product-keyword" class="cart-input-search-item" name="product-keyword" type="search" autocomplete="off">
-      <input id="product-keyword-btn" class="product-search" type="submit" value="검색">
-    </form>
+    <input id="product-keyword" class="cart-input-search-item" type="search" autocomplete="off">
+    <input id="product-keyword-btn" class="product-search" type="submit" value="검색">
     <div class="product-keyword-last">최근검색어</div>
     `;
   const mainHeaderTag = document.querySelector(".main-header");
@@ -59,47 +57,133 @@ Search.prototype.widthFromPxToVw = function (value) {
  */
 Search.prototype.saveKeyword = function () {
   //
-  const keywordFormTag = document.querySelector("#keyword-form");
+  const productKeywordBtnTag = document.querySelector("#product-keyword-btn");
   const productKeywordTag = document.querySelector("#product-keyword");
   //
   // ㅜ 검색 창에 검색어를 입력하고 검색 버튼을 클릭했을 때
-  keywordFormTag.addEventListener("submit", (event) => {
+  productKeywordBtnTag.addEventListener("click", () => {
     //
-    if (productKeywordTag.value) keywordFormTag.submit();
+    if (!productKeywordTag.value) return;
+    const keyword = productKeywordTag.value;
+    this.saveKeywordAjax(keyword);
+  });
+  //
+  // ㅜ 검색 창에 검색어를 입력하고 엔터를 입력했을 때
+  productKeywordTag.addEventListener("keypress", (e) => {
+    if (e.code === "Enter") {
+      //
+      if (!productKeywordTag.value) return;
+      const keyword = productKeywordTag.value;
+      this.saveKeywordAjax(keyword);
+    }
+  });
+  // function saveKeywordAjax(keyword) {
+  //   //
+  //   $.ajax({
+  //     url: "/keyword/save",
+  //     type: "post",
+  //     data: { keyword },
+  //     //
+  //     success: ({ stringKeywords }) => {
+  //       log(this)
+  //       this._search.createCookie("keyword", stringKeywords, 0.0001);
+  //     }
+  //   });
+  // };
+};
+
+/**
+ * 검색어를 저장하는 ajax에 대한 함수
+ */
+Search.prototype.saveKeywordAjax = function (keyword) {
+  $.ajax({
+    url: "/keyword/save",
+    type: "post",
+    data: { keyword },
+    /**
+     * 
+     * @param {object} { array or undefined: 쿠키에 들어 있는 최근 검색어 정보 }
+     */
+    success: ({ keywords }) => {
+      if (keywords) {
+        const stringKeywords = keywords.join(", ");
+        this.createCookie("keyword", stringKeywords, 0.1);
+      }
+    }
   });
 };
 
-/////////////////////////
+////////////////////////////
 /**
- * 최근 검색어에 대한 함수
+ * 최근 검색어를 보여주는 함수
  */
 Search.prototype.showKeyword = function () {
   //
+  const productKeywordTag = document.querySelector("#product-keyword");
+  productKeywordTag.addEventListener("focus", () => {
+    this.showKeywordAjax();
+  });
+  //
+  productKeywordTag.addEventListener("keyup", (e) => {
+    if (e.code === "Enter") this.showKeywordAjax();
+  })
+};
+
+/**
+ * 최근 검색어를 보여주는 ajax에 대한 함수
+ */
+Search.prototype.showKeywordAjax = function () {
+  //
   const productLastKeywordsTag = document.querySelector(".product-keyword-last");
   const productKeywordTag = document.querySelector("#product-keyword");
-  //
-  // ㅜ 검색 창의 focus 여부에 따라 최근 검색어 보여주고 숨겨주기
-  productKeywordTag.addEventListener("focus", () => {
-    $.ajax({
-      url: "/keyword/last",
-      type: "post",
+  const keywords = this.getCookie("keyword");
+  $.ajax({
+    url: "/keyword/last",
+    type: "post",
+    data: { keywords },
+    /**
+     * 비회원일 경우 쿠키에, 로그인한 회원일 경우 DB에 저장되어 있는 최근 검색어 정보를 보여주는 함수
+     * @param {object} { array: 5개의 최근 검색어 정보 } 
+     */
+    success: ({ keywords }) => {
       //
-      /**
-       *
-       * @param {*} result
-       */
-      success: (result) => {
-        productLastKeywordsTag.innerHTML = "최근 검색어";
-        result.forEach((el) => {
-          productLastKeywordsTag.innerHTML += `<br>${el}`;
-        });
-      },
-    });
-    productLastKeywordsTag.style.visibility = "visible";
+      productLastKeywordsTag.innerHTML = "최근 검색어";
+      keywords.forEach((el) => {
+        productLastKeywordsTag.innerHTML += `<br>${el}`;
+      });
+      productLastKeywordsTag.style.visibility = "visible";
+    },
   });
+  //
   productKeywordTag.addEventListener("focusout", () => {
     productLastKeywordsTag.style.visibility = "hidden";
   });
+};
+
+//////////////////////
+/**
+ * 쿠키를 생성하는 함수
+ * @param {string} name 쿠키의 키 값
+ * @param {string} value 쿠키의 value 값
+ * @param {number} time 저장 일수
+ */
+Search.prototype.createCookie = function (name, value, time) {
+  //
+  const date = new Date();
+  date.setTime(date.getTime() + time * 24 * 60 * 60 * 1000);
+  //
+  document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/;`;
+};
+
+//////////////////////////
+/**
+ * 쿠키의 값을 조회하는 함수
+ * @param {string} name 쿠키의 키 값
+ * @returns 쿠키의 value 값
+ */
+Search.prototype.getCookie = function (name) {
+  const value = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
+  return value ? value[2] : null;
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -165,4 +249,4 @@ Search.prototype.searchPriceProducts = function () {
   }
 };
 //
-// 09.03.16 수정
+// 09.03.22 수정

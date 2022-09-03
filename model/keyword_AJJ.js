@@ -9,7 +9,6 @@ class Keyword extends Sql.Model {
         name: {
           type: Sql.STRING(100),
           allowNull: false,
-          unique: true,
         },
         // ㅜ 검색 횟수
         count: {
@@ -37,4 +36,4 @@ class Keyword extends Sql.Model {
 
 module.exports = Keyword;
 
-// 08.30.09 수정
+// 09.03.09 수정
