@@ -24,8 +24,10 @@ Search.prototype.createSearchTags = function () {
     <input id="product-sort-new" class="product-search" type="button" value="신상품순">
     <input id="product-sort-low-price" class="product-search" type="button" value="낮은가격순">
     <input id="product-sort-high-price" class="product-search" type="button" value="높은가격순">
-    <input id="product-keyword" class="cart-input-search-item" type="search">
-    <input name="q" id="product-keyword-btn" class="product-search" type="button" value="검색">
+    <form action="/keyword/save" method="post" id="keyword-form">
+      <input id="product-keyword" class="cart-input-search-item" name="product-keyword" type="search" autocomplete="off">
+      <input id="product-keyword-btn" class="product-search" type="submit" value="검색">
+    </form>
     <div class="product-keyword-last">최근검색어</div>
     `;
   const mainHeaderTag = document.querySelector(".main-header");
@@ -54,48 +56,24 @@ Search.prototype.widthFromPxToVw = function (value) {
 //////////////////////////////////////
 /**
  * 검색어 테이블에 검색어를 저장하는 함수
- * @param {*} id 어느 회원인지를 특정하는 id 컬럼의 값
  */
-Search.prototype.saveKeyword = function (id) {
+Search.prototype.saveKeyword = function () {
   //
-  const productKeywordBtnTag = document.querySelector("#product-keyword-btn");
+  const keywordFormTag = document.querySelector("#keyword-form");
   const productKeywordTag = document.querySelector("#product-keyword");
+  //
   // ㅜ 검색 창에 검색어를 입력하고 검색 버튼을 클릭했을 때
-  productKeywordBtnTag.addEventListener("click", () => {
+  keywordFormTag.addEventListener("submit", (event) => {
     //
-    if (!productKeywordTag.value) return;
-    this.saveKeywordAjax(id);
+    if (productKeywordTag.value) keywordFormTag.submit();
   });
-  // ㅜ 검색 창에 검색어를 입력하고 엔터를 입력했을 때
-  productKeywordTag.addEventListener("keypress", (e) => {
-    if (e.code === "Enter") {
-      //
-      if (!productKeywordTag.value) return;
-      this.saveKeywordAjax(id);
-    }
-  });
-
-  ///////////////////////////////////
-  /**
-   * 검색어를 저장하는 ajax에 대한 함수
-   */
-  Search.prototype.saveKeywordAjax = function (id) {
-    //
-    const keyword = productKeywordTag.value;
-    $.ajax({
-      url: "/keyword/save",
-      type: "post",
-      data: { id, keyword },
-    });
-  };
 };
 
 /////////////////////////
 /**
  * 최근 검색어에 대한 함수
- * @param {*} id 어느 회원인지를 특정하는 id 컬럼의 값
  */
-Search.prototype.showKeyword = function (id) {
+Search.prototype.showKeyword = function () {
   //
   const productLastKeywordsTag = document.querySelector(".product-keyword-last");
   const productKeywordTag = document.querySelector("#product-keyword");
@@ -105,8 +83,11 @@ Search.prototype.showKeyword = function (id) {
     $.ajax({
       url: "/keyword/last",
       type: "post",
-      data: { id },
       //
+      /**
+       *
+       * @param {*} result
+       */
       success: (result) => {
         productLastKeywordsTag.innerHTML = "최근 검색어";
         result.forEach((el) => {
@@ -184,4 +165,4 @@ Search.prototype.searchPriceProducts = function () {
   }
 };
 //
-// 09.02.09 수정
+// 09.03.16 수정

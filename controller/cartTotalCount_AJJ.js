@@ -10,11 +10,11 @@ module.exports = function cartTotalCount(id) {
   return (
     Cart.sum("product_count", { where: { user_id: id } })
       //
-      .then((value) => {
-        if (value !== null) return value;
+      .then((_Cart) => {
+        if (_Cart !== null) return _Cart;
         else return 0;
       })
   );
 };
 //
-// 09.02.23 수정
+// 09.03.14 수정

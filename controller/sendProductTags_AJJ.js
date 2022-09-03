@@ -13,13 +13,13 @@ module.exports = function sendProductTags(shopName, userEmail, res, condition, c
   //
   switch (shopName) {
     case "ajy":
-      AJYproduct.findAndCountAll(condition).then((products) => _sendProductTags(products));
+      AJYproduct.findAndCountAll(condition).then((_AJYproduct) => _sendProductTags(_AJYproduct));
       break;
     case "jbh":
-      JBHproduct.findAndCountAll(condition).then((products) => _sendProductTags(products));
+      JBHproduct.findAndCountAll(condition).then((_JBHproduct) => _sendProductTags(_JBHproduct));
       break;
     case "jjw":
-      JJWproduct.findAndCountAll(condition).then((products) => _sendProductTags(products));
+      JJWproduct.findAndCountAll(condition).then((_JJWproduct) => _sendProductTags(_JJWproduct));
       break;
     default:
       break;
@@ -36,4 +36,4 @@ module.exports = function sendProductTags(shopName, userEmail, res, condition, c
   };
 };
 //
-// 09.02.23 수정
+// 09.03.14 수정

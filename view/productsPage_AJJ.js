@@ -25,8 +25,8 @@ shopBtnTags.forEach((el, idx) => {
     //
     // ㅜ 검색 창 태그 생성 및 검색어 기능에 대하여
     _search.createSearchTags();
-    // _search.saveKeyword(id);
-    // _search.showKeyword(id);
+    _search.saveKeyword();
+    _search.showKeyword();
     //
     // ㅜ 신상품순의 버튼을 클릭했을 때
     const productSortNewBtnTag = document.querySelector("#product-sort-new");
@@ -141,7 +141,6 @@ const createProductTagsAjax = function (method, shopName, priceScope, skipCount,
         //
         const section3Tag = document.querySelector(".section3");
         section3Tag.scroll(0, 0);
-        //
       } else parentTag.innerHTML += result.productTags.join("");
       //
       // ㅜ 이전에 더보기 버튼이 있다면 삭제하기
@@ -174,4 +173,4 @@ const createProductTagsAjax = function (method, shopName, priceScope, skipCount,
   });
 };
 //
-// 09.03.12 수정
+// 09.03.14 수정
