@@ -2,11 +2,13 @@ const { log } = console;
 const { Op } = require("sequelize");
 const { Cart } = require("../model/index_AJJ");
 /**
- * 장바구니 DB에서 장바구니에 담은 총 수량을 반환하는 함수
+ * 해당하는 회원의 장바구니 테이블에 담긴 모든 상품의 수량을 반환하는 함수
+ * @param {string} id 어느 회원인지를 특정하는 id 컬럼의 값
+ * @returns 장바구니에 담긴 모든 상품의 수량
  */
-module.exports = function cartTotalCount() {
+module.exports = function cartTotalCount(id) {
   return (
-    Cart.sum("product_count", { where: { user_id: { [Op.is]: null } } })
+    Cart.sum("product_count", { where: { user_id: id } })
       //
       .then((value) => {
         if (value !== null) return value;
@@ -15,4 +17,4 @@ module.exports = function cartTotalCount() {
   );
 };
 //
-// 09.01.17 수정
+// 09.02.23 수정

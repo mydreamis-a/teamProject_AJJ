@@ -1,4 +1,4 @@
-/* 09.01.21 수정 */
+/* 09.02.22 수정 */
 
 p {
   margin-bottom: 0px;
@@ -155,7 +155,7 @@ textarea {
 }
 
 .product-btn-container {
-  padding-top: 1.042vw;
+  padding-bottom: 1.042vw;
 }
 
 .product-btn-group>input {
@@ -171,6 +171,12 @@ textarea {
   width: 10.417vw;
   height: 6.25vw;
   display: flex;
+}
+
+[class ^= "like-product-btn"] {
+  padding-top: 1vw;
+  cursor: pointer;
+  width: 2vw;
 }
 
 .search {

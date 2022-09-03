@@ -2,12 +2,12 @@ const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
 const createProductTags = require("./createProductTags_AJJ");
 const { log } = console;
 /**
- * 각 상점에 해당하는 상품 목록을 찾는 함수
+ * 각 상점에 해당하는 상품 목록을 찾아서 문자열의 HTML 태그로 보내는 함수
  * @param {string} shopName 상점 이름
  * @param {string} userEmail 상품의 좋아요 기능을 위한 회원의 이메일
  * @param {*} res
  * @param {object} condition 해당하는 상품 목록을 찾거나 정렬하기 위한 조건
- * @param {number} cartTotalCount 장바구니에 담긴 상품의 총 수량
+ * @param {number} cartTotalCount 장바구니에 담긴 모든 상품의 수량
  */
 module.exports = function sendProductTags(shopName, userEmail, res, condition, cartTotalCount) {
   //
@@ -25,7 +25,7 @@ module.exports = function sendProductTags(shopName, userEmail, res, condition, c
       break;
   }
   /**
-   * 결과 값의 상품 목록을 문자열의 HTML 태그로 담아서 보내는 함수
+   * 배열에 결과 값인 상품 목록을 문자열의 HTML 태그로 담아서 보내는 함수
    * @param {array} products 찾은 상품 목록
    */
   const _sendProductTags = (products) => {
@@ -36,4 +36,4 @@ module.exports = function sendProductTags(shopName, userEmail, res, condition, c
   };
 };
 //
-// 09.02.10 수정
+// 09.02.23 수정

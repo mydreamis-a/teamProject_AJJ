@@ -12,15 +12,15 @@ shopBtnTags.forEach((el, idx) => {
     const skipCount = 0;
     let priceScope = null;
     const limitCount = 20;
-    //
-    // ㅜ 비회원으로 가정
-    const id = null;
     const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
     //
-    // ㅜ 각 상점의 상품 목록 태그 생성 및 장바구니 기능에 대하여
+    // ㅜ 각 상점의 상품 목록 태그 생성
     createProductTagsAjax(method, shopName[idx], priceScope, skipCount, limitCount)
       //
+      // ㅜ 장바구니에 담긴 모든 상품의 수량
       .then((result) => (cartTotalCountNumberTag.innerHTML = result.cartTotalCount));
+    //
+    // ㅜ 장바구니 아이콘에 대한 함수
     _cart.clickCartIcon();
     //
     // ㅜ 검색 창 태그 생성 및 검색어 기능에 대하여
@@ -99,7 +99,7 @@ const productShowMoreBtnEvent = function () {
  * @param {string} priceScope 가격 검색으로 입력한 범위
  * @param {number} skipCount 상품 제외 개수
  * @param {number} limitCount 상품 조회 개수
- * @returns 상품 검색 결과 { 문자열의 상품 목록 태그, 조건에 해당되는 모든 상품 목록의 개수, 장바구니의 상품 수량 }
+ * @returns 상품 검색 결과 { 문자열의 상품 목록 태그, 조건에 해당되는 모든 상품 목록의 개수, 장바구니에 담긴 모든 상품의 수량 }
  */
 const createProductTagsAjax = function (method, shopName, priceScope, skipCount, limitCount) {
   //
@@ -116,7 +116,7 @@ const createProductTagsAjax = function (method, shopName, priceScope, skipCount,
     data: { skipCount, limitCount },
     /**
      * 각 상점의 상품 목록 태그를 생성해주는 함수
-     * @param {object} result { 문자열의 상품 목록 태그, 조건에 해당되는 모든 상품 목록의 개수, 장바구니의 상품 수량 }
+     * @param {object} result { 문자열의 상품 목록 태그, 조건에 해당되는 모든 상품 목록의 개수, 장바구니에 담긴 모든 상품의 수량 }
      */
     success: (result) => {
       switch (shopName) {
@@ -144,7 +144,7 @@ const createProductTagsAjax = function (method, shopName, priceScope, skipCount,
         //
       } else parentTag.innerHTML += result.productTags.join("");
       //
-      // ㅜ 이전의 더보기 버튼이 있다면 삭제하기
+      // ㅜ 이전에 더보기 버튼이 있다면 삭제하기
       let productShowMoreBtnTag = null;
       if (document.querySelector(`[class ^= "product-show-more-btn"][data-name = "${shopName}"][data-method = "${method}"][data-priceScope = "${priceScope}"]`)) {
         productShowMoreBtnTag = document.querySelector(`[class ^= "product-show-more-btn"][data-name = "${shopName}"][data-method = "${method}"][data-priceScope = "${priceScope}"]`);
@@ -174,4 +174,4 @@ const createProductTagsAjax = function (method, shopName, priceScope, skipCount,
   });
 };
 //
-// 09.02.09 수정
+// 09.03.10 수정

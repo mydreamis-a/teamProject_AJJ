@@ -23,13 +23,13 @@ module.exports = function createProductTags(shopName, products, userEmail) {
             <div class="product-box">
               <p class="product-name">${el.name}</p>
               <p class="product-price">${el.price} 원</p>
+              <img class="like-product-btn${idx + 1}" src="/img_Ahn_Ju/heart.gif" alt="" onclick="likeInsert('${el.name}','${idx + 1}','${userEmail}')">
+              <span style="font-size: 2vw; font-weight: 900;">${el.like_count}</span>
               <div class="product-btn-container">
                 <div class="product-btn-group">
-                  <input class="in-cart-btn${idx + 1}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="_cart.inCartAjax('${shopName}', ${idx + 1})">
-                  <input class="show-product-btn${idx + 1}" type="button" value="상품 보기">
-                  <input class="like-product-btn${idx + 1}" type="button" value="좋아요" onclick="likeInsert('${el.name}','${idx + 1}','${userEmail}')">
-                  <h2>${el.like_count}</h2>
-                </div>
+                <input class="in-cart-btn${idx + 1}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="_cart.inCartAjax('${shopName}', ${idx + 1})">
+                <input class="show-product-btn${idx + 1}" type="button" value="상품 보기">
+              </div>
               </div>
             </div>
           </div>
@@ -39,4 +39,4 @@ module.exports = function createProductTags(shopName, products, userEmail) {
   return productTags;
 };
 //
-// 09.02.09 수정
+// 09.02.22 수정
