@@ -8,12 +8,15 @@ const { log } = console;
 ////////////////////////////////////////////////
 // ㅜ 장바구니 아이콘을 클릭했을 때의 장바구니 화면
 router.post("/list", async (req, res) => {
-  const cartProducts = {};
+  let cartProducts = new Object();
   //
   // ㅜ 비회원일 경우
   // [ { ajyproduct_num: number, product_count: number, AJYproduct: { price: number } } ]
-  if (!req.session.email) res.send(req.session.cart)
-  //
+  if (!req.session.email) {
+    //
+    cartProducts = req.session.cart;
+    res.send(cartProducts);
+  }
   // ㅜ 로그인한 회원일 경우
   else {
     let id;
@@ -73,11 +76,9 @@ router.post("/list", async (req, res) => {
 
 ///////////////////////////////
 // ㅜ 장바구니에 상품을 담을 경우
-router.post("/:shopName/:productNum", (req, res) => {
+router.post("/:shopName/:productNum", async (req, res) => {
   //
   const { shopName, productNum } = req.params;
-  let _cartTotalCount = 0;
-  let increment = false;
   //
   // ㅜ 비회원일 경우
   if (!req.session.email) {
@@ -89,64 +90,69 @@ router.post("/:shopName/:productNum", (req, res) => {
       req.session.cart.jbhproduct = new Array();
       req.session.cart.jjwproduct = new Array();
     }
-    let price;
     const cartSession = req.session.cart;
+    let _cartTotalCount = 0;
+    let increment = false;
+    let price;
     switch (shopName) {
       //
       case "ajy":
-        AJYproduct.findOne({ where: { id: productNum }, attributes: ["price"] })
-          .then(AJYproduct => price = AJYproduct.dataValues.price);
-        //
-        cartSession.ajyproduct.forEach(el => {
-          if (el.ajyproduct_num === productNum) {
-            el.product_count++;
-            increment = true;
-            return;
-          }
-        })
-        if (!increment) {
-          cartSession.ajyproduct.push({ ajyproduct_num: productNum, product_count: 1, AJYproduct: { price: price } });
-        }
+        await AJYproduct.findOne({ where: { id: productNum }, attributes: ["price"] })
+          .then((AJYproduct) => (price = AJYproduct.dataValues.price))
+          .then(() => {
+            cartSession.ajyproduct.forEach((el) => {
+              if (el.ajyproduct_num === productNum) {
+                el.product_count++;
+                increment = true;
+                return;
+              }
+            });
+            if (!increment) {
+              cartSession.ajyproduct.push({ ajyproduct_num: productNum, product_count: 1, AJYproduct: { price: price } });
+            }
+          });
         break;
       //
       case "jbh":
-        JBHproduct.findOne({ where: { id: productNum }, attributes: ["price"] })
-          .then(JBHproduct => price = JBHproduct.dataValues.price);
-        //
-        cartSession.jbhproduct.forEach(el => {
-          if (el.jbhproduct_num === productNum) {
-            el.product_count++;
-            increment = true;
-            return;
-          }
-        })
-        if (!increment) {
-          cartSession.jbhproduct.push({ jbhproduct_num: productNum, product_count: 1, JBHproduct: { price: price } });
-        }
+        await JBHproduct.findOne({ where: { id: productNum }, attributes: ["price"] })
+          .then((JBHproduct) => (price = JBHproduct.dataValues.price))
+          .then(() => {
+            cartSession.jbhproduct.forEach((el) => {
+              if (el.jbhproduct_num === productNum) {
+                el.product_count++;
+                increment = true;
+                return;
+              }
+            });
+            if (!increment) {
+              cartSession.jbhproduct.push({ jbhproduct_num: productNum, product_count: 1, JBHproduct: { price: price } });
+            }
+          });
         break;
       //
       case "jjw":
-        JJWproduct.findOne({ where: { id: productNum }, attributes: ["price"] })
-          .then(JJWproduct => price = JJWproduct.dataValues.price);
-        //
-        cartSession.jjwproduct.forEach(el => {
-          if (el.jjwproduct_num === productNum) {
-            el.product_count++;
-            increment = true;
-            return;
-          }
-        })
-        if (!increment) {
-          cartSession.jjwproduct.push({ jjwproduct_num: productNum, product_count: 1, JJWproduct: { price: price } });
-        }
+        await JJWproduct.findOne({ where: { id: productNum }, attributes: ["price"] })
+          .then((JJWproduct) => (price = JJWproduct.dataValues.price))
+          .then(() => {
+            cartSession.jjwproduct.forEach((el) => {
+              if (el.jjwproduct_num === productNum) {
+                el.product_count++;
+                increment = true;
+                return;
+              }
+            });
+            if (!increment) {
+              cartSession.jjwproduct.push({ jjwproduct_num: productNum, product_count: 1, JJWproduct: { price: price } });
+            }
+          });
         break;
       default:
         break;
     }
     // ㅜ 비회원의 장바구니 수량
-    _cartTotalCount = cartSession.ajyproduct.reduce((prev, curr) => prev += curr.product_count, _cartTotalCount);
-    _cartTotalCount = cartSession.jbhproduct.reduce((prev, curr) => prev += curr.product_count, _cartTotalCount);
-    _cartTotalCount = cartSession.jjwproduct.reduce((prev, curr) => prev += curr.product_count, _cartTotalCount);
+    _cartTotalCount = cartSession.ajyproduct.reduce((prev, curr) => (prev += curr.product_count), _cartTotalCount);
+    _cartTotalCount = cartSession.jbhproduct.reduce((prev, curr) => (prev += curr.product_count), _cartTotalCount);
+    _cartTotalCount = cartSession.jjwproduct.reduce((prev, curr) => (prev += curr.product_count), _cartTotalCount);
     res.send({ _cartTotalCount });
   }
   // ㅜ 로그인한 회원일 경우
@@ -179,16 +185,14 @@ router.post("/:shopName/:productNum", (req, res) => {
   function saveCartProducts(data, id) {
     Cart.findOne({ where: data }).then((value) => {
       //
-      if (value === null) Cart.create(data)
-        .then(() => cartTotalCount(id).then((_cartTotalCount) => res.send({ _cartTotalCount })));
+      if (value === null) Cart.create(data).then(() => cartTotalCount(id).then((_cartTotalCount) => res.send({ _cartTotalCount })));
       //
       else {
-        Cart.increment({ product_count: 1 }, { where: data })
-          .then(() => cartTotalCount(id).then((_cartTotalCount) => res.send({ _cartTotalCount })));
+        Cart.increment({ product_count: 1 }, { where: data }).then(() => cartTotalCount(id).then((_cartTotalCount) => res.send({ _cartTotalCount })));
       }
     });
   }
 });
 module.exports = router;
 //
-// 09.03.12 수정
+// 09.03.13 수정

@@ -11,7 +11,7 @@ class Cart {
  * @param {*} shopName 상점 이름
  * @param {*} productNum 1부터 시작하는 상품 번호
  */
- Cart.prototype.inCartAjax = function (shopName, productNum) {
+Cart.prototype.inCartAjax = function (shopName, productNum) {
   $.ajax({
     //
     url: `/cart/${shopName}/${productNum}`,
