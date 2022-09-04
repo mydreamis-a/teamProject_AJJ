@@ -8,10 +8,11 @@ class Cart {
 ////////////////////////////////////////
 /**
  * 장바구니에 상품을 담는 ajax에 대한 함수
- * @param {*} shopName 상점 이름
- * @param {*} productNum 1부터 시작하는 상품 번호
  */
-Cart.prototype.inCartAjax = function (shopName, productNum) {
+Cart.prototype.inCartProducts = function () {
+  //
+  const shopName = event.target.dataset.name;
+  const productNum = event.target.className.replace("in-cart-btn", "");
   $.ajax({
     //
     url: `/cart/${shopName}/${productNum}`,
@@ -59,11 +60,11 @@ Cart.prototype.clickCartIcon = function () {
           if (Object.hasOwnProperty.call(cartProducts, key)) {
             //
             const shopProducts = cartProducts[key];
-            this.createCartProducts(shopProducts, shopName[idx]);
+            this.createCartProducts(shopProducts, shopNameArr[idx]);
             //
             shopProducts.forEach((el) => {
               //
-              const upperCase = shopName[idx].toUpperCase();
+              const upperCase = shopNameArr[idx].toUpperCase();
               const price = el[`${upperCase}product`].price;
               totalprice += price * el.product_count;
             });
@@ -106,12 +107,23 @@ Cart.prototype.createCartProducts = function (products, shopName) {
       cartListRowTag.appendChild(copyTag);
 
       // ㅜ 장바구니 화면에서 삭제하기 버튼을 클릭했을 때
-      cartDeleteBtnTag.addEventListener("click", () => {
+      cartDeleteBtnTag.addEventListener("click", async(e) => {
         //
-        cartDeleteBtnTag.remove();
+        await this.deleteCartProducts(e);
+        copyTag.remove();
       });
     }
   });
 };
+
+Cart.prototype.deleteCartProducts = function (e) {
+  //
+  const shopName = e.target.dataset.name;
+  const productNum = e.target.className.replace("cart-delete-btn", "");
+  $.ajax({
+    url: `/cart/delete/${shopName}/${productNum}`,
+    type: "post",
+  })
+}
 //
-// 09.03.12 수정
+// 09.03.23 수정

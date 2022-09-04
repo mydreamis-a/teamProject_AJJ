@@ -22,8 +22,8 @@ router.post("/list", async (req, res) => {
     let id;
     const email = req.session.email;
     //
-    await User.findOne({ where: { email: email }, attributes: ["id"] }).then((_User) => {
-      id = _User.dataValues.id;
+    await User.findOne({ where: { email: email }, attributes: ["id"] }).then((obj) => {
+      id = obj.dataValues.id;
     });
     //
     await Cart.findAll({
@@ -35,8 +35,8 @@ router.post("/list", async (req, res) => {
       include: [{ model: AJYproduct, attributes: ["price"] }],
       //
     }).then((ajyproducts) => {
-      ajyproducts = ajyproducts.map((_Cart) => _Cart.dataValues);
-      ajyproducts.map((_Cart) => (_Cart.AJYproduct = _Cart.AJYproduct.dataValues));
+      ajyproducts = ajyproducts.map((obj) => obj.dataValues);
+      ajyproducts.map((obj) => (obj.AJYproduct = obj.AJYproduct.dataValues));
       //
       cartProducts.ajyproducts = ajyproducts;
     });
@@ -50,8 +50,8 @@ router.post("/list", async (req, res) => {
       include: [{ model: JBHproduct, attributes: ["price"] }],
       //
     }).then((jbhproducts) => {
-      jbhproducts = jbhproducts.map((_Cart) => _Cart.dataValues);
-      jbhproducts.map((_Cart) => (_Cart.JBHproduct = _Cart.JBHproduct.dataValues));
+      jbhproducts = jbhproducts.map((obj) => obj.dataValues);
+      jbhproducts.map((obj) => (obj.JBHproduct = obj.JBHproduct.dataValues));
       //
       cartProducts.jbhproducts = jbhproducts;
     });
@@ -65,8 +65,8 @@ router.post("/list", async (req, res) => {
       include: [{ model: JJWproduct, attributes: ["price"] }],
       //
     }).then((jjwproducts) => {
-      jjwproducts = jjwproducts.map((_Cart) => _Cart.dataValues);
-      jjwproducts.map((_Cart) => (_Cart.JJWproduct = _Cart.JJWproduct.dataValues));
+      jjwproducts = jjwproducts.map((obj) => obj.dataValues);
+      jjwproducts.map((obj) => (obj.JJWproduct = obj.JJWproduct.dataValues));
       //
       cartProducts.jjwproducts = jjwproducts;
     });
@@ -98,7 +98,7 @@ router.post("/:shopName/:productNum", async (req, res) => {
       //
       case "ajy":
         await AJYproduct.findOne({ where: { id: productNum }, attributes: ["price"] })
-          .then((_AJYproduct) => (price = _AJYproduct.dataValues.price))
+          .then((obj) => (price = obj.dataValues.price))
           .then(() => {
             cartSession.ajyproduct.forEach((el) => {
               if (el.ajyproduct_num === productNum) {
@@ -115,7 +115,7 @@ router.post("/:shopName/:productNum", async (req, res) => {
       //
       case "jbh":
         await JBHproduct.findOne({ where: { id: productNum }, attributes: ["price"] })
-          .then((_JBHproduct) => (price = _JBHproduct.dataValues.price))
+          .then((obj) => (price = obj.dataValues.price))
           .then(() => {
             cartSession.jbhproduct.forEach((el) => {
               if (el.jbhproduct_num === productNum) {
@@ -132,7 +132,7 @@ router.post("/:shopName/:productNum", async (req, res) => {
       //
       case "jjw":
         await JJWproduct.findOne({ where: { id: productNum }, attributes: ["price"] })
-          .then((_JJWproduct) => (price = _JJWproduct.dataValues.price))
+          .then((obj) => (price = obj.dataValues.price))
           .then(() => {
             cartSession.jjwproduct.forEach((el) => {
               if (el.jjwproduct_num === productNum) {
@@ -142,7 +142,8 @@ router.post("/:shopName/:productNum", async (req, res) => {
               }
             });
             if (!increment) {
-              cartSession.jjwproduct.push({ jjwproduct_num: productNum, product_count: 1, JJWproduct: { price: price } });
+              cartSession.jjwproduct.push(
+                { jjwproduct_num: productNum, product_count: 1, JJWproduct: { price: price } });
             }
           });
         break;
@@ -160,18 +161,18 @@ router.post("/:shopName/:productNum", async (req, res) => {
     let id;
     const email = req.session.email;
     //
-    User.findOne({ where: { email: email }, attributes: ["id"] }).then((_User) => {
-      id = _User.dataValues.id;
+    User.findOne({ where: { email: email }, attributes: ["id"] }).then((obj) => {
+      id = obj.dataValues.id;
       //
       switch (shopName) {
         case "ajy":
-          saveCartProducts({ ajyproduct_num: productNum, user_id: id }, id);
+          saveCartDB({ ajyproduct_num: productNum, user_id: id }, id);
           break;
         case "jbh":
-          saveCartProducts({ jbhproduct_num: productNum, user_id: id }, id);
+          saveCartDB({ jbhproduct_num: productNum, user_id: id }, id);
           break;
         case "jjw":
-          saveCartProducts({ jjwproduct_num: productNum, user_id: id }, id);
+          saveCartDB({ jjwproduct_num: productNum, user_id: id }, id);
           break;
         default:
           break;
@@ -180,19 +181,66 @@ router.post("/:shopName/:productNum", async (req, res) => {
   }
   /**
    * 장바구니에 담기 버튼을 클릭한 상품 정보를 저장하는 함수
-   * @param {object} data 찾거나 추가할 데이터 내용
+   * @param {object} condition 찾거나 추가할 데이터 조건
    */
-  function saveCartProducts(data, id) {
-    Cart.findOne({ where: data }).then((_Cart) => {
+  function saveCartDB(condition, id) {
+    //
+    Cart.findOne({ where: condition }).then((obj) => {
       //
-      if (_Cart === null) Cart.create(data).then(() => cartTotalCount(id).then((_cartTotalCount) => res.send({ _cartTotalCount })));
+      if (obj === null) {
+        Cart.create(condition)
+          .then(() => cartTotalCount(id))
+          .then((_cartTotalCount) => res.send({ _cartTotalCount }));
+      }
       //
       else {
-        Cart.increment({ product_count: 1 }, { where: data }).then(() => cartTotalCount(id).then((_cartTotalCount) => res.send({ _cartTotalCount })));
+        Cart.increment({ product_count: 1 }, { where: condition })
+          .then(() => cartTotalCount(id))
+          .then((_cartTotalCount) => res.send({ _cartTotalCount }));
       }
     });
   }
 });
+
+///////////////////////////////////////
+// ㅜ 장바구니 화면에서 상품을 삭제할 경우
+router.post("/delete/:shopName/:productNum", (req, res) => {
+  const { shopName, productNum } = req.params;
+  //
+  // ㅜ 비회원일 경우
+  if (!req.session.email) {
+    //
+    // const cartProducts = req.session.cart;
+    log(req.session.cart)
+    req.session.cart = "왜 안 되는 거야.... 할 게 산 더미인데...."
+    //
+    // for (const key in cartProducts) {
+    //   if (Object.hasOwnProperty.call(cartProducts, key)) {
+    //     //
+    //     cartProducts[key] = cartProducts[key].reduce((prev, curr) => {
+    //       if (curr[`${shopName}product_num`] === productNum) {
+    //         return [...prev];
+    //       }
+    //       else return [...prev, curr];
+    //     }, new Array());
+    //     //
+    //     req.session.cart = cartProducts;
+    //   }
+    log(req.session.cart)
+    }
+  // ㅜ 로그인한 회원일 경우
+  else {
+
+    switch (shopName) {
+      case "ajy":
+        AJYproduct.destroy({})
+        break;
+
+      default:
+        break;
+    }
+  }
+})
 module.exports = router;
 //
-// 09.03.14 수정
+// 09.04.02 수정

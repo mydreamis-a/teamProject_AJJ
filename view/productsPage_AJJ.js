@@ -1,4 +1,4 @@
-const shopName = ["ajy", "jbh", "jjw"];
+const shopNameArr = ["ajy", "jbh", "jjw"];
 const JuShopBtnTag = document.querySelector(".Ju-shop-btn");
 const AhnShopBtnTag = document.querySelector(".Ahn-shop-btn");
 const JangShopBtnTag = document.querySelector(".Jang-shop-btn");
@@ -15,7 +15,7 @@ shopBtnTags.forEach((el, idx) => {
     const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
     //
     // ㅜ 각 상점의 상품 목록 태그 생성
-    createProductTagsAjax(method, shopName[idx], priceScope, skipCount, limitCount)
+    createProductTagsAjax(method, shopNameArr[idx], priceScope, skipCount, limitCount)
       //
       // ㅜ 장바구니에 담긴 모든 상품의 수량
       .then((result) => (cartTotalCountNumberTag.innerHTML = result.cartTotalCount));
@@ -173,4 +173,4 @@ const createProductTagsAjax = function (method, shopName, priceScope, skipCount,
   });
 };
 //
-// 09.03.14 수정
+// 09.03.23 수정

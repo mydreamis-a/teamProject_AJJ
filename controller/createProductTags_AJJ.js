@@ -27,7 +27,7 @@ module.exports = function createProductTags(shopName, products, userEmail) {
               <span style="font-size: 2vw; font-weight: 900;">${el.like_count}</span>
               <div class="product-btn-container">
                 <div class="product-btn-group">
-                <input class="in-cart-btn${idx + 1}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="_cart.inCartAjax('${shopName}', ${idx + 1})">
+                <input class="in-cart-btn${idx + 1}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="_cart.inCartProducts()">
                 <input class="show-product-btn${idx + 1}" type="button" value="상품 보기">
               </div>
               </div>
@@ -39,4 +39,4 @@ module.exports = function createProductTags(shopName, products, userEmail) {
   return productTags;
 };
 //
-// 09.02.22 수정
+// 09.03.23 수정
