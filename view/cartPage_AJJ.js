@@ -2,14 +2,14 @@
  * 장바구니에 대한 클래스
  */
 class Cart {
-  constructor() {}
+  constructor() { }
 }
 
 ////////////////////////////////////////
 /**
  * 장바구니에 상품을 담는 ajax에 대한 함수
  */
-Cart.prototype.inCartProducts = function () {
+Cart.prototype.inCartAjax = function () {
   //
   const shopName = event.target.dataset.name;
   const productNum = event.target.className.replace("in-cart-btn", "");
@@ -17,18 +17,20 @@ Cart.prototype.inCartProducts = function () {
     //
     url: `/cart/${shopName}/${productNum}`,
     type: "post",
+
+    //////////////////////////////
     /**
-     * 장바구니에 담은 상품의 정보를 저장하고 장바구니에 담긴 모든 상품의 수량을 반환하는 함수
-     * @param {number} result { _cartTotalCount }
+     * 장바구니 수량을 수정하는 함수
+     * @param {object} { 장바구니에 담긴 모든 상품의 수량 }
      */
-    success: (result) => {
+    success: ({ cartTotalCount }) => {
       const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
-      cartTotalCountNumberTag.innerHTML = result._cartTotalCount;
+      cartTotalCountNumberTag.innerHTML = cartTotalCount;
     },
   });
 };
 
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
 /**
  * 장바구니 아이콘을 클릭하면 장바구니 화면을 보여주는 함수
  */
@@ -45,32 +47,36 @@ Cart.prototype.clickCartIcon = function () {
       url: "/cart/list",
       type: "post",
       /**
-       * 장바구니에 담긴 상품 목록을 태그로 생성하기 위해 각 상점별로 분류하는 함수
-       * @param {object} cartProducts { ajyproducts, jbhproducts, jjwproducts }
+       * 장바구니에 담긴 상품의 태그를 생성하는 함수
+       * @param {object} { [ {ajyproduct_num: null, jbhproduct_num: null, jjwproduct_num: number, prodcut_count: number, JJWproduct: { price: number } } ] } 
        */
-      success: (cartProducts) => {
+      success: ({ cartProducts }) => {
         //
-        let idx = 0;
         let totalprice = 0;
-        const cartTotalAmountTag = document.querySelector(".cart-total-price");
-        const cartListRowTag = document.querySelector(".cart-list-row");
-        cartListRowTag.innerHTML = "";
+        const cartTotalAmountTag = document.querySelector("#cart-total-price");
         //
-        for (const key in cartProducts) {
-          if (Object.hasOwnProperty.call(cartProducts, key)) {
-            //
-            const shopProducts = cartProducts[key];
-            this.createCartProducts(shopProducts, shopNameArr[idx]);
-            //
-            shopProducts.forEach((el) => {
-              //
-              const upperCase = shopNameArr[idx].toUpperCase();
-              const price = el[`${upperCase}product`].price;
-              totalprice += price * el.product_count;
-            });
-            idx++;
+        cartProducts.forEach(el => {
+          //
+          let shopName = null;
+          let productNum = 0;
+          //
+          if (el.ajyproduct_num !== null) {
+            shopName = shopNameArr[0];
+            productNum = el.ajyproduct_num;
           }
-        }
+          else if (el.jbhproduct_num !== null) {
+            shopName = shopNameArr[1];
+            productNum = el.jbhproduct_num;
+          }
+          else if (el.jjwproduct_num !== null) {
+            shopName = shopNameArr[2];
+            productNum = el.jjwproduct_num;
+          }
+          const productCount = el.product_count;
+          const _shopName = shopName.toUpperCase();
+          totalprice += el[`${_shopName}product`].price;
+          this.createCartProducts(shopName, productNum, productCount);
+        })
         cartTotalAmountTag.innerHTML = `총 합계 금액: ${totalprice} 원`;
       },
     });
@@ -81,39 +87,38 @@ Cart.prototype.clickCartIcon = function () {
   });
 };
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////
 /**
- * 각 상점의 상품 번호를 통해 상품 목록의 태그를 복사해서 장바구니 화면에 태그를 생성하는 함수
- * @param {Array} products 각 상점별로 분류한 장바구니 상품
+ * 상점 이름과 상품 번호를 통해 상품 목록에서 태그를 복사하고 장바구니 화면에 생성하는 함수
  * @param {string} shopName 상점 이름
+ * @param {number} productNum 상품 번호
+ * @param {number} productCount 장바구니에 담은 수량
  */
-Cart.prototype.createCartProducts = function (products, shopName) {
+Cart.prototype.createCartProducts = function (shopName, productNum, productCount) {
   //
-  products.forEach((el) => {
-    const productNum = el[`${shopName}product_num`];
+  const cartDeleteBtnTags = document.querySelectorAll(`[class = "cart-delete-btn${productNum}"][data-name = "${shopName}"]`);
+  const createTagCount = productCount - cartDeleteBtnTags.length;
+  //
+  for (let i = 0; i < createTagCount; i++) {
     //
-    for (let i = 0; i < el.product_count; i++) {
-      //
-      const inCartBtnTag = document.querySelector(`[class = "in-cart-btn${productNum}"][data-name = "${shopName}"]`);
-      //
-      const cartListRowTag = document.querySelector(".cart-list-row");
-      const copyTag = inCartBtnTag.closest(".product-list-col").cloneNode(true);
-      const cartDeleteBtnTag = copyTag.querySelector(`.in-cart-btn${productNum}`);
-      //
-      cartDeleteBtnTag.className = `cart-delete-btn${productNum}`;
-      cartDeleteBtnTag.setAttribute("value", "삭제하기");
-      cartDeleteBtnTag.removeAttribute("onclick");
-      //
-      cartListRowTag.appendChild(copyTag);
+    const inCartBtnTag = document.querySelector(`[class = "in-cart-btn${productNum}"][data-name = "${shopName}"]`);
+    const copyTag = inCartBtnTag.closest(".product-list-col").cloneNode(true);
+    const cartDeleteBtnTag = copyTag.querySelector(`.in-cart-btn${productNum}`);
+    const cartListRowTag = document.querySelector(".cart-list-row");
+    //
+    cartDeleteBtnTag.className = `cart-delete-btn${productNum}`;
+    cartDeleteBtnTag.setAttribute("value", "삭제하기");
+    cartDeleteBtnTag.removeAttribute("onclick");
+    //
+    cartListRowTag.insertBefore(copyTag, cartListRowTag.firstElementChild);
 
-      // ㅜ 장바구니 화면에서 삭제하기 버튼을 클릭했을 때
-      cartDeleteBtnTag.addEventListener("click", async(e) => {
-        //
-        await this.deleteCartProducts(e);
-        copyTag.remove();
-      });
-    }
-  });
+    // ㅜ 장바구니 화면에서 삭제하기 버튼을 클릭했을 때
+    // cartDeleteBtnTag.addEventListener("click", async (e) => {
+    //   //
+    //   await this.deleteCartProducts(e);
+    //   copyTag.remove();
+    // });
+  }
 };
 
 Cart.prototype.deleteCartProducts = function (e) {
@@ -126,4 +131,4 @@ Cart.prototype.deleteCartProducts = function (e) {
   })
 }
 //
-// 09.03.23 수정
+// 09.04.21 수정

@@ -4,36 +4,36 @@ const { log } = console;
 /**
  * 각 상점에 해당하는 상품 목록을 찾아서 문자열의 HTML 태그로 보내는 함수
  * @param {string} shopName 상점 이름
- * @param {string} userEmail 상품의 좋아요 기능을 위한 회원의 이메일
- * @param {*} res
  * @param {object} condition 해당하는 상품 목록을 찾거나 정렬하기 위한 조건
+ * @param {*} res
+ * @param {string} email 상품의 좋아요 기능을 위한 회원의 이메일
  * @param {number} cartTotalCount 장바구니에 담긴 모든 상품의 수량
  */
-module.exports = function sendProductTags(shopName, userEmail, res, condition, cartTotalCount) {
+module.exports = function sendProductTags (shopName, condition, res, email, cartTotalCount) {
   //
+  let productsClass = null;
   switch (shopName) {
     case "ajy":
-      AJYproduct.findAndCountAll(condition).then((_AJYproduct) => _sendProductTags(_AJYproduct));
+      productsClass = AJYproduct;
       break;
     case "jbh":
-      JBHproduct.findAndCountAll(condition).then((_JBHproduct) => _sendProductTags(_JBHproduct));
+      productsClass = JBHproduct;
       break;
     case "jjw":
-      JJWproduct.findAndCountAll(condition).then((_JJWproduct) => _sendProductTags(_JJWproduct));
+      productsClass = JJWproduct;
       break;
     default:
       break;
-  }
-  /**
-   * 배열에 결과 값인 상품 목록을 문자열의 HTML 태그로 담아서 보내는 함수
-   * @param {array} products 찾은 상품 목록
-   */
-  const _sendProductTags = (products) => {
-    const productTags = createProductTags(shopName, products.rows, userEmail);
-    const resultCount = products.count;
+  };
+  //
+  productsClass.findAndCountAll(condition).then((obj) => {
+    //
+    const products = obj.rows.map(modelName => modelName.dataValues);
+    const productTags = createProductTags(shopName, products, email);
+    const resultCount = obj.count;
     //
     res.send({ productTags, resultCount, cartTotalCount });
-  };
+  });
 };
 //
-// 09.03.14 수정
+// 09.04.18 수정
