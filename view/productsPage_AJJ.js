@@ -1,3 +1,9 @@
+// ### 개발 일기
+//
+// 1. 페이지 로드와 동시에 상품 목록 태그를 생성했다.
+// why 로그인 회원이 로그인 하자마자 장바구니 버튼을 클릭할 경우 장바구니에 담긴 상품 목록의 태그를 장바구니 DB에서 불러와서 장바구니 화면에 생성해줘야 하는데, 장바구니의 상품 목록의 태그를 생성하는 방식이 기존 상품 목록의 태그를 복사하는 방식이기 때문에 기존에 해당하는 상품 목록의 태그가 생성되어 있어야 한다.
+// ㅁ
+
 const shopNameArr = ["ajy", "jbh", "jjw"];
 const JuShopBtnTag = document.querySelector(".Ju-shop-btn");
 const AhnShopBtnTag = document.querySelector(".Ahn-shop-btn");

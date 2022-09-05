@@ -46,9 +46,11 @@ Cart.prototype.clickCartIcon = function () {
     $.ajax({
       url: "/cart/list",
       type: "post",
+
+      ///////////////////////////////////////////
       /**
        * 장바구니에 담긴 상품의 태그를 생성하는 함수
-       * @param {object} { [ {ajyproduct_num: null, jbhproduct_num: null, jjwproduct_num: number, prodcut_count: number, JJWproduct: { price: number } } ] }
+       * @param {object} { [{ jjwproduct_num: number, product_count: number, JJWproduct: { price: number } }] }
        */
       success: ({ cartProducts }) => {
         //
@@ -59,7 +61,6 @@ Cart.prototype.clickCartIcon = function () {
           //
           let productNum = 0;
           let shopName = null;
-          let productCount = 0;
           //
           for (const key in el) {
             if (Object.hasOwnProperty.call(el, key)) {
@@ -68,22 +69,22 @@ Cart.prototype.clickCartIcon = function () {
               switch (key) {
                 case "ajyproduct_num":
                   shopName = shopNameArr[0];
+                  productNum = el[key];
                   break;
                 case "jbhproduct_num":
                   shopName = shopNameArr[1];
+                  productNum = el[key];
                   break;
                 case "jjwproduct_num":
                   shopName = shopNameArr[2];
-                  break;
-                default:
+                  productNum = el[key];
                   break;
               }
-              productNum = el[key];
             }
           }
+          const productCount = el.product_count;
           const _shopName = shopName.toUpperCase();
           //
-          productCount = el.product_count;
           totalprice += el[`${_shopName}product`].price;
           this.createCartProducts(shopName, productNum, productCount);
         });
@@ -105,7 +106,7 @@ Cart.prototype.clickCartIcon = function () {
  * @param {number} productCount 장바구니에 담은 수량
  */
 Cart.prototype.createCartProducts = function (shopName, productNum, productCount) {
-  //
+  //;
   const cartDeleteBtnTags = document.querySelectorAll(`[class = "cart-delete-btn${productNum}"][data-name = "${shopName}"]`);
   const createTagCount = productCount - cartDeleteBtnTags.length;
   //
@@ -141,4 +142,4 @@ Cart.prototype.deleteCartProducts = function (e) {
   });
 };
 //
-// 09.04.21 수정
+// 09.05.18 수정

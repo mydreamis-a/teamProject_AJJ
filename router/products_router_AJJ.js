@@ -1,9 +1,12 @@
+/////////////////////////////////////////////
+// 목적: 상품 목록 화면을 위한 router 코드 모음
+
 const sendProductTags = require("../controller/sendProductTags_AJJ");
 const _cartTotalCount = require("../controller/cartTotalCount_AJJ");
 //
+const { User } = require("../model/index_AJJ");
 const { Op } = require("sequelize");
 const express = require("express");
-const { User } = require("../model/index_AJJ");
 const router = express.Router();
 const { log } = console;
 
@@ -23,12 +26,12 @@ router.post("/:shopName", async (req, res) => {
     email = req.session.email;
     //
     await User.findOne({ where: { email: email }, attributes: ["id"] })
-      .then(obj => id = obj.dataValues.id)
+      .then((obj) => (id = obj.dataValues.id))
       .then(async () => {
         const cartSession = null;
-        cartTotalCount = await _cartTotalCount(id, cartSession); // question: 함수 안에 await 할 경우 모든 코드가 대기하는 것은 아닌가? 함수 스코프 안에서만 await 하는 거?
+        cartTotalCount = await _cartTotalCount(id, cartSession);
         // log("2");
-      })
+      });
   }
   // ㅜ 비회원일 경우
   else {
@@ -36,8 +39,7 @@ router.post("/:shopName", async (req, res) => {
       //
       const cartSession = req.session.cart;
       cartTotalCount = _cartTotalCount(id, cartSession);
-    }
-    else cartTotalCount = 0;
+    } else cartTotalCount = 0;
   }
   sendProductTags(shopName, condition, res, email, cartTotalCount);
 });
@@ -98,4 +100,4 @@ router.post("/sortPrice/:shopName/:min/:max", (req, res) => {
 //
 module.exports = router;
 //
-// 09.04.20 수정
+// 09.05.18 수정

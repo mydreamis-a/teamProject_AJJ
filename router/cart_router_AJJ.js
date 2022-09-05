@@ -1,6 +1,5 @@
-const { Cart, AJYproduct, JBHproduct, JJWproduct, User } = require("../model/index_AJJ");
+const { Cart, User, AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
 const _cartTotalCount = require("../controller/cartTotalCount_AJJ");
-const { Op } = require("sequelize");
 const express = require("express");
 const router = express.Router();
 const { log } = console;
@@ -116,8 +115,6 @@ router.post("/list", (req, res) => {
         return obj.map((_Cart) => {
           _Cart = _Cart.dataValues;
           //
-          // const { ajyproduct_num, jbhproduct_num, jjwproduct_num, AJYproduct, JBHproduct, JJWproduct } = _Cart;
-          //
           for (const key in _Cart) {
             if (Object.hasOwnProperty.call(_Cart, key)) {
               //
@@ -129,37 +126,13 @@ router.post("/list", (req, res) => {
           }
           return _Cart;
         });
-        // if (ajyproduct_num === null) {
-        //   delete AJYproduct;
-        //   delete ajyproduct_num;
-        // }
-        // //
-        // else AJYproduct = AJYproduct.dataValues;
-        // //
-        // if (jbhproduct_num === null) {
-        //   delete JBHproduct;
-        //   delete jbhproduct_num;
-        // }
-        // //
-        // else JBHproduct = JBHproduct.dataValues;
-        // //
-        // if (jjwproduct_num === null) {
-        //   delete JJWproduct;
-        //   delete jjwproduct_num;
-        // }
-        // //
-        // else JJWproduct = JJWproduct.dataValues;
-        // //
       })
-      // ㅜ { [ {ajyproduct_num: null, jbhproduct_num: null, jjwproduct_num: number, prodcut_count: number, JJWproduct: { price: number } } ] }
-      .then((cartProducts) => {
-        log(cartProducts);
-        res.send({ cartProducts });
-      });
+      // ㅜ [{ jjwproduct_num: number, product_count: number, JJWproduct: { price: number } }]
+      .then((cartProducts) => res.send({ cartProducts }));
   }
 });
 
-////////////////////////////////////////
+///////////////////////////////////////
 // ㅜ 장바구니 화면에서 상품을 삭제할 경우
 router.post("/delete/:shopName/:productNum", (req, res) => {
   const { shopName, productNum } = req.params;
@@ -214,8 +187,8 @@ async function addCartSession(shopName, productNum, cartSession) {
         .then((obj) => obj.dataValues.price)
         .then((price) => {
           cartProductObj = {
-            ajyproduct_num: productNum,
             product_count: 1,
+            ajyproduct_num: productNum,
             AJYproduct: { price: price },
           };
         });
@@ -225,8 +198,8 @@ async function addCartSession(shopName, productNum, cartSession) {
         .then((obj) => obj.dataValues.price)
         .then((price) => {
           cartProductObj = {
-            jbhproduct_num: productNum,
             product_count: 1,
+            jbhproduct_num: productNum,
             JBHproduct: { price: price },
           };
         });
@@ -236,8 +209,8 @@ async function addCartSession(shopName, productNum, cartSession) {
         .then((obj) => obj.dataValues.price)
         .then((price) => {
           cartProductObj = {
-            jjwproduct_num: productNum,
             product_count: 1,
+            jjwproduct_num: productNum,
             JJWproduct: { price: price },
           };
         });
@@ -248,4 +221,4 @@ async function addCartSession(shopName, productNum, cartSession) {
 }
 module.exports = router;
 //
-// 09.05.14 수정
+// 09.05.18 수정
