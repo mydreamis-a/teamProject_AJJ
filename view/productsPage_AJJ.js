@@ -94,9 +94,12 @@ const productShowMoreBtnEvent = function () {
       const shopName = el.dataset.name;
       let priceScope = el.dataset.pricescope;
       //
-      if (method === undefined) method = null;
-      if (priceScope === undefined) priceScope = null;
-      //
+      if (method === undefined) {
+        method = null;
+      }
+      if (priceScope === undefined) {
+        priceScope = null;
+      }
       const btnNumber = el.className.replace("product-show-more-btn", "");
       const skipCount = btnNumber * 20;
       //
@@ -114,29 +117,46 @@ const productShowMoreBtnEvent = function () {
  * @param {string} priceScope 가격 검색일 경우 입력 범위
  * @param {number} skipCount 상품 제외 개수
  * @param {number} limitCount 상품 조회 개수
- * @returns {object} { 문자열의 상품 목록 태그, 조건에 해당되는 모든 상품 목록의 개수, 장바구니에 담긴 모든 상품의 수량 }
+ * @returns {object}
+ * products 해당 되는 상품 목록, resultCount 조건에 해당되는 모든 상품 목록의 개수, cartTotalCount 장바구니에 담긴 모든 상품의 수량, email 상품의 좋아요 기능을 위한 회원의 이메일
  */
+// 1. method, shopName, priceScope의 변수를 통해
+//    어떤 상점의 어떤 방법의 어느 가격 범위의 결과 값을 요하는 지에 대한 경로를 설정하고
+//    결과 값에 해당되는 모든 상품 목록에서 몇 개부터 몇 개까지 받을 건지 경로와 함께 전송
+// 2. 전송 받은 데이터가 해당되는 모든 상품 목록 중에서 첫 데이터일 경우
+//    createProductTags 함수의 반환 값인 문자열의 HTML 태그를
+//    덮어쓰기로서 상품 목록의 태그를 생성하고
+//    위로 스크롤
+// 3. 중간 데이터일 경우
+//    기존의 상품 목록 태그 아래에 생성하고
+//    기존의 더 보기 버튼은 삭제
+// 4. 전송 받은 데이터가 마지막 데이터가 아니라면
+//    더 보기 버튼 생성
+// 5. 더 보기 버튼에 대한 이벤트 등록
 function createProductTagsAjax(method, shopName, priceScope, skipCount, limitCount) {
   //
   let url = null;
-  let parentTag = null;
   //
-  if (priceScope !== null) url = `shop/${method}/${shopName}/${priceScope}`;
-  if (method !== null) url = `shop/${method}/${shopName}`;
-  else url = `shop/${shopName}`;
-  //
+  if (priceScope !== null) {
+    url = `shop/${method}/${shopName}/${priceScope}`;
+  }
+  if (method !== null) {
+    url = `shop/${method}/${shopName}`;
+  }
+  else {
+    url = `shop/${shopName}`;
+  }
   return $.ajax({
     url: url,
     type: "post",
     data: { skipCount, limitCount },
-
-    //////////////////////////////////////////
-    /**
-     * 각 상점의 상품 목록 태그를 생성해주는 함수
-     * @param {object} { 문자열의 상품 목록 태그, 조건에 해당되는 모든 상품 목록의 개수, 장바구니에 담긴 모든 상품의 수량 }
-     */
-    success: ({ productTags, resultCount, cartTotalCount }) => {
+    //
+    success: ({ products, resultCount, cartTotalCount, email }) => {
+      //
       let lastName = null;
+      let parentTag = null;
+      const productTags = createProductTags(shopName, products, email);
+      //
       switch (shopName) {
         case "ajy":
           lastName = "Ahn";
@@ -147,8 +167,6 @@ function createProductTagsAjax(method, shopName, priceScope, skipCount, limitCou
         case "jjw":
           lastName = "Jang";
           break;
-        default:
-          break;
       }
       parentTag = document.querySelector(`.${lastName}-product-list`).querySelector(".product-list-row");
       //
@@ -158,12 +176,15 @@ function createProductTagsAjax(method, shopName, priceScope, skipCount, limitCou
         //
         const section3Tag = document.querySelector(".section3");
         section3Tag.scroll(0, 0);
-      } else parentTag.innerHTML += productTags.join("");
+      }
       //
-      // ㅜ 이전에 더보기 버튼이 있었다면 삭제하기
-      const productShowMoreBtnTag = document.querySelector(`[class ^= "product-show-more-btn"][data-name = "${shopName}"][data-method = "${method}"][data-priceScope = "${priceScope}"]`);
-      if (productShowMoreBtnTag !== null) productShowMoreBtnTag.remove();
-      //
+      else {
+        parentTag.innerHTML += productTags.join("");
+        //
+        // ㅜ 기존의 더보기 버튼은 삭제하기
+        const productShowMoreBtnTag = document.querySelector(`[class ^= "product-show-more-btn"][data-name = "${shopName}"][data-method = "${method}"][data-priceScope = "${priceScope}"]`);
+        productShowMoreBtnTag.remove();
+      }
       // ㅜ 더보기 버튼이 필요하다면 생성하기
       if (resultCount > skipCount + limitCount) {
         //

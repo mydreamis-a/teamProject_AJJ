@@ -142,7 +142,7 @@ Search.prototype.showKeywordAjax = function () {
     type: "post",
     data: { keywords },
     /**
-     * 비회원일 경우 쿠키에, 로그인한 회원일 경우 DB에 저장되어 있는 최근 검색어 정보를 보여주는 함수
+     * 비회원일 경우 쿠키에, 로그인한 회원일 경우 DB에 저장 되어 있는 최근 검색어 정보를 보여주는 함수
      * @param {object} { array: 5개의 최근 검색어 정보 } 
      */
     success: ({ keywords }) => {

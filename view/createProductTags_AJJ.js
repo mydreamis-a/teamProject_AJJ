@@ -1,16 +1,22 @@
 const { log } = console;
+
+////////////////////////////////////////////////////////////////////
 /**
  * 해당하는 상품 목록의 태그 생성을 위해 문자열의 HTML 태그를 담은 함수
  * @param {string} shopName 상점 이름
- * @param {array} products 각 상점 별로 분류된 상품 목록
+ * @param {array} products 상품 목록 정보
  * @param {string} email 상품의 좋아요 기능을 위한 회원의 이메일
- * @returns 문자열의 HTML 태그
+ * @returns {string} 문자열의 HTML 태그
  */
-module.exports = function createProductTags(shopName, products, email) {
+// ㅜ 역할:
+// 상품 정보에 담긴 인덱스 id, 이름, 가격, 이미지 경로, 좋아요 개수와
+// 좋아요 기능을 위한 버튼 클릭 이벤트와
+// 장바구니 담기 기능을 위한 버튼 클릭 이벤트를 담은
+// 문자열의 HTML 태그를 반환
+const createProductTags = (shopName, products, email) => {
   const productTags = new Array();
   //
-  products.forEach((el, idx) => {
-    //
+  products.forEach((el) => {
     productTags.push(`
         <div class="product-list-col">
           <div class="product-container">
@@ -22,12 +28,12 @@ module.exports = function createProductTags(shopName, products, email) {
             <div class="product-box">
               <p class="product-name">${el.name}</p>
               <p class="product-price">${el.price} 원</p>
-              <img class="like-product-btn${idx + 1}" src="/img_Ahn_Ju/heart.gif" alt="" onclick="likeInsert('${el.name}','${idx + 1}','${email}')">
+              <img class="like-product-btn${el.id}" src="/img_Ahn_Ju/heart.gif" alt="" onclick="likeInsert('${el.name}','${el.id}','${email}')">
               <span style="font-size: 2vw; font-weight: 900;">${el.like_count}</span>
               <div class="product-btn-container">
                 <div class="product-btn-group">
-                <input class="in-cart-btn${idx + 1}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="_cart.inCartAjax()">
-                <input class="show-product-btn${idx + 1}" type="button" value="상품 보기">
+                <input class="in-cart-btn${el.id}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="_cart.inCartAjax()">
+                <input class="show-product-btn${el.id}" type="button" value="상품 보기">
               </div>
               </div>
             </div>
@@ -38,7 +44,14 @@ module.exports = function createProductTags(shopName, products, email) {
   return productTags;
 };
 
-module.exports = function createCartProductTags(shopName, products) {
+/////////////////////////////////////////////////////////////////
+/**
+ * 장바구니에 담긴 상품 목록의 태그 생성을 위해 문자열의 HTML 태그를 담은 함수
+ * @param {object} cartProducts 장바구니에 담긴 상품 목록 정보
+ * { [{ product_count: number, JJWproduct: { id: number, name: string, price: number, img: string } }] }
+ * @returns {string} 문자열의 HTML 태그
+ */
+const createCartProductTags = (cartProducts) => {
   const cartProductTags = new Array();
   //
   products.forEach((el, idx) => {

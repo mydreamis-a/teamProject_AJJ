@@ -2,13 +2,21 @@
  * 장바구니에 대한 클래스
  */
 class Cart {
-  constructor() {}
+  constructor() { }
 }
 
 ////////////////////////////////////////
 /**
  * 장바구니에 상품을 담는 ajax에 대한 함수
+ * @returns {object}
+ * cartTotalCount 장바구니에 담긴 모든 상품의 수량
  */
+// ㅜ 역할:
+// 1. 장바구니에 담기 버튼을 통해
+//    상점의 이름과 상품 번호를 가져와서
+//    해당 경로로 전송
+// 2. 장바구니에 담긴 모든 상품의 수량을 받아서
+//    장바구니 수량 태그에 값 삽입
 Cart.prototype.inCartAjax = function () {
   //
   const shopName = event.target.dataset.name;
@@ -17,12 +25,7 @@ Cart.prototype.inCartAjax = function () {
     //
     url: `/cart/${shopName}/${productNum}`,
     type: "post",
-
-    //////////////////////////////
-    /**
-     * 장바구니 수량을 수정하는 함수
-     * @param {object} { 장바구니에 담긴 모든 상품의 수량 }
-     */
+    //
     success: ({ cartTotalCount }) => {
       const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
       cartTotalCountNumberTag.innerHTML = cartTotalCount;
@@ -33,7 +36,14 @@ Cart.prototype.inCartAjax = function () {
 ////////////////////////////////////////////////////////
 /**
  * 장바구니 아이콘을 클릭하면 장바구니 화면을 보여주는 함수
+ * @returns {object} cartProducts 장바구니에 담긴 상품 목록 정보
+ * { [{ product_count: number, JJWproduct: { id: number, name: string, price: number, img: string } }] }
  */
+// 1. 장바구니 아이콘 클릭
+// 2. 장바구니 화면 표시
+// 3. 해당 경로로 전송
+// 4. 전송 받은 장바구니의 상품 정보로
+//  
 Cart.prototype.clickCartIcon = function () {
   //
   const cartModalContainerTag = document.querySelector(".cart-modal-container");
@@ -46,49 +56,33 @@ Cart.prototype.clickCartIcon = function () {
     $.ajax({
       url: "/cart/list",
       type: "post",
-
-      ///////////////////////////////////////////
-      /**
-       * 장바구니에 담긴 상품의 태그를 생성하는 함수
-       * @param {object} { [{ jjwproduct_num: number, product_count: number, JJWproduct: { price: number } }] }
-       */
+      //
       success: ({ cartProducts }) => {
         //
-        let totalprice = 0;
-        const cartTotalAmountTag = document.querySelector("#cart-total-price");
+        let totalPrice = 0;
+        const cartTotalPriceTag = document.querySelector("#cart-total-price");
         //
         cartProducts.forEach((el) => {
           //
           let productNum = 0;
           let shopName = null;
           //
+          
           for (const key in el) {
             if (Object.hasOwnProperty.call(el, key)) {
-              // log(el.ajyproduct_num); // undefined
+              // log(el.JJWproduct); // undefined
               //
-              switch (key) {
-                case "ajyproduct_num":
-                  shopName = shopNameArr[0];
-                  productNum = el[key];
-                  break;
-                case "jbhproduct_num":
-                  shopName = shopNameArr[1];
-                  productNum = el[key];
-                  break;
-                case "jjwproduct_num":
-                  shopName = shopNameArr[2];
-                  productNum = el[key];
-                  break;
+
+              log(el[key]?.price)
+              if (el[key]?.price !== undefined) {
+                price = el[key].price;
               }
             }
           }
-          const productCount = el.product_count;
-          const _shopName = shopName.toUpperCase();
-          //
-          totalprice += el[`${_shopName}product`].price;
-          this.createCartProducts(shopName, productNum, productCount);
+          totalPrice += price;
         });
-        cartTotalAmountTag.innerHTML = `총 합계 금액: ${totalprice} 원`;
+        createCartProductTags(cartProducts);
+        cartTotalPriceTag.innerHTML = `총 합계 금액: ${totalPrice} 원`;
       },
     });
   });
