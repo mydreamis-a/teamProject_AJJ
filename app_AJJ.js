@@ -89,7 +89,7 @@ sequelize
 app.get("/", (req, res) => {
   let userName = "";
   let errorCode = "";
-  let userPoint;
+  let userPoint = 0;
   jwt.verify(req.session.aT, process.env.JU_ACCESS_TOKEN, (err, decoded) => {
     if (err) {
       errorCode = "로그인을 해주세요";
@@ -104,7 +104,6 @@ app.get("/", (req, res) => {
       userPoint = req.session.point;
       console.log(err);
       errorCode = err;
-      console.log(userPoint);
     }
   });
   // ㅜ 등록된 회원 데이터가 하나도 없으면 테스트용 데이터 넣기

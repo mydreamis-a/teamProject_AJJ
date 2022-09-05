@@ -32,7 +32,7 @@ router.post("/login", (req, res) => {
             process.env.JU_ACCESS_TOKEN,
             {
               issuer: "주병현",
-              expiresIn: "15s",
+              expiresIn: "30s",
             }
           );
           let rT = jwt.sign(
@@ -43,7 +43,7 @@ router.post("/login", (req, res) => {
             process.env.JU_REFRESH_TOKEN,
             {
               issuer: "주병현",
-              expiresIn: "15s",
+              expiresIn: "30s",
             }
           );
           req.session.aT = aT;

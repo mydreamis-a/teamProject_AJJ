@@ -16,7 +16,7 @@ router.post("/", (req, res) => {
             { point :  e.point},
             { where :  { email : email }}
         );
-        res.send({ data : money });
+        res.send({ data : money , name : e.name});
     })
     .catch(() => {
         res.send({ data : "null" })
