@@ -144,7 +144,7 @@
       </div>
       <div class="sign-up-modal">
         <div class="sign-up-sub-modal">
-          <form action="/signUp" method="post">
+          <form action="/signUp" method="post" id="join-form">
             <fieldset class="fieldset">
               <legend class="legend">회 원 가 입</legend>
               <div class="sign-up-delete"><svg xmlns="http://www.w3.org/2000/svg" width="49.997px" height="49.997px"
@@ -236,7 +236,7 @@
             <div class="cart-list">
               <div class="cart-list-row">
               </div>
-              <p class="cart-total-price">총 합계 금액: 0 원</p>
+              <p id="cart-total-price">총 합계 금액: 0 원</p>
             </div>
           </div>
           <div class="cart-btn-group">
@@ -316,7 +316,6 @@
 <script src="JS/logo_AJJ.js"></script>
 <script src="JS/slide_mainContent_AJJ copy 2.js"></script>
 <script src="JS/slide_mainContent_AJJ copy.js"></script>
-<script src="JS/rankSlide_AJJ.js"></script>
 <script src="JS/dateAnimation_AJJ.js"></script>
 
 
@@ -328,6 +327,7 @@
 
 <script src="view/nav_AJJ.js"></script>
 <script src="view/loginPage_AJJ.js"></script>
+<script src="view/rankSlide_AJJ.js"></script>
 <script src="view/signUpPage_AJJ.js"></script>
 <script src="view/productsPage_AJJ.js"></script>
 <script src="view/iconEventPage_AJJ.js"></script>
@@ -338,7 +338,7 @@
 
 <script>const _dateAnimation = new dateAnimation();</script>
 <script>
-  // 09.01.19 수정
+  // 09.05.08 수정
   //
   const _mainNav = new mainNav();
   const _logo = new logo();

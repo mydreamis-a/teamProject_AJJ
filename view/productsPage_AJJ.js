@@ -1,9 +1,18 @@
-const shopName = ["ajy", "jbh", "jjw"];
+const shopNameArr = ["ajy", "jbh", "jjw"];
 const JuShopBtnTag = document.querySelector(".Ju-shop-btn");
 const AhnShopBtnTag = document.querySelector(".Ahn-shop-btn");
 const JangShopBtnTag = document.querySelector(".Jang-shop-btn");
 const shopBtnTags = [AhnShopBtnTag, JuShopBtnTag, JangShopBtnTag];
 //
+// ㅜ 각 상점의 상품 목록 태그 생성
+shopNameArr.forEach(el =>{
+    const method = null;
+    const skipCount = 0;
+    const limitCount = 20;
+    const priceScope = null;
+  createProductTagsAjax(method, el, priceScope, skipCount, limitCount);
+})
+
 // ㅜ 각 상점의 버튼을 클릭했을 때
 shopBtnTags.forEach((el, idx) => {
   el.addEventListener("click", async () => {
@@ -11,22 +20,22 @@ shopBtnTags.forEach((el, idx) => {
     let method = null;
     const skipCount = 0;
     let priceScope = null;
-    const limitCount = 20;
-    //
-    // ㅜ 비회원으로 가정
-    const id = null;
+    const limitCount = 20; // 이 변수들 사용하나?
     const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
     //
-    // ㅜ 각 상점의 상품 목록 태그 생성 및 장바구니 기능에 대하여
-    createProductTagsAjax(method, shopName[idx], priceScope, skipCount, limitCount)
+    // ㅜ 각 상점의 상품 목록 태그 생성
+    createProductTagsAjax(method, shopNameArr[idx], priceScope, skipCount, limitCount)
       //
-      .then((result) => (cartTotalCountNumberTag.innerHTML = result.cartTotalCount));
+      // ㅜ 장바구니에 담긴 모든 상품의 수량
+      .then(({ productTags, resultCount, cartTotalCount }) => (cartTotalCountNumberTag.innerHTML = cartTotalCount));
+    //
+    // ㅜ 장바구니 아이콘에 대한 함수
     _cart.clickCartIcon();
     //
     // ㅜ 검색 창 태그 생성 및 검색어 기능에 대하여
     _search.createSearchTags();
-    _search.saveKeyword(id);
-    _search.showKeyword(id);
+    _search.saveKeyword();
+    _search.showKeyword();
     //
     // ㅜ 신상품순의 버튼을 클릭했을 때
     const productSortNewBtnTag = document.querySelector("#product-sort-new");
@@ -96,12 +105,12 @@ const productShowMoreBtnEvent = function () {
  * 각 상점의 상품 목록 태그 생성을 위한 ajax에 대한 함수
  * @param {string} method 상품 검색 및 정렬 조건
  * @param {string} shopName 상점 이름
- * @param {string} priceScope 가격 검색으로 입력한 범위
+ * @param {string} priceScope 가격 검색일 경우 입력 범위
  * @param {number} skipCount 상품 제외 개수
  * @param {number} limitCount 상품 조회 개수
- * @returns 상품 검색 결과 { 문자열의 상품 목록 태그, 조건에 해당되는 모든 상품 목록의 개수, 장바구니의 상품 수량 }
+ * @returns {object} { 문자열의 상품 목록 태그, 조건에 해당되는 모든 상품 목록의 개수, 장바구니에 담긴 모든 상품의 수량 }
  */
-const createProductTagsAjax = function (method, shopName, priceScope, skipCount, limitCount) {
+function createProductTagsAjax (method, shopName, priceScope, skipCount, limitCount) {
   //
   let url = null;
   let parentTag = null;
@@ -114,46 +123,46 @@ const createProductTagsAjax = function (method, shopName, priceScope, skipCount,
     url: url,
     type: "post",
     data: { skipCount, limitCount },
+
+    //////////////////////////////////////////
     /**
      * 각 상점의 상품 목록 태그를 생성해주는 함수
-     * @param {object} result { 문자열의 상품 목록 태그, 조건에 해당되는 모든 상품 목록의 개수, 장바구니의 상품 수량 }
+     * @param {object} { 문자열의 상품 목록 태그, 조건에 해당되는 모든 상품 목록의 개수, 장바구니에 담긴 모든 상품의 수량 } 
      */
-    success: (result) => {
+    success: ({ productTags, resultCount, cartTotalCount }) => {
+      let lastName = null;
       switch (shopName) {
-        //
         case "ajy":
-          parentTag = document.querySelector(".Ahn-product-list").querySelector(".product-list-row");
+          lastName = "Ahn";
           break;
-        //
         case "jbh":
-          parentTag = document.querySelector(".Ju-product-list").querySelector(".product-list-row");
+          lastName = "Ju";
           break;
-        //
         case "jjw":
-          parentTag = document.querySelector(".Jang-product-list").querySelector(".product-list-row");
+          lastName = "Jang";
           break;
-        //
         default:
           break;
       }
+      parentTag = document.querySelector(`.${lastName}-product-list`).querySelector(".product-list-row");
+      //
+      // ㅜ 태그 생성에 있어 덮어쓰거나 추가하거나
       if (skipCount === 0) {
-        parentTag.innerHTML = result.productTags.join("");
+        parentTag.innerHTML = productTags.join("");
         //
         const section3Tag = document.querySelector(".section3");
         section3Tag.scroll(0, 0);
-        //
-      } else parentTag.innerHTML += result.productTags.join("");
+      } else parentTag.innerHTML += productTags.join("");
       //
-      // ㅜ 이전의 더보기 버튼이 있다면 삭제하기
-      let productShowMoreBtnTag = null;
+      // ㅜ 이전에 더보기 버튼이 있었다면 삭제하기
       if (document.querySelector(`[class ^= "product-show-more-btn"][data-name = "${shopName}"][data-method = "${method}"][data-priceScope = "${priceScope}"]`)) {
-        productShowMoreBtnTag = document.querySelector(`[class ^= "product-show-more-btn"][data-name = "${shopName}"][data-method = "${method}"][data-priceScope = "${priceScope}"]`);
+        const productShowMoreBtnTag = document.querySelector(`[class ^= "product-show-more-btn"][data-name = "${shopName}"][data-method = "${method}"][data-priceScope = "${priceScope}"]`);
         productShowMoreBtnTag.remove();
       }
       // ㅜ 더보기 버튼이 필요하다면 생성하기
-      if (result.resultCount > skipCount + limitCount) {
+      if (resultCount > skipCount + limitCount) {
         //
-        productShowMoreBtnTag = document.createElement("input");
+        const productShowMoreBtnTag = document.createElement("input");
         if (priceScope !== null) {
           productShowMoreBtnTag.setAttribute("data-pricescope", priceScope);
         }
@@ -174,4 +183,4 @@ const createProductTagsAjax = function (method, shopName, priceScope, skipCount,
   });
 };
 //
-// 09.02.09 수정
+// 09.05.00 수정

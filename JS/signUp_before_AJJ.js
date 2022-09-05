@@ -24,9 +24,9 @@ class signUp {
       }
     });
 
-    // Object.prototype.insertAfter = (newNode) => {
-    //   this.parentNode.insertBefore(newNode, this.nextSibling);
-    // };
+    Object.prototype.insertAfter = (newNode) => {
+      this.parentNode.insertBefore(newNode, this.nextSibling);
+    };
 
     this.disallowMessages.push("한글 또는 영어로 2글자 이상 입력해야 합니다.");
     this.disallowMessages.push("0으로 시작하는 숫자 9~12자리를 입력해야 합니다.");
