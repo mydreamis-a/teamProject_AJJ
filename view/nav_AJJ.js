@@ -52,6 +52,8 @@ class mainNav {
   init() {
     // 챗봇박스는 일단 먼저 꺼둔다.
     this.chatBotTag.style.display = "none";
+    // 관리자만 볼 수 있기 때문에 먼저 꺼둔다. 
+    this.rooms.style.display = "none";
     // transition에 property(속성)를 넣으면 그 property(속성)에만 적용가능하다.
     // this.remocon.style.transition = "opacity 10s";
     // js에서 먼저 설정해줘야함
@@ -133,23 +135,32 @@ class mainNav {
       const liveSubmit = document.createElement("div");
       liveSubmit.classList.add("submission");
       liveSubmit.innerHTML = "상담하기";
+      const liveSubmit2 = document.createElement("div");
+      liveSubmit2.classList.add("submission");
+      liveSubmit2.innerHTML = "종료하기";
 
       chat.appendChild(liveChatName);
       chat.appendChild(liveSubmit);
+      chat.appendChild(liveSubmit2);
       this.chatBox.appendChild(chat);
       this.chatBox.scrollBy(0, this.chatBox.offsetHeight);
       liveSubmit.onclick = () => {
         // 관리자 socket.id 인지 유저 socket.id인지 확인 이벤트 요청
         if (liveChatName.value === admin) {
+          this.rooms.style.display = "block";
           socket.emit("admin");
         } else {
           // admin이 아니면 상담하기 누르면 이름 떠서 안녕하세요 띄우고, 관리자 옵션(방) 추가하기
-          socket.emit("liveHi", {
-            name: liveChatName.value,
-          });
+          // 안에 이름 안쓰면 상담이 안됨.
+          if(!liveChatName.value){
+            return alert("이름쓰라고 ^^");
+          } else {
+            socket.emit("liveHi", {
+              name: liveChatName.value,
+            });
+          }
         }
-
-        if (!liveChatName.value) return alert("이름쓰라고 ^^");
+        // if (!liveChatName.value) return alert("이름쓰라고 ^^");
         // 두번째 인풋 막은거 다시 풀기.
         this.chatInput.removeEventListener("click", this.bb);
         this.chatInput.readOnly = false;
