@@ -4,6 +4,9 @@ const signInExitTag = document.querySelector('.sign-in-exit-btn').addEventListen
   modal.style.display = "none";
 });
 
+const userLogin = document.querySelector(".user-login");
+console.log(userLogin);
+
 personIcon.addEventListener("click", () => {
     modal.style.display = "block";
 });

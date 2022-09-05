@@ -41,11 +41,10 @@ router.post("/last", (req, res) => {
   User.findOne({
     where: { email: email },
   }).then((e) => {
-    if (e == null){
+    if (e == null) {
       console.log(e);
-      res.send({ data : "null" });
-    }
-    else{
+      res.send({ data: "null" });
+    } else {
       DailyCheck.findAll({
         where: { user_id: e.id },
       }).then((e) => {
@@ -59,9 +58,40 @@ router.post("/last", (req, res) => {
         });
       });
     }
-  })
+  });
 });
 
 module.exports = router;
 
 // 08.25.10 수정
+
+// ㅜ  return을 사용하면 가독성이 좋아진다.
+
+// router.post("/today", (req, res) => {
+//   // 유저가 누른 오늘 날짜와 이메일을 담아옴
+//   const { date } = req.body;
+//   let email = req.session.email;
+//   let userId = null;
+//   User.findOne({ where: { email: email } })
+//     .then((e) => {
+//       userId = e.id;
+//       return DailyCheck.findOne({
+//         where: {
+//           day: date,
+//           user_id: userId,
+//         },
+//       });
+//     })
+//     .then((e) => {
+//       if (!e) {
+//         return DailyCheck.create({
+//           day: date,
+//           user_id: userId,
+//         }).then(() => {
+//           res.send({ result: date });
+//         });
+//       } else {
+//         res.send({ done: "already" });
+//       }
+//     });
+// });
