@@ -10,19 +10,16 @@ module.exports = function cartTotalCount(id, cartSession) {
   //
   // ㅜ 로그인한 회원일 경우
   if (id !== null) {
-    return Cart.sum("product_count", { where: { user_id: id } })
-      .then((obj) => {
-        // log("1");
-        if (obj !== null) return obj;
-        else return 0;
-      })
+    return Cart.sum("product_count", { where: { user_id: id } }).then((obj) => {
+      // log("1");
+      if (obj !== null) return obj;
+      else return 0;
+    });
   }
   // ㅜ 비회원일 경우
   else {
-    return cartSession.reduce((prev, curr) => {
-      log(prev)
-      return prev + curr.product_count; }, 0);
-  };
+    return cartSession.reduce((prev, curr) => prev + curr.product_count, 0);
+  }
 };
 //
-// 09.05.07 수정
+// 09.05.13 수정

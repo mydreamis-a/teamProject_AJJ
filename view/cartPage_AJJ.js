@@ -2,7 +2,7 @@
  * 장바구니에 대한 클래스
  */
 class Cart {
-  constructor() { }
+  constructor() {}
 }
 
 ////////////////////////////////////////
@@ -48,35 +48,45 @@ Cart.prototype.clickCartIcon = function () {
       type: "post",
       /**
        * 장바구니에 담긴 상품의 태그를 생성하는 함수
-       * @param {object} { [ {ajyproduct_num: null, jbhproduct_num: null, jjwproduct_num: number, prodcut_count: number, JJWproduct: { price: number } } ] } 
+       * @param {object} { [ {ajyproduct_num: null, jbhproduct_num: null, jjwproduct_num: number, prodcut_count: number, JJWproduct: { price: number } } ] }
        */
       success: ({ cartProducts }) => {
         //
         let totalprice = 0;
         const cartTotalAmountTag = document.querySelector("#cart-total-price");
         //
-        cartProducts.forEach(el => {
+        cartProducts.forEach((el) => {
           //
-          let shopName = null;
           let productNum = 0;
+          let shopName = null;
+          let productCount = 0;
           //
-          if (el.ajyproduct_num !== null) {
-            shopName = shopNameArr[0];
-            productNum = el.ajyproduct_num;
+          for (const key in el) {
+            if (Object.hasOwnProperty.call(el, key)) {
+              // log(el.ajyproduct_num); // undefined
+              //
+              switch (key) {
+                case "ajyproduct_num":
+                  shopName = shopNameArr[0];
+                  break;
+                case "jbhproduct_num":
+                  shopName = shopNameArr[1];
+                  break;
+                case "jjwproduct_num":
+                  shopName = shopNameArr[2];
+                  break;
+                default:
+                  break;
+              }
+              productNum = el[key];
+            }
           }
-          else if (el.jbhproduct_num !== null) {
-            shopName = shopNameArr[1];
-            productNum = el.jbhproduct_num;
-          }
-          else if (el.jjwproduct_num !== null) {
-            shopName = shopNameArr[2];
-            productNum = el.jjwproduct_num;
-          }
-          const productCount = el.product_count;
           const _shopName = shopName.toUpperCase();
+          //
+          productCount = el.product_count;
           totalprice += el[`${_shopName}product`].price;
           this.createCartProducts(shopName, productNum, productCount);
-        })
+        });
         cartTotalAmountTag.innerHTML = `총 합계 금액: ${totalprice} 원`;
       },
     });
@@ -128,7 +138,7 @@ Cart.prototype.deleteCartProducts = function (e) {
   $.ajax({
     url: `/cart/delete/${shopName}/${productNum}`,
     type: "post",
-  })
-}
+  });
+};
 //
 // 09.04.21 수정

@@ -42,7 +42,6 @@ router.post("/last", (req, res) => {
     where: { email: email },
   }).then((e) => {
     if (e == null) {
-      console.log(e);
       res.send({ data: "null" });
     } else {
       DailyCheck.findAll({

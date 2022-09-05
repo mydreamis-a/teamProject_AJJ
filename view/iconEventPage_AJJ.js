@@ -92,7 +92,7 @@ mainEvent.addEventListener("click", () => {
     },
   });
 });
-window.onload= () => {
+window.onload = () => {
   $.ajax({
     url: "/dailyPoint",
     type: "post",
@@ -103,13 +103,11 @@ window.onload= () => {
       userCookie = id;
       if (data == "null") {
         time();
-      }
-      else if (getCookie("id") === userCookie) {
-          mainEvent.style.display = "none";
-        }
-        else  time();
-      }
-    })
+      } else if (getCookie("id") === userCookie) {
+        mainEvent.style.display = "none";
+      } else time();
+    },
+  });
 };
 
 // let time = 0;
