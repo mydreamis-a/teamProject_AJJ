@@ -1,6 +1,7 @@
 /* 07 24 19 수정 */
 
 .main-event {
+    color: indianred;
     animation: move 0.5s alternate infinite;
     position: relative;
     z-index: 9999;
