@@ -21,7 +21,9 @@ router.post("/:shopName/:productNum", async (req, res) => {
     // ㅜ 첫 접속일 경우
     if (cartSession === undefined) {
       cartSession = new Array();
-    } else {
+    }
+    //
+    else {
       cartSession.forEach(async (el) => {
         //
         // ㅜ 해당 상품이 이미 저장되어 있을 경우
@@ -36,7 +38,7 @@ router.post("/:shopName/:productNum", async (req, res) => {
     if (!update) {
       cartSession = await addCartSession(shopName, productNum, cartSession);
     }
-    req.session.cart = await cartSession;
+    req.session.cart = cartSession;
     //
     // ㅜ 장바구니에 담긴 모든 상품의 수량
     const cartTotalCount = _cartTotalCount(id, cartSession);
