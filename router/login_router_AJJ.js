@@ -52,11 +52,12 @@ router.post("/login", (req, res) => {
           req.session.email = user.email;
           req.session.point = user.point;
           res.redirect("/");
-        } else if (err) {
-          console.log(err);
-          errorCode = "계정없음";
+        } else if (!same) {
+          console.log(err + "1");
+          errorCode = "아이디와 비밀번호가 정확하지 않습니다.";
           userName = "";
-          res.redirect("/");
+          res.render("main_AJJ", { errorCode });
+          // res.redirect("/");
         }
       });
     })

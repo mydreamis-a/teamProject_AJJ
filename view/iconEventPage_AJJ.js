@@ -3,16 +3,18 @@ mainEvent.style.display = "none";
 
 let stop;
 let userPoint;
+let userCookie = null;
 
+// ㅜ 인터넷 예시? 이건 또 잘 날짜가 들어감..
 // document.cookie = "user=John; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT"
 
 // 쿠키 생성 함수
 let createCookie = function (name, value, time) {
   let date = new Date();
-  date.setTime(date.getTime() + time * 10 * 1000);
+  date.setTime(date.getTime() + time * 60 * 1000);
   // ㅜ 날짜로 잘 들어감..
   document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/;`;
-  // ㅜ 세션으로 들어감..
+  // ㅜ 세션으로 들어감.. 이건 왜 안되는걸까?
   // document.cookie = name + "=" + value + "; expries=" + date.toUTCString() + "; path=/;"
 };
 // 쿠키 유무
@@ -24,22 +26,12 @@ let isActiveCookie = function (key) {
 let getCookie = function (name) {
   // 현재 저장된 쿠키중 name에 맞는 쿠키가 저장되어 있으면
   let value = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
-  // 있으면 값을 내보낸다.
+  // 있으면 값을 내보낸다..
   // 쿠키의 값이 있는 인덱스가 2번이라서 인덱스 값을 가져온다.
   // console.log("cookie" + value[2]);
   // console.log("cookie" + value[0]);
   return value ? value[2] : null;
 };
-
-// 쿠키 제거 함수
-let isDeleteCookie = function (key) {
-  // key는 쿠키의 이름
-  // 쿠키 제거 기능은 없기에 제일 예전 날짜를 넣어줘서 자동으로 삭제되게 만든다.
-  document.cookie = key + "=; expires=Thu, 01 Jan 1999 00:00:10 GMT;";
-};
-
-// 이미 dailyCheck_ajax.js에서 선언해서 사용하기 때문에 재선언할 필요가 없다.
-// ㅜ 로그인된 회원의 아이디(이메일) 임의 지정
 
 function time() {
   let eventleft = Math.floor(Math.random() * 1851);
@@ -73,26 +65,50 @@ mainEvent.addEventListener("click", () => {
     data: {
       userPoint: userPoint,
     },
-    success: function (result) {
-      if (result.data == "null") {
+    success: function ({ data, id }) {
+      if (data == "null") {
+        console.log(document.cookie);
         alert(" 로그인하시면 포인트 받을 수 있음 ^^7 ");
         time();
       } else {
-        alert(result.data + "적립");
-        createCookie("qq", "qq", 1);
-        isDeleteCookie();
-        let aa = isActiveCookie(result.name);
-        if (aa == true) {
+        alert(data + "적립");
+        createCookie("id", id, 1);
+        userCookie = id;
+        // console.log(document.cookie);
+        // let aa = isActiveCookie("id")
+        // console.log(aa);
+        // if(aa == true)
+        // {
+        //   console.log("aa1");
+        // } else{
+        //   console.log("aa2");
+        if (getCookie("id") === userCookie) {
           mainEvent.style.display = "none";
         } else {
-          time();
+          // time();
         }
+        // }
       }
     },
   });
 });
-
-time();
+window.onload = () => {
+  $.ajax({
+    url: "/dailyPoint",
+    type: "post",
+    data: {
+      userPoint: userPoint,
+    },
+    success: function ({ data, id }) {
+      userCookie = id;
+      if (data == "null") {
+        time();
+      } else if (getCookie("id") === userCookie) {
+        mainEvent.style.display = "none";
+      } else time();
+    },
+  });
+};
 
 // let time = 0;
 // let ran = 0;

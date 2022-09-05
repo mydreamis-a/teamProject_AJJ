@@ -14,7 +14,7 @@ const cookie = require("cookie-parser");
 const session = require("express-session");
 //
 // ㅜ model
-const { sequelize, AJYproduct, JBHproduct, JJWproduct, Like } = require("./model/index_AJJ");
+const { sequelize, User, AJYproduct, JBHproduct, JJWproduct, Like } = require("./model/index_AJJ");
 //
 // ㅜ router
 const cart = require("./router/cart_router_AJJ");
@@ -100,7 +100,7 @@ app.get("/", (req, res) => {
       req.session.rT = "";
     } else if (decoded) {
       errorCode = "";
-      userName = req.session.name;
+      userName = req.session.name + "님 환영합니다.";
       userPoint = req.session.point;
       // console.log(err);
       errorCode = err;
