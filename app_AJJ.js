@@ -14,7 +14,7 @@ const cookie = require("cookie-parser");
 const session = require("express-session");
 //
 // ㅜ model
-const { sequelize, User, Cart, Keyword, JBHproduct, JJWproduct, AJYproduct, Like } = require("./model/index_AJJ");
+const { sequelize, AJYproduct, JBHproduct, JJWproduct, Like } = require("./model/index_AJJ");
 //
 // ㅜ router
 const cart = require("./router/cart_router_AJJ");
@@ -102,25 +102,15 @@ app.get("/", (req, res) => {
       errorCode = "";
       userName = req.session.name;
       userPoint = req.session.point;
-      console.log(err);
+      // console.log(err);
       errorCode = err;
     }
   });
-  // ㅜ 등록된 회원 데이터가 하나도 없으면 테스트용 데이터 넣기
-  User.findOne({}).then((value) => {
-    if (value !== null) res.render("main_AJJ", { data: { userName, userPoint }, errorCode });
-    else {
-      addProductData()
-        .then(() => {
-          User.create({
-            name: "똥",
-            phone: "8282",
-            email: "ajj@ajj.com",
-            password: "acca3434",
-          });
-        })
-        .then(() => res.render("main_AJJ", { userName, errorCode }));
-    }
+  AJYproduct.findOne({}).then(async (obj) => {
+    //
+    // ㅜ 저장된 상품 데이터가 하나도 없을 경우 넣기
+    if (obj === null) await addProductData();
+    res.render("main_AJJ", { data: { userName, userPoint }, errorCode });
   });
 });
 
@@ -184,7 +174,6 @@ io.sockets.on("connection", async (socket) => {
     })
       .then((data) => {
         if (data) {
-          console.log("들어오냐?");
           Like.destroy({
             where: {
               user_id: data[0].user_id,
@@ -193,12 +182,9 @@ io.sockets.on("connection", async (socket) => {
           });
         }
       })
-      .catch((err) => {
-        console.log("좋아요 눌렀습니다");
-      });
+      .catch((err) => {});
   });
   socket.on("likeInsert", async (shopName, productIndex, userEmail) => {
-    console.log("들?");
     let arr1;
     await User.findOne({
       where: {
@@ -243,12 +229,12 @@ io.sockets.on("connection", async (socket) => {
                     });
                 })
                 .catch((err) => {
-                  console.log(err + "1");
+                  console.log(err);
                 });
             }
           })
           .catch((err) => {
-            console.log(err + "2");
+            console.log(err);
           });
         if (arr1 == null) {
           JJWproduct.findOne({
@@ -270,7 +256,7 @@ io.sockets.on("connection", async (socket) => {
               }
             })
             .catch((err) => {
-              console.log(err + "3");
+              console.log(err);
             });
         }
         if (arr1 == null) {
@@ -293,7 +279,7 @@ io.sockets.on("connection", async (socket) => {
               }
             })
             .catch((err) => {
-              console.log(err + "4");
+              console.log(err);
             });
         }
         if (arr1 == null) {
@@ -301,9 +287,9 @@ io.sockets.on("connection", async (socket) => {
         }
       })
       .catch((err) => {
-        console.log(err + "3");
+        console.log(err);
       });
   });
 });
 //
-// 09.03.16 수정
+// 09.05.13 수정

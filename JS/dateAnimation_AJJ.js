@@ -98,7 +98,6 @@ class dateAnimation {
     let _setTimeOut = null;
 
     // ㅜ 나머지 값에서 시작하기
-    console.log();
     const startValue = this.goal - this.sum(this.againstSum(this.goal));
     this.value = startValue;
 

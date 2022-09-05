@@ -5,12 +5,12 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 router.use(
-    session({
-      secret: process.env.JU_SECRET_KEY,
-      resave: false,
-      saveUninitialized: true,
-    })
-  );
+  session({
+    secret: process.env.JU_SECRET_KEY,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 router.post("/login", (req, res) => {
   let errorCode = "";
@@ -22,7 +22,7 @@ router.post("/login", (req, res) => {
     },
   })
     .then((user) => {
-      bcrypt.compare(password, user?.password, (err,same) => {
+      bcrypt.compare(password, user?.password, (err, same) => {
         if (same) {
           let aT = jwt.sign(
             {
@@ -53,7 +53,7 @@ router.post("/login", (req, res) => {
           req.session.point = user.point;
           res.redirect("/");
         } else if (err) {
-          console.log(err + "1");
+          console.log(err);
           errorCode = "계정없음";
           userName = "";
           res.redirect("/");
@@ -61,12 +61,11 @@ router.post("/login", (req, res) => {
       });
     })
     .catch((e) => {
-      console.log(err + "2");
+      console.log(err);
       errorCode = "비밀번호 틀림";
       userName = "";
       res.render("main_AJJ", { userName, errorCode });
     });
 });
-
 
 module.exports = router;
