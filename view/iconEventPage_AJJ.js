@@ -4,11 +4,16 @@ mainEvent.style.display = "none";
 let stop;
 let userPoint;
 
+// document.cookie = "user=John; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT"
+
 // 쿠키 생성 함수
 let createCookie = function(name, value, time){
   let date = new Date();
-  date.setTime(date.getTime() + time * 5 * 1000);
-  document.cookie = name + "=" + value + ";expries" + date.toUTCString() + ";path=/"
+  date.setTime(date.getTime() + time * 10 * 1000);
+  // ㅜ 날짜로 잘 들어감..
+  document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/;`;
+  // ㅜ 세션으로 들어감..
+  // document.cookie = name + "=" + value + "; expries=" + date.toUTCString() + "; path=/;"
 };
 // 쿠키 유무
 let isActiveCookie = function(key){
@@ -24,6 +29,13 @@ let getCookie = function(name){
   // console.log("cookie" + value[2]);
   // console.log("cookie" + value[0]);
   return value ? value[2] : null;
+};
+
+// 쿠키 제거 함수
+let isDeleteCookie = function(key){
+  // key는 쿠키의 이름
+  // 쿠키 제거 기능은 없기에 제일 예전 날짜를 넣어줘서 자동으로 삭제되게 만든다.
+  document.cookie = key + "=; expires=Thu, 01 Jan 1999 00:00:10 GMT;";
 };
 
 // 이미 dailyCheck_ajax.js에서 선언해서 사용하기 때문에 재선언할 필요가 없다.
@@ -63,11 +75,13 @@ mainEvent.addEventListener("click", () => {
     },
     success: function (result) {
       if (result.data == "null") {
+        console.log(document.cookie);
         alert(" 로그인하시면 포인트 받을 수 있음 ^^7 ");
         time();
       } else {
         alert(result.data + "적립");
-        createCookie("asd","asd",1);
+        createCookie("qq","qq",1);
+        isDeleteCookie();
         console.log(document.cookie);
         let aa = isActiveCookie(result.name)
         console.log(aa);
