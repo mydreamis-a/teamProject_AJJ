@@ -42,7 +42,7 @@ const createProductTags = (shopName, products, email) => {
   return productTags;
 };
 
-/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 /**
  * 장바구니에 담긴 상품 목록의 태그 생성을 위해 문자열의 HTML 태그를 담은 함수
  * @param {object} cartProducts 장바구니에 담긴 상품 목록 정보
@@ -71,7 +71,6 @@ const createCartProductTags = (cartProducts) => {
           img = productData.img;
           name = productData.name;
           price = productData.price;
-          log(typeof key);
           shopName = key.replace("product", "").toLowerCase();
         }
       }
@@ -100,7 +99,7 @@ const createCartProductTags = (cartProducts) => {
         `);
     }
   });
-  return cartProductTags;
+  return cartProductTags.reverse();
 };
 //
 // 09.05.18 수정

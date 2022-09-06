@@ -1,13 +1,7 @@
 ////////////////////////////////////////////
 // 목적: 장바구니 기능을 위한 router 코드 모음
 
-const {
-  Cart,
-  User,
-  AJYproduct,
-  JBHproduct,
-  JJWproduct,
-} = require("../model/index_AJJ");
+const { Cart, User, AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
 const _cartTotalCount = require("../controller/cartTotalCount_AJJ");
 const express = require("express");
 const router = express.Router();
@@ -40,12 +34,10 @@ const { Op } = require("sequelize");
 //    모든 상품의 수량을 가져와서
 //    ajax에 전송
 
-
-
 //@@@@@@@@@@@@@@@@@@@@@@@
 router.post("/search", async (req, res) => {
   const { search } = req.body;
-  console.log("req.body",req.body);
+  console.log("req.body", req.body);
   AJYproduct.findAll({
     where: {
       name: {
@@ -55,16 +47,12 @@ router.post("/search", async (req, res) => {
   }).then((datas) => {
     console.log(datas);
     const result = datas.map((data) => data.dataValues);
-    
+
     console.log(result);
     res.send(result);
   });
 });
 //@@@@@@@@@@@@@@@@@@@@@@@
-
-
-
-
 
 router.post("/:shopName/:productNum", async (req, res) => {
   //
@@ -87,11 +75,14 @@ router.post("/:shopName/:productNum", async (req, res) => {
       cartSession.forEach(async (el) => {
         //
         // ㅜ 해당 상품이 이미 저장 되어 있을 경우
-        if (el[`${_shopName}product`].id === productNum) {
-          //
-          el.product_count++;
-          update = true;
-          return;
+        // if (el[`${_shopName}product`]?.id === productNum) {
+        if (el[`${_shopName}product`] !== undefined) {
+          if (el[`${_shopName}product`].id === productNum) {
+            //
+            el.product_count++;
+            update = true;
+            return;
+          }
         }
       });
     }
@@ -193,22 +184,29 @@ router.post("/list", (req, res) => {
         });
       })
       .then((obj) => {
-        return obj.map((_Cart) => {
-          _Cart = _Cart.dataValues;
+        return obj.map((_obj) => _obj.dataValues);
+      })
+      .then((arr) => {
+        arr.forEach((el) => {
           //
-          for (const key in _Cart) {
-            if (Object.hasOwnProperty.call(_Cart, key)) {
+          for (const key in el) {
+            if (Object.hasOwnProperty.call(el, key)) {
               //
-              let el = _Cart[key];
-              if (el === null) delete _Cart[key];
+              let element = el[key];
               //
-              if (el?.dataValues !== undefined) _Cart[key] = el.dataValues;
+              if (element === null) {
+                delete el[key];
+                continue;
+              }
+              if (element.dataValues !== undefined) {
+                el[key] = element.dataValues;
+              }
             }
           }
-          return _Cart;
         });
+        return arr;
+        // ㅗ [{ product_count: number, JJWproduct: { id: number, name: string, price: number, img: string } }]
       })
-      // ㅜ [{ product_count: number, JJWproduct: { id: number, name: string, price: number, img: string } }]
       .then((cartProducts) => res.send({ cartProducts }));
   }
 });
@@ -315,4 +313,4 @@ async function addCartSession(shopName, productNum, cartSession) {
 }
 module.exports = router;
 //
-// 09.05.18 수정
+// 09.06.16 수정

@@ -11,9 +11,7 @@ class Search {
  */
 Search.prototype.createSearchTags = function () {
   //
-  const width = document.querySelector(
-    "[class $= '-product-list']"
-  ).clientWidth;
+  const width = document.querySelector("[class $= '-product-list']").clientWidth;
   const searchTag = document.querySelector(".search");
   //
   searchTag.style.width = `${this.widthFromPxToVw(width)}vw`;
@@ -28,7 +26,7 @@ Search.prototype.createSearchTags = function () {
     <input id="product-sort-high-price" class="product-search" type="button" value="높은가격순">
     <input id="product-keyword" class="cart-input-search-item" type="search" autocomplete="off">
     <input id="product-keyword-btn" class="product-search" type="submit" value="검색">
-    <div class="product-keyword-last">최근검색어</div>
+    <div class="product-last-keyword">최근검색어</div>
     `;
   const mainHeaderTag = document.querySelector(".main-header");
   mainHeaderTag.style.backgroundColor = "white";
@@ -79,34 +77,27 @@ Search.prototype.saveKeyword = function () {
       this.saveKeywordAjax(keyword);
     }
   });
-  // function saveKeywordAjax(keyword) {
-  //   //
-  //   $.ajax({
-  //     url: "/keyword/save",
-  //     type: "post",
-  //     data: { keyword },
-  //     //
-  //     success: ({ stringKeywords }) => {
-  //       log(this)
-  //       this._search.createCookie("keyword", stringKeywords, 0.0001);
-  //     }
-  //   });
-  // };
 };
 
+///////////////////////////////////
 /**
  * 검색어를 저장하는 ajax에 대한 함수
+ * @param {string} keyword 입력된 검색어
+ * @returns {object}
+ * keywords 비회원일 경우에 쿠키에 저장되어 있는 최근 검색어에 대한 배열
  */
+// 1. 입력된 검색어를 해당 경로로 전송
+// 2. 전송 받은 최근 검색어 배열을 문자열로 바꿔서
+//    쿠키 생성
 Search.prototype.saveKeywordAjax = function (keyword) {
   $.ajax({
     url: "/keyword/save",
     type: "post",
     data: { keyword },
-    /**
-     *
-     * @param {object} { array or undefined: 쿠키에 들어 있는 최근 검색어 정보 }
-     */
+    //
     success: ({ keywords }) => {
+      // log(keywords); // 로그인한 회원일 경우 실행되지 않음
+      //
       if (keywords) {
         const stringKeywords = keywords.join(", ");
         this.createCookie("keyword", stringKeywords, 0.1);
@@ -127,43 +118,59 @@ Search.prototype.showKeyword = function () {
   });
   //
   productKeywordTag.addEventListener("keyup", (e) => {
-    if (e.code === "Enter") this.showKeywordAjax();
+    if (e.code === "Enter") {
+      this.showKeywordAjax();
+    }
   });
 };
 
+///////////////////////////////////////
 /**
  * 최근 검색어를 보여주는 ajax에 대한 함수
+ * @returns {object}
+ * keywords 쿠키 혹은 검색어 테이블에 저장되어 있는 최근 검색어에 대한 배열
  */
+// 1. 쿠키에 저장된 최근 검색어 정보를 가져와서
+//    해당 경로로 전송
+// 2. 전송 받은 최근 검색어의 배열을
+//    검색 창 아래에 태그를 생성해서 보여주고
+// 3. 해당 검색어에 대한 이벤트 등록
+// 4. 최근 검색어 태그 숨김에 대한 이벤트 등록
 Search.prototype.showKeywordAjax = function () {
   //
-  const productLastKeywordsTag = document.querySelector(
-    ".product-keyword-last"
-  );
+  const productLastKeywordsTag = document.querySelector(".product-last-keyword");
   const productKeywordTag = document.querySelector("#product-keyword");
   const keywords = this.getCookie("keyword");
   $.ajax({
     url: "/keyword/last",
     type: "post",
     data: { keywords },
-    /**
-     * 비회원일 경우 쿠키에, 로그인한 회원일 경우 DB에 저장 되어 있는 최근 검색어 정보를 보여주는 함수
-     * @param {object} { array: 5개의 최근 검색어 정보 }
-     */
+    //
     success: ({ keywords }) => {
       //
       productLastKeywordsTag.innerHTML = "최근 검색어";
+      productLastKeywordsTag.style.display = "block";
+      //
       keywords.forEach((el) => {
-        productLastKeywordsTag.innerHTML += `<br>${el}`;
+        productLastKeywordsTag.innerHTML += `<p>${el}</p>`;
       });
-      productLastKeywordsTag.style.visibility = "visible";
+      //
+      // ㅜ 검색어를 클릭했을 때 검색 창에 해당 검색어 입력하기
+      const productLastKeywordPTag = document.querySelectorAll(".product-last-keyword > p");
+      productLastKeywordPTag.forEach((el) => {
+        el.addEventListener("click", () => {
+          productKeywordTag.value = el.innerHTML;
+        });
+      });
     },
   });
-  //
+  // ㅜ 최근 검색어 태그 숨기기
   productKeywordTag.addEventListener("focusout", () => {
-    productLastKeywordsTag.style.visibility = "hidden";
+    setTimeout(() => {
+      productLastKeywordsTag.style.display = "none";
+    }, 100);
   });
 };
-
 //////////////////////
 /**
  * 쿠키를 생성하는 함수
@@ -223,12 +230,8 @@ Search.prototype.sortProducts = function (method, priceScope) {
  */
 Search.prototype.searchPriceProducts = function () {
   //
-  const productSearchPriceStartTag = document.querySelector(
-    "#product-search-price-start"
-  );
-  const productSearchPriceEndTag = document.querySelector(
-    "#product-search-price-end"
-  );
+  const productSearchPriceStartTag = document.querySelector("#product-search-price-start");
+  const productSearchPriceEndTag = document.querySelector("#product-search-price-end");
   //
   let min = productSearchPriceStartTag.value;
   let max = productSearchPriceEndTag.value;
@@ -272,27 +275,25 @@ Search.prototype.search = function (search) {
      */
     success: (search) => {
       //[
-        //   {
-        //     id: 15,
-        //     name: '고라파덕미니',
-        //     price: 10000,
-        //     img: '/img_Ahn_Ju/f94.png',
-        //     stock: 100,
-        //     category: 'figure',
-        //     tag: null,
-        //     content: null,
-        //     like_count: 0,
-        //     createdAt: 2022-09-02T09:35:05.000Z
-        //   },
-        // ]}
+      //   {
+      //     id: 15,
+      //     name: '고라파덕미니',
+      //     price: 10000,
+      //     img: '/img_Ahn_Ju/f94.png',
+      //     stock: 100,
+      //     category: 'figure',
+      //     tag: null,
+      //     content: null,
+      //     like_count: 0,
+      //     createdAt: 2022-09-02T09:35:05.000Z
+      //   },
+      // ]}
       if (search) {
         console.log(search);
       }
 
-      const newEl = document.createElement("div")
-      newEl.innerHTML = search
-
-
+      const newEl = document.createElement("div");
+      newEl.innerHTML = search;
     },
   });
 };

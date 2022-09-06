@@ -1,9 +1,9 @@
 const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
 const { log } = console;
 
-/////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////
 /**
- * 각 상점에 해당하는 상품 목록을 찾아서 문자열의 HTML 태그로 보내는 함수
+ * 각 상점에 해당하는 상품 목록을 찾아서 보내는 함수
  * @param {string} shopName 상점 이름
  * @param {object} condition 해당하는 상품 목록을 찾거나 정렬하기 위한 조건
  * @param {*} res
@@ -30,15 +30,14 @@ module.exports = function sendProductTags(shopName, condition, res, email, cartT
       break;
     default:
       break;
-  };
+  }
   //
-  productsClass.findAndCountAll(condition)
-    .then((obj) => {
-      const products = obj.rows.map(modelName => modelName.dataValues);
-      const resultCount = obj.count;
-      //
-      res.send({ products, resultCount, cartTotalCount, email });
-    });
+  productsClass.findAndCountAll(condition).then((obj) => {
+    const products = obj.rows.map((modelName) => modelName.dataValues);
+    const resultCount = obj.count;
+    //
+    res.send({ products, resultCount, cartTotalCount, email });
+  });
 };
 //
 // 09.04.18 수정
