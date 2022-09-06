@@ -4,14 +4,14 @@ const AhnShopBtnTag = document.querySelector(".Ahn-shop-btn");
 const JangShopBtnTag = document.querySelector(".Jang-shop-btn");
 const shopBtnTags = [AhnShopBtnTag, JuShopBtnTag, JangShopBtnTag];
 
-// ㅜ 각 상점의 버튼을 클릭했을 때
+// ㅜ 각 상점의 버튼을 클릭 했을 때
 shopBtnTags.forEach((el, idx) => {
   el.addEventListener("click", async () => {
     //
     let method = null;
     const skipCount = 0;
     let priceScope = null;
-    const limitCount = 20; // 이 변수들 사용하나?
+    const limitCount = 20;
     const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
     //
     // ㅜ 각 상점의 상품 목록 태그 생성
@@ -37,28 +37,31 @@ shopBtnTags.forEach((el, idx) => {
 
     //@@@@@@@@@@@@@@@@@@@@@@@@
 
-    // ㅜ 신상품순의 버튼을 클릭했을 때
+    // ㅜ 신상품순의 버튼을 클릭 했을 때
     const productSortNewBtnTag = document.querySelector("#product-sort-new");
     productSortNewBtnTag.addEventListener("click", () => {
       //
-      _search.sortProducts("new", null);
+      method = "new";
+      _search.sortProducts(method, priceScope);
     });
     //
-    // ㅜ 낮은 가격순의 버튼을 클릭했을 때
+    // ㅜ 낮은 가격순의 버튼을 클릭 했을 때
     const productSortLowPriceBtnTag = document.querySelector("#product-sort-low-price");
     productSortLowPriceBtnTag.addEventListener("click", () => {
       //
-      _search.sortProducts("lowPrice", null);
+      method = "lowPrice";
+      _search.sortProducts(method, priceScope);
     });
     //
-    // ㅜ 높은 가격순의 버튼을 클릭했을 때
+    // ㅜ 높은 가격순의 버튼을 클릭 했을 때
     const productSortHighPriceBtnTag = document.querySelector("#product-sort-high-price");
     productSortHighPriceBtnTag.addEventListener("click", () => {
       //
-      _search.sortProducts("highPrice", null);
+      method = "highPrice";
+      _search.sortProducts(method, priceScope);
     });
     //
-    // ㅜ 가격 범위를 입력하고 검색 버튼을 클릭했을 때
+    // ㅜ 가격 범위를 입력하고 검색 버튼을 클릭 했을 때
     const productSearchPriceBtnTag = document.querySelector("#product-search-price-btn");
     productSearchPriceBtnTag.addEventListener("click", () => {
       //
@@ -133,9 +136,12 @@ function createProductTagsAjax(method, shopName, priceScope, skipCount, limitCou
   if (priceScope !== null) {
     url = `shop/${method}/${shopName}/${priceScope}`;
   }
-  if (method !== null) {
+  //
+  else if (method !== null) {
     url = `shop/${method}/${shopName}`;
-  } else {
+  }
+  //
+  else {
     url = `shop/${shopName}`;
   }
   return $.ajax({
@@ -166,8 +172,12 @@ function createProductTagsAjax(method, shopName, priceScope, skipCount, limitCou
       if (skipCount === 0) {
         parentTag.innerHTML = productTags.join("");
         //
+        const section2Tag = document.querySelector(".section2");
         const section3Tag = document.querySelector(".section3");
+        const section4Tag = document.querySelector(".section4");
+        section2Tag.scroll(0, 0);
         section3Tag.scroll(0, 0);
+        section4Tag.scroll(0, 0);
       }
       //
       else {
@@ -197,4 +207,4 @@ function createProductTagsAjax(method, shopName, priceScope, skipCount, limitCou
   });
 }
 //
-// 09.05.17 수정
+// 09.06.21 수정

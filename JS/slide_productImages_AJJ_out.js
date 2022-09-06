@@ -52,14 +52,14 @@ class JangSubSlide {
     _this.slideWrapTag.style.left = `-${_this.slideWidth}vw`;
     _this.autoPlay();
 
-    // ㅜ 다음 버튼을 클릭했을 때
+    // ㅜ 다음 버튼을 클릭 했을 때
     _this.nextBtn.onclick = () => {
       clearInterval(_this.autoPlayFn);
       _this.autoPlayFn = null;
       _this.move("next");
     };
 
-    // ㅜ 이전 버튼을 클릭했을 때
+    // ㅜ 이전 버튼을 클릭 했을 때
     _this.prevBtn.onclick = () => {
       clearInterval(_this.autoPlayFn);
       _this.autoPlayFn = null;

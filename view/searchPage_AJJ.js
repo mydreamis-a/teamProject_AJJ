@@ -1,5 +1,5 @@
 /**
- * 검색 창에 대한 클래스
+ * 상품 검색에 대한 클래스
  */
 class Search {
   constructor() {}
@@ -31,7 +31,7 @@ Search.prototype.createSearchTags = function () {
   const mainHeaderTag = document.querySelector(".main-header");
   mainHeaderTag.style.backgroundColor = "white";
   //
-  // ㅜ TOP 버튼을 클릭했을 때 검색 창 태그 숨기기
+  // ㅜ TOP 버튼을 클릭 했을 때 검색 창 태그 숨기기
   const topIconTag = document.querySelector(".top-icon");
   topIconTag.addEventListener("click", () => {
     //
@@ -60,7 +60,7 @@ Search.prototype.saveKeyword = function () {
   const productKeywordBtnTag = document.querySelector("#product-keyword-btn");
   const productKeywordTag = document.querySelector("#product-keyword");
   //
-  // ㅜ 검색 창에 검색어를 입력하고 검색 버튼을 클릭했을 때
+  // ㅜ 검색 창에 검색어를 입력하고 검색 버튼을 클릭 했을 때
   productKeywordBtnTag.addEventListener("click", () => {
     //
     if (!productKeywordTag.value) return;
@@ -155,7 +155,7 @@ Search.prototype.showKeywordAjax = function () {
         productLastKeywordsTag.innerHTML += `<p>${el}</p>`;
       });
       //
-      // ㅜ 검색어를 클릭했을 때 검색 창에 해당 검색어 입력하기
+      // ㅜ 검색어를 클릭 했을 때 검색 창에 해당 검색어 입력하기
       const productLastKeywordPTag = document.querySelectorAll(".product-last-keyword > p");
       productLastKeywordPTag.forEach((el) => {
         el.addEventListener("click", () => {
@@ -171,6 +171,100 @@ Search.prototype.showKeywordAjax = function () {
     }, 100);
   });
 };
+
+///////////////////////////
+/**
+ * 가격 검색 기능에 대한 함수
+ */
+// 1. 희망하는 가격의 범위를 입력하고 검색 버튼을 클릭 했을 때
+// 2. 최소 가격과 최대 가격에 모두 빈 값을 입력하거나
+//    최소 가격 혹은 최대 가격에 숫자가 아닌 값을 입력하거나
+//    최소 가격 혹은 최대 가격에 0보다 작은 수를 입력하거나
+//    최대 가격이 최소 가격보다 작다면
+//    입력 창의 값을 비우고
+//    다시 입력하라는 alert 생성과 함께 return
+// 3. 최소 가격 혹은 최대 가격에 빈 값을 입력한 경우
+//    0 혹은 99999999 값 입력
+// 4. 올바르게 입력했다면
+//    sortProducts 함수로
+//    조회 시작
+Search.prototype.searchPriceProducts = function () {
+  //
+  const productSearchPriceStartTag = document.querySelector("#product-search-price-start");
+  const productSearchPriceEndTag = document.querySelector("#product-search-price-end");
+  //
+  let min = productSearchPriceStartTag.value;
+  let max = productSearchPriceEndTag.value;
+  //
+  if (min === "" && max === "") {
+    return inputPriceAlert();
+  }
+  if (isNaN(min) || isNaN(max)) {
+    return inputPriceAlert();
+  }
+  if (min < 0 || max < 0) {
+    return inputPriceAlert();
+  }
+  if (max !== "" && max < min) {
+    return inputPriceAlert();
+  }
+  if (min === "") {
+    productSearchPriceStartTag.value = 0;
+    min = 0;
+  }
+  if (max === "") {
+    productSearchPriceEndTag.value = 99999999;
+    max = 99999999;
+  }
+  const method = "sortPrice";
+  const priceScope = `${min}/${max}`;
+  this.sortProducts(method, priceScope);
+
+  ////////////////////////////////////////////////////
+  /**
+   * 가격의 범위를 제대로 입력하지 않았을 경우에 대한 함수
+   */
+  function inputPriceAlert() {
+    //
+    alert("다시 입력해주세요.");
+    productSearchPriceEndTag.value = "";
+    productSearchPriceStartTag.value = "";
+  }
+};
+
+////////////////////////////////////////////////////////////////////////
+/**
+ * 현재 보고 있는 상점의 상품 목록을 정렬하기 위해 어느 상점인지 구별하는 함수
+ * @param {string} method 상품 목록의 정렬 방법
+ * @param {string} priceScope 가격 검색일 경우 입력 범위
+ */
+// ㅜ 역할:
+// top 값을 조정하는 단일 홈 페이지
+// top 값을 통해 어느 상점인지 구분
+// createProductTagsAjax 함수로
+// 해당하는 상품 목록의 태그를 생성
+Search.prototype.sortProducts = function (method, priceScope) {
+  //
+  const allSectionsTag = document.querySelector(".all-sections");
+  const top = allSectionsTag.style.top.replace("vh", "");
+  const limitCount = 20;
+  const skipCount = 0;
+  //
+  switch (Number(top)) {
+    case -100:
+      createProductTagsAjax(method, "ajy", priceScope, skipCount, limitCount);
+      break;
+    case -200:
+      createProductTagsAjax(method, "jbh", priceScope, skipCount, limitCount);
+      break;
+    case -300:
+      createProductTagsAjax(method, "jjw", priceScope, skipCount, limitCount);
+      break;
+    default:
+      break;
+  }
+};
+
 //////////////////////
 /**
  * 쿠키를 생성하는 함수
@@ -196,71 +290,8 @@ Search.prototype.getCookie = function (name) {
   const value = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
   return value ? value[2] : null;
 };
-
-////////////////////////////////////////////////////////////////////////
-/**
- * 현재 보고 있는 상점의 상품 목록을 정렬하기 위해 어느 상점인지 구별하는 함수
- * @param {string} method 상품 목록의 정렬 방법
- */
-Search.prototype.sortProducts = function (method, priceScope) {
-  //
-  const allSectionsTag = document.querySelector(".all-sections");
-  let top = allSectionsTag.style.top;
-  const limitCount = 20;
-  const skipCount = 0;
-  //
-  top = top.replace("vh", "");
-  top = Number(top);
-  switch (top) {
-    case -100:
-      createProductTagsAjax(method, "ajy", priceScope, skipCount, limitCount);
-    case -200:
-      createProductTagsAjax(method, "jbh", priceScope, skipCount, limitCount);
-    case -300:
-      createProductTagsAjax(method, "jjw", priceScope, skipCount, limitCount);
-    default:
-      break;
-  }
-};
-
-///////////////////////////
-/**
- * 가격 검색 기능에 대한 함수
- * @returns
- */
-Search.prototype.searchPriceProducts = function () {
-  //
-  const productSearchPriceStartTag = document.querySelector("#product-search-price-start");
-  const productSearchPriceEndTag = document.querySelector("#product-search-price-end");
-  //
-  let min = productSearchPriceStartTag.value;
-  let max = productSearchPriceEndTag.value;
-  //
-  if (min < 0 || max < 0) return inputPriceAlert();
-  if (max !== "" && max < min) return inputPriceAlert();
-  if (min === "" && max === "") return inputPriceAlert();
-  //
-  if (min === "") {
-    productSearchPriceStartTag.value = 0;
-    min = 0;
-  }
-  if (max === "") {
-    productSearchPriceEndTag.value = 99999999;
-    max = 99999999;
-  }
-  _search.sortProducts("sortPrice", `${min}/${max}`);
-  /**
-   * 가격의 범위를 제대로 입력하지 않은 경우에 대한 함수
-   */
-  function inputPriceAlert() {
-    //
-    alert("다시 입력해주세요.");
-    productSearchPriceEndTag.value = "";
-    productSearchPriceStartTag.value = "";
-  }
-};
 //
-// 09.03.22 수정
+// 09.06.21 수정
 
 //@@@@@@@@@@@@@@@@@@@@@@@
 Search.prototype.search = function (search) {

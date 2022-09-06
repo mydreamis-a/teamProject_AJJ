@@ -102,4 +102,4 @@ const createCartProductTags = (cartProducts) => {
   return cartProductTags.reverse();
 };
 //
-// 09.05.18 수정
+// 09.06.21 수정

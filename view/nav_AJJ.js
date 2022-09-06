@@ -52,7 +52,7 @@ class mainNav {
   init() {
     // 챗봇박스는 일단 먼저 꺼둔다.
     this.chatBotTag.style.display = "none";
-    // 관리자만 볼 수 있기 때문에 먼저 꺼둔다. 
+    // 관리자만 볼 수 있기 때문에 먼저 꺼둔다.
     this.rooms.style.display = "none";
     // transition에 property(속성)를 넣으면 그 property(속성)에만 적용가능하다.
     // this.remocon.style.transition = "opacity 10s";
@@ -152,7 +152,7 @@ class mainNav {
         } else {
           // admin이 아니면 상담하기 누르면 이름 떠서 안녕하세요 띄우고, 관리자 옵션(방) 추가하기
           // 안에 이름 안쓰면 상담이 안됨.
-          if(!liveChatName.value){
+          if (!liveChatName.value) {
             return alert("이름쓰라고 ^^");
           } else {
             socket.emit("liveHi", {
@@ -319,7 +319,7 @@ class mainNav {
       this.remoconOff();
     });
 
-    // ㅜ 메뉴 버튼을 클릭했을 때 ㅡㅡㅡ shopBtnTags[0, 1, 2]
+    // ㅜ 메뉴 버튼을 클릭 했을 때 ㅡㅡㅡ shopBtnTags[0, 1, 2]
     this.shopBtnTags.forEach((el, idx) => {
       el.addEventListener("click", () => {
         if (this.doNotClick) return;

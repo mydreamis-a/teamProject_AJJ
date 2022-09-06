@@ -141,7 +141,7 @@ router.post("/:shopName/:productNum", async (req, res) => {
 });
 
 ////////////////////////////////////////////////
-// ㅜ 장바구니 아이콘을 클릭했을 때의 장바구니 화면
+// ㅜ 장바구니 아이콘을 클릭 했을 때의 장바구니 화면
 // 1. 세션 정보로 로그인 유무 판단
 // 2. 비회원이면서 첫 접속일 경우
 //    세션에 새로운 장바구니 배열 생성
@@ -217,7 +217,7 @@ router.post("/delete/:shopName/:productNum", (req, res) => {
   const { shopName, productNum } = req.params;
   //
   // ㅜ 비회원일 경우
-  if (!req.session.email) {
+  if (req.session.email === "") {
     //
     const cartProducts = req.session.cart;
     //
@@ -313,4 +313,4 @@ async function addCartSession(shopName, productNum, cartSession) {
 }
 module.exports = router;
 //
-// 09.06.16 수정
+// 09.06.21 수정

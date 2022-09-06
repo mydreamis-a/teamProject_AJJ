@@ -34,11 +34,11 @@ Cart.prototype.inCartAjax = function () {
 
 ///////////////////////////////////////////////////////
 /**
- * 장바구니 아이콘을 클릭하면 장바구니 화면을 보여주는 함수
+ * 장바구니 아이콘을 클릭 하면 장바구니 화면을 보여주는 함수
  * @returns {object} cartProducts 장바구니에 담긴 상품 목록 정보의 배열
  * [{ product_count: number, JJWproduct: { id: number, name: string, price: number, img: string } }]
  */
-// 1. 장바구니 아이콘을 클릭했을 때
+// 1. 장바구니 아이콘을 클릭 했을 때
 // 2. 장바구니 화면 표시
 // 3. 해당 경로로 전송
 // 4. 전송 받은 장바구니의 상품 정보로
@@ -70,7 +70,7 @@ Cart.prototype.clickCartIcon = function () {
           //
           for (const key in el) {
             if (Object.hasOwnProperty.call(el, key)) {
-              // log(el.JJWproduct); // undefined
+              // log(el.JJWproduct === undefined);
               //
               if (el[key]?.price !== undefined) {
                 price = el[key].price;
@@ -85,7 +85,7 @@ Cart.prototype.clickCartIcon = function () {
       },
     });
   });
-  // ㅜ 장바구니 화면에서 나가기 버튼을 클릭했을 때
+  // ㅜ 장바구니 화면에서 나가기 버튼을 클릭 했을 때
   cartExitBtnTag.addEventListener("click", () => {
     cartModalContainerTag.style.display = "none";
   });
@@ -101,4 +101,4 @@ Cart.prototype.deleteCartProducts = function (e) {
   });
 };
 //
-// 09.06.16 수정
+// 09.06.21 수정
