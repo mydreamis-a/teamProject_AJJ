@@ -89,7 +89,7 @@ const createCartProductTags = (cartProducts) => {
                 <p class ="product-price">${price} 원</p>
                 <div class ="product-btn-container">
                   <div class ="product-btn-group">
-                  <input class ="cart-delete-btn${id}" data-name="${shopName}" type="button" value="삭제하기" onclick="">
+                  <input class ="cart-delete-btn${id}" data-name="${shopName}" type="button" value="삭제하기" onclick="_cart.deleteCartProducts()">
                   <input class ="show-product-btn${id}" type="button" value="상품 보기">
                 </div>
                 </div>
@@ -102,4 +102,4 @@ const createCartProductTags = (cartProducts) => {
   return cartProductTags.reverse();
 };
 //
-// 09.06.21 수정
+// 09.07.01 수정

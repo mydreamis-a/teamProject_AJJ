@@ -12,12 +12,16 @@ class Cart {
  * cartTotalCount 장바구니에 담긴 모든 상품의 수량
  */
 // ㅜ 역할:
+//
 // 1. 장바구니에 담기 버튼을 통해
 //    상점의 이름과 상품 번호를 가져와서
 //    해당 경로로 전송
 // 2. 장바구니에 담긴 모든 상품의 수량을 받아서
 //    장바구니 수량 태그에 값 삽입
 Cart.prototype.inCartAjax = function () {
+  //
+  if (inCartControl === true) return;
+  inCartControl = true;
   //
   const shopName = event.target.dataset.name;
   const productNum = event.target.className.replace("in-cart-btn", "");
@@ -28,6 +32,8 @@ Cart.prototype.inCartAjax = function () {
     success: ({ cartTotalCount }) => {
       const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
       cartTotalCountNumberTag.innerHTML = cartTotalCount;
+      //
+      inCartControl = false;
     },
   });
 };
@@ -52,7 +58,7 @@ Cart.prototype.clickCartIcon = function () {
   const cartModalContainerTag = document.querySelector(".cart-modal-container");
   const cartTotalPriceTag = document.querySelector("#cart-total-price");
   const cartOrderBtnTag = document.querySelector("#cart-order-btn");
-  const cartExitBtnTag = document.querySelector(".cart-exit-btn");
+  const cartExitBtnTag = document.querySelector("#cart-exit-btn");
   const cartIconTag = document.querySelector(".cart-icon");
   //
   cartIconTag.addEventListener("click", () => {
@@ -64,26 +70,7 @@ Cart.prototype.clickCartIcon = function () {
       //
       success: ({ cartProducts }) => {
         //
-        let totalPrice = 0;
-        let productCount = 0;
-        const cartListRowTag = document.querySelector(".cart-list-row");
-        //
-        cartProducts.forEach((el) => {
-          //
-          for (const key in el) {
-            if (Object.hasOwnProperty.call(el, key)) {
-              // log(el.JJWproduct === undefined);
-              //
-              if (el[key]?.price !== undefined) {
-                price = el[key].price;
-                productCount = el.product_count;
-              }
-            }
-          }
-          totalPrice += price * productCount;
-        });
-        cartListRowTag.innerHTML = createCartProductTags(cartProducts).join("");
-        cartTotalPriceTag.innerHTML = `총 합계 금액: ${totalPrice} 원`;
+        this.showCartProducts(cartProducts);
       },
     });
   });
@@ -102,16 +89,63 @@ Cart.prototype.clickCartIcon = function () {
   cartExitBtnTag.addEventListener("click", () => {
     cartModalContainerTag.style.display = "none";
   });
+
+  /**
+   * 
+   * @returns 
+   */
+  // ㅜ 
+  // 1. 삭제하기 연속 클릭 막고
+  Cart.prototype.deleteCartProducts = function () {
+    //
+    if (deleteCartControl === true) return;
+    deleteCartControl = true;
+    //
+    const shopName = event.target.dataset.name;
+    const productNum = event.target.className.replace("cart-delete-btn", "");
+    $.ajax({
+      url: `/cart/delete/${shopName}/${productNum}`,
+      type: "post",
+      success: ({ cartProducts, cartTotalCount }) => {
+        //
+        this.showCartProducts(cartProducts);
+        //
+        const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
+        cartTotalCountNumberTag.innerHTML = cartTotalCount;
+        //
+        deleteCartControl = false;
+      },
+    });
+  };
 };
 
-Cart.prototype.deleteCartProducts = function (e) {
+/**
+ * 
+ * @param {*} cartProducts 
+ */
+Cart.prototype.showCartProducts = function (cartProducts) {
   //
-  const shopName = e.target.dataset.name;
-  const productNum = e.target.className.replace("cart-delete-btn", "");
-  $.ajax({
-    url: `/cart/delete/${shopName}/${productNum}`,
-    type: "post",
+  let totalPrice = 0;
+  let productCount = 0;
+  const cartListRowTag = document.querySelector(".cart-list-row");
+  const cartTotalPriceTag = document.querySelector("#cart-total-price");
+  //
+  cartProducts.forEach((el) => {
+    //
+    for (const key in el) {
+      if (Object.hasOwnProperty.call(el, key)) {
+        // log(el.JJWproduct === undefined);
+        //
+        if (el[key]?.price !== undefined) {
+          price = el[key].price;
+          productCount = el.product_count;
+        }
+      }
+    }
+    totalPrice += price * productCount;
   });
-};
+  cartListRowTag.innerHTML = createCartProductTags(cartProducts).join("");
+  cartTotalPriceTag.innerHTML = `총 합계 금액: ${totalPrice} 원`;
+}
 //
 // 09.06.21 수정

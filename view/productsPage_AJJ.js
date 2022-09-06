@@ -1,3 +1,5 @@
+let deleteCartControl = false;
+let inCartControl = false;
 const shopNameArr = ["ajy", "jbh", "jjw"];
 const JuShopBtnTag = document.querySelector(".Ju-shop-btn");
 const AhnShopBtnTag = document.querySelector(".Ahn-shop-btn");

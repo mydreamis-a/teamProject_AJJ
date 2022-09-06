@@ -6,7 +6,6 @@ const _cartTotalCount = require("../controller/cartTotalCount_AJJ");
 const express = require("express");
 const router = express.Router();
 const { log } = console;
-const { Op } = require("sequelize");
 
 ///////////////////////////////
 // ㅜ 장바구니에 상품을 담을 경우
@@ -35,7 +34,8 @@ const { Op } = require("sequelize");
 //    ajax에 전송
 router.post("/:shopName/:productNum", async (req, res) => {
   //
-  const { shopName, productNum } = req.params;
+  let { shopName, productNum } = req.params;
+  productNum = Number(productNum);
   //
   // ㅜ 비회원일 경우
   if (req.session.email === "") {
@@ -51,17 +51,15 @@ router.post("/:shopName/:productNum", async (req, res) => {
     }
     //
     else {
-      cartSession.forEach(async (el) => {
+      cartSession.forEach((el) => {
         //
         // ㅜ 해당 상품이 이미 저장 되어 있을 경우
         // if (el[`${_shopName}product`]?.id === productNum) {
-        if (el[`${_shopName}product`] !== undefined) {
-          if (el[`${_shopName}product`].id === productNum) {
-            //
-            el.product_count++;
-            update = true;
-            return;
-          }
+        if (el[`${_shopName}product`].id === productNum) {
+          //
+          el.product_count++;
+          update = true;
+          return;
         }
       });
     }
@@ -150,81 +148,92 @@ router.post("/list", (req, res) => {
     //
     User.findOne({ where: { email: email }, attributes: ["id"] })
       .then((obj) => obj.dataValues.id)
-      .then((id) => {
-        return Cart.findAll({
-          where: { user_id: id },
-          attributes: ["product_count"],
-          order: [["updated_at", "ASC"]],
-          include: [
-            { model: AJYproduct, attributes: ["id", "name", "price", "img"] },
-            { model: JBHproduct, attributes: ["id", "name", "price", "img"] },
-            { model: JJWproduct, attributes: ["id", "name", "price", "img"] },
-          ],
-        });
-      })
-      .then((obj) => {
-        return obj.map((_obj) => _obj.dataValues);
-      })
-      .then((arr) => {
-        arr.forEach((el) => {
-          //
-          for (const key in el) {
-            if (Object.hasOwnProperty.call(el, key)) {
-              //
-              let element = el[key];
-              //
-              if (element === null) {
-                delete el[key];
-                continue;
-              }
-              if (element.dataValues !== undefined) {
-                el[key] = element.dataValues;
-              }
-            }
-          }
-        });
-        return arr;
-        // ㅗ [{ product_count: number, JJWproduct: { id: number, name: string, price: number, img: string } }]
-      })
+      .then((id) => findAllCart(id))
       .then((cartProducts) => res.send({ cartProducts }));
   }
 });
 
 ///////////////////////////////////////
 // ㅜ 장바구니 화면에서 상품을 삭제할 경우
-router.post("/delete/:shopName/:productNum", (req, res) => {
-  const { shopName, productNum } = req.params;
+// 1. 세션 정보로 로그인 유무 판단
+// 2. 비회원일 경우
+//    params를 통해 상점의 이름과 상품 번호를 가져와서
+router.post("/delete/:shopName/:productNum", async (req, res) => {
+  //
+  // [{ product_count: number, JJWproduct: { id: number, name: string, price: number, img: string } }]
+  let { shopName, productNum } = req.params;
+  productNum = Number(productNum);
+  let cartTotalCount = 0;
   //
   // ㅜ 비회원일 경우
   if (req.session.email === "") {
     //
-    const cartProducts = req.session.cart;
+    const id = null;
+    let cartSession = req.session.cart;
+    const _shopName = shopName.toUpperCase();
     //
-    // key: ajyproduct, jhbproduct, jjwproduct
-    for (const key in cartProducts) {
-      if (Object.hasOwnProperty.call(cartProducts, key)) {
-        //
-        cartProducts[key] = cartProducts[key].reduce((prev, curr) => {
-          if (curr[`${shopName}product_num`] === productNum) {
-            return [...prev];
-          } else return [...prev, curr];
-        }, new Array());
-        //
+    cartSession = cartSession.reduce((prev, curr) => {
+      //
+      if (curr[`${_shopName}product`].id !== productNum) {
+        return [...prev, curr];
       }
-    }
-    req.session.cart = cartProducts;
-    req.session.save();
+      //
+      else if (curr.product_count > 1) {
+        curr.product_count--;
+        return [...prev, curr];
+      }
+      //
+      else return [...prev];
+    }, new Array());
+    //
+    req.session.cart = cartSession;
+    cartTotalCount = await _cartTotalCount(id, cartSession);
+    //
+    res.send({ cartProducts: cartSession, cartTotalCount });
   }
   // ㅜ 로그인한 회원일 경우
   else {
-    switch (shopName) {
-      case "ajy":
-        AJYproduct.destroy({});
-        break;
-
-      default:
-        break;
-    }
+    let id = null;
+    let conditionObj = null;
+    const email = req.session.email;
+    //
+    User.findOne({ where: { email: email }, attributes: ["id"] })
+      .then((obj) => {
+        return (id = obj.dataValues.id);
+      })
+      .then(() => {
+        switch (shopName) {
+          case "ajy":
+            conditionObj = { ajyproduct_num: productNum, user_id: id };
+            break;
+          case "jbh":
+            conditionObj = { jbhproduct_num: productNum, user_id: id };
+            break;
+          case "jjw":
+            conditionObj = { jjwproduct_num: productNum, user_id: id };
+            break;
+        };
+        // ㅜ 이미 저장 되어 있는 상품인지에 따라 수량만 감소시키거나 로우 삭제하기
+        return Cart.findOne({ where: conditionObj });
+      })
+      .then((obj) => {
+        if (obj !== null) {
+          return Cart.decrement({ product_count: 1 }, { where: conditionObj });
+        }
+        //
+        else {
+          return Cart.destroy(conditionObj);
+        };
+      })
+      // ㅜ 장바구니에 담긴 모든 상품의 수량
+      .then(async () => {
+        const cartSession = null;
+        return cartTotalCount = await _cartTotalCount(id, cartSession);
+      })
+      .then(() => findAllCart(id))
+      .then((cartProducts) => {
+        res.send({ cartProducts, cartTotalCount });
+      });
   }
 });
 
@@ -289,6 +298,49 @@ async function addCartSession(shopName, productNum, cartSession) {
   }
   cartSession.push(cartProductObj);
   return cartSession;
+}
+
+/**
+ * 
+ * @param {number} id 
+ * @returns 
+ */
+async function findAllCart(id) {
+  //
+  return await Cart.findAll({
+    where: { user_id: id },
+    attributes: ["product_count"],
+    order: [["updated_at", "ASC"]],
+    include: [
+      { model: AJYproduct, attributes: ["id", "name", "price", "img"] },
+      { model: JBHproduct, attributes: ["id", "name", "price", "img"] },
+      { model: JJWproduct, attributes: ["id", "name", "price", "img"] },
+    ],
+  })
+    .then((obj) => {
+      return obj.map((_obj) => _obj.dataValues);
+    })
+    .then((arr) => {
+      arr.forEach((el) => {
+        //
+        for (const key in el) {
+          if (Object.hasOwnProperty.call(el, key)) {
+            //
+            let element = el[key];
+            //
+            if (element === null) {
+              delete el[key];
+              continue;
+            }
+            if (element.dataValues !== undefined) {
+              el[key] = element.dataValues;
+            }
+          }
+        }
+      });
+      return arr;
+      // ㅗ [{ product_count: number, JJWproduct: { id: number, name: string, price: number, img: string } }]
+    })
 }
 module.exports = router;
 //
