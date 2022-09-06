@@ -78,7 +78,7 @@ router.post("/:shopName/:productNum", async (req, res) => {
     //
     User.findOne({ where: { email: email }, attributes: ["id"] })
       .then((obj) => {
-        return id = obj.dataValues.id;
+        return (id = obj.dataValues.id);
       })
       .then(() => {
         switch (shopName) {
@@ -112,7 +112,7 @@ router.post("/:shopName/:productNum", async (req, res) => {
       .then((cartTotalCount) => {
         res.send({ cartTotalCount });
       });
-  };
+  }
 });
 
 ////////////////////////////////////////////////

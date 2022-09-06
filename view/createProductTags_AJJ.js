@@ -1,5 +1,3 @@
-const { log } = console;
-
 ////////////////////////////////////////////////////////////////////
 /**
  * 해당하는 상품 목록의 태그 생성을 위해 문자열의 HTML 태그를 담은 함수
@@ -54,29 +52,53 @@ const createProductTags = (shopName, products, email) => {
 const createCartProductTags = (cartProducts) => {
   const cartProductTags = new Array();
   //
-  products.forEach((el, idx) => {
+  cartProducts.forEach((el) => {
     //
-    cartProductTags.push(`
-        <div class="product-list-col">
-          <div class="product-container">
-            <div class="product-img" style="background-image: url('${el.img}');">
-              <div class="product-img-dark">
-                <p class="product-img-text">사진 크게 보기</p>
+    let id = 0;
+    let price = 0;
+    let img = null;
+    let name = null;
+    let shopName = null;
+    const productCount = el.product_count;
+    for (const key in el) {
+      if (Object.hasOwnProperty.call(el, key)) {
+        //
+        if (key !== "product_count") {
+          //
+          const productData = el[key];
+          //
+          id = productData.id;
+          img = productData.img;
+          name = productData.name;
+          price = productData.price;
+          log(typeof key);
+          shopName = key.replace("product", "").toLowerCase();
+        }
+      }
+    }
+    for (let i = 0; i < productCount; i++) {
+      cartProductTags.push(`
+          <div class="product-list-col">
+            <div class="product-container">
+              <div class="product-img" style="background-image: url('${img}');">
+                <div class="product-img-dark">
+                  <p class="product-img-text">사진 크게 보기</p>
+                </div>
               </div>
-            </div>
-            <div class="product-box">
-              <p class="product-name">${el.name}</p>
-              <p class="product-price">${el.price} 원</p>
-              <div class="product-btn-container">
-                <div class="product-btn-group">
-                <input class="cart-delete-btn${idx + 1}" data-name="${shopName}" type="button" value="삭제하기" onclick="">
-                <input class="show-product-btn${idx + 1}" type="button" value="상품 보기">
-              </div>
+              <div class="product-box">
+                <p class="product-name">${name}</p>
+                <p class="product-price">${price} 원</p>
+                <div class="product-btn-container">
+                  <div class="product-btn-group">
+                  <input class="cart-delete-btn${id}" data-name="${shopName}" type="button" value="삭제하기" onclick="">
+                  <input class="show-product-btn${id}" type="button" value="상품 보기">
+                </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      `);
+        `);
+    }
   });
   return cartProductTags;
 };
