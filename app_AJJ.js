@@ -14,7 +14,14 @@ const cookie = require("cookie-parser");
 const session = require("express-session");
 //
 // ㅜ model
-const { sequelize, User, AJYproduct, JBHproduct, JJWproduct, Like } = require("./model/index_AJJ");
+const {
+  sequelize,
+  User,
+  AJYproduct,
+  JBHproduct,
+  JJWproduct,
+  Like,
+} = require("./model/index_AJJ");
 //
 // ㅜ router
 const cart = require("./router/cart_router_AJJ");
@@ -86,10 +93,11 @@ sequelize
   .catch((err) => log(err));
 //
 // ㅜ 메인 페이지
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   let userName = "";
   let errorCode = "";
   let userPoint = 0;
+
   jwt.verify(req.session.aT, process.env.JU_ACCESS_TOKEN, (err, decoded) => {
     if (err) {
       errorCode = "로그인을 해주세요";
@@ -106,13 +114,32 @@ app.get("/", (req, res) => {
       errorCode = err;
     }
   });
-  AJYproduct.findOne({}).then(async (obj) => {
+  await AJYproduct.findOne({}).then(async (obj) => {
     //
     // ㅜ 저장된 상품 데이터가 하나도 없을 경우 넣기
     if (obj === null) await addProductData();
     res.render("main_AJJ", { data: { userName, userPoint }, errorCode });
   });
 });
+
+app.get("/point", async (req,res) => {
+  let id = null;
+  let email = null;
+  if (req.session.email) {
+    email = req.session.email;
+  }
+  await User.findOne({ 
+    where: { email: email }, 
+    attributes: ["id"] 
+  }).then(
+    (obj) => {
+      if (obj !== null){  
+        id = obj.dataValues.id;
+      }
+    }
+  );
+  res.send({ id: id });
+})
 
 ////////////////
 // ㅜ 주영님 코드
@@ -165,6 +192,7 @@ io.sockets.on("connection", async (socket) => {
       message: data.message,
     });
   });
+
   socket.on("likeCheck", async (shopName, productIndex, userEmail) => {
     await Like.findAll({
       where: {

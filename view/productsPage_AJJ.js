@@ -33,7 +33,7 @@ shopBtnTags.forEach((el, idx) => {
     createProductTagsAjax(method, shopNameArr[idx], priceScope, skipCount, limitCount)
       //
       // ㅜ 장바구니에 담긴 모든 상품의 수량
-      .then(({ productTags, resultCount, cartTotalCount }) => (cartTotalCountNumberTag.innerHTML = cartTotalCount));
+      .then(({ productTags, resultCount, cartTotalCount, email}) => (cartTotalCountNumberTag.innerHTML = cartTotalCount));
     //
     // ㅜ 장바구니 아이콘에 대한 함수
     _cart.clickCartIcon();
