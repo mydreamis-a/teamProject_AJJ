@@ -65,6 +65,20 @@ router.post("/:shopName", async (req, res) => {
   sendProductTags(shopName, condition, res, email, cartTotalCount);
 });
 
+///////////////////////////////////////////////
+// ㅜ 검색어로 상품 검색 했을 때의 상품 목록 화면
+router.post("/search/:shopName/:keyword", (req, res) => {
+  //
+  const _cartTotalCount = null;
+  const { keyword } = req.params;
+  const email = req.session.email; // log(email === ""); // 비회원일 경우
+  const shopName = req.params.shopName;
+  const { skipCount, limitCount } = req.body;
+  const condition = { where: { name: { [Op.like]: `%${keyword}%` } }, attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
+  //
+  sendProductTags(shopName, condition, res, email, _cartTotalCount);
+})
+
 /////////////////////////////////////////////////
 // ㅜ 신상품순의 버튼을 클릭 했을 때의 상품 목록 화면
 router.post("/new/:shopName", (req, res) => {
@@ -73,7 +87,7 @@ router.post("/new/:shopName", (req, res) => {
   const email = req.session.email; // log(email === ""); // 비회원일 경우
   const shopName = req.params.shopName;
   const { skipCount, limitCount } = req.body;
-  const condition = { order: [["id", "DESC"]], offset: Number(skipCount), limit: Number(limitCount) };
+  const condition = { order: [["id", "DESC"]], attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
   //
   sendProductTags(shopName, condition, res, email, _cartTotalCount);
 });
@@ -86,7 +100,7 @@ router.post("/lowPrice/:shopName", (req, res) => {
   const email = req.session.email; // log(email === ""); // 비회원일 경우
   const shopName = req.params.shopName;
   const { skipCount, limitCount } = req.body;
-  const condition = { order: [["price", "ASC"]], offset: Number(skipCount), limit: Number(limitCount) };
+  const condition = { order: [["price", "ASC"]], attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
   //
   sendProductTags(shopName, condition, res, email, _cartTotalCount);
 });
@@ -99,7 +113,7 @@ router.post("/highPrice/:shopName", (req, res) => {
   const email = req.session.email; // log(email === ""); // 비회원일 경우
   const shopName = req.params.shopName;
   const { skipCount, limitCount } = req.body;
-  const condition = { order: [["price", "DESC"]], offset: Number(skipCount), limit: Number(limitCount) };
+  const condition = { order: [["price", "DESC"]], attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
   //
   sendProductTags(shopName, condition, res, email, _cartTotalCount);
 });
@@ -114,11 +128,11 @@ router.post("/sortPrice/:shopName/:min/:max", (req, res) => {
   const email = req.session.email; // log(email === ""); // 비회원일 경우
   const shopName = req.params.shopName;
   const { skipCount, limitCount } = req.body;
-  const condition = { where: { price: { [Op.gte]: min, [Op.lte]: max } }, offset: Number(skipCount), limit: Number(limitCount) };
+  const condition = { where: { price: { [Op.gte]: min, [Op.lte]: max } }, attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
   //
   sendProductTags(shopName, condition, res, email, _cartTotalCount);
 });
 //
 module.exports = router;
 //
-// 09.06.21 수정
+// 09.07.00 수정

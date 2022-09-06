@@ -1,7 +1,7 @@
 const { AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
 const { log } = console;
 
-////////////////////////////////////////////////
+/////////////////////////////////////////////////
 /**
  * 각 상점에 해당하는 상품 목록을 찾아서 보내는 함수
  * @param {string} shopName 상점 이름
@@ -28,8 +28,6 @@ module.exports = function sendProductTags(shopName, condition, res, email, cartT
     case "jjw":
       productsClass = JJWproduct;
       break;
-    default:
-      break;
   }
   //
   productsClass.findAndCountAll(condition).then((obj) => {
@@ -40,4 +38,4 @@ module.exports = function sendProductTags(shopName, condition, res, email, cartT
   });
 };
 //
-// 09.04.18 수정
+// 09.07.00 수정

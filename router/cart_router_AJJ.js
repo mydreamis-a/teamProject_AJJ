@@ -33,27 +33,6 @@ const { Op } = require("sequelize");
 // 9. 해당 회원의 장바구니 테이블에서
 //    모든 상품의 수량을 가져와서
 //    ajax에 전송
-
-//@@@@@@@@@@@@@@@@@@@@@@@
-router.post("/search", async (req, res) => {
-  const { search } = req.body;
-  console.log("req.body", req.body);
-  AJYproduct.findAll({
-    where: {
-      name: {
-        [Op.like]: "%" + search + "%",
-      },
-    },
-  }).then((datas) => {
-    console.log(datas);
-    const result = datas.map((data) => data.dataValues);
-
-    console.log(result);
-    res.send(result);
-  });
-});
-//@@@@@@@@@@@@@@@@@@@@@@@
-
 router.post("/:shopName/:productNum", async (req, res) => {
   //
   const { shopName, productNum } = req.params;
@@ -313,4 +292,4 @@ async function addCartSession(shopName, productNum, cartSession) {
 }
 module.exports = router;
 //
-// 09.06.21 수정
+// 09.07.00 수정

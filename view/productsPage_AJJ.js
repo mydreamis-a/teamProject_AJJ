@@ -10,12 +10,13 @@ shopBtnTags.forEach((el, idx) => {
     //
     let method = null;
     const skipCount = 0;
+    const keyword = null;
     let priceScope = null;
     const limitCount = 20;
     const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
     //
     // ㅜ 각 상점의 상품 목록 태그 생성
-    createProductTagsAjax(method, shopNameArr[idx], priceScope, skipCount, limitCount)
+    createProductTagsAjax(method, shopNameArr[idx], priceScope, keyword, skipCount, limitCount)
       //
       // ㅜ 장바구니에 담긴 모든 상품의 수량
       .then(({ products, resultCount, cartTotalCount, email }) => (cartTotalCountNumberTag.innerHTML = cartTotalCount));
@@ -25,24 +26,15 @@ shopBtnTags.forEach((el, idx) => {
     //
     // ㅜ 검색 창 태그 생성 및 검색어 기능에 대하여
     _search.createSearchTags();
-    _search.saveKeyword();
+    _search.searchKeyword();
     _search.showKeyword();
     //
-    //@@@@@@@@@@@@@@@@@@@@@@@@
-
-    document.querySelector("#product-keyword").addEventListener("change", (e) => {
-      // console.log(e.target.value);
-      _search.search(e.target.value);
-    });
-
-    //@@@@@@@@@@@@@@@@@@@@@@@@
-
     // ㅜ 신상품순의 버튼을 클릭 했을 때
     const productSortNewBtnTag = document.querySelector("#product-sort-new");
     productSortNewBtnTag.addEventListener("click", () => {
       //
       method = "new";
-      _search.sortProducts(method, priceScope);
+      _search.sortProducts(method, priceScope, keyword);
     });
     //
     // ㅜ 낮은 가격순의 버튼을 클릭 했을 때
@@ -50,7 +42,7 @@ shopBtnTags.forEach((el, idx) => {
     productSortLowPriceBtnTag.addEventListener("click", () => {
       //
       method = "lowPrice";
-      _search.sortProducts(method, priceScope);
+      _search.sortProducts(method, priceScope, keyword);
     });
     //
     // ㅜ 높은 가격순의 버튼을 클릭 했을 때
@@ -58,7 +50,7 @@ shopBtnTags.forEach((el, idx) => {
     productSortHighPriceBtnTag.addEventListener("click", () => {
       //
       method = "highPrice";
-      _search.sortProducts(method, priceScope);
+      _search.sortProducts(method, priceScope, keyword);
     });
     //
     // ㅜ 가격 범위를 입력하고 검색 버튼을 클릭 했을 때
@@ -86,6 +78,7 @@ const productShowMoreBtnEvent = function () {
   productShowMoreBtnTags.forEach((el) => {
     el.addEventListener("click", function () {
       //
+      const keyword = null;
       const limitCount = 20;
       let method = el.dataset.method;
       const shopName = el.dataset.name;
@@ -100,7 +93,7 @@ const productShowMoreBtnEvent = function () {
       const btnNumber = el.className.replace("product-show-more-btn", "");
       const skipCount = btnNumber * 20;
       //
-      createProductTagsAjax(method, shopName, priceScope, skipCount, limitCount);
+      createProductTagsAjax(method, shopName, priceScope, keyword, skipCount, limitCount);
       this.remove();
     });
   });
@@ -112,6 +105,7 @@ const productShowMoreBtnEvent = function () {
  * @param {string} method 상품 검색 및 정렬 조건
  * @param {string} shopName 상점 이름
  * @param {string} priceScope 가격 검색일 경우 입력 범위
+ * @param {string} keyword 문자열의 상품 검색어
  * @param {number} skipCount 상품 제외 개수
  * @param {number} limitCount 상품 조회 개수
  * @returns {object}
@@ -129,12 +123,16 @@ const productShowMoreBtnEvent = function () {
 // 4. 전송 받은 데이터가 마지막 데이터가 아니라면
 //    더 보기 버튼 생성
 // 5. 더 보기 버튼에 대한 이벤트 등록
-function createProductTagsAjax(method, shopName, priceScope, skipCount, limitCount) {
+function createProductTagsAjax(method, shopName, priceScope, keyword, skipCount, limitCount) {
   //
   let url = null;
   //
   if (priceScope !== null) {
     url = `shop/${method}/${shopName}/${priceScope}`;
+  }
+  //
+  else if (keyword !== null) {
+    url = `shop/${method}/${shopName}/${keyword}`;
   }
   //
   else if (method !== null) {
@@ -207,4 +205,4 @@ function createProductTagsAjax(method, shopName, priceScope, skipCount, limitCou
   });
 }
 //
-// 09.06.21 수정
+// 09.07.00 수정

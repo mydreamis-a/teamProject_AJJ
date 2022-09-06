@@ -2,7 +2,7 @@
  * 상품 검색에 대한 클래스
  */
 class Search {
-  constructor() {}
+  constructor() { }
 }
 
 ///////////////////////////////////////
@@ -51,11 +51,11 @@ Search.prototype.widthFromPxToVw = function (value) {
   return (value / bodyWidth) * 100;
 };
 
-//////////////////////////////////////
+/////////////////////////////////////
 /**
- * 검색어 테이블에 검색어를 저장하는 함수
+ * 상품 검색 및 검색어 저장에 대한 함수
  */
-Search.prototype.saveKeyword = function () {
+Search.prototype.searchKeyword = function () {
   //
   const productKeywordBtnTag = document.querySelector("#product-keyword-btn");
   const productKeywordTag = document.querySelector("#product-keyword");
@@ -64,8 +64,10 @@ Search.prototype.saveKeyword = function () {
   productKeywordBtnTag.addEventListener("click", () => {
     //
     if (!productKeywordTag.value) return;
-    const keyword = productKeywordTag.value;
+    const keyword = String(productKeywordTag.value);
+    //
     this.saveKeywordAjax(keyword);
+    this.searchProducts(keyword);
   });
   //
   // ㅜ 검색 창에 검색어를 입력하고 엔터를 입력했을 때
@@ -73,16 +75,30 @@ Search.prototype.saveKeyword = function () {
     if (e.code === "Enter") {
       //
       if (!productKeywordTag.value) return;
-      const keyword = productKeywordTag.value;
+      const keyword = String(productKeywordTag.value);
+      //
       this.saveKeywordAjax(keyword);
+      this.searchProducts(keyword);
     }
   });
 };
 
+//////////////////////
+/**
+ * 
+ * @param {string} keyword 문자열의 상품 검색어
+ */
+Search.prototype.searchProducts = function (keyword) {
+  //
+  const method = "search";
+  const priceScope = null;
+  this.sortProducts(method, priceScope, keyword);
+}
+
 ///////////////////////////////////
 /**
  * 검색어를 저장하는 ajax에 대한 함수
- * @param {string} keyword 입력된 검색어
+ * @param {string} keyword 문자열의 상품 검색어
  * @returns {object}
  * keywords 비회원일 경우에 쿠키에 저장되어 있는 최근 검색어에 대한 배열
  */
@@ -237,13 +253,14 @@ Search.prototype.searchPriceProducts = function () {
  * 현재 보고 있는 상점의 상품 목록을 정렬하기 위해 어느 상점인지 구별하는 함수
  * @param {string} method 상품 목록의 정렬 방법
  * @param {string} priceScope 가격 검색일 경우 입력 범위
+ * @param {string} keyword 문자열의 상품 검색어
  */
 // ㅜ 역할:
 // top 값을 조정하는 단일 홈 페이지
 // top 값을 통해 어느 상점인지 구분
 // createProductTagsAjax 함수로
 // 해당하는 상품 목록의 태그를 생성
-Search.prototype.sortProducts = function (method, priceScope) {
+Search.prototype.sortProducts = function (method, priceScope, keyword) {
   //
   const allSectionsTag = document.querySelector(".all-sections");
   const top = allSectionsTag.style.top.replace("vh", "");
@@ -252,13 +269,13 @@ Search.prototype.sortProducts = function (method, priceScope) {
   //
   switch (Number(top)) {
     case -100:
-      createProductTagsAjax(method, "ajy", priceScope, skipCount, limitCount);
+      createProductTagsAjax(method, "ajy", priceScope, keyword, skipCount, limitCount);
       break;
     case -200:
-      createProductTagsAjax(method, "jbh", priceScope, skipCount, limitCount);
+      createProductTagsAjax(method, "jbh", priceScope, keyword, skipCount, limitCount);
       break;
     case -300:
-      createProductTagsAjax(method, "jjw", priceScope, skipCount, limitCount);
+      createProductTagsAjax(method, "jjw", priceScope, keyword, skipCount, limitCount);
       break;
     default:
       break;
@@ -291,41 +308,4 @@ Search.prototype.getCookie = function (name) {
   return value ? value[2] : null;
 };
 //
-// 09.06.21 수정
-
-//@@@@@@@@@@@@@@@@@@@@@@@
-Search.prototype.search = function (search) {
-  console.log(search);
-  $.ajax({
-    url: "/cart/search",
-    type: "post",
-    data: { search },
-    /**
-     *
-     * @param {object} { array or undefined: 쿠키에 들어 있는 최근 검색어 정보 }
-     */
-    success: (search) => {
-      //[
-      //   {
-      //     id: 15,
-      //     name: '고라파덕미니',
-      //     price: 10000,
-      //     img: '/img_Ahn_Ju/f94.png',
-      //     stock: 100,
-      //     category: 'figure',
-      //     tag: null,
-      //     content: null,
-      //     like_count: 0,
-      //     createdAt: 2022-09-02T09:35:05.000Z
-      //   },
-      // ]}
-      if (search) {
-        console.log(search);
-      }
-
-      const newEl = document.createElement("div");
-      newEl.innerHTML = search;
-    },
-  });
-};
-//@@@@@@@@@@@@@@@@@@@@@@@
+// 09.07.00 수정

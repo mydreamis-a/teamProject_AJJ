@@ -1,7 +1,7 @@
-////////////////////////////////////////
-// 목적: 검색 기능을 위한 router 코드 모음
+///////////////////////////////////////////
+// 목적: 검색어 기능을 위한 router 코드 모음
 
-const { Keyword, User } = require("../model/index_AJJ");
+const { User, Keyword } = require("../model/index_AJJ");
 const { Op } = require("sequelize");
 const express = require("express");
 const router = express.Router();
