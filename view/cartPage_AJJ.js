@@ -2,7 +2,7 @@
  * 장바구니에 대한 클래스
  */
 class Cart {
-  constructor() {}
+  constructor() { }
 }
 
 ////////////////////////////////////////
@@ -45,10 +45,13 @@ Cart.prototype.inCartAjax = function () {
 //    합계 금액 계산
 // 5. createCartProductTags 함수로
 //    장바구니 화면에 해당 상품 목록의 태그 생성
-// 6. 나가기 버튼에 대한 클릭 이벤트 등록
+// 6. 주문하기 버튼에 대한 클릭 이벤트 등록
+// 7. 나가기 버튼에 대한 클릭 이벤트 등록
 Cart.prototype.clickCartIcon = function () {
   //
   const cartModalContainerTag = document.querySelector(".cart-modal-container");
+  const cartTotalPriceTag = document.querySelector("#cart-total-price");
+  const cartOrderBtnTag = document.querySelector("#cart-order-btn");
   const cartExitBtnTag = document.querySelector(".cart-exit-btn");
   const cartIconTag = document.querySelector(".cart-icon");
   //
@@ -64,7 +67,6 @@ Cart.prototype.clickCartIcon = function () {
         let totalPrice = 0;
         let productCount = 0;
         const cartListRowTag = document.querySelector(".cart-list-row");
-        const cartTotalPriceTag = document.querySelector("#cart-total-price");
         //
         cartProducts.forEach((el) => {
           //
@@ -84,6 +86,17 @@ Cart.prototype.clickCartIcon = function () {
         cartTotalPriceTag.innerHTML = `총 합계 금액: ${totalPrice} 원`;
       },
     });
+  });
+  // ㅜ 장바구니 화면에서 주문하기 버튼을 클릭 했을 때
+  cartOrderBtnTag.addEventListener("click", () => {
+    //
+    const orderPrice = cartTotalPriceTag.innerHTML.replace("총 합계 금액: ", "");
+    const orderMessage = `주문하시겠습니까?\n주문 금액: ${orderPrice}`;
+    //
+    if (orderPrice === 0) return;
+    if (confirm(orderMessage)) {
+      alert(`${orderPrice} 주문 완료!`);
+    };
   });
   // ㅜ 장바구니 화면에서 나가기 버튼을 클릭 했을 때
   cartExitBtnTag.addEventListener("click", () => {

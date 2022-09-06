@@ -16,22 +16,22 @@ const createProductTags = (shopName, products, email) => {
   //
   products.forEach((el) => {
     productTags.push(`
-        <div class="product-list-col">
-          <div class="product-container">
-            <div class="product-img" style="background-image: url('${el.img}');">
-              <div class="product-img-dark">
-                <p class="product-img-text">사진 크게 보기</p>
+        <div class ="product-list-col">
+          <div class ="product-container">
+            <div class ="product-img" style="background-image: url('${el.img}');">
+              <div class ="product-img-dark">
+                <p class ="product-img-text">사진 크게 보기</p>
               </div>
             </div>
-            <div class="product-box">
-              <p class="product-name">${el.name}</p>
-              <p class="product-price">${el.price} 원</p>
-              <img class="like-product-btn${el.id}" src="/img_Ahn_Ju/heart.gif" alt="" onclick="likeInsert('${el.name}','${el.id}','${email}')">
+            <div class ="product-box">
+              <p class ="product-name">${el.name}</p>
+              <p class ="product-price">${el.price} 원</p>
+              <img class ="like-product-btn${el.id}" src="/img_Ahn_Ju/heart.gif" alt="" onclick="likeInsert('${el.name}','${el.id}','${email}')">
               <span style="font-size: 2vw; font-weight: 900;">${el.like_count}</span>
-              <div class="product-btn-container">
-                <div class="product-btn-group">
-                <input class="in-cart-btn${el.id}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="_cart.inCartAjax()">
-                <input class="show-product-btn${el.id}" type="button" value="상품 보기">
+              <div class ="product-btn-container">
+                <div class ="product-btn-group">
+                <input class ="in-cart-btn${el.id}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="_cart.inCartAjax()">
+                <input class ="show-product-btn${el.id}" type="button" value="상품 보기">
               </div>
               </div>
             </div>
@@ -77,20 +77,20 @@ const createCartProductTags = (cartProducts) => {
     }
     for (let i = 0; i < productCount; i++) {
       cartProductTags.push(`
-          <div class="product-list-col">
-            <div class="product-container">
-              <div class="product-img" style="background-image: url('${img}');">
-                <div class="product-img-dark">
-                  <p class="product-img-text">사진 크게 보기</p>
+          <div class ="product-list-col">
+            <div class ="product-container">
+              <div class ="product-img" style="background-image: url('${img}');">
+                <div class ="product-img-dark">
+                  <p class ="product-img-text">사진 크게 보기</p>
                 </div>
               </div>
-              <div class="product-box">
-                <p class="product-name">${name}</p>
-                <p class="product-price">${price} 원</p>
-                <div class="product-btn-container">
-                  <div class="product-btn-group">
-                  <input class="cart-delete-btn${id}" data-name="${shopName}" type="button" value="삭제하기" onclick="">
-                  <input class="show-product-btn${id}" type="button" value="상품 보기">
+              <div class ="product-box">
+                <p class ="product-name">${name}</p>
+                <p class ="product-price">${price} 원</p>
+                <div class ="product-btn-container">
+                  <div class ="product-btn-group">
+                  <input class ="cart-delete-btn${id}" data-name="${shopName}" type="button" value="삭제하기" onclick="">
+                  <input class ="show-product-btn${id}" type="button" value="상품 보기">
                 </div>
                 </div>
               </div>
