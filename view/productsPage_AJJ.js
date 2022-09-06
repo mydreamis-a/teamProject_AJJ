@@ -43,6 +43,17 @@ shopBtnTags.forEach((el, idx) => {
     _search.saveKeyword();
     _search.showKeyword();
     //
+
+    //@@@@@@@@@@@@@@@@@@@@@@@@
+
+    document.querySelector("#product-keyword").addEventListener("change",(e)=>{
+      // console.log(e.target.value);
+      _search.search(e.target.value)
+    })
+
+    //@@@@@@@@@@@@@@@@@@@@@@@@
+
+
     // ㅜ 신상품순의 버튼을 클릭했을 때
     const productSortNewBtnTag = document.querySelector("#product-sort-new");
     productSortNewBtnTag.addEventListener("click", () => {

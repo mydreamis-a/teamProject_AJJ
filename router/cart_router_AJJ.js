@@ -1,11 +1,18 @@
 ////////////////////////////////////////////
 // 목적: 장바구니 기능을 위한 router 코드 모음
 
-const { Cart, User, AJYproduct, JBHproduct, JJWproduct } = require("../model/index_AJJ");
+const {
+  Cart,
+  User,
+  AJYproduct,
+  JBHproduct,
+  JJWproduct,
+} = require("../model/index_AJJ");
 const _cartTotalCount = require("../controller/cartTotalCount_AJJ");
 const express = require("express");
 const router = express.Router();
 const { log } = console;
+const { Op } = require("sequelize");
 
 ///////////////////////////////
 // ㅜ 장바구니에 상품을 담을 경우
@@ -32,6 +39,33 @@ const { log } = console;
 // 9. 해당 회원의 장바구니 테이블에서
 //    모든 상품의 수량을 가져와서
 //    ajax에 전송
+
+
+
+//@@@@@@@@@@@@@@@@@@@@@@@
+router.post("/search", async (req, res) => {
+  const { search } = req.body;
+  console.log("req.body",req.body);
+  AJYproduct.findAll({
+    where: {
+      name: {
+        [Op.like]: "%" + search + "%",
+      },
+    },
+  }).then((datas) => {
+    console.log(datas);
+    const result = datas.map((data) => data.dataValues);
+    
+    console.log(result);
+    res.send(result);
+  });
+});
+//@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+
+
 router.post("/:shopName/:productNum", async (req, res) => {
   //
   const { shopName, productNum } = req.params;
@@ -234,7 +268,10 @@ async function addCartSession(shopName, productNum, cartSession) {
   let cartProductObj = null;
   switch (shopName) {
     case "ajy":
-      await AJYproduct.findOne({ where: { id: productNum }, attributes: ["id", "name", "price", "img"] })
+      await AJYproduct.findOne({
+        where: { id: productNum },
+        attributes: ["id", "name", "price", "img"],
+      })
         .then((obj) => obj.dataValues)
         .then((_obj) => {
           const { id, name, price, img } = _obj;
@@ -245,7 +282,10 @@ async function addCartSession(shopName, productNum, cartSession) {
         });
       break;
     case "jbh":
-      await JBHproduct.findOne({ where: { id: productNum }, attributes: ["id", "name", "price", "img"] })
+      await JBHproduct.findOne({
+        where: { id: productNum },
+        attributes: ["id", "name", "price", "img"],
+      })
         .then((obj) => obj.dataValues)
         .then((_obj) => {
           const { id, name, price, img } = _obj;
@@ -256,7 +296,10 @@ async function addCartSession(shopName, productNum, cartSession) {
         });
       break;
     case "jjw":
-      await JJWproduct.findOne({ where: { id: productNum }, attributes: ["id", "name", "price", "img"] })
+      await JJWproduct.findOne({
+        where: { id: productNum },
+        attributes: ["id", "name", "price", "img"],
+      })
         .then((obj) => obj.dataValues)
         .then((_obj) => {
           const { id, name, price, img } = _obj;

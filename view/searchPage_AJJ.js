@@ -2,7 +2,7 @@
  * 검색 창에 대한 클래스
  */
 class Search {
-  constructor() { }
+  constructor() {}
 }
 
 ///////////////////////////////////////
@@ -11,7 +11,9 @@ class Search {
  */
 Search.prototype.createSearchTags = function () {
   //
-  const width = document.querySelector("[class $= '-product-list']").clientWidth;
+  const width = document.querySelector(
+    "[class $= '-product-list']"
+  ).clientWidth;
   const searchTag = document.querySelector(".search");
   //
   searchTag.style.width = `${this.widthFromPxToVw(width)}vw`;
@@ -101,7 +103,7 @@ Search.prototype.saveKeywordAjax = function (keyword) {
     type: "post",
     data: { keyword },
     /**
-     * 
+     *
      * @param {object} { array or undefined: 쿠키에 들어 있는 최근 검색어 정보 }
      */
     success: ({ keywords }) => {
@@ -109,7 +111,7 @@ Search.prototype.saveKeywordAjax = function (keyword) {
         const stringKeywords = keywords.join(", ");
         this.createCookie("keyword", stringKeywords, 0.1);
       }
-    }
+    },
   });
 };
 
@@ -126,7 +128,7 @@ Search.prototype.showKeyword = function () {
   //
   productKeywordTag.addEventListener("keyup", (e) => {
     if (e.code === "Enter") this.showKeywordAjax();
-  })
+  });
 };
 
 /**
@@ -134,7 +136,9 @@ Search.prototype.showKeyword = function () {
  */
 Search.prototype.showKeywordAjax = function () {
   //
-  const productLastKeywordsTag = document.querySelector(".product-keyword-last");
+  const productLastKeywordsTag = document.querySelector(
+    ".product-keyword-last"
+  );
   const productKeywordTag = document.querySelector("#product-keyword");
   const keywords = this.getCookie("keyword");
   $.ajax({
@@ -143,7 +147,7 @@ Search.prototype.showKeywordAjax = function () {
     data: { keywords },
     /**
      * 비회원일 경우 쿠키에, 로그인한 회원일 경우 DB에 저장 되어 있는 최근 검색어 정보를 보여주는 함수
-     * @param {object} { array: 5개의 최근 검색어 정보 } 
+     * @param {object} { array: 5개의 최근 검색어 정보 }
      */
     success: ({ keywords }) => {
       //
@@ -219,8 +223,12 @@ Search.prototype.sortProducts = function (method, priceScope) {
  */
 Search.prototype.searchPriceProducts = function () {
   //
-  const productSearchPriceStartTag = document.querySelector("#product-search-price-start");
-  const productSearchPriceEndTag = document.querySelector("#product-search-price-end");
+  const productSearchPriceStartTag = document.querySelector(
+    "#product-search-price-start"
+  );
+  const productSearchPriceEndTag = document.querySelector(
+    "#product-search-price-end"
+  );
   //
   let min = productSearchPriceStartTag.value;
   let max = productSearchPriceEndTag.value;
@@ -250,3 +258,23 @@ Search.prototype.searchPriceProducts = function () {
 };
 //
 // 09.03.22 수정
+
+//@@@@@@@@@@@@@@@@@@@@@@@
+Search.prototype.search = function (search) {
+  console.log(search);
+  $.ajax({
+    url: "/cart/search",
+    type: "post",
+    data: { search },
+    /**
+     *
+     * @param {object} { array or undefined: 쿠키에 들어 있는 최근 검색어 정보 }
+     */
+    success: (search) => {
+      if (search) {
+        console.log(search);
+      }
+    },
+  });
+};
+//@@@@@@@@@@@@@@@@@@@@@@@
