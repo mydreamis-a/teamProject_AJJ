@@ -271,9 +271,28 @@ Search.prototype.search = function (search) {
      * @param {object} { array or undefined: 쿠키에 들어 있는 최근 검색어 정보 }
      */
     success: (search) => {
+      //[
+        //   {
+        //     id: 15,
+        //     name: '고라파덕미니',
+        //     price: 10000,
+        //     img: '/img_Ahn_Ju/f94.png',
+        //     stock: 100,
+        //     category: 'figure',
+        //     tag: null,
+        //     content: null,
+        //     like_count: 0,
+        //     createdAt: 2022-09-02T09:35:05.000Z
+        //   },
+        // ]}
       if (search) {
         console.log(search);
       }
+
+      const newEl = document.createElement("div")
+      newEl.innerHTML = search
+
+
     },
   });
 };
