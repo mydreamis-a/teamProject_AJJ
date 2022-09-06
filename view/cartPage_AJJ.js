@@ -2,7 +2,7 @@
  * 장바구니에 대한 클래스
  */
 class Cart {
-  constructor() { }
+  constructor() {}
 }
 
 ////////////////////////////////////////
@@ -22,7 +22,6 @@ Cart.prototype.inCartAjax = function () {
   const shopName = event.target.dataset.name;
   const productNum = event.target.className.replace("in-cart-btn", "");
   $.ajax({
-    //
     url: `/cart/${shopName}/${productNum}`,
     type: "post",
     //
@@ -33,17 +32,20 @@ Cart.prototype.inCartAjax = function () {
   });
 };
 
-////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
 /**
  * 장바구니 아이콘을 클릭하면 장바구니 화면을 보여주는 함수
- * @returns {object} cartProducts 장바구니에 담긴 상품 목록 정보
- * { [{ product_count: number, JJWproduct: { id: number, name: string, price: number, img: string } }] }
+ * @returns {object} cartProducts 장바구니에 담긴 상품 목록 정보의 배열
+ * [{ product_count: number, JJWproduct: { id: number, name: string, price: number, img: string } }]
  */
-// 1. 장바구니 아이콘 클릭
+// 1. 장바구니 아이콘을 클릭했을 때
 // 2. 장바구니 화면 표시
 // 3. 해당 경로로 전송
 // 4. 전송 받은 장바구니의 상품 정보로
-//  
+//    합계 금액 계산
+// 5. createCartProductTags 함수로
+//    장바구니 화면에 해당 상품 목록의 태그 생성
+// 6. 나가기 버튼에 대한 클릭 이벤트 등록
 Cart.prototype.clickCartIcon = function () {
   //
   const cartModalContainerTag = document.querySelector(".cart-modal-container");
@@ -60,28 +62,25 @@ Cart.prototype.clickCartIcon = function () {
       success: ({ cartProducts }) => {
         //
         let totalPrice = 0;
+        let productCount = 0;
+        const cartListRowTag = document.querySelector(".cart-list-row");
         const cartTotalPriceTag = document.querySelector("#cart-total-price");
         //
         cartProducts.forEach((el) => {
           //
-          let productNum = 0;
-          let shopName = null;
-          //
-          
           for (const key in el) {
             if (Object.hasOwnProperty.call(el, key)) {
               // log(el.JJWproduct); // undefined
               //
-
-              log(el[key]?.price)
               if (el[key]?.price !== undefined) {
                 price = el[key].price;
+                productCount = el.product_count;
               }
             }
           }
-          totalPrice += price;
+          totalPrice += price * productCount;
         });
-        createCartProductTags(cartProducts);
+        cartListRowTag.innerHTML = createCartProductTags(cartProducts).join("");
         cartTotalPriceTag.innerHTML = `총 합계 금액: ${totalPrice} 원`;
       },
     });
@@ -90,40 +89,6 @@ Cart.prototype.clickCartIcon = function () {
   cartExitBtnTag.addEventListener("click", () => {
     cartModalContainerTag.style.display = "none";
   });
-};
-
-//////////////////////////////////////////////////////////////////////////////////////
-/**
- * 상점 이름과 상품 번호를 통해 상품 목록에서 태그를 복사하고 장바구니 화면에 생성하는 함수
- * @param {string} shopName 상점 이름
- * @param {number} productNum 상품 번호
- * @param {number} productCount 장바구니에 담은 수량
- */
-Cart.prototype.createCartProducts = function (shopName, productNum, productCount) {
-  //;
-  const cartDeleteBtnTags = document.querySelectorAll(`[class = "cart-delete-btn${productNum}"][data-name = "${shopName}"]`);
-  const createTagCount = productCount - cartDeleteBtnTags.length;
-  //
-  for (let i = 0; i < createTagCount; i++) {
-    //
-    const inCartBtnTag = document.querySelector(`[class = "in-cart-btn${productNum}"][data-name = "${shopName}"]`);
-    const copyTag = inCartBtnTag.closest(".product-list-col").cloneNode(true);
-    const cartDeleteBtnTag = copyTag.querySelector(`.in-cart-btn${productNum}`);
-    const cartListRowTag = document.querySelector(".cart-list-row");
-    //
-    cartDeleteBtnTag.className = `cart-delete-btn${productNum}`;
-    cartDeleteBtnTag.setAttribute("value", "삭제하기");
-    cartDeleteBtnTag.removeAttribute("onclick");
-    //
-    cartListRowTag.insertBefore(copyTag, cartListRowTag.firstElementChild);
-
-    // ㅜ 장바구니 화면에서 삭제하기 버튼을 클릭했을 때
-    // cartDeleteBtnTag.addEventListener("click", async (e) => {
-    //   //
-    //   await this.deleteCartProducts(e);
-    //   copyTag.remove();
-    // });
-  }
 };
 
 Cart.prototype.deleteCartProducts = function (e) {
@@ -136,4 +101,4 @@ Cart.prototype.deleteCartProducts = function (e) {
   });
 };
 //
-// 09.05.18 수정
+// 09.06.16 수정

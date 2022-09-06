@@ -1,4 +1,4 @@
-/* 09.02.22 수정 */
+/* 09.06.12 수정 */
 
 p {
   margin-bottom: 0px;
@@ -207,10 +207,10 @@ textarea {
   width: 17vw;
 }
 
-.product-keyword-last {
+.product-last-keyword {
   background-color: rgba(255, 255, 255, 0.5);
-  visibility: hidden;
   position: absolute;
+  display: none;
   width: 17vw;
   left: 57vw;
   top: 17vh;

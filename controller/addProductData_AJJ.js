@@ -524,7 +524,7 @@ module.exports = async function addProductData() {
     {
       name: "술잔 옆에 안주로 따뜻한 음악 하나, 꼭 챙겨드세요.",
       price: 100,
-      img: "",
+      img: "/img_Jang/서현진 배우님.jpeg",
       stock: 100,
       category: "firstContent",
     },
@@ -1112,4 +1112,4 @@ module.exports = async function addProductData() {
   ]);
 };
 //
-// 09.01.17 수정
+// 09.06.11 수정

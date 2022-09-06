@@ -17,12 +17,14 @@ const { log } = console;
 //    장바구니 수량은 0으로
 //    sendProductTags 함수에 전송
 // 3. 비회원이면서 세션에 저장된 장바구니 정보가 있을 경우
+//    cartTotalCount 함수를 통해
 //    현재 장바구니에 담긴 모든 상품의 수량을 가져와서
 //    sendProductTags 함수에 전송
 // 4. 로그인한 회원일 경우
 //    세션에 저장된 이메일을 통해서
 //    유저 테이블의 id 컬럼 값을 가져오고
-// 9. 그를 통해 해당 회원의 장바구니 테이블에서
+//    cartTotalCount 함수를 통해
+//    해당 회원의 장바구니 테이블에서
 //    모든 상품의 수량을 가져와서
 //    sendProductTags 함수에 전송
 router.post("/:shopName", async (req, res) => {
@@ -52,7 +54,7 @@ router.post("/:shopName", async (req, res) => {
     //
     await User.findOne({ where: { email: email }, attributes: ["id"] })
       .then((obj) => {
-        return id = obj.dataValues.id;
+        return (id = obj.dataValues.id);
       })
       .then(async () => {
         const cartSession = null;

@@ -1,23 +1,8 @@
-// ### 개발 일기
-//
-// 1. 페이지 로드와 동시에 상품 목록 태그를 생성했다.
-// why 로그인 회원이 로그인 하자마자 장바구니 버튼을 클릭할 경우 장바구니에 담긴 상품 목록의 태그를 장바구니 DB에서 불러와서 장바구니 화면에 생성해줘야 하는데, 장바구니의 상품 목록의 태그를 생성하는 방식이 기존 상품 목록의 태그를 복사하는 방식이기 때문에 기존에 해당하는 상품 목록의 태그가 생성되어 있어야 한다.
-// ㅁ
-
 const shopNameArr = ["ajy", "jbh", "jjw"];
 const JuShopBtnTag = document.querySelector(".Ju-shop-btn");
 const AhnShopBtnTag = document.querySelector(".Ahn-shop-btn");
 const JangShopBtnTag = document.querySelector(".Jang-shop-btn");
 const shopBtnTags = [AhnShopBtnTag, JuShopBtnTag, JangShopBtnTag];
-//
-// ㅜ 각 상점의 상품 목록 태그 생성
-shopNameArr.forEach((el) => {
-  const method = null;
-  const skipCount = 0;
-  const limitCount = 20;
-  const priceScope = null;
-  createProductTagsAjax(method, el, priceScope, skipCount, limitCount);
-});
 
 // ㅜ 각 상점의 버튼을 클릭했을 때
 shopBtnTags.forEach((el, idx) => {
@@ -33,7 +18,7 @@ shopBtnTags.forEach((el, idx) => {
     createProductTagsAjax(method, shopNameArr[idx], priceScope, skipCount, limitCount)
       //
       // ㅜ 장바구니에 담긴 모든 상품의 수량
-      .then(({ productTags, resultCount, cartTotalCount, email}) => (cartTotalCountNumberTag.innerHTML = cartTotalCount));
+      .then(({ products, resultCount, cartTotalCount, email }) => (cartTotalCountNumberTag.innerHTML = cartTotalCount));
     //
     // ㅜ 장바구니 아이콘에 대한 함수
     _cart.clickCartIcon();
@@ -43,16 +28,14 @@ shopBtnTags.forEach((el, idx) => {
     _search.saveKeyword();
     _search.showKeyword();
     //
-
     //@@@@@@@@@@@@@@@@@@@@@@@@
 
-    document.querySelector("#product-keyword").addEventListener("change",(e)=>{
+    document.querySelector("#product-keyword").addEventListener("change", (e) => {
       // console.log(e.target.value);
-      _search.search(e.target.value)
-    })
+      _search.search(e.target.value);
+    });
 
     //@@@@@@@@@@@@@@@@@@@@@@@@
-
 
     // ㅜ 신상품순의 버튼을 클릭했을 때
     const productSortNewBtnTag = document.querySelector("#product-sort-new");
@@ -82,18 +65,18 @@ shopBtnTags.forEach((el, idx) => {
       _search.searchPriceProducts();
     });
     //
-    // ㅜ 더보기 버튼을 클릭했을 때
-    if (document.querySelector(`[class ^= "product-show-more-btn"]`)) {
-      //
-      productShowMoreBtnEvent();
-    }
   });
 });
 
-/////////////////////////////////////
+//////////////////////////////////////
 /**
- * 더보기 버튼의 클릭 이벤트에 대한 함수
+ * 더 보기 버튼의 클릭 이벤트에 대한 함수
  */
+// ㅜ 역할:
+// 모든 더 보기 버튼에 대해서 클릭 했을 때
+// 버튼에 담긴 정보를 통해
+// createProductTagsAjax 함수로 더 많은 상품을 가져올 수 있도록 하고
+// 기존의 클릭한 버튼은 삭제
 const productShowMoreBtnEvent = function () {
   //
   const productShowMoreBtnTags = document.querySelectorAll(`[class ^= "product-show-more-btn"]`);
@@ -139,8 +122,7 @@ const productShowMoreBtnEvent = function () {
 //    덮어쓰기로서 상품 목록의 태그를 생성하고
 //    위로 스크롤
 // 3. 중간 데이터일 경우
-//    기존의 상품 목록 태그 아래에 생성하고
-//    기존의 더 보기 버튼은 삭제
+//    기존의 상품 목록 태그 아래에 생성
 // 4. 전송 받은 데이터가 마지막 데이터가 아니라면
 //    더 보기 버튼 생성
 // 5. 더 보기 버튼에 대한 이벤트 등록
@@ -153,8 +135,7 @@ function createProductTagsAjax(method, shopName, priceScope, skipCount, limitCou
   }
   if (method !== null) {
     url = `shop/${method}/${shopName}`;
-  }
-  else {
+  } else {
     url = `shop/${shopName}`;
   }
   return $.ajax({
@@ -191,10 +172,6 @@ function createProductTagsAjax(method, shopName, priceScope, skipCount, limitCou
       //
       else {
         parentTag.innerHTML += productTags.join("");
-        //
-        // ㅜ 기존의 더보기 버튼은 삭제하기
-        const productShowMoreBtnTag = document.querySelector(`[class ^= "product-show-more-btn"][data-name = "${shopName}"][data-method = "${method}"][data-priceScope = "${priceScope}"]`);
-        productShowMoreBtnTag.remove();
       }
       // ㅜ 더보기 버튼이 필요하다면 생성하기
       if (resultCount > skipCount + limitCount) {
