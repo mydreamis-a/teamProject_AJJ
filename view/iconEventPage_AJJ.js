@@ -74,41 +74,33 @@ mainEvent.addEventListener("click", () => {
         alert(data + "적립");
         createCookie("id", id, 1);
         userCookie = id;
-        // console.log(document.cookie);
-        // let aa = isActiveCookie("id")
-        // console.log(aa);
-        // if(aa == true)
-        // {
-        //   console.log("aa1");
-        // } else{
-        //   console.log("aa2");
         if (getCookie("id") === userCookie) {
           mainEvent.style.display = "none";
         } else {
           // time();
         }
-        // }
       }
     },
   });
 });
 window.onload = () => {
   $.ajax({
-    url: "/dailyPoint",
-    type: "post",
-    data: {
-      userPoint: userPoint,
-    },
-    success: function ({ data, id }) {
+    url: "/point",
+    type: "get",
+    success : function ({ id }) {
       userCookie = id;
-      if (data == "null") {
+      if (id == null) {
         time();
-      } else if (getCookie("id") === userCookie) {
+      }
+      else if(Number(getCookie("id")) === userCookie){
         mainEvent.style.display = "none";
-      } else time();
+      } else{
+        time();
+      }
     },
   });
 };
+
 
 // let time = 0;
 // let ran = 0;

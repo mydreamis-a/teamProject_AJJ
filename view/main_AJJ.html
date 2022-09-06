@@ -76,9 +76,7 @@
     </div>
     <div>
       <% if(!errorCode){%>
-        <h2 class="user-login">
-          <%= data.userName %>
-        </h2>
+        <h2 class="user-login"><%= data.userName %></h2>
         <p>
           보유 포인트: <%= data.userPoint %>
         </p>
@@ -356,17 +354,19 @@
   _JangMainSlide.slideTextTags[_JangMainSlide.slideTextTags.length - 1].appendChild(_dateAnimation.increaseCopyTag);
 
   let check = false;
-  function likeInsert(shopName,productIndex,userEmail) { 
-    if(check)
-    {
-      socket.emit("likeCheck",shopName,productIndex,userEmail);
-      check = false;
-      
+  function likeInsert(shopName,productIndex,userEmail) {
+    if(userEmail == "null"){
+      alert("로그인하고 누르세요.");
     }else{
-      socket.emit("likeInsert",shopName,productIndex,userEmail);
-      check = true;
+      if(check)
+      {
+        socket.emit("likeCheck",shopName,productIndex,userEmail);
+        check = false;
+      }else {
+        socket.emit("likeInsert",shopName,productIndex,userEmail);
+        check = true;
+      }
     }
-
   }
 </script>
 </html>
