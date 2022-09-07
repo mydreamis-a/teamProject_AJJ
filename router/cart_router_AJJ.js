@@ -38,7 +38,7 @@ router.post("/:shopName/:productNum", async (req, res) => {
   productNum = Number(productNum);
   //
   // ㅜ 비회원일 경우
-  if (req.session.email === "") {
+  if (req.session.email === undefined) {
     //
     const id = null;
     let update = false;
@@ -133,7 +133,7 @@ router.post("/:shopName/:productNum", async (req, res) => {
 router.post("/list", (req, res) => {
   //
   // ㅜ 비회원일 경우
-  if (req.session.email === "") {
+  if (req.session.email === undefined) {
     //
     // ㅜ 첫 접속 시
     if (req.session.cart === undefined) {
@@ -166,7 +166,7 @@ router.post("/delete/:shopName/:productNum", async (req, res) => {
   let cartTotalCount = 0;
   //
   // ㅜ 비회원일 경우
-  if (req.session.email === "") {
+  if (req.session.email === undefined) {
     //
     const id = null;
     let cartSession = req.session.cart;

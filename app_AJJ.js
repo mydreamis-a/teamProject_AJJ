@@ -110,10 +110,10 @@ app.get("/", async (req, res) => {
     if (err) {
       errorCode = "로그인을 해주세요";
       userName = "";
-      req.session.email = "";
-      req.session.name = "";
-      req.session.aT = "";
-      req.session.rT = "";
+      delete req.session.email;
+      delete req.session.name;
+      delete req.session.aT;
+      delete req.session.rT;
     } else if (decoded) {
       errorCode = "";
       userName = req.session.name + "님 환영합니다.";

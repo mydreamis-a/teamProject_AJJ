@@ -10,6 +10,7 @@ router.post("/today", (req, res) => {
   const { date } = req.body;
   let email = req.session.email;
   let userId = null;
+  //
   User.findOne({
     where: { email: email },
   }).then((e) => {

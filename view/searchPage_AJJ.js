@@ -17,16 +17,16 @@ Search.prototype.createSearchTags = function () {
   searchTag.style.width = `${this.widthFromPxToVw(width)}vw`;
   searchTag.style.visibility = "visible";
   searchTag.innerHTML = `
-    <label class ="product-search-price-start" for="product-search-price-start">가격 검색</label>
-    <input id ="product-search-price-start" class ="product-search" type="number">
-    <input id ="product-search-price-end" class ="product-search" type="number">
-    <input id ="product-search-price-btn" class ="product-search" type="button" value="검색">
-    <input id ="product-sort-new" class ="product-search" type="button" value="신상품순">
-    <input id ="product-sort-low-price" class ="product-search" type="button" value="낮은가격순">
-    <input id ="product-sort-high-price" class ="product-search" type="button" value="높은가격순">
-    <input id ="product-keyword" class ="cart-input-search-item" type="search" autocomplete="off">
-    <input id ="product-keyword-btn" class ="product-search" type="submit" value="검색">
-    <div class ="product-last-keyword">최근검색어</div>
+    <label class="product-search-price-start" for="product-search-price-start">가격 검색</label>
+    <input id="product-search-price-start" class="product-search" type="number">
+    <input id="product-search-price-end" class="product-search" type="number">
+    <input id="product-search-price-btn" class="product-search" type="button" value="검색">
+    <input id="product-sort-new" class="product-search" type="button" value="신상품순">
+    <input id="product-sort-low-price" class="product-search" type="button" value="낮은가격순">
+    <input id="product-sort-high-price" class="product-search" type="button" value="높은가격순">
+    <input id="product-keyword" class="cart-input-search-item" type="search" autocomplete="off">
+    <input id="product-keyword-btn" class="product-search" type="submit" value="검색">
+    <div class="product-last-keyword">최근검색어</div>
     `;
   const mainHeaderTag = document.querySelector(".main-header");
   mainHeaderTag.style.backgroundColor = "white";
@@ -116,7 +116,7 @@ Search.prototype.saveKeywordAjax = function (keyword) {
       //
       if (keywords) {
         const stringKeywords = keywords.join(", ");
-        this.createCookie("keyword", stringKeywords, 0.1);
+        this.createCookie("keyword",encodeURIComponent(stringKeywords), 0.1);
       }
     },
   });
@@ -305,7 +305,7 @@ Search.prototype.createCookie = function (name, value, time) {
  */
 Search.prototype.getCookie = function (name) {
   const value = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
-  return value ? value[2] : null;
+  return value ? decodeURIComponent(value[2]) : null;
 };
 //
 // 09.07.00 수정

@@ -27,7 +27,7 @@ router.post("/save", async (req, res) => {
   const { keyword } = req.body;
   //
   // ㅜ 비회원일 경우
-  if (req.session.email === "") {
+  if (req.session.email === undefined) {
     //
     let keywords = new Array();
     //
@@ -90,18 +90,22 @@ router.post("/save", async (req, res) => {
 router.post("/last", (req, res) => {
   //
   // ㅜ 비회원일 경우
-  if (req.session.email === "") {
+  log("''", req.session.email === undefined)
+  log("undefined", req.session.email === undefined)
+  log("req.session.email", req.session.email)
+  log("req.session", req.session)
+  if (req.session.email === undefined) {
     // log(keywords === ""); // 쿠키가 아예 없을 경우
     //
     let { keywords } = req.body;
     keywords = keywords.split(", ").reverse();
     res.send({ keywords });
-    //
-    // ㅜ 로그인한 회원일 경우
-  } else {
+  }
+  // ㅜ 로그인한 회원일 경우
+  else {
     let id;
     const email = req.session.email;
-    //
+  //
     User.findOne({ where: { email: email }, attributes: ["id"] })
       .then((obj) => {
         return (id = obj.dataValues.id);
