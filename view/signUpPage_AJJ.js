@@ -61,7 +61,7 @@ class signUp2 {
       e.stopPropagation();
       if (rsltArr.every((value) => value === true)) {
         const userName = document.querySelector("#input-name").value;
-        alert(userName + "님, 환영합니다.\n회원가입이 완료되었습니다.");
+        // alert(userName + "님, 환영합니다.\n회원가입이 완료되었습니다.");
         this.formTag.submit();
       }
     });
@@ -103,4 +103,4 @@ class signUp2 {
   }
 }
 
-// 09.03.22 수정
+// 09.08.13 수정

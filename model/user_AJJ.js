@@ -32,6 +32,9 @@ class User extends Sql.Model {
           type: Sql.INTEGER,
           defaultValue: 0,
         },
+        refresh: {
+          type: Sql.STRING(255),
+        }
       },
       {
         sequelize,
@@ -57,4 +60,4 @@ class User extends Sql.Model {
 
 module.exports = User;
 
-// 08.30.07 수정
+// 09.08.02 수정

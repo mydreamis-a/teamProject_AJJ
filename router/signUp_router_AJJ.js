@@ -1,14 +1,20 @@
 const { User } = require("../model/index_AJJ");
 const express = require("express");
-const router = express.Router();
 const bcrypt = require("bcrypt");
+const router = express.Router();
+const { log } = console;
+//
 router.post("/signUp", (req, res) => {
+  //
+  const errorCode = undefined;
   const { name, phone, email, password } = req.body;
-  bcrypt.hash(password, 10, (err, data) => {
-    if (err) {
-      console.log(err);
-    } else {
+  //
+  bcrypt.hash(password, 10, (err, password) => {
+    //
+    if (err) log(err);
+    else {
       User.findOrCreate({
+        //
         where: {
           phone: phone,
           email: email,
@@ -17,21 +23,18 @@ router.post("/signUp", (req, res) => {
           name: name,
           phone: phone,
           email: email,
-          password: data,
+          password: password,
         },
       })
-        .then((e) => {
-          let userName = "회원가입이 완료되었습니다";
-          let errorCode = "";
+        .then(() => {
+          const userName = "회원 가입이 완료되었습니다";
           res.render("main_AJJ", { data: { userName }, errorCode });
         })
-        .catch((e) => {
-          console.log(err);
-          let userName = "이미 중복된 값이 있습니다";
-          let errorCode = "";
+        .catch(() => {
+          const userName = "입력하신 전화 번호 혹은 이메일이 이미 존재합니다. 회원 가입이 완료 되지 않았습니다.";
           res.render("main_AJJ", { data: { userName }, errorCode });
         });
-    }
+    };
   });
 });
 

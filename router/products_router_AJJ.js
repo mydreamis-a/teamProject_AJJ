@@ -54,7 +54,7 @@ router.post("/:shopName", async (req, res) => {
   //
     await User.findOne({ where: { email: email }, attributes: ["id"] })
       .then((obj) => {
-        return (id = obj.dataValues.id);
+        return   (id = obj.dataValues.id);
       })
       .then(async () => {
         const cartSession = null;

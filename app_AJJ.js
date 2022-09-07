@@ -7,7 +7,6 @@ const mysql = require("mysql2");
 // ㅜ 시퀄라이즈 패키지이자 생성자
 const Sql = require("sequelize");
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const socketio = require("socket.io");
 const dot = require("dotenv").config();
 const cookie = require("cookie-parser");
@@ -35,6 +34,7 @@ const iconEvent = require("./router/iconEvent_router_AJJ");
 const dailyCheck = require("./router/dailyCheck_router_AJJ");
 //
 // ㅜ controller
+const tokenVerify = require("./controller/tokenVerify_AJJ");
 const addProductData = require("./controller/addProductData_AJJ");
 //
 // ㅜ server 연결
@@ -102,33 +102,22 @@ sequelize
 //
 // ㅜ 메인 페이지
 app.get("/", async (req, res) => {
-  let userName = "";
-  let errorCode = "";
-  let userPoint = 0;
-
-  jwt.verify(req.session.aT, process.env.JU_ACCESS_TOKEN, (err, decoded) => {
-    if (err) {
-      errorCode = "로그인을 해주세요";
-      userName = "";
-      delete req.session.email;
-      delete req.session.name;
-      delete req.session.aT;
-      delete req.session.rT;
-    } else if (decoded) {
-      errorCode = "";
-      userName = req.session.name + "님 환영합니다.";
-      userPoint = req.session.point;
-      // console.log(err);
-      errorCode = err;
-    }
-  });
+  //
+  const { userName, userPoint, errorCode } = tokenVerify(req, res);
+  //
+  log(userPoint)
+  // ㅜ 저장된 상품 데이터가 하나도 없을 경우 생성하기
   await AJYproduct.findOne({}).then(async (obj) => {
     //
-    // ㅜ 저장된 상품 데이터가 하나도 없을 경우 넣기
-    if (obj === null) await addProductData();
+    if (obj === null) {
+      await addProductData();
+    }
     res.render("main_AJJ", { data: { userName, userPoint }, errorCode });
   });
 });
+
+////////////////
+// ㅜ 주영님 코드
 
 app.get("/point", async (req,res) => {
   let id = null;
@@ -149,8 +138,6 @@ app.get("/point", async (req,res) => {
   res.send({ id: id });
 })
 
-////////////////
-// ㅜ 주영님 코드
 let adminArray = new Array();
 let userArray = new Array();
 
@@ -328,4 +315,4 @@ io.sockets.on("connection", async (socket) => {
   });
 });
 //
-// 09.05.13 수정
+// 09.08.13 수정

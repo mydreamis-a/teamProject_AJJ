@@ -1,4 +1,4 @@
-const { sequelize, User, Cart, Like, Comment, Keyword, AJYproduct, JBHproduct, JJWproduct, DailyCheck, BestItem } = require("../model/index_AJJ");
+const { } = require("../model/index_AJJ");
 const express = require("express");
 const router = express.Router();
 const { log } = console;
@@ -8,4 +8,4 @@ router.post("/", (req, res) => {});
 //
 module.exports = router;
 //
-// 09.01.13 수정
+// 09.08.01 수정
