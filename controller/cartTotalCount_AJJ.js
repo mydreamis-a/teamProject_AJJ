@@ -36,4 +36,4 @@ module.exports = function cartTotalCount(id, cartSession) {
   }
 };
 //
-// 09.06.13 수정
+// 09.07.00 수정

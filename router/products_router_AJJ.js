@@ -11,7 +11,7 @@ const router = express.Router();
 const { log } = console;
 
 ////////////////////////////////////////////////
-// ㅜ 각 상점의 버튼을 클릭했을 때의 상품 목록 화면
+// ㅜ 각 상점의 버튼을 클릭 했을 때의 상품 목록 화면
 // 1. 세션 정보로 로그인 유무 판단
 // 2. 비회원이면서 첫 접속일 경우
 //    장바구니 수량은 0으로
@@ -65,60 +65,74 @@ router.post("/:shopName", async (req, res) => {
   sendProductTags(shopName, condition, res, email, cartTotalCount);
 });
 
+///////////////////////////////////////////////
+// ㅜ 검색어로 상품 검색 했을 때의 상품 목록 화면
+router.post("/search/:shopName/:keyword", (req, res) => {
+  //
+  const _cartTotalCount = null;
+  const { keyword } = req.params;
+  const email = req.session.email; // log(email === ""); // 비회원일 경우
+  const shopName = req.params.shopName;
+  const { skipCount, limitCount } = req.body;
+  const condition = { where: { name: { [Op.like]: `%${keyword}%` } }, attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
+  //
+  sendProductTags(shopName, condition, res, email, _cartTotalCount);
+})
+
 /////////////////////////////////////////////////
-// ㅜ 신상품순의 버튼을 클릭했을 때의 상품 목록 화면
+// ㅜ 신상품순의 버튼을 클릭 했을 때의 상품 목록 화면
 router.post("/new/:shopName", (req, res) => {
   //
   const _cartTotalCount = null;
-  const email = req.session.email;
-  const _shopName = req.params.shopName;
+  const email = req.session.email; // log(email === ""); // 비회원일 경우
+  const shopName = req.params.shopName;
   const { skipCount, limitCount } = req.body;
-  const condition = { order: [["id", "DESC"]], offset: Number(skipCount), limit: Number(limitCount) };
+  const condition = { order: [["id", "DESC"]], attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
   //
-  sendProductTags(_shopName, email, res, condition, _cartTotalCount);
+  sendProductTags(shopName, condition, res, email, _cartTotalCount);
 });
 
 ///////////////////////////////////////////////////
-// ㅜ 낮은 가격순의 버튼을 클릭했을 때의 상품 목록 화면
+// ㅜ 낮은 가격순의 버튼을 클릭 했을 때의 상품 목록 화면
 router.post("/lowPrice/:shopName", (req, res) => {
   //
   const _cartTotalCount = null;
-  const email = req.session.email;
-  const _shopName = req.params.shopName;
+  const email = req.session.email; // log(email === ""); // 비회원일 경우
+  const shopName = req.params.shopName;
   const { skipCount, limitCount } = req.body;
-  const condition = { order: [["price", "ASC"]], offset: Number(skipCount), limit: Number(limitCount) };
+  const condition = { order: [["price", "ASC"]], attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
   //
-  sendProductTags(_shopName, email, res, condition, _cartTotalCount);
+  sendProductTags(shopName, condition, res, email, _cartTotalCount);
 });
 
 ///////////////////////////////////////////////////
-// ㅜ 높은 가격순의 버튼을 클릭했을 때의 상품 목록 화면
+// ㅜ 높은 가격순의 버튼을 클릭 했을 때의 상품 목록 화면
 router.post("/highPrice/:shopName", (req, res) => {
   //
   const _cartTotalCount = null;
-  const email = req.session.email;
-  const _shopName = req.params.shopName;
+  const email = req.session.email; // log(email === ""); // 비회원일 경우
+  const shopName = req.params.shopName;
   const { skipCount, limitCount } = req.body;
-  const condition = { order: [["price", "DESC"]], offset: Number(skipCount), limit: Number(limitCount) };
+  const condition = { order: [["price", "DESC"]], attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
   //
-  sendProductTags(_shopName, email, res, condition, _cartTotalCount);
+  sendProductTags(shopName, condition, res, email, _cartTotalCount);
 });
 
 //////////////////////////////////////////////////////W////////
-// ㅜ 가격 범위를 입력하고 검색 버튼을 클릭했을 때의 상품 목록 화면
+// ㅜ 가격 범위를 입력하고 검색 버튼을 클릭 했을 때의 상품 목록 화면
 router.post("/sortPrice/:shopName/:min/:max", (req, res) => {
   //
   const min = req.params.min;
   const max = req.params.max;
   const _cartTotalCount = null;
-  const email = req.session.email;
-  const _shopName = req.params.shopName;
+  const email = req.session.email; // log(email === ""); // 비회원일 경우
+  const shopName = req.params.shopName;
   const { skipCount, limitCount } = req.body;
-  const condition = { where: { price: { [Op.gte]: min, [Op.lte]: max } }, offset: Number(skipCount), limit: Number(limitCount) };
+  const condition = { where: { price: { [Op.gte]: min, [Op.lte]: max } }, attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
   //
-  sendProductTags(_shopName, email, res, condition, _cartTotalCount);
+  sendProductTags(shopName, condition, res, email, _cartTotalCount);
 });
 //
 module.exports = router;
 //
-// 09.05.18 수정
+// 09.07.00 수정

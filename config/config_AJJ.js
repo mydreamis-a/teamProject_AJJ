@@ -8,6 +8,13 @@ const config = {
     host: "127.0.0.1",
     dialect: "mysql",
     //
+    // ㅜ 한국 시간 설정
+    timezone: "+09:00",
+    dialectOptions: {
+      dateStrings: true,
+      typeCast: true
+    },
+    //
     // ㅜ 쿼리 로그 비활성화
     logging: false,
   },
@@ -15,4 +22,4 @@ const config = {
 
 module.exports = config;
 
-// 08.23.02 수정
+// 09.07.08 수정

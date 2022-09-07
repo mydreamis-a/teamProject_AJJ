@@ -100,21 +100,21 @@ class JangListSlide {
     this.slideWrapTag.style.left = `-${this.slideWidth}vw`;
     this.autoPlay();
 
-    // ㅜ 다음 버튼을 클릭했을 때
+    // ㅜ 다음 버튼을 클릭 했을 때
     // ㅜ 맨 뒤에 복사해 둔 첫 번째 사진의 경우 원래 자리로 이동해야 하기 때문에 막아놓기
     this.nextBtn.onclick = () => {
       if (this.index === this.imgTags.length / this.rowImgCount - 1) return;
       this.btnControl("next");
     };
 
-    // ㅜ 이전 버튼을 클릭했을 때
+    // ㅜ 이전 버튼을 클릭 했을 때
     // ㅜ 맨 뒤에 복사해 둔 첫 번째 사진의 경우 원래 자리로 이동해야 하기 때문에 막아놓기
     this.prevBtn.onclick = () => {
       if (this.index === 0) return;
       this.btnControl("prev");
     };
 
-    // // ㅜ 마우스 왼쪽 버튼을 클릭했을 때
+    // // ㅜ 마우스 왼쪽 버튼을 클릭 했을 때
     // this.slideContainerTag.onmousedown = (e) => {
     //     // ㅜ 맨 앞과 맨 뒤에 복사해 둔 사진의 위치일 때는 드래그 막아놓기
     //     if (this.index >= (this.imgTags.length / this.rowImgCount - 1)) return;

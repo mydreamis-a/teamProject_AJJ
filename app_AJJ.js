@@ -10,8 +10,9 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const socketio = require("socket.io");
 const dot = require("dotenv").config();
-const cookie = require("cookie-parser");
+// const cookie = require("cookie-parser");
 const session = require("express-session");
+const responseTime = require("response-time");
 //
 // ㅜ model
 const {
@@ -41,6 +42,14 @@ const app = express();
 const server = app.listen(PORT, () => {
   log("localhost:", PORT);
 });
+const io = socketio(server);
+//
+app.use(
+  responseTime((req, res, time) => {
+    log(req.mothod, req.url, time);
+  })
+);
+//
 // ㅜ session 설정
 app.use(
   session({
@@ -53,10 +62,9 @@ app.use(
     saveUninitialized: true,
   })
 );
-const io = socketio(server);
 //
 // ㅜ 헤더에 쿠키 추가
-app.use(cookie());
+// app.use(cookie());
 //
 // ㅜ body-parser
 app.use(express.urlencoded({ extended: false }));

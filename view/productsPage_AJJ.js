@@ -1,21 +1,24 @@
+let deleteCartControl = false;
+let inCartControl = false;
 const shopNameArr = ["ajy", "jbh", "jjw"];
 const JuShopBtnTag = document.querySelector(".Ju-shop-btn");
 const AhnShopBtnTag = document.querySelector(".Ahn-shop-btn");
 const JangShopBtnTag = document.querySelector(".Jang-shop-btn");
 const shopBtnTags = [AhnShopBtnTag, JuShopBtnTag, JangShopBtnTag];
 
-// ㅜ 각 상점의 버튼을 클릭했을 때
+// ㅜ 각 상점의 버튼을 클릭 했을 때
 shopBtnTags.forEach((el, idx) => {
   el.addEventListener("click", async () => {
     //
     let method = null;
     const skipCount = 0;
+    const keyword = null;
     let priceScope = null;
-    const limitCount = 20; // 이 변수들 사용하나?
+    const limitCount = 20;
     const cartTotalCountNumberTag = document.querySelector(".cart-total-count-number");
     //
     // ㅜ 각 상점의 상품 목록 태그 생성
-    createProductTagsAjax(method, shopNameArr[idx], priceScope, skipCount, limitCount)
+    createProductTagsAjax(method, shopNameArr[idx], priceScope, keyword, skipCount, limitCount)
       //
       // ㅜ 장바구니에 담긴 모든 상품의 수량
       .then(({ products, resultCount, cartTotalCount, email }) => (cartTotalCountNumberTag.innerHTML = cartTotalCount));
@@ -25,40 +28,34 @@ shopBtnTags.forEach((el, idx) => {
     //
     // ㅜ 검색 창 태그 생성 및 검색어 기능에 대하여
     _search.createSearchTags();
-    _search.saveKeyword();
+    _search.searchKeyword();
     _search.showKeyword();
     //
-    //@@@@@@@@@@@@@@@@@@@@@@@@
-
-    document.querySelector("#product-keyword").addEventListener("change", (e) => {
-      // console.log(e.target.value);
-      _search.search(e.target.value);
-    });
-
-    //@@@@@@@@@@@@@@@@@@@@@@@@
-
-    // ㅜ 신상품순의 버튼을 클릭했을 때
+    // ㅜ 신상품순의 버튼을 클릭 했을 때
     const productSortNewBtnTag = document.querySelector("#product-sort-new");
     productSortNewBtnTag.addEventListener("click", () => {
       //
-      _search.sortProducts("new", null);
+      method = "new";
+      _search.sortProducts(method, priceScope, keyword);
     });
     //
-    // ㅜ 낮은 가격순의 버튼을 클릭했을 때
+    // ㅜ 낮은 가격순의 버튼을 클릭 했을 때
     const productSortLowPriceBtnTag = document.querySelector("#product-sort-low-price");
     productSortLowPriceBtnTag.addEventListener("click", () => {
       //
-      _search.sortProducts("lowPrice", null);
+      method = "lowPrice";
+      _search.sortProducts(method, priceScope, keyword);
     });
     //
-    // ㅜ 높은 가격순의 버튼을 클릭했을 때
+    // ㅜ 높은 가격순의 버튼을 클릭 했을 때
     const productSortHighPriceBtnTag = document.querySelector("#product-sort-high-price");
     productSortHighPriceBtnTag.addEventListener("click", () => {
       //
-      _search.sortProducts("highPrice", null);
+      method = "highPrice";
+      _search.sortProducts(method, priceScope, keyword);
     });
     //
-    // ㅜ 가격 범위를 입력하고 검색 버튼을 클릭했을 때
+    // ㅜ 가격 범위를 입력하고 검색 버튼을 클릭 했을 때
     const productSearchPriceBtnTag = document.querySelector("#product-search-price-btn");
     productSearchPriceBtnTag.addEventListener("click", () => {
       //
@@ -83,6 +80,7 @@ const productShowMoreBtnEvent = function () {
   productShowMoreBtnTags.forEach((el) => {
     el.addEventListener("click", function () {
       //
+      const keyword = null;
       const limitCount = 20;
       let method = el.dataset.method;
       const shopName = el.dataset.name;
@@ -97,7 +95,7 @@ const productShowMoreBtnEvent = function () {
       const btnNumber = el.className.replace("product-show-more-btn", "");
       const skipCount = btnNumber * 20;
       //
-      createProductTagsAjax(method, shopName, priceScope, skipCount, limitCount);
+      createProductTagsAjax(method, shopName, priceScope, keyword, skipCount, limitCount);
       this.remove();
     });
   });
@@ -109,6 +107,7 @@ const productShowMoreBtnEvent = function () {
  * @param {string} method 상품 검색 및 정렬 조건
  * @param {string} shopName 상점 이름
  * @param {string} priceScope 가격 검색일 경우 입력 범위
+ * @param {string} keyword 문자열의 상품 검색어
  * @param {number} skipCount 상품 제외 개수
  * @param {number} limitCount 상품 조회 개수
  * @returns {object}
@@ -126,16 +125,23 @@ const productShowMoreBtnEvent = function () {
 // 4. 전송 받은 데이터가 마지막 데이터가 아니라면
 //    더 보기 버튼 생성
 // 5. 더 보기 버튼에 대한 이벤트 등록
-function createProductTagsAjax(method, shopName, priceScope, skipCount, limitCount) {
+function createProductTagsAjax(method, shopName, priceScope, keyword, skipCount, limitCount) {
   //
   let url = null;
   //
   if (priceScope !== null) {
     url = `shop/${method}/${shopName}/${priceScope}`;
   }
-  if (method !== null) {
+  //
+  else if (keyword !== null) {
+    url = `shop/${method}/${shopName}/${keyword}`;
+  }
+  //
+  else if (method !== null) {
     url = `shop/${method}/${shopName}`;
-  } else {
+  }
+  //
+  else {
     url = `shop/${shopName}`;
   }
   return $.ajax({
@@ -166,8 +172,12 @@ function createProductTagsAjax(method, shopName, priceScope, skipCount, limitCou
       if (skipCount === 0) {
         parentTag.innerHTML = productTags.join("");
         //
+        const section2Tag = document.querySelector(".section2");
         const section3Tag = document.querySelector(".section3");
+        const section4Tag = document.querySelector(".section4");
+        section2Tag.scroll(0, 0);
         section3Tag.scroll(0, 0);
+        section4Tag.scroll(0, 0);
       }
       //
       else {
@@ -197,4 +207,4 @@ function createProductTagsAjax(method, shopName, priceScope, skipCount, limitCou
   });
 }
 //
-// 09.05.17 수정
+// 09.07.00 수정
