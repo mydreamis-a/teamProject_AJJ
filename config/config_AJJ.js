@@ -2,9 +2,9 @@ const dot = require("dotenv").config();
 
 const config = {
   dev: {
-    username: "root",
+    username: "j",
     password: process.env.DATABASE_PASSWORD,
-    database: "ajj_project",
+    database: "AJJ",
     host: "127.0.0.1",
     dialect: "mysql",
     //
@@ -12,7 +12,7 @@ const config = {
     timezone: "+09:00",
     dialectOptions: {
       dateStrings: true,
-      typeCast: true
+      typeCast: true,
     },
     //
     // ㅜ 쿼리 로그 비활성화
