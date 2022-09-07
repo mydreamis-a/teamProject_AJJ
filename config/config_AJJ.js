@@ -2,9 +2,9 @@ const dot = require("dotenv").config();
 
 const config = {
   dev: {
-    username: "root",
+    username: "admin",
     password: process.env.DATABASE_PASSWORD,
-    database: "ajj_project",
+    database: "mydb",
     host: "127.0.0.1",
     dialect: "mysql",
     //
