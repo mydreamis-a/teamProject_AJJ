@@ -60,3 +60,6 @@
     position: absolute;
     left: 16.5%;
 }
+.user-login{
+    display: none;
+}

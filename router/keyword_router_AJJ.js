@@ -27,7 +27,7 @@ router.post("/save", async (req, res) => {
   const { keyword } = req.body;
   //
   // ㅜ 비회원일 경우
-  if (req.session.email === "") {
+  if (req.session.email === undefined) {
     //
     let keywords = new Array();
     //
@@ -90,7 +90,7 @@ router.post("/save", async (req, res) => {
 router.post("/last", (req, res) => {
   //
   // ㅜ 비회원일 경우
-  if (req.session.email === "") {
+  if (req.session.email === undefined) {
     // log(keywords === ""); // 쿠키가 아예 없을 경우
     //
     let { keywords } = req.body;

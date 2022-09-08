@@ -4,10 +4,14 @@ const signInExitTag = document.querySelector(".sign-in-exit-btn").addEventListen
   modal.style.display = "none";
 });
 
-const userLogin = document.querySelector(".user-login");
+const userLogin = document.querySelector(".user-login").innerHTML;
 
 personIcon.addEventListener("click", () => {
-  modal.style.display = "block";
+  if(userLogin !== ""){
+    alert("내정보 페이지 준비중");
+  }else{
+    modal.style.display = "block";
+  }
 });
 
 document.querySelector(".sign-in-exit-btn").addEventListener("click", function () {

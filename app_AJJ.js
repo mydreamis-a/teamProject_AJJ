@@ -105,17 +105,19 @@ app.get("/", async (req, res) => {
   let userName = "";
   let errorCode = "";
   let userPoint = 0;
+  let aa = "";
 
   jwt.verify(req.session.aT, process.env.JU_ACCESS_TOKEN, (err, decoded) => {
     if (err) {
       errorCode = "로그인을 해주세요";
       userName = "";
-      req.session.email = "";
-      req.session.name = "";
-      req.session.aT = "";
-      req.session.rT = "";
+      delete req.session.email;
+      delete req.session.name;
+      delete req.session.aT;
+      delete req.session.rT;
     } else if (decoded) {
       errorCode = "";
+      aa = req.session.name;
       userName = req.session.name + "님 환영합니다.";
       userPoint = req.session.point;
       // console.log(err);
@@ -126,7 +128,7 @@ app.get("/", async (req, res) => {
     //
     // ㅜ 저장된 상품 데이터가 하나도 없을 경우 넣기
     if (obj === null) await addProductData();
-    res.render("main_AJJ", { data: { userName, userPoint }, errorCode });
+    res.render("main_AJJ", { data: { userName, userPoint, aa }, errorCode });
   });
 });
 

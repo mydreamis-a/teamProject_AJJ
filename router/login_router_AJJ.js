@@ -4,13 +4,14 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
-router.use(
-  session({
-    secret: process.env.JU_SECRET_KEY,
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+
+// router.use(
+//   session({
+//     secret: process.env.JU_SECRET_KEY,
+//     resave: false,
+//     saveUninitialized: true,
+//   })
+// );
 
 router.post("/login", (req, res) => {
   let errorCode = "";
