@@ -76,14 +76,18 @@ Cart.prototype.clickCartIcon = function () {
   });
   // ㅜ 장바구니 화면에서 주문하기 버튼을 클릭 했을 때
   cartOrderBtnTag.addEventListener("click", () => {
-    //
-    const orderPrice = cartTotalPriceTag.innerHTML.replace("총 합계 금액: ", "");
-    const orderMessage = `주문하시겠습니까?\n주문 금액: ${orderPrice}`;
-    //
-    if (orderPrice === 0) return;
-    if (confirm(orderMessage)) {
-      alert(`${orderPrice} 주문 완료!`);
-    };
+    // 로그인 판단 여부 변수는 로그인 페이지에 선언해둠.
+    if(userLogin == ""){
+      alert("로그인 먼저 해주세요");
+    } else{
+      const orderPrice = cartTotalPriceTag.innerHTML.replace("총 합계 금액: ", "");
+      const orderMessage = `주문하시겠습니까?\n주문 금액: ${orderPrice}`;
+      //
+      if (orderPrice === 0) return;
+      if (confirm(orderMessage)) {
+        alert(`${orderPrice} 주문 완료!`);
+      };
+    }
   });
   // ㅜ 장바구니 화면에서 나가기 버튼을 클릭 했을 때
   cartExitBtnTag.addEventListener("click", () => {

@@ -75,11 +75,12 @@
     <div class="search">
     </div>
     <div>
+      <h6 class="user-login"><%= data.aa %></h6>
       <% if(!errorCode){%>
-        <h2 class="user-login"><%= data.userName %></h2>
+        <h2><%= data.userName %></h2>
         <p>
           보유 포인트: <%= data.userPoint %>
-        </p>
+        </p> 
         <% }else{%>
           <h2>
             <%= errorCode %>

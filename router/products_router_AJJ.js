@@ -37,7 +37,7 @@ router.post("/:shopName", async (req, res) => {
   const condition = { attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
   //
   // ㅜ 비회원일 경우
-  if (req.session.email === "") {
+  if (req.session.email === undefined) {
     //
     if (req.session.cart === undefined) {
       cartTotalCount = 0;
@@ -71,7 +71,7 @@ router.post("/search/:shopName/:keyword", (req, res) => {
   //
   const _cartTotalCount = null;
   const { keyword } = req.params;
-  const email = req.session.email; // log(email === ""); // 비회원일 경우
+  const email = req.session.email; // log(email === undefined); // 비회원일 경우
   const shopName = req.params.shopName;
   const { skipCount, limitCount } = req.body;
   const condition = { where: { name: { [Op.like]: `%${keyword}%` } }, attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
@@ -84,7 +84,7 @@ router.post("/search/:shopName/:keyword", (req, res) => {
 router.post("/new/:shopName", (req, res) => {
   //
   const _cartTotalCount = null;
-  const email = req.session.email; // log(email === ""); // 비회원일 경우
+  const email = req.session.email; // log(email === undefined); // 비회원일 경우
   const shopName = req.params.shopName;
   const { skipCount, limitCount } = req.body;
   const condition = { order: [["id", "DESC"]], attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
@@ -97,7 +97,7 @@ router.post("/new/:shopName", (req, res) => {
 router.post("/lowPrice/:shopName", (req, res) => {
   //
   const _cartTotalCount = null;
-  const email = req.session.email; // log(email === ""); // 비회원일 경우
+  const email = req.session.email; // log(email === undefined); // 비회원일 경우
   const shopName = req.params.shopName;
   const { skipCount, limitCount } = req.body;
   const condition = { order: [["price", "ASC"]], attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
@@ -110,7 +110,7 @@ router.post("/lowPrice/:shopName", (req, res) => {
 router.post("/highPrice/:shopName", (req, res) => {
   //
   const _cartTotalCount = null;
-  const email = req.session.email; // log(email === ""); // 비회원일 경우
+  const email = req.session.email; // log(email === undefined); // 비회원일 경우
   const shopName = req.params.shopName;
   const { skipCount, limitCount } = req.body;
   const condition = { order: [["price", "DESC"]], attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
@@ -125,7 +125,7 @@ router.post("/sortPrice/:shopName/:min/:max", (req, res) => {
   const min = req.params.min;
   const max = req.params.max;
   const _cartTotalCount = null;
-  const email = req.session.email; // log(email === ""); // 비회원일 경우
+  const email = req.session.email; // log(email === undefined); // 비회원일 경우
   const shopName = req.params.shopName;
   const { skipCount, limitCount } = req.body;
   const condition = { where: { price: { [Op.gte]: min, [Op.lte]: max } }, attributes: ["id", "name", "price", "img", "like_count"], offset: Number(skipCount), limit: Number(limitCount) };
