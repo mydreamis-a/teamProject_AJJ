@@ -2,7 +2,7 @@
  * 상품 검색에 대한 클래스
  */
 class Search {
-  constructor() { }
+  constructor() {}
 }
 
 ///////////////////////////////////////
@@ -85,7 +85,7 @@ Search.prototype.searchKeyword = function () {
 
 //////////////////////
 /**
- * 
+ *
  * @param {string} keyword 문자열의 상품 검색어
  */
 Search.prototype.searchProducts = function (keyword) {
@@ -93,7 +93,7 @@ Search.prototype.searchProducts = function (keyword) {
   const method = "search";
   const priceScope = null;
   this.sortProducts(method, priceScope, keyword);
-}
+};
 
 ///////////////////////////////////
 /**
@@ -116,7 +116,7 @@ Search.prototype.saveKeywordAjax = function (keyword) {
       //
       if (keywords) {
         const stringKeywords = keywords.join(", ");
-        this.createCookie("keyword",encodeURIComponent(stringKeywords), 0.1);
+        this.createCookie("keyword", encodeURIComponent(stringKeywords), 0.1);
       }
     },
   });

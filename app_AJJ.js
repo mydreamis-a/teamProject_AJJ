@@ -14,14 +14,7 @@ const session = require("express-session");
 const responseTime = require("response-time");
 //
 // ㅜ model
-const {
-  sequelize,
-  User,
-  AJYproduct,
-  JBHproduct,
-  JJWproduct,
-  Like,
-} = require("./model/index_AJJ");
+const { sequelize, User, AJYproduct, JBHproduct, JJWproduct, Like } = require("./model/index_AJJ");
 //
 // ㅜ router
 const cart = require("./router/cart_router_AJJ");
@@ -105,7 +98,7 @@ app.get("/", async (req, res) => {
   //
   const { userName, userPoint, errorCode } = tokenVerify(req, res);
   //
-  log(userPoint)
+  log(userName, userPoint, errorCode);
   // ㅜ 저장된 상품 데이터가 하나도 없을 경우 생성하기
   await AJYproduct.findOne({}).then(async (obj) => {
     //
@@ -119,24 +112,22 @@ app.get("/", async (req, res) => {
 ////////////////
 // ㅜ 주영님 코드
 
-app.get("/point", async (req,res) => {
+app.get("/point", async (req, res) => {
   let id = null;
   let email = null;
   if (req.session.email) {
     email = req.session.email;
   }
-  await User.findOne({ 
-    where: { email: email }, 
-    attributes: ["id"] 
-  }).then(
-    (obj) => {
-      if (obj !== null){  
-        id = obj.dataValues.id;
-      }
+  await User.findOne({
+    where: { email: email },
+    attributes: ["id"],
+  }).then((obj) => {
+    if (obj !== null) {
+      id = obj.dataValues.id;
     }
-  );
+  });
   res.send({ id: id });
-})
+});
 
 let adminArray = new Array();
 let userArray = new Array();
