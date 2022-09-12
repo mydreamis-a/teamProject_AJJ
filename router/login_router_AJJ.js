@@ -61,22 +61,6 @@ router.post("/login", (req, res) => {
           const loginLimit = new Date();
           loginLimit.setSeconds(loginLimit.getSeconds() + 60);
           //
-<<<<<<< HEAD
-          User.update({ refresh: rT }, { where: { email: email } })
-            .then(() => {
-              const loginLimit = new Date();
-              loginLimit.setSeconds(loginLimit.getSeconds() + 60);
-              //
-              const autoLogout = schedule.scheduleJob(loginLimit, () => {
-                //
-                log("logout", loginLimit);
-              })
-              res.redirect("/");
-            })
-        }
-      })
-    })
-=======
           const autoLogout = schedule.scheduleJob(loginLimit, () => {
             //
             log("logout", loginLimit);
@@ -87,7 +71,6 @@ router.post("/login", (req, res) => {
       }
     });
   });
->>>>>>> cb0ede4832c56686d3a99f331b5ef8a9949e0f7f
 });
 
 module.exports = router;
