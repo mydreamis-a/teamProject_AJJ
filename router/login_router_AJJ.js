@@ -66,7 +66,6 @@ router.post("/login", (req, res) => {
               const autoLogout = schedule.scheduleJob(loginLimit, () => {
                 //
                 log("logout", loginLimit);
-                res.redirect("/");
               })
               res.redirect("/");
             })

@@ -103,9 +103,9 @@ sequelize
 // ㅜ 메인 페이지
 app.get("/", async (req, res) => {
   //
-  const { userName, userPoint, errorCode } = tokenVerify(req, res);
+  const { userName, userPoint, errorCode } = await tokenVerify(req, res);
   //
-  log(userPoint)
+  log("1", userPoint)
   // ㅜ 저장된 상품 데이터가 하나도 없을 경우 생성하기
   await AJYproduct.findOne({}).then(async (obj) => {
     //

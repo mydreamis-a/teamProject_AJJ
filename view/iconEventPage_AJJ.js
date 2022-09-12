@@ -12,10 +12,7 @@ let userCookie = null;
 let createCookie = function (name, value, time) {
   let date = new Date();
   date.setTime(date.getTime() + time * 60 * 1000);
-  // ㅜ 날짜로 잘 들어감..
   document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/;`;
-  // ㅜ 세션으로 들어감.. 이건 왜 안되는걸까?
-  // document.cookie = name + "=" + value + "; expries=" + date.toUTCString() + "; path=/;"
 };
 // 쿠키 유무
 let isActiveCookie = function (key) {
