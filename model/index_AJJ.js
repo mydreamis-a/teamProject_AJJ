@@ -2,6 +2,7 @@ const Sql = require("sequelize");
 const User = require("./user_AJJ");
 const Cart = require("./cart_AJJ");
 const Like = require("./like_AJJ");
+const Post = require("./post_AJJ");
 const Comment = require("./comment_AJJ");
 const Keyword = require("./keyword_AJJ");
 const AJYproduct = require("./AJYproduct_AJJ");
@@ -19,6 +20,7 @@ const db = {};
 db.User = User;
 db.Cart = Cart;
 db.Like = Like;
+db.Post = Post;
 db.Comment = Comment;
 db.Keyword = Keyword;
 db.sequelize = sequelize;
@@ -31,6 +33,7 @@ db.BestItem = BestItem;
 User.init(sequelize);
 Cart.init(sequelize);
 Like.init(sequelize);
+Post.init(sequelize);
 Comment.init(sequelize);
 Keyword.init(sequelize);
 AJYproduct.init(sequelize);
@@ -42,6 +45,7 @@ BestItem.init(sequelize);
 User.associate(db);
 Cart.associate(db);
 Like.associate(db);
+Post.associate(db);
 Comment.associate(db);
 Keyword.associate(db);
 AJYproduct.associate(db);
@@ -50,6 +54,6 @@ JJWproduct.associate(db);
 DailyCheck.associate(db);
 BestItem.associate(db);
 //
-module.exports = { sequelize, User, Cart, Like, Comment, Keyword, AJYproduct, JBHproduct, JJWproduct, DailyCheck, BestItem };
+module.exports = { sequelize, User, Cart, Like, Post, Comment, Keyword, AJYproduct, JBHproduct, JJWproduct, DailyCheck, BestItem };
 //
-// 09.01.13 수정
+// 09.13.12 수정

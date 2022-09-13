@@ -98,11 +98,7 @@ app.get("/", async (req, res) => {
   //
   const { userName, userPoint, errorCode } = await tokenVerify(req, res);
   //
-<<<<<<< HEAD
-  log("1", userPoint)
-=======
-  log(userName, userPoint, errorCode);
->>>>>>> cb0ede4832c56686d3a99f331b5ef8a9949e0f7f
+  log("1", userPoint);
   // ㅜ 저장된 상품 데이터가 하나도 없을 경우 생성하기
   await AJYproduct.findOne({}).then(async (obj) => {
     //

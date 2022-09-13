@@ -34,7 +34,7 @@ class User extends Sql.Model {
         },
         refresh: {
           type: Sql.STRING(255),
-        }
+        },
       },
       {
         sequelize,
@@ -49,15 +49,16 @@ class User extends Sql.Model {
     );
   }
   static associate(db) {
-    db.User.hasMany(db.Like, { foreignKey: "user_id", sourceKey: "email"});
-    db.User.hasMany(db.BestItem, { foreignKey: "email", sourceKey: "email" });
+    db.User.hasMany(db.Post, { foreignKey: "user_id", sourceKey: "id" });
     db.User.hasMany(db.Cart, { foreignKey: "user_id", sourceKey: "id" });
+    db.User.hasMany(db.Like, { foreignKey: "user_id", sourceKey: "email" });
     db.User.hasMany(db.Comment, { foreignKey: "user_id", sourceKey: "id" });
     db.User.hasMany(db.Keyword, { foreignKey: "user_id", sourceKey: "id" });
+    db.User.hasMany(db.BestItem, { foreignKey: "email", sourceKey: "email" });
     db.User.hasMany(db.DailyCheck, { foreignKey: "user_id", sourceKey: "id" });
   }
 }
 
 module.exports = User;
 
-// 09.08.02 수정
+// 09.13.13 수정

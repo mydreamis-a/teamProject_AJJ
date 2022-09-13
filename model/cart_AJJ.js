@@ -10,6 +10,10 @@ class Cart extends Sql.Model {
           allowNull: false,
           defaultValue: 1,
         },
+        user_id: {
+          type: Sql.INTEGER,
+          allowNull: false,
+        },
       },
       {
         sequelize,
@@ -33,4 +37,4 @@ class Cart extends Sql.Model {
 
 module.exports = Cart;
 
-// 08.30.07 수정
+// 09.13.12 수정

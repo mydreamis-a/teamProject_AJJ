@@ -10,11 +10,19 @@ class Comment extends Sql.Model {
           type: Sql.STRING(200),
           allowNull: false,
         },
-        // ㅜ 비밀 댓글로의 설정 여부
+        // ㅜ 비밀 댓글의 설정 여부
         secret: {
           type: Sql.INTEGER,
           allowNull: false,
           defaultValue: 0,
+        },
+        user_id: {
+          type: Sql.INTEGER,
+          allowNull: false,
+        },
+        post_id: {
+          type: Sql.INTEGER,
+          allowNull: false,
         },
       },
       {
@@ -31,14 +39,12 @@ class Comment extends Sql.Model {
   }
   static associate(db) {
     db.Comment.belongsTo(db.User, { foreignKey: "user_id", targetKey: "id" });
-    db.Comment.belongsTo(db.AJYproduct, { foreignKey: "ajyproduct_num", targetKey: "id" });
-    db.Comment.belongsTo(db.JBHproduct, { foreignKey: "jbhproduct_num", targetKey: "id" });
-    db.Comment.belongsTo(db.JJWproduct, { foreignKey: "jjwproduct_num", targetKey: "id" });
-    db.Comment.belongsTo(db.Comment, { foreignKey: "this_id", targetKey: "id" });
+    db.Comment.belongsTo(db.Post, { foreignKey: "post_id", targetKey: "id" });
     db.Comment.hasMany(db.Comment, { foreignKey: "this_id", sourceKey: "id" });
+    db.Comment.belongsTo(db.Comment, { foreignKey: "this_id", targetKey: "id" });
   }
 }
 
 module.exports = Comment;
 
-// 08.30.11 수정
+// 09.13.12 수정

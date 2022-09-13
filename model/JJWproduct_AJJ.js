@@ -54,12 +54,11 @@ class JJWproduct extends Sql.Model {
   static associate(db) {
     db.JJWproduct.hasOne(db.Like, { foreignKey: "jjwproduct_num", sourceKey: "id" });
     db.JJWproduct.hasOne(db.Cart, { foreignKey: "jjwproduct_num", sourceKey: "id" });
-    db.JJWproduct.hasMany(db.Comment, { foreignKey: "jjwproduct_num", sourceKey: "id" });
-    // 추가
+    db.JJWproduct.hasMany(db.Post, { foreignKey: "jjwproduct_num", sourceKey: "id" });
     db.JJWproduct.hasMany(db.BestItem, { foreignKey: "jjwproduct_num", sourceKey: "id" });
   }
 }
 
 module.exports = JJWproduct;
 
-// 08.29.01 수정
+// 09.13.13 수정

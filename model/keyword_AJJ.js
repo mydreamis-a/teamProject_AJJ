@@ -16,6 +16,10 @@ class Keyword extends Sql.Model {
           allowNull: false,
           defaultValue: 1,
         },
+        user_id: {
+          type: Sql.INTEGER,
+          allowNull: false,
+        },
       },
       {
         sequelize,
@@ -36,4 +40,4 @@ class Keyword extends Sql.Model {
 
 module.exports = Keyword;
 
-// 09.03.09 수정
+// 09.13.12 수정

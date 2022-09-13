@@ -10,6 +10,10 @@ class DailyCheck extends Sql.Model {
           type: Sql.INTEGER,
           allowNull: false,
         },
+        user_id: {
+          type: Sql.INTEGER,
+          allowNull: false,
+        },
       },
       {
         sequelize,
@@ -31,4 +35,4 @@ class DailyCheck extends Sql.Model {
 
 module.exports = DailyCheck;
 
-// 08.30.11 수정
+// 09.13.12 수정
