@@ -62,6 +62,21 @@ shopBtnTags.forEach((el, idx) => {
       _search.searchPriceProducts();
     });
     //
+
+    const boardBtn = document.querySelector(".product-img");
+    log(boardBtn);
+    //
+    setTimeout(() => {
+      if (boardBtn.style.backgroundImage === "url('/img_Jang/서현진 배우님.jpeg')") {
+        //
+        boardBtn.addEventListener("click", () => {
+          $.ajax({
+            url: "/board",
+            type: "post",
+          });
+        });
+      }
+    }, 1000);
   });
 });
 

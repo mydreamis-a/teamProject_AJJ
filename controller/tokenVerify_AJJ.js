@@ -11,6 +11,9 @@ module.exports = async function tokenVerify(req, res) {
   //
   let rT = undefined;
   const { aT, email } = req.session;
+  let userName = "";
+  let userPoint = "";
+  let errorCode = "";
   //
   if (req.session.email !== undefined) {
     //
@@ -69,7 +72,7 @@ module.exports = async function tokenVerify(req, res) {
     });
   }
   // log("2");
-  log("2", userName, userPoint, errorCode);
+  // log("2", userName, userPoint, errorCode);
   return { userName, userPoint, errorCode };
 };
 // 09.08.07 수정

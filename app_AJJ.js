@@ -18,6 +18,7 @@ const { sequelize, User, AJYproduct, JBHproduct, JJWproduct, Like } = require(".
 //
 // ㅜ router
 const cart = require("./router/cart_router_AJJ");
+const board = require("./router/board_rouer_AJJ");
 const login = require("./router/login_router_AJJ");
 const signUp = require("./router/signUp_router_AJJ");
 const example = require("./router/example_router_AJJ");
@@ -82,11 +83,11 @@ app.use("/dailyPoint", iconEvent);
 app.use("/example", example);
 app.use("/keyword", keyword);
 app.use("/shop", products);
+app.use("/board", board);
 app.use("/cart", cart);
 app.use("/", signUp);
 app.use("/", login);
 //
-
 // ㅜ 서버 실행 시 MySQL 연동
 sequelize
   .sync({ force: false })
@@ -306,4 +307,4 @@ io.sockets.on("connection", async (socket) => {
   });
 });
 //
-// 09.08.13 수정
+// 09.14.16 수정
