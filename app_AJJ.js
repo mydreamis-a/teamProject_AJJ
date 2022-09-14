@@ -307,4 +307,4 @@ io.sockets.on("connection", async (socket) => {
   });
 });
 //
-// 09.14.16 수정
+// 09.15.02 수정

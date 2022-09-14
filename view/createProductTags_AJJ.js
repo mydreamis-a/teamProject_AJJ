@@ -30,9 +30,9 @@ const createProductTags = (shopName, products, email) => {
               <span style="font-size: 2vw; font-weight: 900;">${el.like_count}</span>
               <div class="product-btn-container">
                 <div class="product-btn-group">
-                <input class="in-cart-btn${el.id}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="_cart.inCartAjax()">
-                <input class="show-product-btn${el.id}" type="button" value="상품 보기">
-              </div>
+                  <input class="in-cart-btn${el.id}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="_cart.inCartAjax()">
+                  <input class="show-product-btn${el.id}" type="button" value="상품 보기" onclick="boardAjax()">
+                </div>
               </div>
             </div>
           </div>
@@ -89,9 +89,9 @@ const createCartProductTags = (cartProducts) => {
                 <p class="product-price">${price} 원</p>
                 <div class="product-btn-container">
                   <div class="product-btn-group">
-                  <input class="cart-delete-btn${id}" data-name="${shopName}" type="button" value="삭제하기" onclick="_cart.deleteCartProducts()">
-                  <input class="show-product-btn${id}" type="button" value="상품 보기">
-                </div>
+                    <input class="cart-delete-btn${id}" data-name="${shopName}" type="button" value="삭제하기" onclick="_cart.deleteCartProducts()">
+                    <input class="show-product-btn${id}" type="button" value="상품 보기">
+                  </div>
                 </div>
               </div>
             </div>
@@ -102,4 +102,4 @@ const createCartProductTags = (cartProducts) => {
   return cartProductTags.reverse();
 };
 //
-// 09.14.17 수정
+// 09.15.01 수정
