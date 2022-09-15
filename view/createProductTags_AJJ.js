@@ -31,7 +31,7 @@ const createProductTags = (shopName, products, email) => {
               <div class="product-btn-container">
                 <div class="product-btn-group">
                   <input class="in-cart-btn${el.id}" data-name="${shopName}" type="button" value="장바구니에 담기" onclick="_cart.inCartAjax()">
-                  <input class="show-product-btn${el.id}" type="button" value="상품 보기" onclick="boardAjax()">
+                  <input class="show-product-btn${el.id}" type="button" value="상품 보기" onclick="boardAjax(this)">
                 </div>
               </div>
             </div>
@@ -102,4 +102,4 @@ const createCartProductTags = (cartProducts) => {
   return cartProductTags.reverse();
 };
 //
-// 09.15.01 수정
+// 09.15.10 수정

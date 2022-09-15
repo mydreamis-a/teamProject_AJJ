@@ -2,12 +2,15 @@ const express = require("express");
 const router = express.Router();
 const { log } = console;
 
-router.post("/", (req, res) => {
+router.get("/", (req, res) => {
   //
-  log("dd")
-  log(__dirname)
   res.render("board_AJJ");
 });
+
+router.post("/", (req, res) => {
+  //
+  res.send();
+})
 module.exports = router;
 //
-// 09.15.02 수정
+// 09.15.10 수정
